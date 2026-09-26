@@ -1,0 +1,122 @@
+[
+  {
+    "group": "高云板卡（部分）资料及开源项目资料（部分资料需科学上网）",
+    "file": "高云FPGA学习资料整理（更正链接）.pdf",
+    "bytes": 2158350,
+    "sha256": "b280835d753bfdda509276de1f42e2ae8a1a9107429f8e9c7bd4b8578c6fe93e"
+  },
+  {
+    "group": "2019-2021往年板卡资料",
+    "file": "2023年FPGA创新设计竞赛初赛晋级决赛名单公示.pdf",
+    "bytes": 297009,
+    "sha256": "05d83458d54c7ed7c7a406093584ba4c4719efc622ca760b155acaf0510e9079"
+  },
+  {
+    "group": "2019-2021往年板卡资料",
+    "file": "combat 18k test_prj.zip",
+    "bytes": 77024734,
+    "sha256": null
+  },
+  {
+    "group": "2019-2021往年板卡资料",
+    "file": "Combat-rev1.dxf",
+    "bytes": 9387201,
+    "sha256": null
+  },
+  {
+    "group": "2019-2021往年板卡资料",
+    "file": "Combat原理图.pdf",
+    "bytes": 873207,
+    "sha256": "8b54df234ca9ecd7e9a7cb79239474130dcb58cf1774af6fedaf7b452320e4a5"
+  },
+  {
+    "group": "2019-2021往年板卡资料",
+    "file": "Combat竞技板指导手册.pdf",
+    "bytes": 2045327,
+    "sha256": "4d3ca868668d0e5ba7607f90b59673614a110fc5cfb4554a98bc5bd3016518e9"
+  },
+  {
+    "group": "2019-2021往年板卡资料",
+    "file": "DDR_test_demo.zip",
+    "bytes": 3546118,
+    "sha256": null
+  },
+  {
+    "group": "2019-2021往年板卡资料",
+    "file": "dk_video_dvp_720_HDMI_LVCMOS12COMBAT板卡的DVP相机到HDM.zip",
+    "bytes": 34972683,
+    "sha256": null
+  },
+  {
+    "group": "2019-2021往年板卡资料",
+    "file": "Ministar实验指导 (1).pdf",
+    "bytes": 4572139,
+    "sha256": "9f53cfc7a51f92e573e09676957a798600fe1f2729df4af2ff36f41dd0731684"
+  },
+  {
+    "group": "2019-2021往年板卡资料",
+    "file": "Ministar实验指导.pdf",
+    "bytes": 4572139,
+    "sha256": "9f53cfc7a51f92e573e09676957a798600fe1f2729df4af2ff36f41dd0731684"
+  },
+  {
+    "group": "2019-2021往年板卡资料",
+    "file": "mini_star.zip",
+    "bytes": 8396867,
+    "sha256": null
+  },
+  {
+    "group": "2019-2021往年板卡资料",
+    "file": "Runber开发板实验指导.pdf",
+    "bytes": 3049118,
+    "sha256": "40c307cad1b01c23f04a24dcb229483df158dd9f1d8d5e4332a1b7a08c5a1c4f"
+  },
+  {
+    "group": "2019-2021往年板卡资料",
+    "file": "Runber开发板实验指导V1_1.pdf",
+    "bytes": 3887811,
+    "sha256": "3994dd40ea739e1491c428704274eb39e789cc7f4151dd35aa655c596723f584"
+  },
+  {
+    "group": "2019-2021往年板卡资料",
+    "file": "sim_model.zip",
+    "bytes": 13257,
+    "sha256": null
+  },
+  {
+    "group": "2019-2021往年板卡资料",
+    "file": "water_led.v",
+    "bytes": 1217,
+    "sha256": null
+  },
+  {
+    "group": "2019-2021往年板卡资料",
+    "file": "【批量下载】Combat原理图等.zip",
+    "bytes": 2918936,
+    "sha256": null
+  },
+  {
+    "group": "2019-2021往年板卡资料",
+    "file": "【批量下载】Runber底板原理图（MINI_EYE_SUPER_GW1N）等.zip",
+    "bytes": 43868087,
+    "sha256": null
+  },
+  {
+    "group": "2019-2021往年板卡资料",
+    "file": "全国大学生嵌入式芯片与系统设计竞赛'2026FPGA赛道选题指南-高云半导体.pdf",
+    "bytes": 1453476,
+    "sha256": "92c74c7c6216f7d67d442339ae10d5e5c4141d6ddce4d2508e36a65d7645328d"
+  },
+  {
+    "group": "2019-2021往年板卡资料",
+    "file": "高云杯2025开题宣讲PPT-黄一川.pdf",
+    "bytes": 5171812,
+    "sha256": "77e7232f817ff1a080fd3382af5ce915e35c10bd8019f2ebe46bd2e14c968119"
+  },
+  {
+    "group": "2025年赛事题目讲解及注意事项",
+    "file": "高云杯2025开题宣讲PPT-黄一川.pdf",
+    "bytes": 5171812,
+    "sha256": "77e7232f817ff1a080fd3382af5ce915e35c10bd8019f2ebe46bd2e14c968119"
+  }
+]
