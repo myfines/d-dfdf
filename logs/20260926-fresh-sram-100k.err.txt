@@ -1,0 +1,7 @@
+libusb: info [winusbx_init] WinUSB DLL available (with isoch support)
+libusb: info [winusbx_init] libusbK DLL is not available
+libusb: info [windows_init] UsbDk backend is not available
+libusb: warning [init_device] device 'USB\VID_0000&PID_0002\6&2908D1D3&0&3' has invalid descriptor!
+libusb: warning [winusb_get_device_list] failed to initialize device 'USB\VID_0000&PID_0002\6&2908D1D3&0&3'
+unable to open ftdi device: -3 (device not found)
+JTAG init failed with: unable to open ftdi device

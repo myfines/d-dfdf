@@ -1,0 +1,14 @@
+[
+  {
+    "Status": "Error",
+    "InstanceId": "USB\\VID_0403&PID_6010&MI_01\\7&2FEB2BE7&0&0001"
+  },
+  {
+    "Status": "OK",
+    "InstanceId": "USB\\VID_0403&PID_6010\\FACTORYAIOT_PRO"
+  },
+  {
+    "Status": "OK",
+    "InstanceId": "USB\\VID_0403&PID_6010&MI_00\\7&2FEB2BE7&0&0000"
+  }
+]

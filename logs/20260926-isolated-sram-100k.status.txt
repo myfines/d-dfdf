@@ -1,0 +1,5 @@
+Start=2026-09-26T19:18:13.2654415+08:00
+Command=openFPGALoader -b tangprimer20k --freq 100000 --write-sram -v E:\gaoyun\led.fs
+B disabled for isolation; timeout 120s
+PID=20276
+Exit=1

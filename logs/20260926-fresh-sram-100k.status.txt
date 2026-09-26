@@ -1,0 +1,5 @@
+Start=2026-09-26T19:18:55.2694872+08:00
+Command=openFPGALoader -b tangprimer20k --freq 100000 --write-sram -v E:\gaoyun\led.fs
+No preceding scan after reset; B disabled; timeout 120s
+PID=27568
+Exit=1

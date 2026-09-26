@@ -76,3 +76,18 @@ openFPGALoader -b tangprimer20k --freq 2500000 --write-sram -v <经核验的码�
 - 45 秒超时结束该下载进程，明确不计为成功。原始标准输出、全部错误和命令/哈希/进程状态见 20260926-sram-winusb.*。
 - 19:15:13 再次软件重启成功，随后计划以 100 kHz 检测降低速率的影响；检测返回 device not found，没有再次写入。Windows 枚举也变成 0 个匹配设备，已请求用户物理重插 USB-JTAG 并尽量直连电脑。
 - scripts/restart-dock-usb.ps1 当前日志为第二次重启（首轮结果时间由本节补录）。未操作 Flash、OTP 或下载器固件。
+
+## 2026-09-26：通道隔离试验、直连后 SRAM 成功
+
+- 前一阶段后续：100 kHz 检测在设备重新出现后返回 ftdi_usb_reset failed。临时禁用 B（Code 22，保留 FTDIBUS）并重启父设备后，检测可读 ID；后续下载在 USB 初始化失败，未进入 SRAM 写入。
+- 再次重启后直接低速下载返回 device not found，同时 libusb 记录另一个 VID_0000/PID_0002 无效描述符；不能仅凭该行认定其就是此板。没有借此认定板损坏。
+- 用户明确报告已直连，要求避免损坏并参考既有案例。19:20 枚举记录在 direct-connection-state.json；没有残留烧录器。
+- 首次状态查询命令有 PowerShell foreach 管道语法错误，未执行设备操作；改成先收集结果再输出后成功。
+- 执行 scripts/restore-uart-b.ps1 正常提权恢复 B，确认 FTDIBUS、ProblemCode 0。通道隔离试验已结束，不能证明 B 是根因。
+- 参考上游 issue #250（https://github.com/trabucayre/openFPGALoader/issues/250）及 troubleshooting：同型号存在历史 SRAM/下载器问题讨论，但没有证据证明当前根因相同；其中其他型号 Flash 擦除建议不适用本授权范围，未执行。
+- 直连后两次连续 100 kHz --detect 均成功（0x0000081B，exit 0），见 direct-detect 与 direct-detect-repeat 日志。
+- 19:21:43 核对原码流 SHA256、无残留烧录器后，执行 openFPGALoader -b tangprimer20k --freq 100000 --write-sram -v E:/gaoyun/led.fs。预设最多 120 秒、出现 USB 通信错误即停止；实际 19:21:46 正常完成。
+- 结果：SRAM erase 成功，Load SRAM 100%，DONE，after program sram=0x00006020（Memory Erase / Done Final / Security Final），exit 0，stderr 为空。工具报告请求/实际 100 kHz；没有物理测量时钟，主机耗时也不能当硬件速率证据。
+- 验证边界：上游 v1.1.1 gowin.cpp detectFamily 对 0x0000081B 设置 skip_checksum=true，因此没有进行独立软件 checksum 比较或完整 SRAM 回读验证。确认的是工具完成配置且 DONE 置位，不把它写成实物点灯已成功。
+- 成功后只读 Windows 枚举：A=WinUSB/oem180.inf/0，B=FTDIBUS/oem178.inf/0，均 OK；没有残留烧录器。停止进一步硬件操作，等待用户确认 LED2 是否闪烁。
+- 本轮所有 FPGA 写入均为 SRAM；无 Flash、OTP、下载器固件更新。无法仅凭日志保证温度或硬件完好。

@@ -1,0 +1,17 @@
+[
+  {
+    "Status": "OK",
+    "Id": "USB\\VID_0403&PID_6010&MI_01\\7&2FEB2BE7&0&0001",
+    "Details": "FTDIBUS,oem178.inf,0"
+  },
+  {
+    "Status": "OK",
+    "Id": "USB\\VID_0403&PID_6010\\FACTORYAIOT_PRO",
+    "Details": "usbccgp,usb.inf,0"
+  },
+  {
+    "Status": "OK",
+    "Id": "USB\\VID_0403&PID_6010&MI_00\\7&2FEB2BE7&0&0000",
+    "Details": "WinUSB,oem180.inf,0"
+  }
+]

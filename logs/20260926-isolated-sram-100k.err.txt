@@ -1,0 +1,6 @@
+libusb: info [winusbx_init] WinUSB DLL available (with isoch support)
+libusb: info [winusbx_init] libusbK DLL is not available
+libusb: info [windows_init] UsbDk backend is not available
+FTDI flush buffer error with code -2 (FTDI purge of RX buffer failed)
+unable to config pins : -1 unable to configure bitbang mode. Perhaps not a BM/2232C type chip?
+JTAG init failed with: low level FTDI init failed
