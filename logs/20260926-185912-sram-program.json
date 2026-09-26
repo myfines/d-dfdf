@@ -1,0 +1,21 @@
+{
+  "start": "2026-09-26T18:59:12.414170+08:00",
+  "command": [
+    "E:\\gaoyun\\tools\\gowin\\programmer1.9.11.03Education(2536).Win64\\Programmer\\bin\\programmer_cli.exe",
+    "--cable",
+    "USB Debugger A",
+    "--frequency",
+    "2.5MHz",
+    "--device",
+    "GW2A-18C",
+    "--operation_index",
+    "2",
+    "--fsFile",
+    "E:\\gaoyun\\projects\\dock_led\\dock_led\\impl\\pnr\\dock_led.fs"
+  ],
+  "bitstream_sha256": "0375dca1c9d62bd721fec38f076c811fac9294cddfd2d1253ab3fac33f7d355f",
+  "openfpgaloader_scan": "libusb error -5 Entity not found with current FTDI Windows driver; no FPGA programming by openFPGALoader",
+  "windows": "USB Serial Converter A and B both OK",
+  "exit_code": 4294967295,
+  "end": "2026-09-26T19:00:19.313113+08:00"
+}

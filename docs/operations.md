@@ -31,3 +31,14 @@ openFPGALoader -b tangprimer20k --freq 2500000 --write-sram -v <经核验的码�
 当前码流 SHA256：0375DCA1C9D62BD721FEC38F076C811FAC9294CDDFD2D1253AB3FAC33F7D355F。
 
 7. 首次提交因本机没有 Git 作者信息而失败；仅为本仓库设置作者 Codex <codex@localhost>，随后重试提交与推送。
+
+## 2026-09-26：重连后点灯尝试及驱动定位
+
+- Windows 显示 FTDI A/B 两通道均 OK。
+- openFPGALoader --scan-usb 返回 libusb error -5 Entity not found，说明现有 FTDIBUS 接口未能被该工具打开；没有开始 FPGA 写入。
+- 尝试独立版 Gowin Programmer 2536：USB Debugger A、2.5MHz、operation_index=2（SRAM Program），码流 SHA256 核验通过。程序未输出进度且进程计数停滞，已结束；没有成功返回。详见 logs/20260926-185912-sram-program.log 及同名 JSON。
+- 已停止相关命令行烧录器。
+- 查阅 openFPGALoader Windows 使用资料及 libwdi 文档，准备将 JTAG 接口 A/MI_00 改为 WinUSB，保留 B/MI_01 的串口驱动。
+- 从 pbatard/libwdi 官方 release 下载 Zadig 2.9，Authenticode 签名 Valid，签名者 Akeo Consulting。配置显示全部子设备但隐藏复合父设备，默认驱动 WinUSB。
+- 已请求打开 Zadig。当前进程为 Windows 中等完整性权限，安装驱动需要用户管理员确认；助手不操作屏幕。驱动尚未确认安装，点灯尚未成功。
+- 用户操作目标：USB Serial Converter A / Interface 0，USB ID 0403:6010:00，替换为 WinUSB；不选择 B 或 USB Composite Device。
