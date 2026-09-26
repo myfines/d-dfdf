@@ -91,3 +91,12 @@ openFPGALoader -b tangprimer20k --freq 2500000 --write-sram -v <经核验的码�
 - 验证边界：上游 v1.1.1 gowin.cpp detectFamily 对 0x0000081B 设置 skip_checksum=true，因此没有进行独立软件 checksum 比较或完整 SRAM 回读验证。确认的是工具完成配置且 DONE 置位，不把它写成实物点灯已成功。
 - 成功后只读 Windows 枚举：A=WinUSB/oem180.inf/0，B=FTDIBUS/oem178.inf/0，均 OK；没有残留烧录器。停止进一步硬件操作，等待用户确认 LED2 是否闪烁。
 - 本轮所有 FPGA 写入均为 SRAM；无 Flash、OTP、下载器固件更新。无法仅凭日志保证温度或硬件完好。
+
+## 2026-09-26T19:23:58+08:00：用户确认实物点灯成功
+
+- 用户先反馈：“有个灯在闪 不清楚哪个”。此时仅记录有闪烁现象，未提前认定目标 LED。
+- 随后用户反馈：“没问题了 看到丝印了 可以了 记录推到github上去”。结合此前 LED2 确认问题，记录为用户已查看丝印并确认目标 LED2 闪烁，点灯成功。
+- 最终证据：原码流身份核验通过；openFPGALoader SRAM 写入 100%、DONE、exit 0；用户实物确认。独立软件 checksum/完整回读验证仍未执行，不扩大验证结论。
+- 保留成功配置：USB-JTAG 直连电脑；A 为 WinUSB，B 为 FTDIBUS 且已恢复启用；下载命令请求 100 kHz，仅 SRAM。
+- 本次仅更新 README 与操作记录并提交推送，没有再次烧录、重启 USB 或修改驱动。SRAM 配置断电失效。
+- USB 直连、驱动绑定和低速设置共同构成此次成功条件；尚未通过受控对照确定此前失败的唯一根因。
