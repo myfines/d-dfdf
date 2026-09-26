@@ -1,0 +1,34 @@
+empty
+write to ram
+Jtag frequency : requested 2.50MHz    -> real 2.00MHz   
+found 1 devices
+index 0:
+	idcode 0x81b
+	manufacturer Gowin
+	family GW2A
+	model  GW2A(R)-18(C)
+	irlength 8
+File type : fs
+Parse file Parse E:\gaoyun\led.fs: 
+checksum 0xa836
+Done
+DONE
+bitstream header infos
+CRCCheck: ON
+Compress: OFF
+ConfDataLength: 1342
+LoadingRate: 2500000
+ProgramDoneBypass: OFF
+SPIAddr: 00000000
+SecurityBit: ON
+idcode: 0000081b
+before program sram: displayReadReg 00006020
+	Memory Erase
+	Done Final
+	Security Final
+Erase SRAM before erase sram: displayReadReg 00006020
+	Memory Erase
+	Done Final
+	Security Final
+pollFlag: 60a0 (80)
+pollFlag: 7f000000 (0)

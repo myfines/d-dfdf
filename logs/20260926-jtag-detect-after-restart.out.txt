@@ -1,0 +1,9 @@
+empty
+Jtag frequency : requested 2.50MHz    -> real 2.00MHz   
+found 1 devices
+index 0:
+	idcode 0x81b
+	manufacturer Gowin
+	family GW2A
+	model  GW2A(R)-18(C)
+	irlength 8

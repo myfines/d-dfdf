@@ -66,3 +66,13 @@ openFPGALoader -b tangprimer20k --freq 2500000 --write-sram -v <经核验的码�
 - 安装成功：A=WinUSB/oem180.inf/ProblemCode 0；B 保持 FTDIBUS，原 Code 10 未消失。原始安装日志 logs/20260926-winusb-install.txt。
 - openFPGALoader --scan-usb 能列出 FTDI2232 0403:6010（描述字符串为 none）。随后 -b tangprimer20k --freq 2500000 --detect -v 返回 exit 1：unable to open ftdi device: -6 (ftdi_usb_reset failed)。未开始 SRAM 下载。
 - 已核对原 LED 工程芯片、H11/N16、LVCMOS33/4mA，led.fs SHA256 与交接一致。仍未确认点灯成功。
+
+## 2026-09-26：USB 软件恢复、JTAG 成功与 SRAM 失败
+
+- 使用管理员 pnputil /restart-device，仅重启 USB\VID_0403&PID_6010\FACTORYAIOT_PRO。首次 19:12:45 完成，A=WinUSB、B=FTDIBUS，均 OK。
+- -b tangprimer20k --freq 2500000 --detect -v 成功退出（0），读到 0x0000081b，实际时钟 2 MHz；日志 20260926-jtag-detect-after-restart.*。
+- 核对上游 v1.1.1 Gowin SRAM 路径不会进入 Flash 访问的 10 MHz 设置，保持请求频率限制。
+- 19:13:56 使用 --write-sram -v E:/gaoyun/led.fs。起始状态 0x6020；SRAM erase 阶段先读到 0x60a0，随后异常值 0x7f000000，接着 usb bulk write failed。未进入正常 Load SRAM 完成流程。
+- 45 秒超时结束该下载进程，明确不计为成功。原始标准输出、全部错误和命令/哈希/进程状态见 20260926-sram-winusb.*。
+- 19:15:13 再次软件重启成功，随后计划以 100 kHz 检测降低速率的影响；检测返回 device not found，没有再次写入。Windows 枚举也变成 0 个匹配设备，已请求用户物理重插 USB-JTAG 并尽量直连电脑。
+- scripts/restart-dock-usb.ps1 当前日志为第二次重启（首轮结果时间由本节补录）。未操作 Flash、OTP 或下载器固件。

@@ -1,0 +1,16 @@
+mpsse_write: fail to write with error -1 (usb bulk write failed)
+mpsse_write: fail to write with error -1 (usb bulk write failed)
+mpsse_read: fail to flush buffer with error: -1 (usb bulk write failed)
+mpsse_write: fail to write with error -1 (usb bulk write failed)
+mpsse_read: fail to flush buffer with error: -1 (usb bulk write failed)
+mpsse_write: fail to write with error -1 (usb bulk write failed)
+mpsse_write: fail to write with error -1 (usb bulk write failed)
+mpsse_write: fail to write with error -1 (usb bulk write failed)
+mpsse_store: fails to first flush -1 usb bulk write failed
+mpsse_write: fail to write with error -1 (usb bulk write failed)
+mpsse_store: fails to first flush -1 usb bulk write failed
+mpsse_read: fail to store with error: -1 (usb bulk write failed)
+mpsse_write: fail to write with error -1 (usb bulk write failed)
+mpsse_store: fails to first flush -1 usb bulk write failed
+mpsse_write: fail to write with error -1 (usb bulk write failed)
+mpsse_store: fails to first flush -1 usb bulk write failed
