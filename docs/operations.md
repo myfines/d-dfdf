@@ -52,3 +52,5 @@ openFPGALoader -b tangprimer20k --freq 2500000 --write-sram -v <经核验的码�
 - USB 扫描结果见本阶段原始日志；现有 FTDIBUS 绑定仍不能证明 openFPGALoader 可以打开接口。
 - 本阶段没有改驱动、执行 JTAG 下载或写 Flash/OTP/下载器固件。点灯仍未确认成功。
 - 下一步需在管理员上下文中解决 A/MI_00 驱动绑定，保留 B 通道；当前只具备 Zadig GUI，尚未准备并验证命令行驱动安装包。遵守不点击屏幕要求。
+
+- 扫描实际返回 empty、退出码 0（没有列出探针），与前次 error -5 不同；紧接着重新枚举，当前匹配 USB 设备数量为 3。不得将空列表当作打开成功。
