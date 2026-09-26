@@ -54,3 +54,15 @@ openFPGALoader -b tangprimer20k --freq 2500000 --write-sram -v <经核验的码�
 - 下一步需在管理员上下文中解决 A/MI_00 驱动绑定，保留 B 通道；当前只具备 Zadig GUI，尚未准备并验证命令行驱动安装包。遵守不点击屏幕要求。
 
 - 扫描实际返回 empty、退出码 0（没有列出探针），与前次 error -5 不同；紧接着重新枚举，当前匹配 USB 设备数量为 3。不得将空列表当作打开成功。
+
+## 2026-09-26：命令行切换 JTAG A 至 WinUSB
+
+- 用户明确授权自行处理权限和命令行排查，仅协助接线；延续 SRAM / 2.5 MHz 限制。
+- 重连枚举：A 正常，B 为 Code 10，均原为 FTDIBUS。记录 logs/20260926-reconnected-devices.json。
+- 从官方 pbatard/libwdi v1.5.1 克隆源码（9b23b82a2dd1cbffc16d46c212f92c6bf8c0c602），使用本机 MinGW 构建 wdi-simple。旧 SDK 缺少 SYSTEM_CODEINTEGRITY_INFORMATION，按 Microsoft 文档补充同布局声明后构建成功；没有修改 libwdi 逻辑。config 与兼容头保存 scripts/。
+- WinUSB coinstaller 取自本机 DriverStore android_general.inf 的 amd64 目录，两份 DLL Authenticode 均 Valid；仅用于本机，不上传二进制。
+- 非管理员 --extract 成功生成仅匹配 VID_0403&PID_6010&MI_00 的 INF；未生成 CAT（缺少提升权限），符合工具日志。
+- 通过 Start-Process powershell.exe -Verb RunAs 正常提权成功，执行 scripts/install-jtag-a.ps1。先导出 oem178.inf 到 E:/gaoyun/tools/ftdi-driver-backup，然后限定 VID/PID/MI=0 安装 WinUSB。
+- 安装成功：A=WinUSB/oem180.inf/ProblemCode 0；B 保持 FTDIBUS，原 Code 10 未消失。原始安装日志 logs/20260926-winusb-install.txt。
+- openFPGALoader --scan-usb 能列出 FTDI2232 0403:6010（描述字符串为 none）。随后 -b tangprimer20k --freq 2500000 --detect -v 返回 exit 1：unable to open ftdi device: -6 (ftdi_usb_reset failed)。未开始 SRAM 下载。
+- 已核对原 LED 工程芯片、H11/N16、LVCMOS33/4mA，led.fs SHA256 与交接一致。仍未确认点灯成功。

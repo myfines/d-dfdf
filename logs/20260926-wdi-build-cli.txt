@@ -1,0 +1,11 @@
+libwdi.c: In function 'wdi_prepare_driver':
+libwdi.c:1278:2: error: unknown type name 'SYSTEM_CODEINTEGRITY_INFORMATION'; did you mean 'SYSTEM_INTERRUPT_INFORMATION'?
+  SYSTEM_CODEINTEGRITY_INFORMATION sci = { 0 };
+  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  SYSTEM_INTERRUPT_INFORMATION
+libwdi.c:1567:7: error: request for member 'Length' in something not a structure or union
+    sci.Length = sizeof(sci);
+       ^
+libwdi.c:1569:37: error: request for member 'CodeIntegrityOptions' in something not a structure or union
+     is_test_signing_enabled = !!(sci.CodeIntegrityOptions & 0x02);
+                                     ^

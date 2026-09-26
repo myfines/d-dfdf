@@ -1,0 +1,3 @@
+empty
+Bus device vid:pid       probe_type manufacturer serial product
+001 028    0x0403:0x6010 FTDI2232   none         none   none

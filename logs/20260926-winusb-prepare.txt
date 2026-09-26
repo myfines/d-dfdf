@@ -1,0 +1,5 @@
+Extracting driver files...
+libwdi:info [extract_binaries] Successfully extracted driver files to 'E:\gaoyun\tools\tang20k-winusb-a'
+libwdi:info [wdi_prepare_driver] Successfully created 'E:\gaoyun\tools\tang20k-winusb-a\tang20k_jtag_a.inf'
+libwdi:info [wdi_prepare_driver] No .cat file generated (missing elevated privileges)
+  Success
