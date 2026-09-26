@@ -1,0 +1,12 @@
+{
+  "started_at": "2026-09-26T18:58:01.412228+08:00",
+  "finished_at": "2026-09-26T18:58:01.471586+08:00",
+  "command": [
+    "E:\\gaoyun\\tools\\openfpgaloader\\ucrt64\\bin\\openFPGALoader.exe",
+    "--scan-usb"
+  ],
+  "exit_code": 0,
+  "stdout": "empty\nBus device vid:pid       probe_type manufacturer serial product\n",
+  "stderr": "",
+  "interpretation": "No USB probes listed; FPGA scan and SRAM programming not attempted."
+}

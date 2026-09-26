@@ -1,0 +1,7 @@
+tools/
+**/impl/
+*.fs
+*.bin
+*.zip
+*.exe
+__pycache__/
