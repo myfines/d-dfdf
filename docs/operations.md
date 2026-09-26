@@ -42,3 +42,13 @@ openFPGALoader -b tangprimer20k --freq 2500000 --write-sram -v <经核验的码�
 - 从 pbatard/libwdi 官方 release 下载 Zadig 2.9，Authenticode 签名 Valid，签名者 Akeo Consulting。配置显示全部子设备但隐藏复合父设备，默认驱动 WinUSB。
 - 已请求打开 Zadig。当前进程为 Windows 中等完整性权限，安装驱动需要用户管理员确认；助手不操作屏幕。驱动尚未确认安装，点灯尚未成功。
 - 用户操作目标：USB Serial Converter A / Interface 0，USB ID 0403:6010:00，替换为 WinUSB；不选择 B 或 USB Composite Device。
+
+## 2026-09-26T19:05:17.8011914+08:00：接手后只读核验
+
+- 目的：确认驱动替换是否完成及是否存在占用，不重复 SRAM 下载。
+- 命令：Get-PnpDevice / Get-PnpDeviceProperty；Get-Process programmer_cli,openFPGALoader,programmer；WindowsPrincipal.IsInRole(Administrator)；openFPGALoader --scan-usb（15 秒超时）。
+- A/MI_00 与 B/MI_01 均为 OK，仍绑定 FTDIBUS / oem178.inf；父设备为 usbccgp / usb.inf。WinUSB 替换未完成。
+- 无残留烧录进程；当前命令行未提升管理员权限。
+- USB 扫描结果见本阶段原始日志；现有 FTDIBUS 绑定仍不能证明 openFPGALoader 可以打开接口。
+- 本阶段没有改驱动、执行 JTAG 下载或写 Flash/OTP/下载器固件。点灯仍未确认成功。
+- 下一步需在管理员上下文中解决 A/MI_00 驱动绑定，保留 B 通道；当前只具备 Zadig GUI，尚未准备并验证命令行驱动安装包。遵守不点击屏幕要求。

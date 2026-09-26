@@ -1,0 +1,2 @@
+empty
+Bus device vid:pid       probe_type manufacturer serial product
