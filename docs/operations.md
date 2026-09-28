@@ -138,3 +138,42 @@ openFPGALoader -b tangprimer20k --freq 2500000 --write-sram -v <经核验的码�
 - 提速复烧：`--freq 2500000 --write-sram`，结果同样是 `Load SRAM 100.00%`、`DONE`、`displayReadReg 00006020`（Done Final）、exit 0、stderr 空，见 `logs/20260929-audio-probe-sram-2500k.*`。2.5 MHz 本次可用；此前 9/26 在 2.5 MHz 失败是当时驱动/通道异常状态下的现象，不能推广为“2.5 MHz 不可用”。
 - 已知未决：可听现象只有耳机孔里的 440 Hz 轻音（约满量程 1.6%），听力反馈仍未取得。
 - 推送状态（必须如实记录）：本阶段提交 `5a8f250` 已建立于本地，`git push origin main` **失败**。原因不是仓库权限，而是本机当前无法与 GitHub 建连：沙箱内 schannel 报 `SEC_E_NO_CREDENTIALS`、openssl 后端报连接被重置，完全权限下报 `Failed to connect to github.com:443`。因此 `main` 领先 `origin/main` 1 个提交，**未同步**，待网络恢复后重推。
+
+## 2026-09-29：音频探针修复、升级为四键演奏，以及“突然失灵”与 Flash 调研
+
+### 音频探针（audio_probe）修复
+
+- 构建失败根因确认：`audio.sdc` 行尾是 LF，高云 SDC 解析器报 `ERROR (TA2000) : "audio.sdc":1 | 'syntax error' near token 'clk]'`。与已通过的 `led/led.sdc` 逐字节比对，两者内容完全相同，唯一差别是行尾（LF 对 CRLF）。改为 CRLF 后 `Exit=0`、0 错 0 警。
+- 防复发：新增 `.gitattributes` 固定 `*.sdc text eol=crlf`；`build.tcl` 的 `create_project` 加 `-force`（否则重跑报 `Project already exists on disk`）。
+- 引脚报告暴露真实缺陷：`audio.cst` 未写 `IO_TYPE`，工具按默认 **LVCMOS18 / 1.8 V** 配，而板子这些脚在 **3.3 V** bank（对比：能点灯的 `led.cst` 用的是 LVCMOS33/3.3）。已补 `IO_TYPE=LVCMOS33`。
+- 音量与听感：首版幅度仅满量程 1.6%（约 -36 dB），用户要求加大，改为满量程并加 5 ms 淡入淡出（避免满音量下的开关爆音）。用户反馈“只能听到噪音”，诊断出另一原因：`PA_EN` 常开时会一直放大耳放本底噪声；新版本改为**仅发声时使能耳放**。
+- 另发现该设计**不驱动任何 LED**（引脚表只有 6 个音频脚，N16/N14/L16 都是未使用的输入脚），所以“没有灯闪”曾被误判为烧录失败；后续版本加了心跳灯。
+- 码流与验证：`audio_probe`（满量程 + 淡入淡出）SHA256 `C9BBF8F4F0CFDD33128C0827FBF29238EF539DD224EA2C6548C243D07211C5BA`；仿真 `logs/20260929-audio-probe-v3-sim.log` PASS；2.5 MHz 仅 SRAM 下载 `Load SRAM 100%` / `DONE` / `00006020` / exit 0。
+
+### 四键演奏（audio_keys）
+
+- 引脚来源：官方仓库 Litex 版 Dock 约束 `Litex/sipeed_tang_primer_20k/src/sipeed_tang_primer_20k.cst`。5 个用户按键 = `T10 T3 T2 D7 C7`（低有效）；LED0..5 = `L16 L14 N14 N16 A13 C13`；音频 = `N15 P16 P15 R16`；`clk` = H11。与本机已知的官方 PT8211 例程（`rst_n`=T3）交叉验证一致。
+- `T10` 在 Gowin 里是 **SSPI 专用脚**：约束到它报 `ERROR (PR2017) : 'btn_n[0]' cannot be placed according to constraint, for the location is a dedicated pin (SSPI)`。因此本版只用 4 个键 `T3 T2 D7 C7`。**用户按丝印反馈：不发声的那颗是 S0**，即 T10；这与 Sipeed 资料中“The reset pin on primer 20K is T10”一致。要启用 S0 需把工程的双用途脚设成“SSPI 作普通 IO”（官方 PT8211 工程即为 `SSPI: true`），**本阶段未修改**，列为已知限制。
+- 电平：4 个按键位于 **1.5 V bank**（DDR3 bank），故声明 `IO_TYPE=LVCMOS15`；其余 3.3 V。布局报告逐条核对通过：`T3/T2/D7/C7 = LVCMOS15 / 1.5 V`，`N15/P16/P15/R16/N16/N14 = LVCMOS33 / 3.3 V`。
+- 设计取舍（由仿真驱动）：最初“先消抖再起音”的写法经仿真算出**按下到出声需约 10.5 ms**（5 ms 消抖 + 5.5 ms 淡入），超过赛题端到端 ≤10 ms 的要求，改为**即按即响（仅两级同步器）+ 松开后才消抖 5 ms**；包络 1 ms 淡入 / 5 ms 淡出；单音（最低键优先）；`PA_EN` 仅发声时使能。
+- 仿真（iverilog，`logs/20260929-audio-keys-sim.log`）：空闲无声且耳放关闭；按键 0 半周期实测 **957,654 ns**（理论 955,700，+0.2%）；按住时 1 ms 抖动**不会**切断声音；松开后 12 ms 内静音且耳放关闭；按键 3 半周期 **638,594 ns**（理论 637,800，+0.12%）。测试台按 `HP_WS` 分帧解码（早期用固定位计数会错开一位，属测试台缺陷，已修正）。
+- 编译 `Exit=0`、0 错 0 警；2.5 MHz 仅 SRAM 下载成功。码流 SHA256 `7C1B92AD60D2238C504A5DC255B4BDD014C4FFD1783F5AEB6E90DCB226CBADA9`。原始日志 `logs/20260929-audio-keys-build*`、`-sram-2500k.*`、`-reflash.*`、`-restore.*`。
+
+### “一开始好使、突然不好使”的排查
+
+- 证据：FTDI 自 00:54:24 起**没有重新枚举**（未拔插、未断电）；JTAG 仍能读到 `0x81b`；无残留烧录进程。说明 FPGA 一直带电，程序消失只能来自**被重新配置**。
+- 两个候选成因：(1) 用户按下了 S0/T10（Sipeed 把 T10 标为 reset pin）；(2) 调试器/USB 抖动——本阶段实际出现 `ftdi_usb_reset failed`、`--scan-usb` 中 manufacturer/serial/product 全变为 `none`、JEDEC 容量字节一次读成 `0x0F`（正常 `0x17`）。两者都会让 SRAM 配置丢失，因为 **Flash 是空的**。
+- 处置：重烧 SRAM 恢复（`-reflash`；随后因 Flash 检测清空 SRAM，又执行一次 `-restore`，均 2.5 MHz 成功）。恢复成本 = 一条命令约 5 秒。
+- 结论：**只写 SRAM 时，任何复位或配置抖动都会让板子变空**。这是是否固化 Flash 的核心权衡依据。
+
+### Flash 固化调研（未执行任何写入）
+
+- `openFPGALoader --detect -f`：板载 NOR 识别为 JEDEC `0B 40 17`（8 MB），`RDSR = 0x00`（无块保护、非忙，可写）。
+- Flash **不是空片**：dump 前 64 KB 中仅 942 字节为 `0xFF`；内容无高云码流 ASCII 头，判断为出厂演示/测试码流。前 64 KB 已备份到 `E:\gaoyun\tools\tang20k-flash-first64k.bin`（未入仓库，`*.bin` 已被忽略）。
+- 副作用必须记录：`--detect -f` 与 `--dump-flash` 会先 **Erase SRAM**（输出 `Erase SRAM DONE`），会清掉正在运行的 SRAM 配置；本次因此多烧录了一次。
+- 读取可靠性不足：同一芯片两次读出的 JEDEC 容量字节不一致（`0x17` / `0x0F`，相差 1 bit），随后 FTDI 链路直接无法打开（`unable to open ftdi device`、`ftdi_usb_reset failed`），拔插 USB 后恢复（总线设备号 007→008）。结论：该板 SPI/USB 链路余量不足，**写 Flash 之前必须先做整片双读一致性校验，写入时必须带 `--verify`**，并预留失败恢复办法。
+- 未执行 Flash 擦写、OTP 或下载器固件更新；是否固化待用户决定。已向用户说明收益（复位/掉电/调试器抖动后自动回到本设计）与风险（覆盖出厂内容；若双用途脚配置不当会导致上电后 JTAG 失效，需短接 Flash 1、4 脚恢复）。
+
+### 推送状态
+
+- 以上所有源码与日志随本节一起提交并推送；此前因网络不可达而滞后的 `5a8f250`、`d2ff8dd` 也一并推送。若本次推送失败，以本节所述为准，不得声称已同步。

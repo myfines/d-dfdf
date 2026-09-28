@@ -3,7 +3,7 @@
 module tb_audio_probe;
     reg clk = 0;
     reg rst_n = 0;
-    wire HP_BCK, HP_WS, HP_DIN, PA_EN;
+    wire HP_BCK, HP_WS, HP_DIN, PA_EN, LED2;
 
     always #18.519 clk = ~clk; // 27 MHz input clock
 
@@ -12,7 +12,8 @@ module tb_audio_probe;
         .GATE_HALF_FRAMES(200)
     ) dut (
         .clk(clk), .rst_n(rst_n),
-        .HP_BCK(HP_BCK), .HP_WS(HP_WS), .HP_DIN(HP_DIN), .PA_EN(PA_EN)
+        .HP_BCK(HP_BCK), .HP_WS(HP_WS), .HP_DIN(HP_DIN), .PA_EN(PA_EN),
+        .LED2(LED2)
     );
 
     integer bit_number = 0;
@@ -20,6 +21,7 @@ module tb_audio_probe;
     integer sounding = 0;
     integer silent = 0;
     integer sign_changes = 0;
+    integer loud = 0;
     integer previous_sign = -1;
     reg started = 0;
     reg [15:0] right_word = 0;
@@ -51,14 +53,16 @@ module tb_audio_probe;
                 next_left = left_word;
                 if (next_right !== next_left)
                     $fatal(1, "Right and left samples differ: %h %h", next_right, next_left);
-                if ($signed(next_left) > 512 || $signed(next_left) < -512)
-                    $fatal(1, "Test tone exceeds its low-volume bound: %0d", $signed(next_left));
+                if ($signed(next_left) > 33000 || $signed(next_left) < -33000)
+                    $fatal(1, "Test tone leaves the 16-bit range: %0d", $signed(next_left));
                 if (frames < 4 && PA_EN !== 0)
                     $fatal(1, "Headphone amp enabled before silent startup");
                 if (frames > 5 && PA_EN !== 1)
                     $fatal(1, "Headphone amp did not enable");
                 if (frames >= 10 && frames < 200) begin
                     if (next_left != 0) sounding = sounding + 1;
+                    if ($signed(next_left) > 4000 || $signed(next_left) < -4000)
+                        loud = loud + 1;
                     if (previous_sign >= 0 && previous_sign != (next_left[15] ? 1 : 0))
                         sign_changes = sign_changes + 1;
                     previous_sign = next_left[15] ? 1 : 0;
@@ -73,9 +77,9 @@ module tb_audio_probe;
                 right_word = 0;
                 left_word = 0;
                 if (frames == 300) begin
-                    if (sounding < 150 || silent < 90 || sign_changes < 2)
-                        $fatal(1, "Tone or silence not observed: %0d %0d %0d", sounding, silent, sign_changes);
-                    $display("PASS: 300 stereo frames, 46.875 kHz, bounded tone, startup mute, gated silence");
+                    if (sounding < 150 || silent < 90 || sign_changes < 2 || loud < 10)
+                        $fatal(1, "Tone or silence not observed: %0d %0d %0d %0d", sounding, silent, sign_changes, loud);
+                    $display("PASS: 300 stereo frames, 46.875 kHz, bounded audible tone, startup mute, gated silence");
                     $finish;
                 end
             end
