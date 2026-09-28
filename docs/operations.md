@@ -134,3 +134,7 @@ openFPGALoader -b tangprimer20k --freq 2500000 --write-sram -v <经核验的码�
 - 预期可听现象：Dock 板载 3.5 mm 耳机孔（LPA4809MSF 耳放，由 PA_EN 使能）输出 440 Hz 三角波，响 1 秒、停 1 秒；幅度约满量程 1.6%，是刻意压低的结果，试听需提高音量。
 - 验证边界：本阶段只证明工具完成 SRAM 配置（工具自报 100 kHz，未做物理时钟测量）。**听力结果待用户反馈，尚未判定“已发声”**；上游 v1.1.1 对 idcode `0x0000081B` 设置 skip_checksum，不做完整回读校验。
 - 备用对照（尚未下载）：Sipeed 官方预编译 `tools/sipeed-example/PT8211/pt8211.fs`（连续正弦、官方提示声音大，同芯片同引脚），可用于区分“板载音频通路问题”与“本设计问题”。
+- 00:5x 用户反馈“怎么还没烧进去”，并授权更快的 JTAG 速度。在此之前已完成的一次 100 kHz 下载是成功的（见上），但本设计**不驱动任何 LED**，板面看起来“没反应”属正常，容易与“没烧进去”混淆。
+- 提速复烧：`--freq 2500000 --write-sram`，结果同样是 `Load SRAM 100.00%`、`DONE`、`displayReadReg 00006020`（Done Final）、exit 0、stderr 空，见 `logs/20260929-audio-probe-sram-2500k.*`。2.5 MHz 本次可用；此前 9/26 在 2.5 MHz 失败是当时驱动/通道异常状态下的现象，不能推广为“2.5 MHz 不可用”。
+- 已知未决：可听现象只有耳机孔里的 440 Hz 轻音（约满量程 1.6%），听力反馈仍未取得。
+- 推送状态（必须如实记录）：本阶段提交 `5a8f250` 已建立于本地，`git push origin main` **失败**。原因不是仓库权限，而是本机当前无法与 GitHub 建连：沙箱内 schannel 报 `SEC_E_NO_CREDENTIALS`、openssl 后端报连接被重置，完全权限下报 `Failed to connect to github.com:443`。因此 `main` 领先 `origin/main` 1 个提交，**未同步**，待网络恢复后重推。
