@@ -1,0 +1,2 @@
+PASS: 300 stereo frames, 46.875 kHz, bounded tone, startup mute, gated silence
+E:\gaoyun\d-dfdf\audio_probe\tb_audio_probe.sv:79: $finish called at 6400629375 (1ps)

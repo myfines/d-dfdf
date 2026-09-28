@@ -9,6 +9,9 @@
 - [用户资料核对与板卡资格依据](docs/reference-review-2026.md)
 - `logs/`：带时间戳的原始结果
 - `led/`：已编译过的最小点灯源文件与约束
+- `audio_probe/`：板载 PT8211 音频通路探针（440 Hz 三角波，响 1 秒/停 1 秒）
+
+音频探针进展：仿真通过（`logs/20260929-audio-test-sim.log`），综合布线通过（`logs/20260929-audio-build-fixed.*`，0 错误 0 警告），2026-09-29 00:54 以 100 kHz 仅 SRAM 下载完成（`Load SRAM 100%`、`DONE`、exit 0）。**是否真的发声仍待听力反馈**，未判定为已验收。构建需注意：`.sdc` 必须保存为 CRLF 行尾，否则高云解析器报 `syntax error near token 'clk]'`。
 
 开源下载工具：openFPGALoader v1.1.1，来源 https://github.com/trabucayre/openFPGALoader/releases/tag/v1.1.1 。已成功识别 0x0000081B 并完成 SRAM 配置；该版本对 GW2A 跳过软件 checksum 比较，不应描述为完整回读校验通过。
 

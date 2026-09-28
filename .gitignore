@@ -5,3 +5,4 @@ tools/
 *.zip
 *.exe
 __pycache__/
+*.vvp

@@ -1,0 +1,2 @@
+Unsupported format 7 setting sysfunc vec4 value.
+Assertion failed: 0, file ../../iverilog-13_0/vvp/vpi_tasks.cc, line 388

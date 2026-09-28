@@ -118,3 +118,19 @@ openFPGALoader -b tangprimer20k --freq 2500000 --write-sram -v <经核验的码�
 - 审阅学习资料索引及 2025 宣讲相关章节；两个目录的宣讲 PDF SHA256 相同。历史建议和其他赛题评分未作为 2026 电子乐器规则。
 - 新增 docs/reference-review-2026.md，更新设计方案与 README。原 PDF、完整文本及预览仅保留本地；仓库保存结论、资源候选链接和哈希。
 - 本阶段没有改变板卡、驱动、烧录状态或采购任何物品。
+
+## 2026-09-29T00:53+08:00：修复 audio_probe 构建失败并下载案例到 SRAM
+
+- 用户要求“单纯跑一下案例”，即不改设计、把已有 audio_probe 案例跑起来试听。本阶段只修构建环境，未改动任何 RTL 逻辑。
+- 复现 9/29 凌晨的失败：`logs/20260929-audio-build.stdout.log` 报 `ERROR (TA2000) : "audio.sdc":1 | 'syntax error' near token 'clk]'`；直接重跑报 `Project already exists on disk, please use '-force' option to overwrite`。
+- 定位方法：逐字节比对 `audio_probe/audio.sdc` 与已成功的 `led/led.sdc`。两者内容完全相同，唯一差别是行尾——audio.sdc 只有 LF，led.sdc 是 CRLF。因此判定为高云 SDC 解析器对裸 LF 行尾的兼容问题，不是约束内容或 RTL 错误。
+- 处理：audio.sdc 以 ASCII + CRLF 重写（59 字节，尾部 `0D 0A`）；`build.tcl` 的 `create_project` 增加 `-force`，避免残留工程目录导致重跑失败。RTL 与约束内容均未改动。
+- 重新编译：`logs/20260929-audio-build-fixed.*`，命令为 `gw_sh.exe E:/gaoyun/d-dfdf/audio_probe/build.tcl`，Exit=0；日志含 `Placement and routing completed`、`Bitstream generation completed`，0 个 ERROR/WARN。
+- 产物：`E:\gaoyun\projects\audio_probe\audio_probe\impl\pnr\audio_probe.fs`，4,620,698 字节，SHA256 `F45AEE6BD4EA92BA6C940CFD812FBF754D774719DE44EEFEE4A6CCBD61D5963A`；头部 Part Number `GW2A-LV18PG256C8/I7`、LoadingRate 2.500MHz、CRCCheck ON、SecurityBit ON、Encryption OFF。
+- 引脚复核：与 Sipeed 官方 Dock 约束一致（README「Audio DAC」表）：PA_EN R16、HP_DIN P15、HP_WS P16、HP_BCK N15、clk H11、rst_n T3。未改动约束。
+- 只读识别：`openFPGALoader --scan-usb` 列出 `001/007 0x0403:0x6010 FTDI2232 SIPEED FactoryAIOT Pro JTAG Debugger`；`-b tangprimer20k --freq 100000 --detect -v` 读到 idcode `0x81b`，exit 0，stderr 空。见 `logs/20260929-audio-probe-detect.*`。
+- 00:54:41–00:54:44 下载：`openFPGALoader -b tangprimer20k --freq 100000 --write-sram -v <audio_probe.fs>`。下载前确认无 programmer_cli/openFPGALoader/Programmer 进程占用，码流 SHA256 再次核对一致。
+- 结果：SRAM erase 成功、`Load SRAM 100.00%`、`DONE`、`displayReadReg 00006020`（Memory Erase / Done Final / Security Final）、exit 0、stderr 空。见 `logs/20260929-audio-probe-sram-100k.*`。仅写 SRAM；未执行 Flash 擦写、OTP 或下载器固件更新。
+- 预期可听现象：Dock 板载 3.5 mm 耳机孔（LPA4809MSF 耳放，由 PA_EN 使能）输出 440 Hz 三角波，响 1 秒、停 1 秒；幅度约满量程 1.6%，是刻意压低的结果，试听需提高音量。
+- 验证边界：本阶段只证明工具完成 SRAM 配置（工具自报 100 kHz，未做物理时钟测量）。**听力结果待用户反馈，尚未判定“已发声”**；上游 v1.1.1 对 idcode `0x0000081B` 设置 skip_checksum，不做完整回读校验。
+- 备用对照（尚未下载）：Sipeed 官方预编译 `tools/sipeed-example/PT8211/pt8211.fs`（连续正弦、官方提示声音大，同芯片同引脚），可用于区分“板载音频通路问题”与“本设计问题”。
