@@ -1,0 +1,4 @@
+empty
+write to ram
+fail to read data usb bulk read failed
+JTAG init failed with: low level FTDI init failed

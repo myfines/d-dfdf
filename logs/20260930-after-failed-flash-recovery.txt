@@ -1,0 +1,8 @@
+2026-09-30 post-failure recovery check:
+- openFPGALoader --scan-usb -vv exit 0; USB bus 001 device 003 0403:6010 FTDI2232 SIPEED FactoryAIOT Pro JTAG Debugger enumerated.
+- SRAM restore command exited 1: `fail to read data usb bulk read failed`; `JTAG init failed with: low level FTDI init failed`.
+- `pnputil /restart-device USB\\VID_0403&PID_6010&MI_00...` reported Access is denied. No driver change made.
+Post-kill software recovery attempts (2026-09-30):
+- `pnputil /restart-device` on USB\\VID_0403&PID_6010&MI_00 was denied by Windows (Access is denied); driver binding was not changed.
+- A one-shot local libusb helper opened and reset 0403:6010; libusb_reset_device returned LIBUSB_SUCCESS. USB scan still enumerated the Sipeed FTDI2232, but a JTAG detect immediately failed `usb bulk read failed` / `low level FTDI init failed`.
+- No Flash command was rerun. Physical disconnect/reconnect of USB-JTAG remains required to recover the downloader.

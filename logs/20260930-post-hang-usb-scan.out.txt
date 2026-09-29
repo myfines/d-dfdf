@@ -1,0 +1,4 @@
+empty
+found 5
+Bus device vid:pid       probe_type manufacturer serial          product
+001 003    0x0403:0x6010 FTDI2232   SIPEED       FactoryAIOT Pro JTAG Debugger

@@ -231,3 +231,12 @@ openFPGALoader -b tangprimer20k --freq 2500000 --write-sram -v <经核验的码�
 - 结论：同一板在无写入、无换线的两次新读仍不一致，不能把退出码 0 和进度 100% 当成可靠 Flash 备份。立即停止整片读取及擦写；这个实测阻碍与用户是否设置速度上限无关。后续先用可信低速路径或独立 3.3 V SPI 读出路径让多次同一区域逐字节一致，再取得整片双份一致备份，之后才考虑写入并校验。
 - Flash 读取清掉了当前 SRAM 配置；随即以请求 100 kHz 重新下载已核对 SHA256 的 S0–S3 音频码流，工具 Load SRAM 100%、Done Final、exit 0、stderr 空，见 logs/20260929-after-flash-read-sram-restore.*。用户确认四键耳机声音都正常。
 - 本阶段没有擦写 Flash、OTP 或下载器固件，也没有驱动变更。
+
+## 2026-09-30T00:04+08:00：低频外置 Flash 写入尝试卡住；尚未验证成功
+
+- 依照用户明确要求，尝试将已在 SRAM 验证的 S0–S3 音频码流写到外置 SPI Flash，并启用写后校验。码流：`E:/gaoyun/projects/audio_keys/audio_keys/impl/pnr/audio_keys.fs`，SHA256 `2D155BB754EC8C6238C57320220F5EE24E029907742F575C61FB7C61D5B4162E`，解析出的配置数据 577,178 B，从地址 0；擦除日志显示 `0x000000`–`0x090000`（9×64 KiB），未发出 bulk erase。
+- 命令：`openFPGALoader-lowclock/openFPGALoader.exe -b tangprimer20k --freq 100000 --external-flash --verify --write-flash -v <audio_keys.fs>`。该工具是基于上游 v1.1.1（源码 commit `85be4fa02b2dd6a83716d7dfac3d25bbd260ff7b`）本地构建的诊断版，Flash 访问 JTAG 请求 2.5 MHz、报告实际 2.0 MHz。
+- 实际识别到 FPGA `0x81B` / GW2A(R)-18(C)，读到 Flash ID `0B 40 17`，保护位 BP=0。擦除报告完成；写入进度到 40.58% 后超过 60 秒无变化，进程读写计数不再增加。已结束卡住的 openFPGALoader 进程。**写入与校验均未完成，Flash 内容现在可能是部分写入状态，不能声称成功。**原始进程日志 `logs/20260930-audio-flash-program-verify.log` 截止于 40.58%。
+- 结束进程后 USB 复合设备仍可枚举，但 JTAG A 通道 `low level FTDI init failed`，SRAM 恢复命令 exit 1。Windows `pnputil /restart-device` 对 MI_00 返回 Access is denied；没有变更驱动。正在等用户物理拔插 USB-JTAG 以复位下载器，然后只恢复 SRAM、读取 JTAG ID 并记录。当前还未重试 Flash 写入。
+- 2026-09-30 低频诊断期间同一 64 KiB 读取仍相差 268 B/316 bit，意味着没有可靠的原厂 Flash 备份。用户最新目标授权了本次烧录验证，但未授权 OTP、bulk erase 或下载器固件更新。
+- Software `libusb_reset_device(0403:6010)` returned success but did not restore JTAG. `--scan-usb` continued to enumerate the board; JTAG `--detect` still failed with bulk read / low level FTDI initialization error. No retry of Flash programming was made.
