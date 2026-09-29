@@ -192,3 +192,13 @@ openFPGALoader -b tangprimer20k --freq 2500000 --write-sram -v <经核验的码�
 - 用户回忆 S0 起初无声而其他功能正常，后来出现失效。该现象与 S0/T10 的复位用途相容，但缺少当时的心跳 LED、其他按键和重烧状态证据，不能唯一确定原因，更不能把 S4 也判为复位键。
 - 已更新 docs/button-audio-next.md：下次板上测试先重装已核对的 SRAM 码流，先验 S1–S3，再单次测试 S4，始终避开 S0；必要时使用仅 LED 状态指示的诊断码流。芯片到货前先做四声部软件仿真。
 - 此次补录仅改文档，没有操作板卡。
+
+## 2026-09-29T22:43+08:00：四键音频 SRAM 重载与 Flash 可行性核查
+
+- 用户要求重新烧录，并询问能否写入 Flash，授权助手自行检查。沿用 JTAG 请求频率上限 2.5 MHz；本阶段没有按屏幕操作。
+- Windows 当前可见 0403:6010：A=WinUSB、B=FTDIBUS、复合父设备 usbccgp，三者 ProblemCode 0。无残留 programmer_cli/openFPGALoader/Programmer 进程。
+- 目标码流 E:/gaoyun/projects/audio_keys/audio_keys/impl/pnr/audio_keys.fs，SHA256 核验仍为 7C1B92AD60D2238C504A5DC255B4BDD014C4FFD1783F5AEB6E90DCB226CBADA9；头部 PN GW2A-LV18PG256C8/I7、C 版、Encryption OFF。没有改 RTL。
+- Flash 暂不写入的具体依据：本地仅有前 64 KB 出厂内容备份，并无可靠整片双读一致性备份；上次 JEDEC 容量字节读数 0x17/0x0F 不一致，USB/FTDI 链路曾失败；本机 openFPGALoader v1.1.1 源码 Gowin::prepare_flash_access() 在 Flash 路径调用 setClkFreq(10000000)，不满足当前最高 2.5 MHz 的约定。官方 Gowin 说明也把直接 -f 的支持范围限定为其他几款板卡。基于现有证据，不能把“能执行 -f”当作可安全固化。
+- 只读检测：openFPGALoader -b tangprimer20k --freq 100000 --detect -v 返回 idcode 0x0000081B、exit 0、stderr 空；见 logs/20260929-audio-keys-redetect.*。
+- SRAM 重载：openFPGALoader -b tangprimer20k --freq 100000 --write-sram -v <上述 fs>，02.63 秒内正常返回，Load SRAM 100%、Done Final、exit 0、stderr 空；见 logs/20260929-audio-keys-sram-reload.*。没有写 Flash、OTP 或下载器固件，也没有读取或改写 Flash。
+- 已请用户用耳机试 S1–S3 后单次试 S4，观察其是否影响其他键；避免按 S0/T10 复位键。实物发声结果待反馈，不能仅凭命令成功声称本次听到了音。

@@ -4,6 +4,8 @@
 
 当前阶段：**四键演奏可发声**。2026-09-29 将 `audio_keys` 以 2.5 MHz 仅 SRAM 下载到板子：按住 4 个用户按键中的任一个即发出对应音高（C5/D5/E5/G5 五声音阶），松开即停，空闲时耳放关闭、无底噪。用户已确认按键可用。下一步是 4 复音（当前为“最低键优先”的单音）。
 
+2026-09-29 22:43 已重新以请求 100 kHz 将同一 SHA256 的 `audio_keys.fs` 下载到 SRAM，工具报告 `DONE / Done Final / exit 0`；本次耳机结果待用户反馈。Flash 未写入；目前只有前 64 KB 备份，历史读数不一致，且此版 openFPGALoader 的 Flash 路径会把 JTAG 设置到 10 MHz，超过当前 2.5 MHz 限制。
+
 - [操作记录](docs/operations.md)
 - [2026 电子乐器设计与采购建议](docs/instrument-plan-2026.md)
 - [用户资料核对与板卡资格依据](docs/reference-review-2026.md)
