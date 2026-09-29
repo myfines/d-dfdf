@@ -1,0 +1,6 @@
+Additional recovery diagnostics after e614873 (2026-09-30):
+- `libusb_reset_device()` against VID:PID 0403:6010 returned success. Subsequent openFPGALoader `--detect` still failed: `usb bulk read failed`, `low level FTDI init failed`.
+- A temporary libftdi helper selected FTDI Interface A, opened 0403:6010, and `ftdi_usb_reset()` returned 0 (`all fine`). Subsequent JTAG detect still failed with the same bulk-read/initialization error.
+- Gowin Programmer read-only scan using USB Debugger A exited 49 with `Cable failed to open via the channel` and `No Gowin devices found`. An earlier unmanaged scan process stayed alive and was then terminated; no programming command was issued from it.
+- A further `--cable-index 5` scan did not produce a captured result within the shell wait; it was not used for writing.
+- Physical unplug/replug remains the only confirmed next recovery step. No additional Flash writes/erases have occurred.

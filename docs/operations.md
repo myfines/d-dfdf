@@ -240,3 +240,5 @@ openFPGALoader -b tangprimer20k --freq 2500000 --write-sram -v <经核验的码�
 - 结束进程后 USB 复合设备仍可枚举，但 JTAG A 通道 `low level FTDI init failed`，SRAM 恢复命令 exit 1。Windows `pnputil /restart-device` 对 MI_00 返回 Access is denied；没有变更驱动。正在等用户物理拔插 USB-JTAG 以复位下载器，然后只恢复 SRAM、读取 JTAG ID 并记录。当前还未重试 Flash 写入。
 - 2026-09-30 低频诊断期间同一 64 KiB 读取仍相差 268 B/316 bit，意味着没有可靠的原厂 Flash 备份。用户最新目标授权了本次烧录验证，但未授权 OTP、bulk erase 或下载器固件更新。
 - Software `libusb_reset_device(0403:6010)` returned success but did not restore JTAG. `--scan-usb` continued to enumerate the board; JTAG `--detect` still failed with bulk read / low level FTDI initialization error. No retry of Flash programming was made.
+
+- 2026-09-30 follow-up recovery diagnostics: libusb device reset returned success; a temporary libftdi helper successfully opened/reset Interface A; neither operation restored JTAG. Gowin Programmer read-only scan exited 49 (`Cable failed to open via the channel`, `No Gowin devices found`); a lingering scan process was terminated. A cable-index 5 read-only scan did not yield a captured result. No second Flash operation was run. Physical USB-JTAG unplug/replug is still needed before SRAM recovery.

@@ -1,0 +1,8 @@
+ Scanning!
+ Target Cable: Gowin USB Cable(FT2CH)/0/None/null@0.1MHz
+
+Error: Cable failed to open via the channel.
+
+Error: No Gowin devices found!
+ Cost 0.03 second(s)
+  
