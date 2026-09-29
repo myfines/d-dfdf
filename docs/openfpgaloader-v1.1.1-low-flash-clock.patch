@@ -1,0 +1,15 @@
+diff --git a/src/gowin.cpp b/src/gowin.cpp
+index 1383494..40b9106 100644
+--- a/src/gowin.cpp
++++ b/src/gowin.cpp
+@@ -1246,7 +1246,9 @@ bool Gowin::prepare_flash_access()
+ 		send_command(0x3D);
+ 	}
+ 
+-	_jtag->setClkFreq(10000000);
++	// Keep GW2A external flash access at a rate the BL702 FTDI emulator
++	// can sustain reliably. This is a local diagnostic build only.
++	_jtag->setClkFreq(2500000);
+ 
+ 	return true;
+ }

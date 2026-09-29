@@ -1,0 +1,15 @@
+Date: 2026-09-30 Asia/Shanghai
+Source: openFPGALoader upstream tag v1.1.1, commit 85be4fa02b2dd6a83716d7dfac3d25bbd260ff7b.
+Local diagnostic patch: docs/openfpgaloader-v1.1.1-low-flash-clock.patch changes Gowin::prepare_flash_access() JTAG request from 10 MHz to 2.5 MHz.
+Build: MinGW-w64 g++ 8.1.0, C++11, only Gowin + FTDI + libusb USB scan sources enabled. DLL import libraries from locally SHA-256-verified MSYS2 packages. The first static-link attempt failed because this GCC lacks __stack_chk_fail/__chk_fail; relinking to the package DLL import libraries succeeded.
+Executable: E:/gaoyun/tools/openfpgaloader-lowclock/openFPGALoader.exe
+SHA256: C982CBA0ABEC3E90B0F60D990229E00B493F46580958B0E4AC437FAA9EF8EE81
+`--help` and `--list-boards` succeeded; board list includes tangprimer20k. `--scan-usb -vv` opened the device and reported Bus 001 Device 003, 0403:6010, FTDI2232, SIPEED, FactoryAIOT Pro JTAG Debugger. Windows showed MI_00 JTAG Debugger and MI_01 USB Serial Converter B both Status OK.
+Read command for each sample (read only):
+`openFPGALoader.exe -b tangprimer20k --freq 100000 --external-flash --dump-flash --file-size 65536 -v <sample>.bin`
+The tool first read FPGA ID 0x81B (Gowin GW2A(R)-18(C)), then reported Flash JEDEC bytes 0B 40 17. Both runs exited 0, wrote 65,536 bytes, and reported JTAG requested 2.50 MHz / real 2.00 MHz. The files are retained offline in E:/gaoyun/tools/flash-backup/20260929-lowclock/ and are intentionally not committed.
+Sample A SHA256 f9192ee7ed6fe4356429ba9b6599eec8c5a126f527e6703ba274500bed07f721.
+Sample B SHA256 0ecc5d47d16a6d5f34fbc6dd7d939726f53bdb1c255d66d0e29d5f923ea7a34a.
+A/B difference: 268 bytes, 316 bits. Thus slower Flash JTAG did not make repeat reads reliable; no backup claim is made.
+This inspection/read process clears SRAM. The verified audio SRAM image was restored after the reads; previous openfpgaloader restore log is logs/20260929-after-flash-read-sram-restore.* and the user confirmed S0-S3 sound normally.
+No Flash erase/write, OTP operation, or downloader firmware operation occurred in this diagnostic phase.

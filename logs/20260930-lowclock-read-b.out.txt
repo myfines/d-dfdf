@@ -1,0 +1,36 @@
+empty
+Jtag frequency : requested 100.00KHz  -> real 100.00KHz 
+found 1 devices
+index 0:
+	idcode 0x81b
+	manufacturer Gowin
+	family GW2A
+	model  GW2A(R)-18(C)
+	irlength 8
+File type : bin
+Erase SRAM before erase sram: displayReadReg 00006020
+	Memory Erase
+	Done Final
+	Security Final
+pollFlag: 60a0 (80)
+pollFlag: 4080 (0)
+pollFlag: 4080 (0)
+pollFlag: 4080 (0)
+pollFlag: 4080 (0)
+pollFlag: a0 (20)
+after erase sram: displayReadReg 000000a0
+	Memory Erase
+	System Edit Mode
+pollFlag: 20 (0)
+Jtag frequency : requested 2.50MHz    -> real 2.00MHz   
+b 40 17 b read b40170b
+Detail: 
+Jedec ID          : 0b
+memory type       : 40
+memory capacity   : 17
+dump flash (May take time)
+Open dump file DONE
+
+Read flash : [==================================================] 100.00%
+
+Done
