@@ -6,7 +6,7 @@
 
 当前音频码流 `E:\gaoyun\projects\audio_keys\audio_keys\impl\pnr\audio_keys.fs` 的 SHA256 为 `2D155BB754EC8C6238C57320220F5EE24E029907742F575C61FB7C61D5B4162E`。旧码流备份在 `E:\gaoyun\tools\audio_keys-pre-s0-7C1B92AD.fs`，未入库。新版仿真和综合布线通过，100 kHz 仅 SRAM 下载 `DONE / exit 0`。JTAG、MSPI、RECONFIG_N 未复用作普通 IO。
 
-2026-09-29 22:43 已重新以请求 100 kHz 将同一 SHA256 的 `audio_keys.fs` 下载到 SRAM，工具报告 `DONE / Done Final / exit 0`；本次耳机结果待用户反馈。Flash 未写入；目前只有前 64 KB 备份，历史读数不一致，且此版 openFPGALoader 的 Flash 路径会把 JTAG 设置到 10 MHz，超过当前 2.5 MHz 限制。
+2026-09-29 22:43 曾重新以请求 100 kHz 将当时的 `audio_keys.fs` 下载到 SRAM，工具报告 `DONE / Done Final / exit 0`。用户现已澄清没有固定 JTAG 速度上限。Flash 未写入：此前只有前 64 KB 备份；本轮在 Flash 路径实际约 6 MHz 的两次独立 64 KB 读取仍相差 277 字节，数据不可信。详见 [Flash 前置条件](docs/flash-readiness.md)。
 
 同日 22:53，用户确认误按的“S4”是实物丝印 **RCFG**。该键后音频失声；以 100 kHz 再次装入上述 `audio_keys.fs`，工具 `DONE / exit 0`，用户确认 S1–S3 三键都恢复发声。请勿把重配置后的灯光反应当作原 SRAM 音频程序仍在运行的证明。
 
@@ -39,7 +39,7 @@
 
 点灯码流 SHA256：`0375DCA1C9D62BD721FEC38F076C811FAC9294CDDFD2D1253AB3FAC33F7D355F`（`logs/20260926-direct-sram-100k.*`）。工具报告频率为请求值，未做物理时钟测量，状态寄存器最终为 `0x00006020 / Done Final`。SRAM 断电失效。
 
-JTAG 请求频率上限 2.5 MHz；Flash、OTP、下载器固件更新仍不在授权范围。禁止把“写入到 100%”或命令退出码单独当成实物成功。
+用户没有规定固定 JTAG 速度上限；选择时钟应服从实际通信可靠性。Flash 固化已获研究授权，但本轮实测重复读取不一致，暂不擦写；OTP 和下载器固件更新未获授权。禁止把“写入到 100%”或命令退出码单独当成实物成功。
 
 注意：`openFPGALoader --detect -f` 与 `--dump-flash` 会先 `Erase SRAM`，会清掉正在运行的 SRAM 配置。
 

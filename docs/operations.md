@@ -222,3 +222,12 @@ openFPGALoader -b tangprimer20k --freq 2500000 --write-sram -v <经核验的码�
 - 请求 100 kHz 仅 SRAM 下载新音频：Load SRAM 100%、Done Final、exit 0、stderr 空；见 logs/20260929-audio-s0-sram.*。用户随后确认 S0 有音，S1/S2/S3 也都正常。当前仍是最低键优先单音，未达到四复音。
 - Flash 研究：最新发布版 v1.1.1 与 master 的 Gowin::prepare_flash_access 均调用 setClkFreq(10000000)；公开问题 #472 的外部 Flash dump 也记录 10 MHz。此路径违背请求频率≤2.5 MHz，而且既往 JEDEC 字节不一致、只备份前 64 KiB。新增 docs/flash-readiness.md 列出低频工具、稳定识别、整片双读一致性备份、外部 Flash 写入校验及掉电恢复验证等门槛。高云 CLI 尚无已验证的整片原始导出路径。
 - 本阶段未读、擦、写 Flash；未操作 OTP 或下载器固件。代码审查已核对修改仅涉及 SSPI 选项、四路引脚重排、说明注释；无新增输出驱动到 T10 或专用配置脚。
+
+## 2026-09-29T23:27–23:30+08:00：撤销过时频率上限后只读复查 Flash
+
+- 用户明确澄清：“自行约定的要求只有不要烧掉板子，不包括速度限制”。该最新要求覆盖交接时的 2.5 MHz 上限；已更正 AGENTS.md、README 与 docs/flash-readiness.md。Flash 写入此前已被用户授权研究，但必须先证明备份与传输可靠。
+- 在确认无残留烧录器、音频码流 SHA256 2D155BB7... 未变后，使用 openFPGALoader v1.1.1 的 `--external-flash --dump-flash --file-size 65536` 只读同一前 64 KiB。命令行初始 `--freq 100000`，工具 Flash 路径报告 requested 10 MHz / real 6 MHz；两次 JEDEC 均报告 `0B 40 17`、输出文件 65536 字节、exit 0。原始输出见 logs/20260929-flash-read64k.* 与 -repeat.*。
+- 先前前 64 KiB 备份 SHA256 EF09DAE103583F2F9AF766C6683679E8566663997619E862852A72C9A747BCFA；本轮 A 为 3306FF6D3DB9E2442CF4D0363DE36469A46BA89440BC14A4D3DAC4457CF8C3E5；B 为 DCE65A79ECCA5A7033722A2CCE49F5390BA8DC0E26A5D529A6FB035C39694BF0。旧版/A 相差 268 字节；A/B 相差 277 字节、321 比特；旧版/B 相差 242 字节。差异记录见 logs/20260929-flash-read64k-compare.txt 与 -repeat-compare.txt。原始二进制留在 E:/gaoyun/tools/flash-backup/20260929/，不上传仓库。
+- 结论：同一板在无写入、无换线的两次新读仍不一致，不能把退出码 0 和进度 100% 当成可靠 Flash 备份。立即停止整片读取及擦写；这个实测阻碍与用户是否设置速度上限无关。后续先用可信低速路径或独立 3.3 V SPI 读出路径让多次同一区域逐字节一致，再取得整片双份一致备份，之后才考虑写入并校验。
+- Flash 读取清掉了当前 SRAM 配置；随即以请求 100 kHz 重新下载已核对 SHA256 的 S0–S3 音频码流，工具 Load SRAM 100%、Done Final、exit 0、stderr 空，见 logs/20260929-after-flash-read-sram-restore.*。用户确认四键耳机声音都正常。
+- 本阶段没有擦写 Flash、OTP 或下载器固件，也没有驱动变更。

@@ -1,0 +1,2 @@
+newA_vs_newB: bytes_different=277, first_offsets=[52, 64, 66, 134, 209, 280, 313, 490, 531, 561], bit_flips=321
+old_vs_newB: bytes_different=242, first_offsets=[22, 24, 103, 134, 164, 209, 341, 426, 490, 519], bit_flips=285

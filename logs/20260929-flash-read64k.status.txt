@@ -1,0 +1,7 @@
+Start=2026-09-29T23:27:59.5781051+08:00
+Command=openFPGALoader -b tangprimer20k --freq 100000 --external-flash --dump-flash --file-size 65536 -v E:\gaoyun\tools\flash-backup\20260929\sample64k-a.bin
+PID=2612
+Exit=0
+End=2026-09-29T23:28:00.4220068+08:00
+Bytes=65536
+SHA256=3306FF6D3DB9E2442CF4D0363DE36469A46BA89440BC14A4D3DAC4457CF8C3E5
