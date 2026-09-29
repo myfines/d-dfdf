@@ -1,0 +1,65 @@
+ Scanning!
+ Target Cable: Gowin USB Cable(WINUSB)/0/None/null@0.1MHz
+Device Info:
+ 	Family: General  
+	Name: General   
+	ID: 0x60010000  
+Device Info:
+ 	Family: General  
+	Name: JTAG_NOP General  (One of them)  
+	ID: 0x00000000  
+Device Info:
+ 	Family: General  
+	Name: JTAG_NOP General  (One of them)  
+	ID: 0x00000000  
+Device Info:
+ 	Family: General  
+	Name: JTAG_NOP General  (One of them)  
+	ID: 0x00000000  
+Device Info:
+ 	Family: General  
+	Name: JTAG_NOP General  (One of them)  
+	ID: 0x00000000  
+Device Info:
+ 	Family: General  
+	Name: JTAG_NOP General  (One of them)  
+	ID: 0x00000000  
+Device Info:
+ 	Family: General  
+	Name: JTAG_NOP General  (One of them)  
+	ID: 0x00000000  
+Device Info:
+ 	Family: General  
+	Name: JTAG_NOP General  (One of them)  
+	ID: 0x00000000  
+Device Info:
+ 	Family: General  
+	Name: JTAG_NOP General  (One of them)  
+	ID: 0x00000000  
+Device Info:
+ 	Family: General  
+	Name: JTAG_NOP General  (One of them)  
+	ID: 0x00000000  
+Device Info:
+ 	Family: General  
+	Name: JTAG_NOP General  (One of them)  
+	ID: 0x00000000  
+Device Info:
+ 	Family: General  
+	Name: JTAG_NOP General  (One of them)  
+	ID: 0x00000000  
+Device Info:
+ 	Family: General  
+	Name: JTAG_NOP General  (One of them)  
+	ID: 0x00000000  
+Device Info:
+ 	Family: General  
+	Name: JTAG_NOP General  (One of them)  
+	ID: 0x00000000  
+Device Info:
+ 	Family: General  
+	Name: JTAG_NOP General  (One of them)  
+	ID: 0x00000000  
+ 16 device(s) found!
+ Cost 0.64 second(s)
+  

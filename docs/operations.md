@@ -244,3 +244,6 @@ openFPGALoader -b tangprimer20k --freq 2500000 --write-sram -v <经核验的码�
 - 2026-09-30 follow-up recovery diagnostics: libusb device reset returned success; a temporary libftdi helper successfully opened/reset Interface A; neither operation restored JTAG. Gowin Programmer read-only scan exited 49 (`Cable failed to open via the channel`, `No Gowin devices found`); a lingering scan process was terminated. A cable-index 5 read-only scan did not yield a captured result. No second Flash operation was run. Physical USB-JTAG unplug/replug is still needed before SRAM recovery.
 
 - 用户拔掉 Dock 全部 USB 供电并等待 10 秒后重新连接。USB 设备描述符恢复为 FactoryAIOT Pro，JTAG 只读识别 ID 0x81B / GW2A(R)-18(C)。原版工具 SRAM 上传虽到 100%，但状态寄存器出现 CRC Error/Timeout/Bad Command，不计为成功；随后本地低频诊断版完成相同 SRAM 码流加载，最终状态 0x00006020（Done Final / Security Final）、exit 0。码流 SHA256 2D155BB754EC8C6238C57320220F5EE24E029907742F575C61FB7C61D5B4162E。用户尚未复听确认。Flash 仍可能部分写入，尚未再次尝试擦写。
+
+- 2026-09-30 第二次 Flash 写入尝试仍停在 35.13%，数分钟未推进百分比。Windows Other I/O 计数缓慢变化，但没有更多写入进度；为避免无限等待，结束进程。擦除命令范围仍为 `0x000000`–`0x090000`，码流 SHA256 与前次相同。写后校验未开始，不能算烧录成功。
+- 结束后设备 USB 描述符可重新枚举，但 JTAG detect 再次报 `usb bulk read failed` / `low level FTDI init failed`；libusb device reset 和 FTDI A reset 均未修复。没有再次恢复 SRAM。最后确认正常的是此前全板 USB 断电重连后 SRAM 的 Done Final 状态；目前需全板断电重连后再恢复 SRAM。没有物理损坏的证据；Flash 内容仍为部分写入/未知状态，不做第三次 Flash 写入。

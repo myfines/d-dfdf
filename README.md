@@ -6,7 +6,7 @@
 
 当前音频码流 `E:\gaoyun\projects\audio_keys\audio_keys\impl\pnr\audio_keys.fs` 的 SHA256 为 `2D155BB754EC8C6238C57320220F5EE24E029907742F575C61FB7C61D5B4162E`。旧码流备份在 `E:\gaoyun\tools\audio_keys-pre-s0-7C1B92AD.fs`，未入库。新版仿真和综合布线通过，100 kHz 仅 SRAM 下载 `DONE / exit 0`。JTAG、MSPI、RECONFIG_N 未复用作普通 IO。
 
-2026-09-30 已尝试通过低频外部 Flash BSCAN 路径写入并校验该音频码流。擦除前 9 个 64 KiB 块后，写入进度卡在 40.58% 超过 60 秒；进程已结束，**烧录和校验未完成，不能视为成功**。之后 JTAG A 初始化失败，全板 USB 断电重连后 JTAG 已恢复；同一音频码流已重新装入 SRAM，最终状态 `0x00006020 / Done Final`，尚待用户复听确认。Flash 地址 0 起仍是部分写入状态。低频工具在 2 MHz 实际 JTAG 下两次只读 64 KiB 仍相差 268 字节；没有可靠的整片原内容备份。详见 [Flash 前置条件](docs/flash-readiness.md) 和 [操作记录](docs/operations.md)。
+2026-09-30 已尝试通过低频外部 Flash BSCAN 路径写入并校验该音频码流。擦除前 9 个 64 KiB 块后，写入进度卡在 40.58% 超过 60 秒；进程已结束，**烧录和校验未完成，不能视为成功**。之后 JTAG A 初始化失败，全板 USB 断电重连后曾恢复 JTAG，并将音频码流装入 SRAM（`0x00006020 / Done Final`）；随后第二次 Flash 尝试停在 35.13%，JTAG 再次需要全板断电重连才能恢复。当前 Flash 是部分写入状态，SRAM 未恢复，烧录校验未完成。没有物理损坏迹象。低频工具在 2 MHz 实际 JTAG 下两次只读 64 KiB 仍相差 268 字节；没有可靠的整片原内容备份。详见 [Flash 前置条件](docs/flash-readiness.md) 和 [操作记录](docs/operations.md)。
 
 同日 22:53，用户确认误按的“S4”是实物丝印 **RCFG**。该键后音频失声；以 100 kHz 再次装入上述 `audio_keys.fs`，工具 `DONE / exit 0`，用户确认 S1–S3 三键都恢复发声。请勿把重配置后的灯光反应当作原 SRAM 音频程序仍在运行的证明。
 
@@ -44,5 +44,4 @@
 注意：`openFPGALoader --detect -f` 与 `--dump-flash` 会先 `Erase SRAM`，会清掉正在运行的 SRAM 配置。
 
 不提交安装包、厂商二进制、个人照片或大体积构建文件。
-
 

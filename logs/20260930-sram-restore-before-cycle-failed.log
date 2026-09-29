@@ -1,0 +1,6 @@
+empty
+write to ram
+Can't read iSerialNumber field from FTDI: considered as empty string
+FTDI bitmode reset error with code -1 (unable to configure bitbang mode. Perhaps not a BM/2232C type chip?)
+unable to config pins : -1 unable to configure bitbang mode. Perhaps not a BM/2232C type chip?
+JTAG init failed with: low level FTDI init failed

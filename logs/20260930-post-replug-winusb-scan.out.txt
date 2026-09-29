@@ -1,0 +1,5 @@
+ Scanning!
+ Target Cable: Gowin USB Cable(WINUSB)/0/None/null@0.1MHz
+
+Error: Error found!
+  
