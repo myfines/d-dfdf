@@ -1,0 +1,6 @@
+Start=2026-09-29T23:07:31.0909823+08:00
+SHA256=9BA62ECFAD24A674BB90E0EB0F0A0D0D9B8632F170323A6A204143225A3CDD0D
+Command=openFPGALoader -b tangprimer20k --freq 100000 --write-sram -v E:\gaoyun\projects\s0_probe\s0_probe\impl\pnr\s0_probe.fs
+PID=17084
+Exit=0
+End=2026-09-29T23:07:33.7217755+08:00

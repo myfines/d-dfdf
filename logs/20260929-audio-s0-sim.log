@@ -1,0 +1,7 @@
+idle: silent, amplifier off, 47 frames decoded
+key 0 (C5 523 Hz): half period 957654 ns averaged over 9 crossings
+bounce: 1 ms release glitch did not cut the held note
+release: silent again, amplifier off
+key 3 (G5 784 Hz): half period 638594 ns averaged over 15 crossings
+PASS: four-key tone, immediate note-on, bounceless note-off, gated amplifier
+E:\gaoyun\d-dfdf\audio_keys\tb_audio_keys.sv:155: $finish called at 43500000000 (1ps)

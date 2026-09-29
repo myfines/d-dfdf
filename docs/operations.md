@@ -211,3 +211,14 @@ openFPGALoader -b tangprimer20k --freq 2500000 --write-sram -v <经核验的码�
 - RCFG 后只读 JTAG 检测：`openFPGALoader -b tangprimer20k --freq 100000 --detect -v` 读到 0x0000081B、exit 0；USB 产品及序列号字符串读取为空，警告保留在 logs/20260929-post-rcfg-detect.out.txt。
 - 再以请求 100 kHz、仅 `--write-sram` 重载 SHA256 7C1B92AD60D2238C504A5DC255B4BDD014C4FFD1783F5AEB6E90DCB226CBADA9 的 audio_keys.fs。Load SRAM 100%、Done Final、exit 0、stderr 空；logs/20260929-post-rcfg-sram-restore.*。用户随后确认左侧 S1/S2/S3 三键均有音。
 - 不再按 RCFG 重复验证；未写 Flash、OTP、下载器固件，未重编译码流。Flash 备份不完整、既有读数不一致及工具内部 Flash 时钟超过 2.5 MHz 的限制仍在，暂不固化。
+
+## 2026-09-29T23:07–23:12+08:00：S0/T10 修复已实物验证；Flash 继续只读评估
+
+- 用户要求查明 S0 不发声并研究 Flash 处理。旧工程 audio_keys 不约束 T10，本地工程流程配置 SSPI=false；之前对 T10 约束时曾出现 PR2017（SSPI 专用脚）。官方 Gowin Tcl 文档支持 set_option -use_sspi_as_gpio 1，官方 Sipeed PT8211 示例也有 SSPI=true。
+- 新建独立 `s0_probe`：T10=LVCMOS33 输入，N14 灯跟随按键，N16 心跳；只把 SSPI 设为 GPIO，JTAG/MSPI/RECONFIG_N 明确保留专用。构建 Exit=0，无 ERROR/WARN，码流 SHA256 9BA62ECFAD24A674BB90E0EB0F0A0D0D9B8632F170323A6A204143225A3CDD0D。
+- 请求 100 kHz 只读扫描读到 0x0000081B、exit 0；FTDI 产品与序列字符串为空的警告保存在 logs/20260929-s0-detect.*。随后只写 SRAM，Load SRAM 100%、Done Final、exit 0，见 logs/20260929-s0-sram.*。用户确认左侧最上方 S0 按下时 LED3 跟随亮灭，心跳灯继续闪：T10 对应该键且输入有效。
+- 原四键音频码流 SHA256 7C1B92AD... 已先单文件备份到 E:/gaoyun/tools/audio_keys-pre-s0-7C1B92AD.fs，未入库。audio_keys 的四路输入改为 S0/T10（3.3 V）、S1/T3、S2/T2、S3/D7（后三路 1.5 V）；RCFG 仍为重配置用途，不用 C7 当第四键。build_keys.tcl 仅启用 SSPI GPIO，JTAG/MSPI/RECONFIG_N=0。
+- 现有音频仿真再次 PASS（空闲静音、按键 0/3 音高、短时弹跳、松开后静音）。高云构建 Exit=0，无 ERROR/WARN；引脚报告 T10/3=LVCMOS33/3.3 V、T3/T2/D7=LVCMOS15/1.5 V；流程配置 SSPI=true，其余三项=false。新码流 SHA256 2D155BB754EC8C6238C57320220F5EE24E029907742F575C61FB7C61D5B4162E。
+- 请求 100 kHz 仅 SRAM 下载新音频：Load SRAM 100%、Done Final、exit 0、stderr 空；见 logs/20260929-audio-s0-sram.*。用户随后确认 S0 有音，S1/S2/S3 也都正常。当前仍是最低键优先单音，未达到四复音。
+- Flash 研究：最新发布版 v1.1.1 与 master 的 Gowin::prepare_flash_access 均调用 setClkFreq(10000000)；公开问题 #472 的外部 Flash dump 也记录 10 MHz。此路径违背请求频率≤2.5 MHz，而且既往 JEDEC 字节不一致、只备份前 64 KiB。新增 docs/flash-readiness.md 列出低频工具、稳定识别、整片双读一致性备份、外部 Flash 写入校验及掉电恢复验证等门槛。高云 CLI 尚无已验证的整片原始导出路径。
+- 本阶段未读、擦、写 Flash；未操作 OTP 或下载器固件。代码审查已核对修改仅涉及 SSPI 选项、四路引脚重排、说明注释；无新增输出驱动到 T10 或专用配置脚。

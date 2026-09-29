@@ -2,7 +2,9 @@
 
 设备：Sipeed Tang Primer 20K + Dock。目标：2026 高云赛道电子乐器。
 
-当前阶段：**S1–S3 三个实体键已确认能发声**。`audio_keys` 具有四路逻辑输入、按最低键优先发单音，不能据此称“四个实体演奏键可用”或“四复音”。左侧底部的 RCFG 是重配置键，用户按下后原音频程序失声；再以 100 kHz 把同一码流装入 SRAM，S1–S3 恢复有音。S0 尚未发声。下一步是在现有耳机口实现并验证四个独立声部，第四个实体演奏键待补齐。
+当前阶段：**S0–S3 四个实体键均已确认能发声**。2026-09-29 23:11 将 T10 的 SSPI 双用途配置为普通输入后，用户逐键试听确认 S0、S1、S2、S3 正常。`audio_keys` 仍按最低键优先发**单音**；四复音尚未实现。左侧底部 RCFG 是重配置键，不能当演奏键。
+
+当前音频码流 `E:\gaoyun\projects\audio_keys\audio_keys\impl\pnr\audio_keys.fs` 的 SHA256 为 `2D155BB754EC8C6238C57320220F5EE24E029907742F575C61FB7C61D5B4162E`。旧码流备份在 `E:\gaoyun\tools\audio_keys-pre-s0-7C1B92AD.fs`，未入库。新版仿真和综合布线通过，100 kHz 仅 SRAM 下载 `DONE / exit 0`。JTAG、MSPI、RECONFIG_N 未复用作普通 IO。
 
 2026-09-29 22:43 已重新以请求 100 kHz 将同一 SHA256 的 `audio_keys.fs` 下载到 SRAM，工具报告 `DONE / Done Final / exit 0`；本次耳机结果待用户反馈。Flash 未写入；目前只有前 64 KB 备份，历史读数不一致，且此版 openFPGALoader 的 Flash 路径会把 JTAG 设置到 10 MHz，超过当前 2.5 MHz 限制。
 
@@ -12,6 +14,7 @@
 - [2026 电子乐器设计与采购建议](docs/instrument-plan-2026.md)
 - [用户资料核对与板卡资格依据](docs/reference-review-2026.md)
 - [板载按键映射与芯片到货前的音频工作](docs/button-audio-next.md)
+- [外部 Flash 固化前置条件](docs/flash-readiness.md)
 - `logs/`：带时间戳的原始结果
 - `led/`：已编译过的最小点灯源文件与约束
 - `audio_probe/`：板载 PT8211 音频通路探针（440 Hz 三角波，响 1 秒/停 1 秒）
@@ -22,7 +25,7 @@
 已知限制（详见 `docs/operations.md` 2026-09-29 一节）：
 
 - **只写 SRAM**：断电、复位、或调试器/USB 抖动都会让板子变空，恢复方式是重烧一次（约 5 秒）。板载 Flash 未写入；出厂内容已备份前 64 KB 到 `tools/tang20k-flash-first64k.bin`（未入库）。
-- **实体键与逻辑管脚尚未完全对上**：当前工程未使用 T10；用户确认 S1–S3 有音、S0 尚无音。RCFG 不能当第四个普通按键；详见 `docs/button-audio-next.md`。
+- **S0 已可用**：T10 需将 SSPI 双用途配置为普通 IO；当前配置只打开 SSPI，四个实体键已试听通过。RCFG 仍不能当演奏键；详见 `docs/button-audio-next.md`。
 - 4 个按键位于 **1.5 V bank**，约束用 `LVCMOS15`；音频与 LED 引脚为 3.3 V。
 - 构建注意：`.sdc` 必须保存为 **CRLF** 行尾，否则高云解析器报 `syntax error near token 'clk]'`（已用 `.gitattributes` 固定）。
 

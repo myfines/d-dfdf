@@ -1,6 +1,7 @@
 // Four-key playable tone for the Tang Primer 20K Dock.
-// Keys are active low: T3, T2, D7, C7 (all in the 1.5 V DDR3 bank, hence
-// LVCMOS15 in the .cst). T10 is a dedicated SSPI pin and is not used here.
+// Physical keys S0-S3 are active low: T10, T3, T2, D7. T10 is in a 3.3 V
+// bank and requires SSPI-as-GPIO; the other three are in a 1.5 V bank.
+// The physical RCFG button is reserved for hardware reconfiguration.
 //
 // Note-on is immediate (only a two-flop synchronizer) so the key-to-sound
 // latency stays in the millisecond range; note-off waits out contact bounce.
