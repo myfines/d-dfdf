@@ -1,0 +1,5 @@
+2026-09-30 after full USB power-cycle, SRAM recovery succeeded:
+Command: `openFPGALoader-lowclock/openFPGALoader.exe -b tangprimer20k --freq 100000 --write-sram -v E:/gaoyun/projects/audio_keys/audio_keys/impl/pnr/audio_keys.fs`
+Result: FPGA ID 0x81B / GW2A(R)-18(C); SRAM transfer reached 100%; final status register 0x00006020 (Memory Erase, Done Final, Security Final); process exit 0. Audio file SHA256: 2D155BB754EC8C6238C57320220F5EE24E029907742F575C61FB7C61D5B4162E.
+Before this, the original openFPGALoader briefly reached 100% but ended with status 0x80FA00FA including CRC Error/Timeout/Bad Command; this was not considered successful. The subsequent diagnostic build completed cleanly and is the recovery that counts.
+Flash remains only partially written from the interrupted external-flash attempt. No second Flash operation has been made since the failure. Audible S0-S3 behavior after this recovery has not yet been reconfirmed by the user.
