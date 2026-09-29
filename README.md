@@ -7,6 +7,7 @@
 - [操作记录](docs/operations.md)
 - [2026 电子乐器设计与采购建议](docs/instrument-plan-2026.md)
 - [用户资料核对与板卡资格依据](docs/reference-review-2026.md)
+- [板载按键映射与芯片到货前的音频工作](docs/button-audio-next.md)
 - `logs/`：带时间戳的原始结果
 - `led/`：已编译过的最小点灯源文件与约束
 - `audio_probe/`：板载 PT8211 音频通路探针（440 Hz 三角波，响 1 秒/停 1 秒）
