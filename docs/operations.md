@@ -202,3 +202,12 @@ openFPGALoader -b tangprimer20k --freq 2500000 --write-sram -v <经核验的码�
 - 只读检测：openFPGALoader -b tangprimer20k --freq 100000 --detect -v 返回 idcode 0x0000081B、exit 0、stderr 空；见 logs/20260929-audio-keys-redetect.*。
 - SRAM 重载：openFPGALoader -b tangprimer20k --freq 100000 --write-sram -v <上述 fs>，02.63 秒内正常返回，Load SRAM 100%、Done Final、exit 0、stderr 空；见 logs/20260929-audio-keys-sram-reload.*。没有写 Flash、OTP 或下载器固件，也没有读取或改写 Flash。
 - 已请用户用耳机试 S1–S3 后单次试 S4，观察其是否影响其他键；避免按 S0/T10 复位键。实物发声结果待反馈，不能仅凭命令成功声称本次听到了音。
+
+## 2026-09-29T22:53+08:00：纠正 RCFG 误认、恢复 SRAM 音频
+
+- 用户在第一次 22:43 重新下载后按其称作“S4”的按键，随后其他键也没声；用户又反馈“心跳灯仍闪、按键灯有反应”。此灯光现象只证明 FPGA 有逻辑在运行，不能证明仍是 audio_keys。此前将它解释为“audio_keys 仍在运行、仅音频通路故障”是错误推断。
+- 回看用户此前提供的实物照片：左侧底部按键丝印为 RCFG。用户明确确认所谓“S4”就是这颗 RCFG。参考 Tang Primer 20K Dock 3713 原理图可见低有效 RECFG 信号；RCFG 不应视为普通演奏键。按下后原 SRAM 音频设计消失，可能转入 Flash 中的出厂设计；后者内容未回读确认，故只记为合理解释。
+- 因这个按键误认，早期 README“4 个实体键可演奏”和 docs/button-audio-next.md 中“S4=C7 可演奏”均失去依据，现已纠正。现有 RTL 仍有 4 个逻辑输入 T3/T2/D7/C7，但只有实物 S1/S2/S3 已经逐个听到声音；S0 尚未发声，丝印到各逻辑脚的完整一一映射未实测。
+- RCFG 后只读 JTAG 检测：`openFPGALoader -b tangprimer20k --freq 100000 --detect -v` 读到 0x0000081B、exit 0；USB 产品及序列号字符串读取为空，警告保留在 logs/20260929-post-rcfg-detect.out.txt。
+- 再以请求 100 kHz、仅 `--write-sram` 重载 SHA256 7C1B92AD60D2238C504A5DC255B4BDD014C4FFD1783F5AEB6E90DCB226CBADA9 的 audio_keys.fs。Load SRAM 100%、Done Final、exit 0、stderr 空；logs/20260929-post-rcfg-sram-restore.*。用户随后确认左侧 S1/S2/S3 三键均有音。
+- 不再按 RCFG 重复验证；未写 Flash、OTP、下载器固件，未重编译码流。Flash 备份不完整、既有读数不一致及工具内部 Flash 时钟超过 2.5 MHz 的限制仍在，暂不固化。

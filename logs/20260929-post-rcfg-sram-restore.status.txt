@@ -1,0 +1,6 @@
+Start=2026-09-29T22:53:53.6668532+08:00
+SHA256=7C1B92AD60D2238C504A5DC255B4BDD014C4FFD1783F5AEB6E90DCB226CBADA9
+Command=openFPGALoader -b tangprimer20k --freq 100000 --write-sram -v E:\gaoyun\projects\audio_keys\audio_keys\impl\pnr\audio_keys.fs
+PID=10588
+Exit=0
+End=2026-09-29T22:53:56.3005780+08:00

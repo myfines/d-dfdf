@@ -1,0 +1,11 @@
+empty
+Can't read iProduct field from FTDI: considered as empty string
+Can't read iSerialNumber field from FTDI: considered as empty string
+Jtag frequency : requested 100.00KHz  -> real 100.00KHz 
+found 1 devices
+index 0:
+	idcode 0x81b
+	manufacturer Gowin
+	family GW2A
+	model  GW2A(R)-18(C)
+	irlength 8

@@ -12,7 +12,7 @@
 
 - Tang Primer 20K + Dock：SRAM 点灯已由用户确认；后续沿用 USB 直连、JTAG 请求 100 kHz。
 - 用户有 DS100 MINI 示波器、面包板，可借万用表；耳机及音箱尚无，杜邦线数量未确认。
-- Dock 有 5 个标为 S0–S4 的按键；S0/T10 在当前配置中承担 FPGA 复位，现有演奏工程只用 S1–S4 四键。另有下载器按键。第一阶段无需另买按键；S4 的实物反应仍待核实。[Sipeed 引脚约束](https://github.com/sipeed/TangPrimer-20K-example/blob/main/Litex/sipeed_tang_primer_20k/src/sipeed_tang_primer_20k.cst)
+- 板卡照片左侧最下方按键标为 RCFG，用户曾误称它为“S4”；它不是已确认的演奏键。2026-09-29 实物确认 S1–S3 可发声，S0 尚未发声。现阶段可先开发合成引擎，但演示四键和弦仍需再取得第四个普通按键；详见[按键核对记录](button-audio-next.md)。[Sipeed 引脚约束](https://github.com/sipeed/TangPrimer-20K-example/blob/main/Litex/sipeed_tang_primer_20k/src/sipeed_tang_primer_20k.cst)
 - Dock 板载音频 DAC 为 PT8211-S。[Sipeed 官方示例](https://github.com/sipeed/TangPrimer-20K-example)
 - PT8211 的串行接口是 LSBJ/Japanese 格式，不能只因有 BCK/WS/DIN 就称为标准 I²S。它适合先验证发声；最终建议另用标准 I²S DAC，以贴合题目措辞。[PT8211 原厂数据手册（PJRC 托管）](https://www.pjrc.com/store/pt8211.pdf)
 
