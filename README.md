@@ -6,7 +6,7 @@
 
 当前音频码流 `E:\gaoyun\projects\audio_keys\audio_keys\impl\pnr\audio_keys.fs` 的 SHA256 为 `2D155BB754EC8C6238C57320220F5EE24E029907742F575C61FB7C61D5B4162E`。旧码流备份在 `E:\gaoyun\tools\audio_keys-pre-s0-7C1B92AD.fs`，未入库。新版仿真和综合布线通过，100 kHz 仅 SRAM 下载 `DONE / exit 0`。JTAG、MSPI、RECONFIG_N 未复用作普通 IO。
 
-2026-09-30 已两次尝试外部 Flash BSCAN 写入，同一批 9 个 64 KiB 块均被擦除；写入分别停在 40.58% 和 35.13%，**烧录和校验未完成，Flash 内容仍是部分写入状态**。中途 USB-JTAG 出现过 Windows Code 43（描述符读取失败）；换到另一个电脑直连 USB 口后恢复，FPGA ID `0x81B` 可读。音频码流已重新装入 SRAM，最终状态 `0x00006020 / Done Final`，用户确认 S0–S3 四键都有声。当前板卡可继续用 SRAM 开发，但掉电启动仍未修好。低频工具在 2 MHz 实际 JTAG 下两次只读 64 KiB 相差 268 字节，没有可靠的整片原内容备份。详见 [Flash 前置条件](docs/flash-readiness.md) 和 [操作记录](docs/operations.md)。
+2026-09-30 已两次尝试外部 Flash BSCAN 写入，同一批 9 个 64 KiB 块均被擦除；写入分别停在 40.58% 和 35.13%，**烧录和校验未完成，Flash 内容仍是部分写入状态**。中途 USB-JTAG 出现过 Windows Code 43（描述符读取失败）；换到另一个电脑直连 USB 口后恢复，FPGA ID `0x81B` 可读。音频码流已重新装入 SRAM，最终状态 `0x00006020 / Done Final`，用户确认 S0–S3 四键都有声。当前板卡可继续用 SRAM 开发，但掉电启动仍未修好。JTAG A 已临时切回 FTDI 驱动，高云官方 Programmer 现可只读识别唯一的 `0x81B`，下一步检查外部 Flash。低频工具在 2 MHz 实际 JTAG 下两次只读 64 KiB 相差 268 字节，没有可靠的整片原内容备份。详见 [Flash 前置条件](docs/flash-readiness.md) 和 [操作记录](docs/operations.md)。
 
 同日 22:53，用户确认误按的“S4”是实物丝印 **RCFG**。该键后音频失声；以 100 kHz 再次装入上述 `audio_keys.fs`，工具 `DONE / exit 0`，用户确认 S1–S3 三键都恢复发声。请勿把重配置后的灯光反应当作原 SRAM 音频程序仍在运行的证明。
 

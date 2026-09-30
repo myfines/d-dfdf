@@ -262,3 +262,9 @@ openFPGALoader -b tangprimer20k --freq 2500000 --write-sram -v <经核验的码�
 - 已把 A 通道目前的 WinUSB 驱动从 Windows 驱动仓库导出到 `E:/gaoyun/tools/driver-switch/backup-winusb-20260930/`；INF SHA256 `17B84FCE55421DBC1092A6F3808C3B4F97935969BC5DF3967FBDA60468392469`。FTDI 备份已存在于 `E:/gaoyun/tools/ftdi-driver-backup/`；原 WinUSB 安装器 `wdi-simple.exe` SHA256 `5B96731BFBDBA2E1EF5BA5AA02963AB365A1A9DDE187A9FC343F2B1F5B31CFF9`。
 - `scripts/try-gowin-ftdi-a.ps1` 先核对唯一 A/B 实例及备份哈希，再仅卸载 A 的 oem180.inf，使已存在的 FTDI 驱动绑定 A；之后高云官方 CLI `--cable-index 1` 只读扫描。仅当看到一个 ID `0x0000081B` 才保留 FTDI；否则自动调用已验证的 WinUSB 安装器恢复 A。脚本不包含 Flash 写入。语法解析 0 错；非管理员预检按预期拒绝运行，未更改驱动，见 `logs/20260930-125042-gowin-ftdi-driver-trial.txt`。
 - 系统当前令牌非管理员，实际驱动切换需要 Windows UAC；已询问用户是否能用键盘 Alt+Y 确认。未得到回复前不运行提权脚本。
+
+## 2026-09-30T12:53+08:00：JTAG A 切回 FTDI；高云官方 Programmer 只读扫描成功
+
+- 用户确认可用键盘 Alt+Y 完成 Windows UAC；运行已推送的 `scripts/try-gowin-ftdi-a.ps1`，先核对目标 A/B、无烧录器进程和 WinUSB 导出文件哈希，再卸载仅供 JTAG A 使用的 `oem180.inf`。Windows 将 A 绑定到已有的 `oem178.inf` / FTDIBUS；B 仍为 FTDIBUS。A、B 状态均 OK / ProblemCode 0。Windows 管理员脚本退出码 0。
+- 脚本仅用 IDE 内置的 Gowin Programmer CLI（V1.9.11.03 Education build 2536）执行 `--cable-index 1 --frequency 2.5MHz --scan`。输出：唯一一个 GW2A/GW2AR-18C、ID `0x0000081B`、`1 device(s) found!`、exit 0，见 `logs/20260930-125300-gowin-ftdi-driver-trial.txt` 与 `.out.txt`。这解决了原 WinUSB 绑定下官方扫描错误/超时的问题。尚未执行任何新 Flash 擦写。
+- 当前 JTAG A/B 均为 FTDI，openFPGALoader 的 WinUSB 路径暂时不可用；若官方 Flash 路径失败，可用已保存的 `scripts/install-jtag-a.ps1` 和导出的 WinUSB INF 恢复 A。恢复前先记录官方工具返回和 FPGA 状态。
