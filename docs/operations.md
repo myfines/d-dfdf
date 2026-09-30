@@ -274,3 +274,9 @@ openFPGALoader -b tangprimer20k --freq 2500000 --write-sram -v <经核验的码�
 - FTDI A/B 均 OK，JTAG 扫描确认唯一 ID `0x0000081B` 后，IDE 内置 Programmer CLI build 2536 执行 `--device GW2A-18C --cable-index 1 --frequency 2.5MHz --operation_index 15 --fsFile E:/gaoyun/projects/audio_keys/audio_keys/impl/pnr/audio_keys.fs --spiaddr 0x000000`。operation 15 是 **exFlash Verify in bscan**，不擦除/写入。
 - 命令识别 Target Device GW2A-18C、Flash ID `0x0B4017`，持续逐块校验至 44%，报告 `Error: SPI Verify failed!`，进程退出码 67，耗时 526.8 秒。原始输出 `logs/20260930-gowin-exflash-bscan-verify-before-write.out.txt`。该结果符合此前两次被中断写入后 Flash 与当前 .fs 不一致的状态；不能据此判断 Flash 芯片损坏。
 - 命令退出后无残留烧录器，A 驱动仍 FTDIBUS、ProblemCode 0。下一步才考虑同一官方通道 operation 13（限定外部 Flash 的 erase/program/verify in bscan），不使用 bulk erase。
+
+## 2026-09-30T13:11+08:00：高云官方工具完成外部 Flash 擦写和编程；独立校验待做
+
+- 在 A/B 均 FTDIBUS、唯一 JTAG ID `0x0000081B`、外部 Flash ID `0x0B4017` 已确认后，IDE 内置 Programmer CLI build 2536 执行 `--device GW2A-18C --cable-index 1 --frequency 2.5MHz --operation_index 13 --fsFile E:/gaoyun/projects/audio_keys/audio_keys/impl/pnr/audio_keys.fs --spiaddr 0x000000`。操作名称为 `exFlash Erase,Program,Verify in bscan`，并非 bulk erase。
+- 工具从 `SPI start of address: 0x000000` 连续推进 Programming 至 100%，报告 `SPI end of address: 0x08CE00`、`Finished!`、耗时 321.31 秒、进程 exit 0。原始输出 `logs/20260930-gowin-exflash-bscan-program-verify.out.txt`。A/B 仍为 FTDIBUS、ProblemCode 0，没有残留烧录器。
+- 日志仅显示 Programming 进度，没有单列只读 Verifying 阶段。不能只因操作名称含 Verify 或退出码 0 就宣称 Flash 字节校验和掉电启动已经通过。下一步独立执行 operation 15（exFlash Verify in bscan），再由用户物理掉电上电观察 S0–S3 是否自动发声。
