@@ -247,3 +247,11 @@ openFPGALoader -b tangprimer20k --freq 2500000 --write-sram -v <经核验的码�
 
 - 2026-09-30 第二次 Flash 写入尝试仍停在 35.13%，数分钟未推进百分比。Windows Other I/O 计数缓慢变化，但没有更多写入进度；为避免无限等待，结束进程。擦除命令范围仍为 `0x000000`–`0x090000`，码流 SHA256 与前次相同。写后校验未开始，不能算烧录成功。
 - 结束后设备 USB 描述符可重新枚举，但 JTAG detect 再次报 `usb bulk read failed` / `low level FTDI init failed`；libusb device reset 和 FTDI A reset 均未修复。没有再次恢复 SRAM。最后确认正常的是此前全板 USB 断电重连后 SRAM 的 Done Final 状态；目前需全板断电重连后再恢复 SRAM。没有物理损坏的证据；Flash 内容仍为部分写入/未知状态，不做第三次 Flash 写入。
+
+## 2026-09-30T12:37–12:47+08:00：换电脑 USB 口恢复下载器与 SRAM；官方通道只读检查
+
+- 上次部分 Flash 写入后无残留烧录进程，Windows 原端口上先识别到 0403:6010，但产品字符串为空、FTDI reset 报 -6；用户全板断电重连后，原电脑 USB 口变为 `USB\\VID_0000&PID_0002`、Code 43（设备描述符请求失败），与此前下载器在同一主机 USB HS12 端口。此时没有执行写入。
+- 用户保持板上供电、把 USB-JTAG 线的电脑端换到另一个直连 USB 口。Windows 重新识别 0403:6010，A（JTAG Debugger/WinUSB/oem180.inf）和 B（FTDIBUS/oem178.inf）均 OK。openFPGALoader 只读识别 FPGA ID `0x81B` / GW2A(R)-18(C)，exit 0。
+- 本地低频诊断版 openFPGALoader 使用 `-b tangprimer20k --freq 100000 --write-sram -v` 重新装入 SHA256 `2D155BB754EC8C6238C57320220F5EE24E029907742F575C61FB7C61D5B4162E` 的四键音频码流；最终寄存器 `0x00006020 / Done Final`、exit 0。用户逐键试听确认 S0–S3 都有声。原始日志 `logs/20260930-new-usb-port-sram-restore.log`。
+- 高云 Programmer CLI 的 FT2CH（`--cable-index 1 --frequency 2.5MHz --scan`）只读扫描 8 秒无返回，已结束该扫描进程；WinUSB（`--cable-index 5 --frequency 2.5MHz --scan`）返回 `0x60010000` 和 16 个 General/JTAG_NOP 设备，并非真实 `0x81B` 链。未让高云工具执行写 Flash。当前驱动绑定保持不变。
+- 发现 [openFPGALoader 上游同型号 issue #573](https://github.com/trabucayre/openFPGALoader/issues/573)：报告者在 Tang Primer 20K 上也遇到开源工具 Flash 写入中途停住，并称高云官方工具可完成；这是相似案例，不等于证明本板根因。接下来优先试官方 FTDI 驱动/Programmer 只读链路，只有正确识别一个 `0x81B` 设备才考虑 Flash 写入。

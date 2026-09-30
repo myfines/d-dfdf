@@ -1,0 +1,6 @@
+2026-09-30 midday USB recovery:
+1. No programmer process remained from previous interrupted write.
+2. At old direct PC USB port, USB descriptor failed. Windows present device: USB\\VID_0000&PID_0002, Code 43, ACPI RHUB HS12. No 0403:6010 listed by openFPGALoader --scan-usb.
+3. User moved Dock USB-JTAG computer end to a different direct PC port. A and B child devices both Status OK, openFPGALoader --scan-usb found 0403:6010 SIPEED FactoryAIOT Pro JTAG Debugger at bus 001 device 010; --detect reported one FPGA ID 0x81B, exit 0.
+4. Low-clock openFPGALoader --write-sram of audio_keys.fs SHA256 2D155BB754EC8C6238C57320220F5EE24E029907742F575C61FB7C61D5B4162E ended with status 0x00006020 Done Final and exit 0. User confirmed S0-S3 all audible.
+5. Gowin Programmer CLI read-only scan with cable-index 1 FT2CH at 2.5MHz timed out after 8s and was killed. Cable-index 5 WINUSB at 2.5MHz exited 0 but returned ID 0x60010000 plus 16 General/JTAG_NOP entries, so it was not used for Flash write. No driver changes or Flash operations in this phase.
