@@ -1,0 +1,55 @@
+ Target Cable: Gowin USB Cable(FT2CH)/0/None/null@2.5MHz
+ Target Device: GW2A-18C(0x0000081B)
+ Operation "exFlash Verify in bscan" for device#1...
+ Status Code is: 0x00006020
+ Try to program spi flash: 0x0B4017!
+
+Verifying: [                         ] 0%                 
+Verifying...: [                         ] 1%                 
+Verifying...: [                         ] 2%                 
+Verifying...: [                         ] 3%                 
+Verifying...: [#                        ] 4%                 
+Verifying...: [#                        ] 5%                 
+Verifying...: [#                        ] 6%                 
+Verifying...: [#                        ] 7%                 
+Verifying...: [##                       ] 8%                 
+Verifying...: [##                       ] 9%                 
+Verifying...: [##                       ] 10%                 
+Verifying...: [##                       ] 11%                 
+Verifying...: [###                      ] 12%                 
+Verifying...: [###                      ] 13%                 
+Verifying...: [###                      ] 14%                 
+Verifying...: [###                      ] 15%                 
+Verifying...: [####                     ] 16%                 
+Verifying...: [####                     ] 17%                 
+Verifying...: [####                     ] 18%                 
+Verifying...: [####                     ] 19%                 
+Verifying...: [#####                    ] 20%                 
+Verifying...: [#####                    ] 21%                 
+Verifying...: [#####                    ] 22%                 
+Verifying...: [#####                    ] 23%                 
+Verifying...: [######                   ] 24%                 
+Verifying...: [######                   ] 25%                 
+Verifying...: [######                   ] 26%                 
+Verifying...: [######                   ] 27%                 
+Verifying...: [#######                  ] 28%                 
+Verifying...: [#######                  ] 29%                 
+Verifying...: [#######                  ] 30%                 
+Verifying...: [#######                  ] 31%                 
+Verifying...: [########                 ] 32%                 
+Verifying...: [########                 ] 33%                 
+Verifying...: [########                 ] 34%                 
+Verifying...: [########                 ] 35%                 
+Verifying...: [#########                ] 36%                 
+Verifying...: [#########                ] 37%                 
+Verifying...: [#########                ] 38%                 
+Verifying...: [#########                ] 39%                 
+Verifying...: [##########               ] 40%                 
+Verifying...: [##########               ] 41%                 
+Verifying...: [##########               ] 42%                 
+Verifying...: [##########               ] 43%                 
+Verifying...: [###########              ] 44%                 
+Error: SPI Verify failed!
+ Finished.
+ Cost 526.8 second(s)
+  

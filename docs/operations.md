@@ -268,3 +268,9 @@ openFPGALoader -b tangprimer20k --freq 2500000 --write-sram -v <经核验的码�
 - 用户确认可用键盘 Alt+Y 完成 Windows UAC；运行已推送的 `scripts/try-gowin-ftdi-a.ps1`，先核对目标 A/B、无烧录器进程和 WinUSB 导出文件哈希，再卸载仅供 JTAG A 使用的 `oem180.inf`。Windows 将 A 绑定到已有的 `oem178.inf` / FTDIBUS；B 仍为 FTDIBUS。A、B 状态均 OK / ProblemCode 0。Windows 管理员脚本退出码 0。
 - 脚本仅用 IDE 内置的 Gowin Programmer CLI（V1.9.11.03 Education build 2536）执行 `--cable-index 1 --frequency 2.5MHz --scan`。输出：唯一一个 GW2A/GW2AR-18C、ID `0x0000081B`、`1 device(s) found!`、exit 0，见 `logs/20260930-125300-gowin-ftdi-driver-trial.txt` 与 `.out.txt`。这解决了原 WinUSB 绑定下官方扫描错误/超时的问题。尚未执行任何新 Flash 擦写。
 - 当前 JTAG A/B 均为 FTDI，openFPGALoader 的 WinUSB 路径暂时不可用；若官方 Flash 路径失败，可用已保存的 `scripts/install-jtag-a.ps1` 和导出的 WinUSB INF 恢复 A。恢复前先记录官方工具返回和 FPGA 状态。
+
+## 2026-09-30T13:02+08:00：高云官方工具只读校验确认 Flash 内容不匹配
+
+- FTDI A/B 均 OK，JTAG 扫描确认唯一 ID `0x0000081B` 后，IDE 内置 Programmer CLI build 2536 执行 `--device GW2A-18C --cable-index 1 --frequency 2.5MHz --operation_index 15 --fsFile E:/gaoyun/projects/audio_keys/audio_keys/impl/pnr/audio_keys.fs --spiaddr 0x000000`。operation 15 是 **exFlash Verify in bscan**，不擦除/写入。
+- 命令识别 Target Device GW2A-18C、Flash ID `0x0B4017`，持续逐块校验至 44%，报告 `Error: SPI Verify failed!`，进程退出码 67，耗时 526.8 秒。原始输出 `logs/20260930-gowin-exflash-bscan-verify-before-write.out.txt`。该结果符合此前两次被中断写入后 Flash 与当前 .fs 不一致的状态；不能据此判断 Flash 芯片损坏。
+- 命令退出后无残留烧录器，A 驱动仍 FTDIBUS、ProblemCode 0。下一步才考虑同一官方通道 operation 13（限定外部 Flash 的 erase/program/verify in bscan），不使用 bulk erase。
