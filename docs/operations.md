@@ -280,3 +280,10 @@ openFPGALoader -b tangprimer20k --freq 2500000 --write-sram -v <经核验的码�
 - 在 A/B 均 FTDIBUS、唯一 JTAG ID `0x0000081B`、外部 Flash ID `0x0B4017` 已确认后，IDE 内置 Programmer CLI build 2536 执行 `--device GW2A-18C --cable-index 1 --frequency 2.5MHz --operation_index 13 --fsFile E:/gaoyun/projects/audio_keys/audio_keys/impl/pnr/audio_keys.fs --spiaddr 0x000000`。操作名称为 `exFlash Erase,Program,Verify in bscan`，并非 bulk erase。
 - 工具从 `SPI start of address: 0x000000` 连续推进 Programming 至 100%，报告 `SPI end of address: 0x08CE00`、`Finished!`、耗时 321.31 秒、进程 exit 0。原始输出 `logs/20260930-gowin-exflash-bscan-program-verify.out.txt`。A/B 仍为 FTDIBUS、ProblemCode 0，没有残留烧录器。
 - 日志仅显示 Programming 进度，没有单列只读 Verifying 阶段。不能只因操作名称含 Verify 或退出码 0 就宣称 Flash 字节校验和掉电启动已经通过。下一步独立执行 operation 15（exFlash Verify in bscan），再由用户物理掉电上电观察 S0–S3 是否自动发声。
+
+## 2026-09-30T13:12+08:00：Flash 自启动与 RCFG 实物验证成功
+
+- 官方 Programmer operation 13 完成后，**未运行任何 SRAM 下载**。用户拔掉板卡全部供电 USB，等待 10 秒，再插回此前正常的电脑直连 USB 口；上电后用户逐键试听，确认 S0、S1、S2、S3 从耳机都有声音。该观察支持 FPGA 从外部 Flash 自动配置为当前音频设计，不能由断电前的 SRAM 程序解释。
+- 用户随后按一次板上丝印 `RCFG` 的重配置键，等待约 2 秒，重新测试 S0–S3；用户报告四键均有声。这解决了此前仅装 SRAM 时按 RCFG 后音频失声的现象。
+- 最后高云 Programmer CLI 只读 `--cable-index 1 --frequency 2.5MHz --scan` 返回唯一设备、ID `0x0000081B`、exit 0；A/B 仍为 FTDIBUS/oem178.inf、ProblemCode 0。JTAG 入口在 Flash 自启动后保持可用。原始输出 `logs/20260930-post-flash-boot-jtag-scan.out.txt`。
+- 本次结论是**当前码流的 Flash 自启动与 RCFG 功能性成功**。operation 13 虽名为 Erase,Program,Verify，日志仅列 Programming 进度；写后未额外运行 operation 15 的独立逐字节比较，因此不声称该项已通过。原厂 Flash 内容没有可靠整片备份。复现步骤见 `docs/flash-programming-procedure.md`。

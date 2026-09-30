@@ -1,6 +1,6 @@
-# Primer 20K Dock 外部 Flash 固化前置条件
+# Primer 20K Dock 外部 Flash 早期诊断与最终结果
 
-状态：2026-09-30 用户已明确授权将当前音频码流写入外置 Flash 并验证，目标是证明 Flash 烧录流程可用；没有固定 JTAG 速度上限，硬件底线是不损坏板卡。两份只读备份仍不一致，因此没有可靠的整片恢复镜像。仅执行码流起始地址附近的扇区擦写，禁止 bulk erase；若写入校验失败，停止，不重复擦写。
+状态：2026-09-30 已使用高云官方 Programmer 将四键音频码流写入外置 Flash，用户报告全板断电上电以及 RCFG 后 S0–S3 均有声；JTAG 仍能只读扫描到唯一的 `0x0000081B`。成功操作的复现命令见[Flash 烧录流程](flash-programming-procedure.md)。以下保留早期不可靠读取和中途失败的诊断证据。原厂 Flash 内容没有可靠整片备份，且写后未另跑独立逐字节 Flash 比较。
 
 ## 现有证据
 
@@ -21,12 +21,12 @@
 - 2026-09-30 以同一源码的低频诊断版重复读取，ID 仍为 `0x81B`、Flash ID `0B 40 17`，两次均 65,536 字节且 exit 0；但 A/B 相差 268 字节、316 比特，SHA256 分别为 `f9192ee7ed6fe4356429ba9b6599eec8c5a126f527e6703ba274500bed07f721` 与 `0ecc5d47d16a6d5f34fbc6dd7d939726f53bdb1c255d66d0e29d5f923ea7a34a`。实际 JTAG 频率 2.0 MHz。不能称为可靠备份。
 - 官方 Sipeed Primer 20K 资料标注板载 NOR Flash 32 Mbit（4 MiB）；本次 .fs 为 Gowin ASCII 位流，码流数据按 openFPGALoader 解析约 577,178 字节（文本文件 4,617,942 字节），目标起始地址 0。按 64 KiB 擦除块向上取整，预计擦除 589,824 字节（0x00000–0x8FFFF），远小于板载标称容量。文件 SHA256 `2D155BB754EC8C6238C57320220F5EE24E029907742F575C61FB7C61D5B4162E`，器件 GW2A-LV18PG256C8/I7。SecurityBit=ON 会阻止配置数据回读；外部 Flash 写入校验仍需看工具实际校验结果，不能用 FPGA SRAM 回读代替。
 
-## 要达到的顺序
+## 最终采用的顺序
 
-1. 用户已授权本次以当前音频码流尝试外部 Flash 写入并验证。限定地址 0，使用明确标注外置 Flash 的 BSCAN 路径，启用校验，不发出 bulk erase 命令；若设备/容量/范围检查不通过或保护位阻止写入，立即停止。
-2. 写后以 Flash 数据逐字节校验结果判断命令是否成功。因为此前只读结果不一致，单独的进度 100% 或 exit 0 不够；如校验失败，记日志并停止重试，重新加载 SRAM 音频码流。
-3. 若写入和校验通过，再由用户物理断电重上电，确认配置从 Flash 启动及 S0–S3 发声。RCFG 行为单独记录。不要将掉电启动前的 SRAM 发声当成 Flash 成功证据。
+1. 将 JTAG A 从 WinUSB 改回已安装的 FTDI 驱动，B 仍为 FTDI；官方 Programmer 2.5 MHz 只读扫描得到唯一 FPGA ID `0x0000081B`。在旧的部分写入状态下，官方 `exFlash Verify in bscan` 在 44% 明确报告不匹配（exit 67）。
+2. 官方 Programmer `exFlash Erase,Program,Verify in bscan`（operation 13）从地址 0 写入当前音频码流，输出 Programming 100%、结束地址 `0x08CE00`、Finished、exit 0。没有执行单独的 bulk erase 操作。
+3. 用户断开板卡所有供电 USB 10 秒后重新上电，期间没有下载 SRAM；用户确认 S0–S3 四键都有声。按 RCFG 后再试，四键仍有声。之后只读 JTAG 扫描仍得到唯一 ID `0x0000081B`。这组功能证据确认当前音频程序可以从 Flash 自启动并在重配置后恢复。
 
-当前原 Flash 的完整内容没有可靠备份；写入会覆盖地址 0 起约 0.56 MiB 的旧配置区域，之后无法凭当前导出保证恢复原样。其他区域不会被本命令主动擦除。按 RCFG 后 LED 仍有反应不等于音频仍在 SRAM。
+原 Flash 的完整内容没有可靠备份；当前音频程序覆盖了从地址 0 起的旧配置区域，无法凭早期不一致的导出文件完整恢复原样。官方写入日志没有单列逐字节 Verifying 阶段，因此不应声称完成了额外的独立全片字节比较；功能性启动与 RCFG 测试已通过。
 
-高云 Programmer CLI 的 operation 13 是 exFlash erase/program/verify in bscan；开源工具则在 Gowin 外部 Flash 实现中执行相同的编程和读回比较。本次使用已从源码编译并验证 USB 枚举的低频 openFPGALoader 诊断版，具体操作与结果见 `docs/operations.md` 和对应 logs。
+开源 openFPGALoader 的两次 Flash 写入中途停住；最终成功路径是高云官方 Programmer + FTDI A 通道。完整逐命令结果见 `docs/operations.md` 和 `logs/`。

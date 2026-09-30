@@ -1,0 +1,7 @@
+2026-09-30 Flash boot functional verification:
+- Gowin Programmer operation 13 finished with Programming 100%, SPI end address 0x08CE00, Finished, exit 0. Audio FS SHA256: 2D155BB754EC8C6238C57320220F5EE24E029907742F575C61FB7C61D5B4162E.
+- No SRAM command was run after the Flash write.
+- User disconnected all board power USB for 10 seconds, reconnected to the working direct PC USB port, and reported S0-S3 all audible.
+- User pressed RCFG and reported S0-S3 all audible again.
+- Subsequent read-only Gowin FT2CH 2.5 MHz scan found one FPGA ID 0x0000081B, exit 0. Both A and B FTDI interfaces remained ProblemCode 0.
+- Independent post-write operation 15 byte comparison was not run. The earlier pre-write operation 15 failed at 44%, exit 67. No old full-Flash backup exists.
