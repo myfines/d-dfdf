@@ -1,0 +1,25 @@
+**********************
+PowerShell transcript start
+Start time: 20260930125042
+Username: ZRK\zrk
+RunAs User: ZRK\zrk
+Configuration Name: 
+Machine: ZRK (Microsoft Windows NT 10.0.26100.0)
+Host Application: C:\Users\zrk\.cache\codex-runtimes\codex-primary-runtime\dependencies\native\powershell\pwsh.dll -NoProfile -ExecutionPolicy Bypass -File E:\gaoyun\d-dfdf\scripts\try-gowin-ftdi-a.ps1
+Process ID: 24472
+PSVersion: 7.6.5
+PSEdition: Core
+GitCommitId: 7.6.5
+OS: Microsoft Windows 10.0.26100
+Platform: Win32NT
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1, 6.0, 7.0
+PSRemotingProtocolVersion: 2.4
+SerializationVersion: 1.1.0.1
+WSManStackVersion: 3.0
+**********************
+Transcript started, output file is E:\gaoyun\d-dfdf\logs\20260930-125042-gowin-ftdi-driver-trial.txt
+Trial failed: Administrator token required; no driver operation attempted.
+**********************
+PowerShell transcript end
+End time: 20260930125042
+**********************

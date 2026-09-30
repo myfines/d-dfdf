@@ -255,3 +255,10 @@ openFPGALoader -b tangprimer20k --freq 2500000 --write-sram -v <经核验的码�
 - 本地低频诊断版 openFPGALoader 使用 `-b tangprimer20k --freq 100000 --write-sram -v` 重新装入 SHA256 `2D155BB754EC8C6238C57320220F5EE24E029907742F575C61FB7C61D5B4162E` 的四键音频码流；最终寄存器 `0x00006020 / Done Final`、exit 0。用户逐键试听确认 S0–S3 都有声。原始日志 `logs/20260930-new-usb-port-sram-restore.log`。
 - 高云 Programmer CLI 的 FT2CH（`--cable-index 1 --frequency 2.5MHz --scan`）只读扫描 8 秒无返回，已结束该扫描进程；WinUSB（`--cable-index 5 --frequency 2.5MHz --scan`）返回 `0x60010000` 和 16 个 General/JTAG_NOP 设备，并非真实 `0x81B` 链。未让高云工具执行写 Flash。当前驱动绑定保持不变。
 - 发现 [openFPGALoader 上游同型号 issue #573](https://github.com/trabucayre/openFPGALoader/issues/573)：报告者在 Tang Primer 20K 上也遇到开源工具 Flash 写入中途停住，并称高云官方工具可完成；这是相似案例，不等于证明本板根因。接下来优先试官方 FTDI 驱动/Programmer 只读链路，只有正确识别一个 `0x81B` 设备才考虑 Flash 写入。
+
+## 2026-09-30T12:50+08:00：准备官方 FTDI 驱动只读试验（尚未切换驱动）
+
+- 目前 JTAG A = WinUSB / oem180.inf，B = FTDIBUS / oem178.inf，均 OK；板上四键音频仍由 SRAM 运行。高云官方 CLI 的 FT2CH 只读扫描在当前绑定下超时，WinUSB 通道返回假 ID 与 16 个虚假设备。
+- 已把 A 通道目前的 WinUSB 驱动从 Windows 驱动仓库导出到 `E:/gaoyun/tools/driver-switch/backup-winusb-20260930/`；INF SHA256 `17B84FCE55421DBC1092A6F3808C3B4F97935969BC5DF3967FBDA60468392469`。FTDI 备份已存在于 `E:/gaoyun/tools/ftdi-driver-backup/`；原 WinUSB 安装器 `wdi-simple.exe` SHA256 `5B96731BFBDBA2E1EF5BA5AA02963AB365A1A9DDE187A9FC343F2B1F5B31CFF9`。
+- `scripts/try-gowin-ftdi-a.ps1` 先核对唯一 A/B 实例及备份哈希，再仅卸载 A 的 oem180.inf，使已存在的 FTDI 驱动绑定 A；之后高云官方 CLI `--cable-index 1` 只读扫描。仅当看到一个 ID `0x0000081B` 才保留 FTDI；否则自动调用已验证的 WinUSB 安装器恢复 A。脚本不包含 Flash 写入。语法解析 0 错；非管理员预检按预期拒绝运行，未更改驱动，见 `logs/20260930-125042-gowin-ftdi-driver-trial.txt`。
+- 系统当前令牌非管理员，实际驱动切换需要 Windows UAC；已询问用户是否能用键盘 Alt+Y 确认。未得到回复前不运行提权脚本。
