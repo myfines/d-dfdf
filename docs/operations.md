@@ -295,3 +295,9 @@ openFPGALoader -b tangprimer20k --freq 2500000 --write-sram -v <经核验的码�
 - 摇杆与 ADS1015 统一用 3.3 V；VRX/VRY 接 A0/A1，ADDR 接 GND 地址 0x48。ADS1015 的转换率为总计 3300 SPS，因此旧 SPI ADC 采购计划的每轴 2kSPS 不能直接沿用。
 - DAC 五针按照片确认为 DATA/BCK/LRCK/+3.3V/GND；其 +3.3V 与 USB-C 的供电关系尚无卖家原理图或实测，不凭丝印将两路供电并接。已请求用户仅 USB-C 普通 5V 供电时测 +3.3V 对 GND；用户说明只有 ADS 资料，尚未提供读数。供电验证仍待完成。
 - 接线表与直插转接方案见 docs/module-wiring-20261011.md。未执行 JTAG、SRAM、Flash、驱动切换或模块上电；此记录仅为资料核对与接线规划，不声称新 ADC/DAC 已实测。
+
+## 2026-10-11：检索 PCM5102A 同布局模块与开源参考
+
+- 按用户长黑板/SLK AUDIO/USB-C/三稳压器/五针特征检索。找到 https://www.ruten.com.tw/item/22201678843542/ ，商品图为同布局绿色 Micro-USB 旧版（实际查看图片，对照三颗稳压器、大电解、插座、五针和元件布局），页面记载 2021-03-03 改 Type-C，USB 5V 供电，五针 DATA/BCK/LRCK/3.3V输出/GND。不将同布局旧版说明冒充黑板原理图或实测。
+- 更新 docs/module-wiring-20261011.md：采用 DAC USB-C 普通5V供电、+3.3V留空、DATA/P6、BCK/R8、LRCK/P8、GND共地，避免两路3.3V电源并接。黑板实际电压仍未测量，完整黑板原理图未找到。
+- 找到开源应用 https://github.com/igor-gia/audio-signal-generator 与 https://github.com/uhucrew/bt-receiver-pcm5102a ，仅作三线I2S/音频代码和原理图参考；它们不是本模块的板级设计文件。本阶段未接线、上电或烧录。
