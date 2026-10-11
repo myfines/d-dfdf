@@ -59,3 +59,9 @@ PCM5102A 芯片为线路输出，不能凭 3.5 mm 插座判断有耳机放大器
 - Adafruit 接线说明：<https://learn.adafruit.com/adafruit-4-channel-adc-breakouts/assembly-and-wiring>
 - TI ADS1015：<https://www.ti.com/product/ADS1015>
 - TI PCM5102A：<https://www.ti.com/lit/ds/symlink/pcm5102a.pdf>
+
+## 减少 USB 供电线：Dock OTG 与杜邦供电
+
+Dock-3713 原理图 P002_USB PHY（PDF 第5页）显示 J8 VBUS 直接连接板上 +5V，而 CC1/CC2 经 R38/R39 5.1k 下拉到 GND；SW2 改变 USB_ID，不切换 CC 为供电端上拉。故有板上5V电源不等于标准 Type-C source，普通 C-to-C 直接连同样为受电端的 DAC 不能保证供电。DAC 的 USB 接口用于供电，不承担USB音频解码。
+
+若只用杜邦线供 DAC，需要找到 DAC 真正的5V输入：照片USB附近两个空焊孔可能是预留电源口，但正负及其用途未确认。断电用万用表确认与 USB VBUS/GND 的连通关系，核实5V输入后才焊接排针；接 Dock 真正+5V电源和GND，不接GPIO或PMOD3V3，且不再接另一USB电源。不要把5V送入DAC标为+3.3V的输出脚。也可用已明确引出VBUS/GND的USB-C供电转接板接DAC USB口；它需要按供电端用途选型，并确认5V电源总电流足够，不能把两个独立5V源并接。
