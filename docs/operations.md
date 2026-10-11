@@ -287,3 +287,11 @@ openFPGALoader -b tangprimer20k --freq 2500000 --write-sram -v <经核验的码�
 - 用户随后按一次板上丝印 `RCFG` 的重配置键，等待约 2 秒，重新测试 S0–S3；用户报告四键均有声。这解决了此前仅装 SRAM 时按 RCFG 后音频失声的现象。
 - 最后高云 Programmer CLI 只读 `--cable-index 1 --frequency 2.5MHz --scan` 返回唯一设备、ID `0x0000081B`、exit 0；A/B 仍为 FTDIBUS/oem178.inf、ProblemCode 0。JTAG 入口在 Flash 自启动后保持可用。原始输出 `logs/20260930-post-flash-boot-jtag-scan.out.txt`。
 - 本次结论是**当前码流的 Flash 自启动与 RCFG 功能性成功**。operation 13 虽名为 Erase,Program,Verify，日志仅列 Programming 进度；写后未额外运行 operation 15 的独立逐字节比较，因此不声称该项已通过。原厂 Flash 内容没有可靠整片备份。复现步骤见 `docs/flash-programming-procedure.md`。
+
+## 2026-10-11：核对新模块照片、ADS1015 资料并确定接线规划
+
+- 用户提供 ADS1015、SLK AUDIO PCM5102A 与 PS2 摇杆四张照片，以及 E:/gaoyun/75107。目录仅包含 ADS1015/ADS1115 共用的 Adafruit 说明、ADS1115 PDF 和库压缩包；没有 PCM5102A 实际模块原理图。淘宝短链未取得可读取的模块说明。
+- 核对 Sipeed 官方 Dock-3713 背面图与 Dock/SOM 原理图：选 PMOD0，I2C 使用 T6/T7，摇杆按键 T8，I2S 使用 P6/R8/P8。这些信号属 bank 3，SOM 原理图接 +3V3；现有音频 CST 未使用这些信号。供电必须使用真实 3V3/GND。
+- 摇杆与 ADS1015 统一用 3.3 V；VRX/VRY 接 A0/A1，ADDR 接 GND 地址 0x48。ADS1015 的转换率为总计 3300 SPS，因此旧 SPI ADC 采购计划的每轴 2kSPS 不能直接沿用。
+- DAC 五针按照片确认为 DATA/BCK/LRCK/+3.3V/GND；其 +3.3V 与 USB-C 的供电关系尚无卖家原理图或实测，不凭丝印将两路供电并接。已请求用户仅 USB-C 普通 5V 供电时测 +3.3V 对 GND；用户说明只有 ADS 资料，尚未提供读数。供电验证仍待完成。
+- 接线表与直插转接方案见 docs/module-wiring-20261011.md。未执行 JTAG、SRAM、Flash、驱动切换或模块上电；此记录仅为资料核对与接线规划，不声称新 ADC/DAC 已实测。
