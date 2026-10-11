@@ -303,3 +303,5 @@ openFPGALoader -b tangprimer20k --freq 2500000 --write-sram -v <经核验的码�
 - 找到开源应用 https://github.com/igor-gia/audio-signal-generator 与 https://github.com/uhucrew/bt-receiver-pcm5102a ，仅作三线I2S/音频代码和原理图参考；它们不是本模块的板级设计文件。本阶段未接线、上电或烧录。
 
 - 2026-10-11 用户询问从Dock OTG口供DAC或只用杜邦线。检查Dock-3713 USB PHY原理图：J8 VBUS直接+5V，CC1/CC2为5.1k下拉，SW2仅改变USB_ID，不能当作标准Type-C source模式切换。记录C-to-C供电不保证；DAC未确认的两孔须先通断确认后才能作为5V/GND输入，不推断孔的极性。不执行硬件操作。
+
+- 2026-10-11 用户要求复核芯片供电。核对TI PCM5102A数据手册（https://www.ti.com/lit/ds/symlink/pcm5102a.pdf）引脚表与电源章节：AVDD/CPVDD为3.3V，DVDD可1.8/3.3V，芯片不要求5V或USB。更正此前“3.3V输出不能反向供电”的过强表述：能否外部供3.3V取决于模块各电源轨连接及稳压器反向电流限制；此黑板拓扑未证实，不允许据芯片规格直接指定从输出脚给整板供电。USB旁两孔也未证实为供电口。无硬件操作。
