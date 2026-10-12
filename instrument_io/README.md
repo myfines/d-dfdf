@@ -67,3 +67,5 @@ pwsh -NoProfile -File E:\gaoyun\d-dfdf\instrument_io\run_tests.ps1
 
 
 S3持续音修正（2026-10-12）：实物复音监测发现旧掩码版本K=F而包络活动Y001；改为每声部一个按键输入和固定音符后，SRAM实测K=F、Y000。UART为COM13、115200/8N1；当前Y字段用于诊断包络是否活动，并非摇杆Y读数。此次修正版只载入SRAM，Flash仍是此前含问题的复音版，待试听后更新。
+
+最新Flash状态（2026-10-12）：直接单键声部修正版已用官方operation13写入100%、exit0，耗时324.31秒；SHA256 9DA141FDAF59E24E1FE10ED352389D8B3D8CE2DC0B1283A2B4A3B317FB99E561。此前“Flash仍为问题版”现已过时。修正版掉电启动验证待反馈，音质因音箱限制尚无法判断。
