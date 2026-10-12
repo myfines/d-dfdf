@@ -1,0 +1,31 @@
+{
+  "current_only_not_fault_history": true,
+  "samples": [
+    {
+      "adc_valid": true,
+      "adc_error": false,
+      "x": 845,
+      "note_page": 0,
+      "timbre": 0,
+      "edit_mode": false,
+      "test32_mode": false,
+      "octave_down": false,
+      "delay_enabled": false,
+      "envelope_active": false,
+      "pressed_keys": []
+    },
+    {
+      "adc_valid": true,
+      "adc_error": false,
+      "x": 845,
+      "note_page": 0,
+      "timbre": 0,
+      "edit_mode": false,
+      "test32_mode": false,
+      "octave_down": false,
+      "delay_enabled": false,
+      "envelope_active": false,
+      "pressed_keys": []
+    }
+  ]
+}
