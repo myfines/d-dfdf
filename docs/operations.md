@@ -511,3 +511,11 @@ RED为缺adsr_envelope模块；实现后包络单独测试覆盖起音峰值、�
 找到最直接的官方说明：Sipeed Primer20K Lite Blink教程 https://wiki.sipeed.com/hardware/en/tang/tang-primer-20k/examples/lite/blink.html ，明确出厂固件有DDR测试和GPIO翻转，DDR测试会使核心板很热。该记录属于默认固件/Lite教程，与本Dock自定义音频无DDR控制器不能直接等同，尤其不能据此把当前快速烫手认定正常或建议直接继续上电擦除。官方板卡资料 https://dl.sipeed.com/fileList/TANG/Primer_20K/01_Specification/Sipeed%20Tang%20Primer%2020K%20Datasheet%20V1.0.pdf 列温升<30K，但不能用未说明负载条件的指标代替当前实测。
 
 检索到社区作者关于BL702编程后需断电恢复的经历 https://stardance.hackclub.com/projects/9491 ，描述下载器锁住，不是GW2A热故障，不能当同一原因。Habr板卡评测及Sipeed Wiki issue542未找到直接热故障定位内容。结论：存在负载使此核心板明显发热的官方记录，当前热故障仍未定位，保持hardware-hold，不访问设备。
+
+## 2026-10-12 相近发热/可恢复社区与官方记录调查
+
+用户询问社区是否有发热后可恢复的案例。找到Sipeed官方Primer20K Lite教程 https://wiki.sipeed.com/hardware/en/tang/tang-primer-20k/examples/lite/blink.html ，明确默认DDR测试会使核心板很热，并建议不需要时擦除该默认固件。它支持“高活动负载可导致很热”的解释，但不是30秒烫手失声后已维修无损的病例；当前本工程未使用DDR测试，不能套用同一根因，也不据该网页立即擦Flash。
+
+社区原作者项目 https://github.com/juj/gowin_flipflop_drainer （2023/01/03及2023/01/06更新）及讨论 https://www.reddit.com/r/GowinFPGA/comments/101p9yd/ ：Nano4K/9K/Primer20K在添加许多无用途运算时视频不稳定；缩小负载或停止加法链活动可改善/恢复输出。README仍说根因未知，电源/内部干扰猜测并非证实，不能称为已确认的过热救活或可靠维修方案。
+
+本轮未找到与用户“GW2A在30秒内烫手、音频失效、重接恢复”完全相同且明确确认长期无损修复的完整记录。用户重启后发声只说明当时功能恢复，支持不必立即认定永久烧毁；不证明热安全。继续保留热故障暂停，待供电/电流/温度检查后才做受控低活动固件对照。未访问板卡、未烧录。
