@@ -468,3 +468,6 @@ Flash现在为直接单键声部修正版（SRAM标识3CB9），不是之前ADE8
 用户对全断电10秒、先PCM后Dock供电、不下载SRAM、不按RCFG条件下的全松静音、S0–S3按松和混音测试回复“ok了”。记录为本轮整体冷启动功能测试通过，未扩展为量化音质测量。结合operation37明确Program and Verify flash successfully、exit0，当前9DA141FDAF59E24E1FE10ED352389D8B3D8CE2DC0B1283A2B4A3B317FB99E561修正版复音Flash持久化完成。
 
 后续采用此次已验证路径：干净USB连接、不打开COM13，官方GAO-Bridge operation37、GW2A-18C、2.5MHz、spiaddr0x000000；核验目标码流hash；工具写入校验成功后，再全断电验证应用。PCM维持USB供电、排针3.3V不并接、与Dock共地。此前bscan失败单一根因仍未隔离证明；音质受音箱限制尚无法判断。
+
+## 2026-10-12 官方赛题差距核对
+重读高云官方2026选题二，生成docs/competition-gap-20261012.md。关键未完成基础是完整可调ADSR、端到端<=10ms实测及多频测试/频谱证据。已实现4声部/双轴/实时HDL/I2S/Flash自启动；当前46.875kHz，48kHz是工程改进而非该页强制要求。32复音、第三维表情、乐器音色预设、效果器、视听反馈及脱机指引等为拓展。未烧录或改变接线。
