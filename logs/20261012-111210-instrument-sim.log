@@ -1,0 +1,55 @@
+**********************
+PowerShell transcript start
+Start time: 20261012111210
+Username: ZRK\zrk
+RunAs User: ZRK\zrk
+Configuration Name: 
+Machine: ZRK (Microsoft Windows NT 10.0.26100.0)
+Host Application: C:\Users\zrk\.cache\codex-runtimes\codex-primary-runtime\dependencies\native\powershell\pwsh.dll -Command try { [Console]::OutputEncoding=[System.Text.Encoding]::UTF8 } catch {}
+@'
+from pathlib import Path
+p=Path('instrument_io/voice_engine.v');s=p.read_text();s=s.replace('// Four-key monophonic bring-up voice at 46,875 frames/s. Controls fail neutral.','// Four independent voices at 46,875 frames/s. Controls fail neutral.');s=s.replace('module voice_engine #(','module voice_lane #(',1)
+wrapper='''// Each lane retains its note index; /4 reserves headroom even with all keys held.
+module voice_engine #(
+    parameter integer RELEASE_FRAMES=235,
+    parameter integer ATTACK_STEP=6
+)(input wire clk,reset_n,frame_tick,input wire [3:0] btn_n,
+  input wire controls_valid,input wire [11:0] axis_x,axis_y,input wire octave_down,
+  output wire signed [15:0] sample,output wire active);
+    wire signed [15:0] lane_sample[0:3];
+    wire [3:0] lane_active;
+    genvar n;
+    generate for(n=0;n<4;n=n+1) begin: voices
+        wire [3:0] lane_keys=btn_n | ~(4'b0001 << n);
+        voice_lane #(.RELEASE_FRAMES(RELEASE_FRAMES),.ATTACK_STEP(ATTACK_STEP)) lane(
+            clk,reset_n,frame_tick,lane_keys,controls_valid,axis_x,axis_y,octave_down,
+            lane_sample[n],lane_active[n]);
+    end endgenerate
+    wire signed [17:0] mix_sum=
+        $signed({{2{lane_sample[0][15]}},lane_sample[0]})+
+        $signed({{2{lane_sample[1][15]}},lane_sample[1]})+
+        $signed({{2{lane_sample[2][15]}},lane_sample[2]})+
+        $signed({{2{lane_sample[3][15]}},lane_sample[3]});
+    assign sample=$signed(mix_sum[17:2]);
+    assign active=|lane_active;
+endmodule
+'''
+p.write_text(s+'\n'+wrapper)
+p=Path('instrument_io/tb_voice.sv');s=p.read_text().replace('largest_step<5000','largest_step<1200').replace('keys=4\'b0110;observe(54,57); // Lowest held key takes priority.','// Chords and selective release are verified separately in tb_poly.').replace('note frequency/priority','single note frequency');p.write_text(s)
+p=Path('instrument_io/run_tests.ps1');s=p.read_text().replace("'voice','instrument'","'voice','poly','instrument'");p.write_text(s)
+'@ | python -; & ./instrument_io/run_tests.ps1 *> logs/20261012-poly-suite.log; "TestsExit=$LASTEXITCODE"; Get-Content logs/20261012-poly-suite.log -Tail 14
+Process ID: 3360
+PSVersion: 7.6.5
+PSEdition: Core
+GitCommitId: 7.6.5
+OS: Microsoft Windows 10.0.26100
+Platform: Win32NT
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1, 6.0, 7.0
+PSRemotingProtocolVersion: 2.4
+SerializationVersion: 1.1.0.1
+WSManStackVersion: 3.0
+**********************
+**********************
+PowerShell transcript end
+End time: 20261012111214
+**********************

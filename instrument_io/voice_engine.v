@@ -1,7 +1,7 @@
 `timescale 1ns/1ps
-// Four-key monophonic bring-up voice at 46,875 frames/s. Controls fail neutral.
+// Four independent voices at 46,875 frames/s. Controls fail neutral.
 // Peak output is limited to one quarter scale; this is still a line-level DAC.
-module voice_engine #(
+module voice_lane #(
     parameter integer RELEASE_FRAMES=235,
     parameter integer ATTACK_STEP=6
 )(input wire clk,reset_n,frame_tick,input wire [3:0] btn_n,
@@ -61,4 +61,29 @@ module voice_engine #(
             end
         end
     end
+endmodule
+
+// Each lane retains its note index; /4 reserves headroom even with all keys held.
+module voice_engine #(
+    parameter integer RELEASE_FRAMES=235,
+    parameter integer ATTACK_STEP=6
+)(input wire clk,reset_n,frame_tick,input wire [3:0] btn_n,
+  input wire controls_valid,input wire [11:0] axis_x,axis_y,input wire octave_down,
+  output wire signed [15:0] sample,output wire active);
+    wire signed [15:0] lane_sample[0:3];
+    wire [3:0] lane_active;
+    genvar n;
+    generate for(n=0;n<4;n=n+1) begin: voices
+        wire [3:0] lane_keys=btn_n | ~(4'b0001 << n);
+        voice_lane #(.RELEASE_FRAMES(RELEASE_FRAMES),.ATTACK_STEP(ATTACK_STEP)) lane(
+            clk,reset_n,frame_tick,lane_keys,controls_valid,axis_x,axis_y,octave_down,
+            lane_sample[n],lane_active[n]);
+    end endgenerate
+    wire signed [17:0] mix_sum=
+        $signed({{2{lane_sample[0][15]}},lane_sample[0]})+
+        $signed({{2{lane_sample[1][15]}},lane_sample[1]})+
+        $signed({{2{lane_sample[2][15]}},lane_sample[2]})+
+        $signed({{2{lane_sample[3][15]}},lane_sample[3]});
+    assign sample=$signed(mix_sum[17:2]);
+    assign active=|lane_active;
 endmodule

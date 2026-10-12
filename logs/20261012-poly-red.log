@@ -1,0 +1,2 @@
+FATAL: instrument_io/tb_poly.sv:15: Chord lost a held voice: got    778 expected sum       -5816
+       Time: 8070000  Scope: tb_poly

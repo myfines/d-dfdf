@@ -11,7 +11,7 @@ $rtl = @('i2s_tx16.v','i2c_register_bus.v','ads1015_reader.v','voice_engine.v','
     ForEach-Object { Join-Path $PSScriptRoot $_ }
 Start-Transcript -Path $logPath
 try {
-    foreach ($name in @('i2s','ads1015','voice','instrument')) {
+    foreach ($name in @('i2s','ads1015','voice','poly','instrument')) {
         $top = "tb_$name"
         $tb = Join-Path $PSScriptRoot "$top.sv"
         $image = Join-Path $outDir "instrument-$name.vvp"
