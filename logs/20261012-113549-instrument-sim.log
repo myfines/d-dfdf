@@ -1,0 +1,32 @@
+**********************
+PowerShell transcript start
+Start time: 20261012113549
+Username: ZRK\zrk
+RunAs User: ZRK\zrk
+Configuration Name: 
+Machine: ZRK (Microsoft Windows NT 10.0.26100.0)
+Host Application: C:\Users\zrk\.cache\codex-runtimes\codex-primary-runtime\dependencies\native\powershell\pwsh.dll -Command try { [Console]::OutputEncoding=[System.Text.Encoding]::UTF8 } catch {}
+@'
+from pathlib import Path
+p=Path('instrument_io/voice_engine.v');s=p.read_text();s=s.replace('parameter integer ATTACK_STEP=6\n)(input wire clk,reset_n,frame_tick,input wire [3:0] btn_n,','parameter integer ATTACK_STEP=6,\n    parameter [31:0] NOTE_INCREMENT=32\'d47943389\n)(input wire clk,reset_n,frame_tick,input wire key_n,',1).replace('reg [3:0] btn_meta,btn_sync;','reg btn_meta,btn_sync;',1)
+a=s.index('    reg [2:0] held;');b=s.index('    wire [11:0] bounded_x',a);s=s[:a]+"    wire [31:0] base_inc=NOTE_INCREMENT;\n"+s[b:]
+s=s.replace('btn_meta<=15;btn_sync<=15;','btn_meta<=1;btn_sync<=1;',1).replace('sounding<=0;release_count<=0;held<=0;','sounding<=0;release_count<=0;',1).replace('btn_meta<=btn_n;btn_sync<=btn_meta;','btn_meta<=key_n;btn_sync<=btn_meta;',1).replace('if(pressed!=4) begin sounding<=1;release_count<=0;held<=pressed;end','if(!btn_sync) begin sounding<=1;release_count<=0;end',1)
+s=s.replace("        wire [3:0] lane_keys=btn_n | ~(4'b0001 << n);", "        localparam [31:0] NOTE_INC=n==0?32'd47943389:n==1?32'd53814635:\n                                     n==2?32'd60404887:32'd71833926;")
+s=s.replace('voice_lane #(.RELEASE_FRAMES(RELEASE_FRAMES),.ATTACK_STEP(ATTACK_STEP)) lane(','voice_lane #(.RELEASE_FRAMES(RELEASE_FRAMES),.ATTACK_STEP(ATTACK_STEP),\n                     .NOTE_INCREMENT(NOTE_INC)) lane(').replace('clk,reset_n,frame_tick,lane_keys,','clk,reset_n,frame_tick,btn_n[n],')
+p.write_text(s)
+'@ | python -; & ./instrument_io/run_tests.ps1 *> logs/20261012-direct-voice-tests.log; if($LASTEXITCODE -ne 0){throw 'Tests failed'}; & 'E:\gaoyun\tools\gowin\Gowin_V1.9.11.03_Education\Gowin_V1.9.11.03_Education_x64\IDE\bin\gw_sh.exe' instrument_io/build.tcl *> logs/20261012-direct-voice-build.log; "BuildExit=$LASTEXITCODE"
+Process ID: 24028
+PSVersion: 7.6.5
+PSEdition: Core
+GitCommitId: 7.6.5
+OS: Microsoft Windows 10.0.26100
+Platform: Win32NT
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1, 6.0, 7.0
+PSRemotingProtocolVersion: 2.4
+SerializationVersion: 1.1.0.1
+WSManStackVersion: 3.0
+**********************
+**********************
+PowerShell transcript end
+End time: 20261012113554
+**********************
