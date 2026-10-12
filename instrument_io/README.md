@@ -73,3 +73,5 @@ S3持续音修正（2026-10-12）：实物复音监测发现旧掩码版本K=F�
 重要状态修正（2026-10-12）：上述Flash写入虽然工具exit0，用户冷启动无响应；随后operation15独立比较到70%报SPI Verify failed、exit67。故当前Flash持久化未验证成功。现已恢复9DA141...E561修正版SRAM，UART/ADC正常；断电或RCFG可能再次无法启动。原因是Flash内容或读链路不一致，尚不能证明芯片损坏。
 
 2026-10-12最新Flash状态：干净USB连接、全程不打开串口，官方operation37 GAO-Bridge将9DA141...E561修正版复音写入Flash并明确校验成功（Program and Verify flash successfully），exit0、20.19秒。冷启动功能验证待反馈。此成功取代此前bscan校验失败的烧录状态；不证明此前单一根因。
+
+当前最终状态（2026-10-12）：官方GAO-Bridge operation37写入/校验通过后，用户按全断电重启、不下载SRAM的条件测试全松静音、S0–S3和混音，反馈“ok了”。修正版复音Flash自启动已通过；音质尚未量化验证。

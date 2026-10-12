@@ -462,3 +462,9 @@ Flash现在为直接单键声部修正版（SRAM标识3CB9），不是之前ADE8
 由于此前bscan独立校验失败，改用高云手册及本机帮助确认支持的operation_index37（exFlash Erase,Program,Verify thru GAO-Bridge），仍为GW2A-18C、2.5MHz、地址0x000000和同一复音码流；不使用bulk erase/OTP/下载器固件更新。日志独立显示Programming Flash进度100%，明确Program and Verify flash successfully、Finished、exit0、20.19秒。这次有工具明确写入＋校验成功证据，尚不代替冷启动功能验证。
 
 同时改变了下载器干净连接和Flash访问路径，因此不能仅凭此次成功断言先前唯一根因是串口占用或bscan缺陷。可复现成功路径现为干净USB状态、不打开COM13、官方GAO-Bridge37。已请求全断电10秒、先PCM后Dock，用户确认使能1号ON，不下载SRAM，验证全松静音、四键和混音。Flash当前为3CB9修正版复音，冷启动反馈待确认。
+
+### GAO-Bridge烧录后冷启动测试通过
+
+用户对全断电10秒、先PCM后Dock供电、不下载SRAM、不按RCFG条件下的全松静音、S0–S3按松和混音测试回复“ok了”。记录为本轮整体冷启动功能测试通过，未扩展为量化音质测量。结合operation37明确Program and Verify flash successfully、exit0，当前9DA141FDAF59E24E1FE10ED352389D8B3D8CE2DC0B1283A2B4A3B317FB99E561修正版复音Flash持久化完成。
+
+后续采用此次已验证路径：干净USB连接、不打开COM13，官方GAO-Bridge operation37、GW2A-18C、2.5MHz、spiaddr0x000000；核验目标码流hash；工具写入校验成功后，再全断电验证应用。PCM维持USB供电、排针3.3V不并接、与Dock共地。此前bscan失败单一根因仍未隔离证明；音质受音箱限制尚无法判断。
