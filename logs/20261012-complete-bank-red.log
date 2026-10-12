@@ -1,0 +1,5 @@
+instrument_io/tb_bank.sv:5: error: Unknown module type: spectrum_bank
+2 error(s) during elaboration.
+*** These modules were missing:
+        spectrum_bank referenced 1 times.
+***

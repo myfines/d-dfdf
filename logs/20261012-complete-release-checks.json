@@ -1,0 +1,30 @@
+{
+  "bitstream_sha256": "436F86922855BD02BA6A10E8649C8483C04D627FE12B7AA00F5C90263617381A",
+  "bitstream_path": "E:\\gaoyun\\projects\\instrument_io\\instrument_io\\impl\\pnr\\instrument_io.fs",
+  "tests": 13,
+  "simulated_spectral_peaks": 32,
+  "physical_spectrum_measured": false,
+  "latency_measured": false,
+  "flash_updated": true,
+  "source_sha256": {
+    "instrument_io\\ads1015_reader.v": "1cdce9b293fb037186e58254c11b414df1a33cab81d25280c856f6ad74728b2b",
+    "instrument_io\\adsr_envelope.v": "395032615aeabfc19ae70b430d62d1629421ebbbe76701499438d69014ad5fe6",
+    "instrument_io\\adsr_runtime.v": "d53ad16485df7c4b082f517e5eaef9d3a0eb13d5ee27ae141c88c97ec9263679",
+    "instrument_io\\i2c_register_bus.v": "d4c8d65d39a3887a1e1de0269d7050a754b56806d7454ac85ceec08b791b470d",
+    "instrument_io\\i2s_tx16.v": "02953e1b1501d07494520dd59f559f38566ccf81b0f914c1024643d6ed03fb19",
+    "instrument_io\\instrument_diag.v": "58a6ed937e8d737d6bac9905a610c716df89ca4bd3c12656aff6997e3494b23b",
+    "instrument_io\\instrument_io.v": "b0670f294ff1c1ff04f9e4b23c14bacfaa4bed878cb5023f2429a3cdf554cddb",
+    "instrument_io\\instrument_panel.v": "6b658d09bc5594db5c6ff69c0e32a8b7ce4a4e2e9ec99e72064b763606236199",
+    "instrument_io\\mode_router.v": "4662a4893dda414f81dae1b4daf2be121f66ed4caa3fdfa0facd720abec25294",
+    "instrument_io\\short_delay.v": "7596539767dbe7c7ebb6ae9bf71fd4e278df8d3c7395476fa82ff4fd4ca2613d",
+    "instrument_io\\spectrum_bank.v": "418c5277533797b50c26597014803cf4d7a726a6021bb700268dd8cdb7b40a63",
+    "instrument_io\\uart_status.v": "2885d21520cc867b560cccb8f648c0cdd86721bf07b6c90d7f539b2626faa28f",
+    "instrument_io\\voice_engine.v": "965a0c717abe9a30d11a4d5210148373f8eaacdae7d3718757b53d4680ee67e9",
+    "instrument_io\\wave_source.v": "5f871240cc7bd8623ebd062331b90338723335f016a6f8784214dcd7bd84c9c8"
+  },
+  "flash_verified": true,
+  "cold_boot_user_confirmed": true,
+  "cold_boot_user_code": "0x00007799",
+  "cold_boot_status": "0x00006020",
+  "new_modes_manual_acceptance": false
+}

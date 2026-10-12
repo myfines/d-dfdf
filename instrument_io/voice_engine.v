@@ -4,16 +4,20 @@
 module voice_lane #(
     parameter integer RELEASE_FRAMES=235,
     parameter integer ATTACK_STEP=6,
-    parameter [31:0] NOTE_INCREMENT=32'd47943389
+    parameter [31:0] NOTE_INCREMENT=32'd47943389,
+    parameter [31:0] PAGE1_INCREMENT=32'd50794208,PAGE2_INCREMENT=32'd76105296
 )(input wire clk,reset_n,frame_tick,input wire key_n,
   input wire controls_valid,input wire [11:0] axis_x,axis_y,input wire octave_down,
-  output wire signed [15:0] sample,output wire active);
+  output wire signed [15:0] sample,output wire active,
+  input wire runtime_enable,input wire [1:0] timbre,input wire [8:0] attack_config,
+  input wire [15:0] decay_config,input wire [8:0] sustain_config,input wire [15:0] release_config,
+  input wire [1:0] note_page);
     reg btn_meta,btn_sync;
     reg [31:0] phase;
     wire [8:0] envelope;
     reg sounding;
     reg [15:0] release_count;
-    wire [31:0] base_inc=NOTE_INCREMENT;
+    wire [31:0] base_inc=note_page==1 ?PAGE1_INCREMENT:note_page==2 ?PAGE2_INCREMENT:NOTE_INCREMENT;
     wire [11:0] bounded_x=axis_x>1650?12'd1650:axis_x;
     wire signed [12:0] delta=$signed({1'b0,bounded_x})-13'sd825;
     wire signed [12:0] bend=(!controls_valid || (delta>=-25 && delta<=25))?13'sd0:delta;
@@ -23,10 +27,11 @@ module voice_lane #(
     wire [19:0] color_scaled=axis_y*8'd159;
     wire [7:0] mix=(!controls_valid)?8'd0:(color_scaled[19:10]>255)?8'd255:color_scaled[17:10];
     wire [8:0] triangle_weight=9'd256-{1'b0,mix};
-    wire [14:0] triangle_magnitude=phase[30]?~phase[29:15]:phase[29:15];
-    // Folding the phase bits gives a continuous two's-complement triangle,
-    // with range -32768..32767 and no arithmetic narrowing.
-    wire signed [15:0] triangle=$signed({phase[31],triangle_magnitude^{15{phase[31]}}});
+    wire signed [15:0] triangle;
+    wave_source oscillator(phase,timbre,triangle);
+    reg [8:0] note_attack,note_sustain;
+    reg [15:0] note_decay,note_release;
+    localparam [8:0] DEFAULT_ATTACK=ATTACK_STEP;
     wire signed [15:0] saw=$signed(phase[31:16]);
     wire signed [25:0] blend_sum=triangle*$signed({1'b0,triangle_weight})+
                                 saw*$signed({2'b00,mix});
@@ -34,16 +39,25 @@ module voice_lane #(
     wire signed [15:0] blend=$signed(blend_sum[23:8]);
     wire signed [26:0] gain_product=blend*$signed({1'b0,envelope});
     assign sample=$signed(gain_product[25:10]);
-    adsr_envelope #(.ATTACK_STEP(ATTACK_STEP)) env(
-        clk,reset_n,frame_tick,sounding,envelope,active);
+    adsr_runtime env(clk,reset_n,frame_tick,sounding,
+        note_attack,note_decay,note_sustain,note_release,envelope,active);
     always @(posedge clk) begin
         if(!reset_n) begin
             btn_meta<=1;btn_sync<=1;phase<=0;
             sounding<=0;release_count<=0;
+            note_attack<=DEFAULT_ATTACK;note_decay<=16;note_sustain<=160;note_release<=4;
         end else begin
             btn_meta<=key_n;btn_sync<=btn_meta;
             if(frame_tick) begin
-                if(!btn_sync) begin sounding<=1;release_count<=0;end
+                if(!btn_sync) begin
+                    sounding<=1;release_count<=0;
+                    if(!sounding)begin
+                        note_attack<=runtime_enable?attack_config:DEFAULT_ATTACK;
+                        note_decay<=runtime_enable?decay_config:16'd16;
+                        note_sustain<=runtime_enable?sustain_config:9'd160;
+                        note_release<=runtime_enable?release_config:16'd4;
+                    end
+                end
                 else if(sounding) begin
                     if(release_count==RELEASE_FRAMES) sounding<=0;
                     else release_count<=release_count+1'b1;
@@ -60,17 +74,23 @@ module voice_engine #(
     parameter integer ATTACK_STEP=6
 )(input wire clk,reset_n,frame_tick,input wire [3:0] btn_n,
   input wire controls_valid,input wire [11:0] axis_x,axis_y,input wire octave_down,
-  output wire signed [15:0] sample,output wire active);
+  output wire signed [15:0] sample,output wire active,
+  input wire runtime_enable,input wire [1:0] timbre,input wire [8:0] attack_config,
+  input wire [15:0] decay_config,input wire [8:0] sustain_config,input wire [15:0] release_config,
+  input wire [1:0] note_page);
     wire signed [15:0] lane_sample[0:3];
     wire [3:0] lane_active;
     genvar n;
     generate for(n=0;n<4;n=n+1) begin: voices
         localparam [31:0] NOTE_INC=n==0?32'd47943389:n==1?32'd53814635:
                                      n==2?32'd60404887:32'd71833926;
+        localparam [31:0] PAGE1_INC=n==0 ?32'd50794254:n==1 ?32'd57014623:n==2 ?32'd63996750:32'd67802195;
+        localparam [31:0] PAGE2_INC=n==0 ?32'd76105391:n==1 ?32'd80630853:n==2 ?32'd85425413:32'd90505072;
         voice_lane #(.RELEASE_FRAMES(RELEASE_FRAMES),.ATTACK_STEP(ATTACK_STEP),
-                     .NOTE_INCREMENT(NOTE_INC)) lane(
+                     .NOTE_INCREMENT(NOTE_INC),.PAGE1_INCREMENT(PAGE1_INC),.PAGE2_INCREMENT(PAGE2_INC)) lane(
             clk,reset_n,frame_tick,btn_n[n],controls_valid,axis_x,axis_y,octave_down,
-            lane_sample[n],lane_active[n]);
+            lane_sample[n],lane_active[n],runtime_enable,timbre,
+            attack_config,decay_config,sustain_config,release_config,note_page);
     end endgenerate
     wire signed [17:0] mix_sum=
         $signed({{2{lane_sample[0][15]}},lane_sample[0]})+

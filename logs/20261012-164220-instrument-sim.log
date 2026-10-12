@@ -1,0 +1,70 @@
+**********************
+PowerShell transcript start
+Start time: 20261012164220
+Username: ZRK\zrk
+RunAs User: ZRK\zrk
+Configuration Name: 
+Machine: ZRK (Microsoft Windows NT 10.0.26100.0)
+Host Application: C:\Users\zrk\.cache\codex-runtimes\codex-primary-runtime\dependencies\native\powershell\pwsh.dll -Command try { [Console]::OutputEncoding=[System.Text.Encoding]::UTF8 } catch {}
+@'
+from pathlib import Path
+import math
+p=Path('instrument_io/instrument_panel.v');s=p.read_text().replace('output reg [1:0] timbre,','output reg [1:0] timbre,note_page,').replace('timbre<=0;edit_mode<=0;','timbre<=0;note_page<=0;edit_mode<=0;').replace("if(!press_keys[1])octave_down", "if(!press_keys[0])begin\n     case(note_page)2'd0:note_page<=2'd1;2'd1:note_page<=2'd2;default:note_page<=2'd0;endcase\n    end\n    else if(!press_keys[1])octave_down");p.write_text(s)
+p=Path('instrument_io/tb_panel.sv');s=p.read_text().replace('wire [1:0] tone,field;','wire [1:0] tone,field,page;').replace('y,tone,edit_mode','y,tone,page,edit_mode').replace('keys=13;click();',"keys=14;click();if(page!=1 || tone!=0)$fatal(1,\"Note page change failed\");\nkeys=13;click();",1);p.write_text(s)
+p=Path('instrument_io/voice_engine.v');s=p.read_text();s=s.replace("parameter [31:0] NOTE_INCREMENT=32'd47943389","parameter [31:0] NOTE_INCREMENT=32'd47943389,\n    parameter [31:0] PAGE1_INCREMENT=32'd50794208,PAGE2_INCREMENT=32'd76105296")
+s=s.replace('input wire [15:0] decay_config,input wire [8:0] sustain_config,input wire [15:0] release_config);','input wire [15:0] decay_config,input wire [8:0] sustain_config,input wire [15:0] release_config,\n  input wire [1:0] note_page);')
+s=s.replace('wire [31:0] base_inc=NOTE_INCREMENT;',"wire [31:0] base_inc=note_page==1 ?PAGE1_INCREMENT:note_page==2 ?PAGE2_INCREMENT:NOTE_INCREMENT;")
+inc=lambda sem:round((440*2**((72+sem-69)/12))*2**32/46875)
+def sel(vals):return "n==0 ?32'd%d:n==1 ?32'd%d:n==2 ?32'd%d:32'd%d"%tuple(map(inc,vals))
+s=s.replace('        voice_lane #(',f"        localparam [31:0] PAGE1_INC={sel([1,3,5,6])};\n        localparam [31:0] PAGE2_INC={sel([8,9,10,11])};\n        voice_lane #(")
+s=s.replace('.NOTE_INCREMENT(NOTE_INC)) lane(','.NOTE_INCREMENT(NOTE_INC),.PAGE1_INCREMENT(PAGE1_INC),.PAGE2_INCREMENT(PAGE2_INC)) lane(').replace('attack_config,decay_config,sustain_config,release_config);','attack_config,decay_config,sustain_config,release_config,note_page);')
+p.write_text(s)
+for name in ['tb_voice.sv','tb_poly.sv']:
+ p=Path('instrument_io/'+name);s=p.read_text().replace("9'd160,16'd4);","9'd160,16'd4,2'd0);");p.write_text(s)
+p=Path('instrument_io/instrument_io.v');s=p.read_text().replace('wire [1:0] timbre,edit_field;','wire [1:0] timbre,note_page,edit_field;').replace('timbre,edit_mode,test_mode,','timbre,note_page,edit_mode,test_mode,').replace("test_mode?16'd4:release_interval);","test_mode?16'd4:release_interval,note_page);").replace("{3'd0,timbre,edit_mode,test_mode,octave_down,echo_enable,edit_field,note_active}","{1'd0,note_page,timbre,edit_mode,test_mode,octave_down,echo_enable,edit_field,note_active}");p.write_text(s)
+'@ | python -; @'
+`timescale 1ns/1ps
+module tb_pages;
+reg clk=0,rst=0,tick=0;always #5 clk=~clk;
+reg [3:0] keys=15;reg [1:0] page=0;
+wire signed [15:0] sample;wire active;
+voice_engine #(.ATTACK_STEP(128),.RELEASE_FRAMES(3)) dut(clk,rst,tick,keys,1'b0,12'd825,12'd0,1'b0,sample,active,1'b0,2'd1,9'd6,16'd16,9'd160,16'd4,page);
+task frame;begin @(negedge clk);tick=1;@(negedge clk);tick=0;end endtask
+real freq;integer n,p,k,c;reg signed [15:0] prev;
+initial begin
+repeat(3)@(negedge clk);rst=1;
+for(p=0;p<3;p=p+1)begin
+page=p;
+for(k=0;k<4;k=k+1)begin
+ keys=15;repeat(1200)frame();keys=~(4'b0001<<k);repeat(500)frame();prev=sample;c=0;
+ for(n=0;n<5000;n=n+1)begin frame();if(prev<0 && sample>=0)c=c+1;prev=sample;end
+ case(p*4+k)
+ 0:freq=523.251;1:freq=587.330;2:freq=659.255;3:freq=783.991;
+ 4:freq=554.365;5:freq=622.254;6:freq=698.456;7:freq=739.989;
+ 8:freq=830.609;9:freq=880;10:freq=932.328;11:freq=987.767;
+ endcase
+ if($itor(c)<freq*5000/46875-1.1 || $itor(c)>freq*5000/46875+1.1)$fatal(1,"Wrong page note %d: %d",p*4+k,c);
+end end
+$display("PASS pages: all 12 chromatic pitches selectable with four keys");$finish;
+end
+endmodule
+'@ | Set-Content instrument_io/tb_pages.sv; (Get-Content -Raw instrument_io/run_tests.ps1).Replace("'poly','controls'","'poly','pages','controls'") | Set-Content instrument_io/run_tests.ps1; & ./instrument_io/run_tests.ps1 *> logs/20261012-complete-pages-tests.log; Get-Content logs/20261012-complete-pages-tests.log -Tail 6
+Process ID: 28480
+PSVersion: 7.6.5
+PSEdition: Core
+GitCommitId: 7.6.5
+OS: Microsoft Windows 10.0.26100
+Platform: Win32NT
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1, 6.0, 7.0
+PSRemotingProtocolVersion: 2.4
+SerializationVersion: 1.1.0.1
+WSManStackVersion: 3.0
+**********************
+E:\gaoyun\d-dfdf\instrument_io\instrument_io.v:54: warning: Port 6 (axis_y) of module uart_status expects 12 bit(s), given 14.
+E:\gaoyun\d-dfdf\instrument_io\instrument_io.v:54:        : Pruning 2 high bits of the expression.
+E:\gaoyun\d-dfdf\instrument_io\instrument_io.v:54: warning: Port 6 (axis_y) of module uart_status expects 12 bit(s), given 14.
+E:\gaoyun\d-dfdf\instrument_io\instrument_io.v:54:        : Pruning 2 high bits of the expression.
+**********************
+PowerShell transcript end
+End time: 20261012164350
+**********************

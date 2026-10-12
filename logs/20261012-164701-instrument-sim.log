@@ -1,0 +1,27 @@
+**********************
+PowerShell transcript start
+Start time: 20261012164701
+Username: ZRK\zrk
+RunAs User: ZRK\zrk
+Configuration Name: 
+Machine: ZRK (Microsoft Windows NT 10.0.26100.0)
+Host Application: C:\Users\zrk\.cache\codex-runtimes\codex-primary-runtime\dependencies\native\powershell\pwsh.dll -Command try { [Console]::OutputEncoding=[System.Text.Encoding]::UTF8 } catch {}
+@'
+from pathlib import Path
+p=Path('instrument_io/instrument_io.v');s=p.read_text().replace("{3'd0,timbre,note_page,edit_mode,test_mode,octave_down,echo_enable,edit_field,note_active}","{1'd0,note_page,timbre,edit_mode,test_mode,octave_down,echo_enable,edit_field,note_active}");p.write_text(s)
+'@ | python -; & ./instrument_io/run_tests.ps1 *> logs/20261012-complete-final-tests.log; Get-Content logs/20261012-complete-final-tests.log -Tail 6
+Process ID: 9088
+PSVersion: 7.6.5
+PSEdition: Core
+GitCommitId: 7.6.5
+OS: Microsoft Windows 10.0.26100
+Platform: Win32NT
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1, 6.0, 7.0
+PSRemotingProtocolVersion: 2.4
+SerializationVersion: 1.1.0.1
+WSManStackVersion: 3.0
+**********************
+**********************
+PowerShell transcript end
+End time: 20261012164831
+**********************

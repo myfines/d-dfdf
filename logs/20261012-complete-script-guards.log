@@ -1,0 +1,2 @@
+PASS rejected invalid hash before hardware access: Bitstream SHA256 mismatch: 436F86922855BD02BA6A10E8649C8483C04D627FE12B7AA00F5C90263617381A
+PASS rejected Flash call without fresh USB acknowledgement before hardware access

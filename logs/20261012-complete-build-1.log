@@ -1,0 +1,39 @@
+*** GOWIN Tcl Command Line Console  *** 
+current working directory: E:/gaoyun/projects/instrument_io/instrument_io
+add new file: "E:/gaoyun/d-dfdf/instrument_io/instrument_io.v"
+add new file: "E:/gaoyun/d-dfdf/instrument_io/voice_engine.v"
+add new file: "E:/gaoyun/d-dfdf/instrument_io/i2s_tx16.v"
+add new file: "E:/gaoyun/d-dfdf/instrument_io/ads1015_reader.v"
+add new file: "E:/gaoyun/d-dfdf/instrument_io/i2c_register_bus.v"
+add new file: "E:/gaoyun/d-dfdf/instrument_io/instrument.cst"
+add new file: "E:/gaoyun/d-dfdf/instrument_io/instrument.sdc"
+add new file: "E:/gaoyun/d-dfdf/instrument_io/uart_status.v"
+add new file: "E:/gaoyun/d-dfdf/instrument_io/adsr_envelope.v"
+add new file: "E:/gaoyun/d-dfdf/instrument_io/adsr_runtime.v"
+add new file: "E:/gaoyun/d-dfdf/instrument_io/instrument_panel.v"
+add new file: "E:/gaoyun/d-dfdf/instrument_io/wave_source.v"
+add new file: "E:/gaoyun/d-dfdf/instrument_io/short_delay.v"
+add new file: "E:/gaoyun/d-dfdf/instrument_io/spectrum_bank.v"
+GowinSynthesis start
+Running parser ...
+Analyzing Verilog file 'E:\gaoyun\d-dfdf\instrument_io\instrument_io.v'
+Analyzing Verilog file 'E:\gaoyun\d-dfdf\instrument_io\voice_engine.v'
+Analyzing Verilog file 'E:\gaoyun\d-dfdf\instrument_io\i2s_tx16.v'
+Analyzing Verilog file 'E:\gaoyun\d-dfdf\instrument_io\ads1015_reader.v'
+Analyzing Verilog file 'E:\gaoyun\d-dfdf\instrument_io\i2c_register_bus.v'
+Analyzing Verilog file 'E:\gaoyun\d-dfdf\instrument_io\uart_status.v'
+Analyzing Verilog file 'E:\gaoyun\d-dfdf\instrument_io\adsr_envelope.v'
+Analyzing Verilog file 'E:\gaoyun\d-dfdf\instrument_io\adsr_runtime.v'
+Analyzing Verilog file 'E:\gaoyun\d-dfdf\instrument_io\instrument_panel.v'
+ERROR (EX3132) : Illegal use of 'x' or 'z' character in a decimal number("E:\gaoyun\d-dfdf\instrument_io\instrument_panel.v":12)
+ERROR (EX3863) : Syntax error near ''d'("E:\gaoyun\d-dfdf\instrument_io\instrument_panel.v":12)
+ERROR (EX3928) : Module 'instrument_panel' is ignored due to previous errors("E:\gaoyun\d-dfdf\instrument_io\instrument_panel.v":48)
+Verilog file 'E:\gaoyun\d-dfdf\instrument_io\instrument_panel.v' ignored due to errors
+Analyzing Verilog file 'E:\gaoyun\d-dfdf\instrument_io\wave_source.v'
+Analyzing Verilog file 'E:\gaoyun\d-dfdf\instrument_io\short_delay.v'
+Analyzing Verilog file 'E:\gaoyun\d-dfdf\instrument_io\spectrum_bank.v'
+GowinSynthesis finish
+
+    while executing
+"run all"
+    (file "instrument_io/build.tcl" line 21)

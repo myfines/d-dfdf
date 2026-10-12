@@ -1,0 +1,170 @@
+{
+  "source": "RTL simulation, not hardware measurement",
+  "sample_rate_hz": 46875.0,
+  "sample_count": 8192,
+  "independent_peaks": 32,
+  "max_bin_error_hz": 2.811279296875,
+  "peak_sample": 8106.0,
+  "peaks": [
+    {
+      "expected_hz": 129,
+      "observed_bin_hz": 131.6070556640625,
+      "magnitude": 457696.8399142088
+    },
+    {
+      "expected_hz": 160,
+      "observed_bin_hz": 160.21728515625,
+      "magnitude": 523743.4065708246
+    },
+    {
+      "expected_hz": 191,
+      "observed_bin_hz": 188.8275146484375,
+      "magnitude": 477270.47623642633
+    },
+    {
+      "expected_hz": 222,
+      "observed_bin_hz": 223.1597900390625,
+      "magnitude": 510680.8736973654
+    },
+    {
+      "expected_hz": 253,
+      "observed_bin_hz": 251.77001953125,
+      "magnitude": 508784.3664511063
+    },
+    {
+      "expected_hz": 284,
+      "observed_bin_hz": 286.102294921875,
+      "magnitude": 479978.53503041004
+    },
+    {
+      "expected_hz": 315,
+      "observed_bin_hz": 314.7125244140625,
+      "magnitude": 523475.36809328804
+    },
+    {
+      "expected_hz": 346,
+      "observed_bin_hz": 343.32275390625,
+      "magnitude": 454282.8243624597
+    },
+    {
+      "expected_hz": 377,
+      "observed_bin_hz": 377.655029296875,
+      "magnitude": 519943.23894316755
+    },
+    {
+      "expected_hz": 408,
+      "observed_bin_hz": 406.2652587890625,
+      "magnitude": 493927.6678358247
+    },
+    {
+      "expected_hz": 439,
+      "observed_bin_hz": 440.5975341796875,
+      "magnitude": 498478.7063342141
+    },
+    {
+      "expected_hz": 470,
+      "observed_bin_hz": 469.207763671875,
+      "magnitude": 517836.46037546615
+    },
+    {
+      "expected_hz": 501,
+      "observed_bin_hz": 503.5400390625,
+      "magnitude": 461004.60037541576
+    },
+    {
+      "expected_hz": 532,
+      "observed_bin_hz": 532.1502685546875,
+      "magnitude": 524231.45594133885
+    },
+    {
+      "expected_hz": 563,
+      "observed_bin_hz": 560.760498046875,
+      "magnitude": 474468.57226602803
+    },
+    {
+      "expected_hz": 594,
+      "observed_bin_hz": 595.0927734375,
+      "magnitude": 512090.38426752907
+    },
+    {
+      "expected_hz": 625,
+      "observed_bin_hz": 623.7030029296875,
+      "magnitude": 506962.9322649549
+    },
+    {
+      "expected_hz": 656,
+      "observed_bin_hz": 658.0352783203125,
+      "magnitude": 483013.93287889386
+    },
+    {
+      "expected_hz": 687,
+      "observed_bin_hz": 686.6455078125,
+      "magnitude": 523082.61860259494
+    },
+    {
+      "expected_hz": 718,
+      "observed_bin_hz": 715.2557373046875,
+      "magnitude": 451014.00146617903
+    },
+    {
+      "expected_hz": 749,
+      "observed_bin_hz": 749.5880126953125,
+      "magnitude": 520766.29108838516
+    },
+    {
+      "expected_hz": 780,
+      "observed_bin_hz": 778.1982421875,
+      "magnitude": 491706.69335942564
+    },
+    {
+      "expected_hz": 811,
+      "observed_bin_hz": 812.530517578125,
+      "magnitude": 500592.99433010083
+    },
+    {
+      "expected_hz": 842,
+      "observed_bin_hz": 841.1407470703125,
+      "magnitude": 516803.94751548336
+    },
+    {
+      "expected_hz": 873,
+      "observed_bin_hz": 875.4730224609375,
+      "magnitude": 464103.47679381643
+    },
+    {
+      "expected_hz": 904,
+      "observed_bin_hz": 904.083251953125,
+      "magnitude": 524354.8627439927
+    },
+    {
+      "expected_hz": 935,
+      "observed_bin_hz": 932.6934814453125,
+      "magnitude": 471608.066341343
+    },
+    {
+      "expected_hz": 966,
+      "observed_bin_hz": 967.0257568359375,
+      "magnitude": 513611.5510577631
+    },
+    {
+      "expected_hz": 997,
+      "observed_bin_hz": 995.635986328125,
+      "magnitude": 505668.4846427845
+    },
+    {
+      "expected_hz": 1028,
+      "observed_bin_hz": 1029.96826171875,
+      "magnitude": 485496.8094681597
+    },
+    {
+      "expected_hz": 1059,
+      "observed_bin_hz": 1058.5784912109375,
+      "magnitude": 522268.77485450107
+    },
+    {
+      "expected_hz": 1090,
+      "observed_bin_hz": 1087.188720703125,
+      "magnitude": 447648.4093361611
+    }
+  ]
+}

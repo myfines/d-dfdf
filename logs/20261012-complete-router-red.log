@@ -1,0 +1,5 @@
+instrument_io/tb_router.sv:5: error: Unknown module type: mode_router
+2 error(s) during elaboration.
+*** These modules were missing:
+        mode_router referenced 1 times.
+***

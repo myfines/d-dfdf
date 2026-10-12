@@ -1,0 +1,27 @@
+Transcript started, output file is E:\gaoyun\d-dfdf\logs\20261012-163430-instrument-sim.log
+PASS router: fade to zero before mode switch, edit silence, bounded gain, return
+E:\gaoyun\d-dfdf\instrument_io\tb_router.sv:14: $finish called at 890000 (1ps)
+PASS 32 bank: 32 active oscillators, per-frame budget, bounded samples, released silence
+E:\gaoyun\d-dfdf\instrument_io\tb_bank.sv:14: $finish called at 9580510000 (1ps)
+PASS panel: presets, octave, echo, ADSR editing, long-press disambiguation, test toggle
+E:\gaoyun\d-dfdf\instrument_io\tb_panel.sv:23: $finish called at 1230000 (1ps)
+PASS delay: initialized silence, delayed impulse, gain, exact bypass
+E:\gaoyun\d-dfdf\instrument_io\tb_effect.sv:15: $finish called at 411000 (1ps)
+PASS waveforms: bounded known samples, fundamental, sine purity, distinct saw harmonics
+E:\gaoyun\d-dfdf\instrument_io\tb_waves.sv:19: $finish called at 768000 (1ps)
+PASS ADSR: peak, decay, stable sustain, release, retrigger, idle
+E:\gaoyun\d-dfdf\instrument_io\tb_adsr.sv:16: $finish called at 17230000 (1ps)
+PASS I2S: delay, signed stereo words, 16-bit slots, coherent frames
+E:\gaoyun\d-dfdf\instrument_io\tb_i2s.sv:36: $finish called at 9735000 (1ps)
+PASS ADS1015: address/config, signed-byte framing, both axes, stretch, NACK, stuck bus recovery
+E:\gaoyun\d-dfdf\instrument_io\tb_ads1015.sv:41: $finish called at 187270000 (1ps)
+PASS voice: single note frequency, bend, timbre, octave, level limit, neutral failover, silence
+E:\gaoyun\d-dfdf\instrument_io\tb_voice.sv:44: $finish called at 745450000 (1ps)
+PASS poly: independent C+G superposition, selective release, four voice headroom, silence
+E:\gaoyun\d-dfdf\instrument_io\tb_poly.sv:22: $finish called at 222050000 (1ps)
+PASS controls integration: debounced combinations, runtime ADSR, edit mute, 32-voice routing, return to silence
+E:\gaoyun\d-dfdf\instrument_io\tb_controls.sv:24: $finish called at 167874643405 (1ps)
+PASS integration: real BCLK rate, decoded stereo audio, ADC LED, missing-ADC fallback, release, amp disabled
+E:\gaoyun\d-dfdf\instrument_io\tb_instrument.sv:41: $finish called at 33812823555 (1ps)
+ALL INSTRUMENT TESTS PASSED
+Transcript stopped, output file is E:\gaoyun\d-dfdf\logs\20261012-163430-instrument-sim.log

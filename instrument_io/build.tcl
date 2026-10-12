@@ -13,4 +13,10 @@ set_option -use_mspi_as_gpio 0
 set_option -use_reconfign_as_gpio 0
 add_file E:/gaoyun/d-dfdf/instrument_io/uart_status.v
 add_file E:/gaoyun/d-dfdf/instrument_io/adsr_envelope.v
+add_file E:/gaoyun/d-dfdf/instrument_io/adsr_runtime.v
+add_file E:/gaoyun/d-dfdf/instrument_io/instrument_panel.v
+add_file E:/gaoyun/d-dfdf/instrument_io/wave_source.v
+add_file E:/gaoyun/d-dfdf/instrument_io/short_delay.v
+add_file E:/gaoyun/d-dfdf/instrument_io/spectrum_bank.v
+add_file E:/gaoyun/d-dfdf/instrument_io/mode_router.v
 run all

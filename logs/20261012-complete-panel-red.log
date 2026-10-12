@@ -1,0 +1,5 @@
+instrument_io/tb_panel.sv:7: error: Unknown module type: instrument_panel
+2 error(s) during elaboration.
+*** These modules were missing:
+        instrument_panel referenced 1 times.
+***

@@ -1,0 +1,69 @@
+**********************
+PowerShell transcript start
+Start time: 20261012163430
+Username: ZRK\zrk
+RunAs User: ZRK\zrk
+Configuration Name: 
+Machine: ZRK (Microsoft Windows NT 10.0.26100.0)
+Host Application: C:\Users\zrk\.cache\codex-runtimes\codex-primary-runtime\dependencies\native\powershell\pwsh.dll -Command try { [Console]::OutputEncoding=[System.Text.Encoding]::UTF8 } catch {}
+@'
+`timescale 1ns/1ps
+module tb_router;
+reg clk=0,rst=0,tick=0;always #5 clk=~clk;reg [1:0] mode=0;
+wire signed [15:0] sample;
+mode_router #(.STEP(64)) dut(clk,rst,tick,mode,16'sd4000,-16'sd4000,sample);
+task frame;begin @(negedge clk);tick=1;@(negedge clk);tick=0;end endtask
+integer i;reg saw_zero=0;
+initial begin
+repeat(3)@(negedge clk);rst=1;repeat(7)frame();if(sample!==4000)$fatal(1,"Router normal gain wrong");
+mode=2;for(i=0;i<12;i=i+1)begin frame();if(sample==0)saw_zero=1;if(sample<0 && !saw_zero)$fatal(1,"Mode switched without zero crossing fade");if(sample>4000 || sample< -4000)$fatal(1,"Router gain overflow");end
+if(sample!==-4000)$fatal(1,"Router test mode did not reach unity");
+mode=1;repeat(12)frame();if(sample!==0)$fatal(1,"Edit mode not muted");
+mode=0;repeat(12)frame();if(sample!==4000)$fatal(1,"Returning to keyboard failed");
+$display("PASS router: fade to zero before mode switch, edit silence, bounded gain, return");$finish;
+end
+endmodule
+'@ | Set-Content instrument_io/tb_router.sv; $env:PATH='E:\gaoyun\tools\openfpgaloader\ucrt64\bin;E:\gaoyun\tools\iverilog\ucrt64\bin;'+$env:PATH; & E:\gaoyun\tools\iverilog\ucrt64\bin\iverilog.exe -g2012 -s tb_router -o E:\gaoyun\router.vvp instrument_io/tb_router.sv *> logs/20261012-complete-router-red.log; @'
+`timescale 1ns/1ps
+// Fade-out, switch at zero, fade-in. Output register isolates the gain multiplier.
+module mode_router #(parameter integer STEP=8)(input wire clk,reset_n,frame_tick,
+ input wire [1:0] desired,input wire signed [15:0] keyboard_sample,bank_sample,
+ output reg signed [15:0] sample);
+ reg [1:0] current;reg [8:0] gain;
+ localparam [8:0] GAIN_STEP=STEP,LIMIT=256-STEP;
+ wire signed [15:0] source=current==2 ?bank_sample:current==1 ?16'sd0:keyboard_sample;
+ wire signed [25:0] product=source*$signed({1'b0,gain});
+ always @(posedge clk)begin
+  if(!reset_n)begin current<=0;gain<=0;sample<=0;end
+  else if(frame_tick)begin
+   sample<=product[23:8];
+   if(current!=desired)begin
+    if(gain==0)current<=desired;
+    else gain<=gain<=GAIN_STEP?9'd0:gain-GAIN_STEP;
+   end else if(gain<LIMIT)gain<=gain+GAIN_STEP;
+   else gain<=256;
+  end
+ end
+endmodule
+'@ | Set-Content instrument_io/mode_router.v; @'
+from pathlib import Path
+p=Path('instrument_io/instrument_io.v');s=p.read_text().replace('assign dry_sample=test_mode?bank_sample:keyboard_sample;','mode_router router(clk,reset_n,frame_tick,test_mode?2\'d2:edit_mode?2\'d1:2\'d0,\n        keyboard_sample,bank_sample,dry_sample);').replace('echo_enable && !test_mode,dry_sample','echo_enable && !test_mode && !edit_mode,dry_sample');p.write_text(s)
+p=Path('instrument_io/tb_controls.sv');s=p.read_text().replace('dut.dry_sample!==dut.bank_sample','dut.router.current!==2\'d2');p.write_text(s)
+p=Path('instrument_io/run_tests.ps1');s=p.read_text().replace("'spectrum_bank.v')","'spectrum_bank.v','mode_router.v')").replace("@('bank'","@('router','bank'");p.write_text(s)
+p=Path('instrument_io/build.tcl');s=p.read_text().replace('run all','add_file E:/gaoyun/d-dfdf/instrument_io/mode_router.v\nrun all');p.write_text(s)
+'@ | python -; & ./instrument_io/run_tests.ps1 *> logs/20261012-complete-release-tests.log; Get-Content logs/20261012-complete-release-tests.log -Tail 7
+Process ID: 9032
+PSVersion: 7.6.5
+PSEdition: Core
+GitCommitId: 7.6.5
+OS: Microsoft Windows 10.0.26100
+Platform: Win32NT
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1, 6.0, 7.0
+PSRemotingProtocolVersion: 2.4
+SerializationVersion: 1.1.0.1
+WSManStackVersion: 3.0
+**********************
+**********************
+PowerShell transcript end
+End time: 20261012163550
+**********************

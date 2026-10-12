@@ -7,11 +7,12 @@ $env:PATH = 'E:\gaoyun\tools\openfpgaloader\ucrt64\bin;E:\gaoyun\tools\iverilog\
 $stamp = Get-Date -Format 'yyyyMMdd-HHmmss'
 $logPath = Join-Path $repoDir "logs\$stamp-instrument-sim.log"
 $outDir = 'E:\gaoyun\tools\smoke'
-$rtl = @('i2s_tx16.v','i2c_register_bus.v','ads1015_reader.v','voice_engine.v','instrument_io.v','uart_status.v','adsr_envelope.v') |
+New-Item -ItemType Directory -Path $outDir -Force | Out-Null
+$rtl = @('i2s_tx16.v','i2c_register_bus.v','ads1015_reader.v','voice_engine.v','instrument_io.v','uart_status.v','adsr_envelope.v','adsr_runtime.v','instrument_panel.v','wave_source.v','short_delay.v','spectrum_bank.v','mode_router.v') |
     ForEach-Object { Join-Path $PSScriptRoot $_ }
 Start-Transcript -Path $logPath
 try {
-    foreach ($name in @('adsr','i2s','ads1015','voice','poly','instrument')) {
+    foreach ($name in @('router','bank','panel','effect','waves','adsr','i2s','ads1015','voice','poly','pages','controls','instrument')) {
         $top = "tb_$name"
         $tb = Join-Path $PSScriptRoot "$top.sv"
         $image = Join-Path $outDir "instrument-$name.vvp"

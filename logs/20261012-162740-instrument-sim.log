@@ -1,0 +1,58 @@
+**********************
+PowerShell transcript start
+Start time: 20261012162740
+Username: ZRK\zrk
+RunAs User: ZRK\zrk
+Configuration Name: 
+Machine: ZRK (Microsoft Windows NT 10.0.26100.0)
+Host Application: C:\Users\zrk\.cache\codex-runtimes\codex-primary-runtime\dependencies\native\powershell\pwsh.dll -Command try { [Console]::OutputEncoding=[System.Text.Encoding]::UTF8 } catch {}
+@'
+from pathlib import Path
+p=Path('instrument_io/short_delay.v');s=p.read_text().replace('reg [AW-1:0] index;','localparam [AW-1:0] LAST_INDEX=DEPTH-1;\n wire [AW:0] index_next={1\'b0,index}+{{AW{1\'b0}},1\'b1};\n reg [AW-1:0] index;').replace("index<=index==DEPTH-1?0:index+1'b1;","index<=index==LAST_INDEX?{AW{1'b0}}:index_next[AW-1:0];");p.write_text(s)
+'@ | python -; @'
+`timescale 1ns/1ps
+module tb_controls;
+reg clk=0;always #18.5185 clk=~clk;
+reg [3:0] keys=15;reg joy=1;reg [11:0] y=825;
+tri1 scl,sda;wire bck,ws,data,pa,hb,hw,hd,alive,adc_led,uart;integer configs,n;
+instrument_io #(.I2C_HALF_TICKS(4),.CONVERSION_TICKS(100),.RETRY_TICKS(200),
+ .BUS_TIMEOUT_TICKS(500),.SWITCH_DEBOUNCE_TICKS(10),.LONG_PRESS_FRAMES(10)) dut(
+ clk,keys,joy,scl,sda,bck,ws,data,pa,hb,hw,hd,alive,adc_led,uart);
+ads1015_model slave(scl,sda,1'b1,12'd825,y,configs);
+task frames(input integer count);begin repeat(count)@(negedge ws);#1;end endtask
+task click;begin joy=0;frames(3);joy=1;frames(3);end endtask
+task hold;begin joy=0;frames(14);joy=1;frames(3);end endtask
+initial begin
+wait(adc_led);frames(3);click();if(dut.timbre!=1)$fatal(1,"Integrated preset click failed");
+keys=13;click();if(!dut.octave_down)$fatal(1,"Integrated octave failed");
+keys=11;click();if(!dut.echo_enable)$fatal(1,"Integrated effect toggle failed");
+keys=15;hold();if(!dut.edit_mode)$fatal(1,"Integrated edit entry failed");
+keys=14;y=1650;frames(1800);if(dut.attack_step!=16 || dut.keyboard_active)$fatal(1,"Edit mapping or muted gates failed");
+keys=15;hold();if(dut.edit_mode)$fatal(1,"Integrated edit exit failed");
+keys=6;hold();frames(70);if(!dut.test_mode || !dut.bank_active || dut.keyboard_active)$fatal(1,"32-voice mode routing failed");
+if(dut.bank_busy)$fatal(1,"Bank cannot finish frame");
+for(n=0;n<50;n=n+1)begin frames(1);if($isunknown(dut.audio_sample) || dut.audio_sample>8192 || dut.audio_sample< -8192)$fatal(1,"Mode output invalid");end
+hold();keys=15;frames(1800);if(dut.test_mode || dut.note_active || dut.audio_sample!==0)$fatal(1,"Leaving test mode did not become silent");
+$display("PASS controls integration: debounced combinations, runtime ADSR, edit mute, 32-voice routing, return to silence");$finish;
+end
+initial begin #120000000;$fatal(1,"Controls integration timeout");end
+endmodule
+'@ | Set-Content instrument_io/tb_controls.sv; (Get-Content -Raw instrument_io/run_tests.ps1).Replace("'poly','instrument'","'poly','controls','instrument'") | Set-Content instrument_io/run_tests.ps1; & ./instrument_io/run_tests.ps1 *> logs/20261012-complete-suite-3.log; Get-Content logs/20261012-complete-suite-3.log -Tail 10
+Process ID: 22068
+PSVersion: 7.6.5
+PSEdition: Core
+GitCommitId: 7.6.5
+OS: Microsoft Windows 10.0.26100
+Platform: Win32NT
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1, 6.0, 7.0
+PSRemotingProtocolVersion: 2.4
+SerializationVersion: 1.1.0.1
+WSManStackVersion: 3.0
+**********************
+E:\gaoyun\d-dfdf\instrument_io\short_delay.v:7: error: Unable to bind wire/reg/memory `index' in `tb_effect.dut'
+E:\gaoyun\d-dfdf\instrument_io\short_delay.v:8:      : A symbol with that name was declared here. Check for declaration after use.
+1 error(s) during elaboration.
+**********************
+PowerShell transcript end
+End time: 20261012162748
+**********************

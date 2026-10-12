@@ -1,0 +1,9 @@
+Transcript started, output file is E:\gaoyun\d-dfdf\logs\20261012-162740-instrument-sim.log
+PASS 32 bank: 32 active oscillators, per-frame budget, bounded samples, released silence
+E:\gaoyun\d-dfdf\instrument_io\tb_bank.sv:14: $finish called at 9580510000 (1ps)
+PASS panel: presets, octave, echo, ADSR editing, long-press disambiguation, test toggle
+E:\gaoyun\d-dfdf\instrument_io\tb_panel.sv:23: $finish called at 1230000 (1ps)
+E:\gaoyun\d-dfdf\instrument_io\short_delay.v:7: error: Unable to bind wire/reg/memory `index' in `tb_effect.dut'
+E:\gaoyun\d-dfdf\instrument_io\short_delay.v:8:      : A symbol with that name was declared here. Check for declaration after use.
+1 error(s) during elaboration.
+Transcript stopped, output file is E:\gaoyun\d-dfdf\logs\20261012-162740-instrument-sim.log

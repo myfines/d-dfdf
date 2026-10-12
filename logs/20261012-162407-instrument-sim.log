@@ -1,0 +1,95 @@
+**********************
+PowerShell transcript start
+Start time: 20261012162407
+Username: ZRK\zrk
+RunAs User: ZRK\zrk
+Configuration Name: 
+Machine: ZRK (Microsoft Windows NT 10.0.26100.0)
+Host Application: C:\Users\zrk\.cache\codex-runtimes\codex-primary-runtime\dependencies\native\powershell\pwsh.dll -Command try { [Console]::OutputEncoding=[System.Text.Encoding]::UTF8 } catch {}
+@'
+`timescale 1ns/1ps
+module tb_bank;
+reg clk=0,rst=0,tick=0;always #5 clk=~clk;
+reg [31:0] gates=0;wire signed [15:0] sample;wire active,busy;
+spectrum_bank dut(clk,rst,tick,gates,sample,active,busy);
+integer n,f;
+task frame;begin @(negedge clk);tick=1;@(negedge clk);tick=0;repeat(110)@(negedge clk);if(busy)$fatal(1,"Bank missed frame budget");end endtask
+initial begin
+repeat(3)@(negedge clk);rst=1;repeat(2)frame();if(sample!==0 || active)$fatal(1,"Bank idle not silent");
+gates=32'hffffffff;repeat(60)frame();if(!active)$fatal(1,"Bank failed to start");
+f=$fopen("E:/gaoyun/tools/smoke/spectrum32.csv","w");
+for(n=0;n<8192;n=n+1)begin frame();if(sample>8192 || sample< -8192 || $isunknown(sample))$fatal(1,"Bank mixed sample invalid");$fdisplay(f,"%0d",sample);end
+$fclose(f);gates=0;repeat(300)frame();if(sample!==0 || active)$fatal(1,"Bank release not silent");
+$display("PASS 32 bank: 32 active oscillators, per-frame budget, bounded samples, released silence");$finish;
+end
+endmodule
+'@ | Set-Content instrument_io/tb_bank.sv; $env:PATH='E:\gaoyun\tools\openfpgaloader\ucrt64\bin;E:\gaoyun\tools\iverilog\ucrt64\bin;'+$env:PATH; & E:\gaoyun\tools\iverilog\ucrt64\bin\iverilog.exe -g2012 -s tb_bank -o E:\gaoyun\bank.vvp instrument_io/tb_bank.sv *> logs/20261012-complete-bank-red.log; Get-Content logs/20261012-complete-bank-red.log; @'
+from pathlib import Path
+s='''`timescale 1ns/1ps
+// 32 independent phases/envelopes, 96 fabric cycles per stereo frame.
+// Time slots share arithmetic but never share oscillator state.
+module spectrum_bank(input wire clk,reset_n,frame_tick,input wire [31:0] gates,
+ output reg signed [15:0] sample,output reg active,output wire busy);
+ localparam IDLE=0,READ=1,CALC=2,ACCUM=3;
+ reg [1:0] state;reg [4:0] index;
+ reg [31:0] phases[0:31];reg [8:0] levels[0:31];
+ reg [31:0] phase_reg,gate_frame;reg [8:0] level_reg;
+ reg signed [30:0] sum;reg frame_active;
+ wire signed [15:0] wave;
+ wave_source oscillator(phase_reg,2'd1,wave);
+ wire signed [25:0] product=wave*$signed({1'b0,level_reg});
+ wire signed [30:0] next_sum=sum+{{5{product[25]}},product};
+ wire [8:0] next_level=gate_frame[index]?(level_reg>=250?9'd256:level_reg+9'd6):
+                                      (level_reg==0?9'd0:level_reg-1'b1);
+ assign busy=state!=IDLE;
+ function [31:0] increment;
+ input [4:0] n;
+ begin case(n)
+'''
+for i in range(32):s+=f"  5'd{i}:increment=32'd{round((129+31*i)*(2**32)/46875)}; // {129+31*i} Hz\n"
+s+='''  default:increment=0;
+ endcase end
+ endfunction
+ integer k;
+ always @(posedge clk)begin
+  if(!reset_n)begin
+   state<=IDLE;index<=0;sample<=0;active<=0;phase_reg<=0;level_reg<=0;gate_frame<=0;sum<=0;frame_active<=0;
+   for(k=0;k<32;k=k+1)begin phases[k]<=0;levels[k]<=0;end
+  end else case(state)
+   IDLE:if(frame_tick)begin gate_frame<=gates;sum<=0;frame_active<=0;index<=0;state<=READ;end
+   READ:begin phase_reg<=phases[index];level_reg<=levels[index];state<=CALC;end
+   CALC:begin phases[index]<=phase_reg+increment(index);levels[index]<=next_level;state<=ACCUM;end
+   ACCUM:begin
+    sum<=next_sum;frame_active<=frame_active || level_reg!=0;
+    if(index==31)begin sample<=next_sum[30:15];active<=frame_active || level_reg!=0;state<=IDLE;end
+    else begin index<=index+1'b1;state<=READ;end
+   end
+   default:state<=IDLE;
+  endcase
+ end
+endmodule
+'''
+Path('instrument_io/spectrum_bank.v').write_text(s)
+# Test mode now selects the 32-voice bank; performer remains four direct voices.
+p=Path('instrument_io/instrument_io.v');s=p.read_text();s=s.replace('wire signed [15:0] audio_sample,dry_sample;','wire signed [15:0] audio_sample,dry_sample,keyboard_sample,bank_sample;\n    wire keyboard_active,bank_active,bank_busy;');s=s.replace('wire [3:0] play_keys=test_mode?4\'d0:edit_mode?4\'d15:keys_sync;','wire [3:0] play_keys=(test_mode || edit_mode)?4\'d15:keys_sync;');s=s.replace('octave_down,dry_sample,note_active,','octave_down,keyboard_sample,keyboard_active,');s=s.replace('    short_delay effect(','''    spectrum_bank bank(clk,reset_n,frame_tick,{32{test_mode}},bank_sample,bank_active,bank_busy);
+    assign dry_sample=test_mode?bank_sample:keyboard_sample;
+    assign note_active=test_mode?bank_active:keyboard_active;
+    short_delay effect(''');s=s.replace('// Test mode uses four neutral-pitch sine voices, held constant for spectrum measurement.','// Test mode selects a 32-voice sine bank; ordinary keys are muted.');p.write_text(s)
+p=Path('instrument_io/run_tests.ps1');s=p.read_text().replace("'short_delay.v')","'short_delay.v','spectrum_bank.v')").replace("@('panel','effect'","@('bank','panel','effect'");p.write_text(s)
+p=Path('instrument_io/build.tcl');s=p.read_text().replace('run all','add_file E:/gaoyun/d-dfdf/instrument_io/spectrum_bank.v\nrun all');p.write_text(s)
+'@ | python -; & ./instrument_io/run_tests.ps1 *> logs/20261012-complete-suite-2.log; Get-Content logs/20261012-complete-suite-2.log -Tail 5
+Process ID: 26576
+PSVersion: 7.6.5
+PSEdition: Core
+GitCommitId: 7.6.5
+OS: Microsoft Windows 10.0.26100
+Platform: Win32NT
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1, 6.0, 7.0
+PSRemotingProtocolVersion: 2.4
+SerializationVersion: 1.1.0.1
+WSManStackVersion: 3.0
+**********************
+**********************
+PowerShell transcript end
+End time: 20261012162438
+**********************
