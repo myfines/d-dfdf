@@ -356,3 +356,8 @@ COM13 115200/8N1、DTR/RTS关闭，读取3秒得到12条状态行，均 V1 E0；
 重新核对TI PCM5102A数据手册：https://www.ti.com/lit/ds/symlink/pcm5102a.pdf 。16bit I2S及32fs BCK是支持的格式；当前46.875kHz非表列标准48kHz，PLL实物锁定未证明。芯片AVDD/DVDD/CPVDD需分别供电；照片模块有三颗LDO，排针3.3V是否同时连通三轨无该板原理图/测量证据，不能从LED亮或客服“可以3.3V输入”证明完整供电。
 
 已请求用户断电后移除PCM的+3.3V供电线（两端悬空），保留DATA/BCK/LRCK/GND四线，改用电脑普通USB-A到USB-C给PCM原USB入口供电。不得并接排针3.3V和USB供电。保持同一诊断码流，下一次仅SRAM重装作单变量对照。尚未收到接线完成反馈，尚未进行下一次下载。未写Flash。
+
+### PCM 改 USB 供电后，重装同一诊断程序
+
+用户回复已完成此前要求的供电切换：PCM 排针3.3V供电线移除，保留三路I2S与共地，USB入口单独供电。此为用户接线确认，非电压实测。
+2.5MHz JTAG扫描ID 0x0000081B、exit0；核验同一FD39A08328F6DE08107700D04741DA3710C866E3B7D43EB8ABA79A7BD70E9F4F码流后，官方operation_index2下载SRAM完成100%，UserCode F871，Status6020，exit0，4.64秒。未改变程序、未写Flash。已请求用户听外接PCM持续固定音，结果待反馈。
