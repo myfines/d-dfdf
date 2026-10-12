@@ -534,3 +534,9 @@ PDF文字已提取，首次控制台输出遇GBK不能编码NBSP的UnicodeEncode
 读取用户新PDF（3页）并查看正面插座/排针图片，确认图示YB-MX04-1.0、右白座I2C GND/SDA/SCL/5V，左白座为串口。核对SOM及已归档Pnr，预定独立I2C SCL=T9、SDA=P9，均bank3/3.3V且无现有工程占用；原理图连接LVDS_IOR38_P/N，不是实际Flash网络。形成docs/eightway-wiring.md，保留ADS/PCM/摇杆接线。5V源单独确认，不能接3.3V/GPIO/12V。
 
 说明要求每次模块上电稳定至少20秒，实际工作高度黑/白各静止3秒校准并短按KEY采样，校准值断电保存。建议先单独模块5V/GND校准，FPGA保持断电、两信号悬空。记录PDF中01111111->0x8F笔误应为0x7F/127。当前7799没有该接口驱动，未接线、未上电或烧录，热问题待查状态不因说明正常而解除。
+
+## 2026-10-12 八路模块5V供电来源与ST-Link用途澄清
+
+用户没有现成5V排针，询问能否用ST-Link作供电。查ST官方UM1075 https://www.st.com/resource/en/user_manual/um1075-stsw-link007.pdf ：VAPP是目标板电压参考/检测，标准V2接口的VDD条目标3.3V，不能把这些直接当模块所需5V输出。用户ST-Link具体型号/克隆脚位未知，需照片与输出供电能力确认，不直接授权任意VCC脚供电。
+
+建议明确的USB-A 5V/GND取电转接板，或已确认USB供电开发板的5V输出；无需把5V送入FPGA GPIO或3.3V轨。若现有ST-Link实际提供USB5V电源输出且能力确认，可仅其5V/GND供巡线模块，SWDIO/SWCLK不接本模块/FPGA，通信保持3.3V与共地。未改接线、未访问板卡或烧录。核心热问题仍不以短时功能正常解除。
