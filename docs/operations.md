@@ -445,3 +445,6 @@ Flash现在为直接单键声部修正版（SRAM标识3CB9），不是之前ADE8
 用户此前“LED0/1都亮”与官方未使能提示吻合，优先核实1号使能拨码，不把此线索直接当根因。JTAG可扫描、SRAM可运行也不取代此物理设置核查。已给官方图片 https://wiki.sipeed.com/hardware/zh/tang/tang-primer-20k/assets/start/switch_1_on.png 并询问ON/OFF。未执行新擦写。
 
 高云现行SUG502-2.5.2E https://cdn.gowinsemi.com.cn/SUG502E.pdf 的GW2A(R)外部Flash章节说明bscan13/15，以及GAO-Bridge36（擦写）/37（擦写校验）。本机CLI帮助亦确认37名称匹配。GAO-Bridge是官方支持的另一路径，非已证实本故障修复方法；目前不能承诺换模式即可成功。接下来顺序应为核实使能与连接，复位下载器并避免串口占用，再视证据采用官方Flash模式且校验通过+冷启动验证；此前70%校验失败不能忽略或归为芯片损坏。
+
+## 2026-10-12 成功/失败Flash流程对比
+已保存 docs/flash-success-failure-comparison-20261012.md 和码流头JSON。旧成功文件hash仍匹配；型号/启动头/地址/工具路径/2.5MHz操作13均一致，文件大小相同。重要差异为此前刚恢复FTDI连接，而本次多轮COM13后未重新插拔下载器。官方FAQ提示串口/JTAG占用，列为优先排除的链路状态假设，不宣称已证明根因。旧版无写后独立比较但有冷启动/RCFG实测；本次校验失败并启动无响应。仅分析，未操作Flash。
