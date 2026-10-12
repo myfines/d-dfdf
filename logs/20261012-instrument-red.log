@@ -1,0 +1,5 @@
+instrument_io\tb_i2s.sv:7: error: Unknown module type: i2s_tx16
+2 error(s) during elaboration.
+*** These modules were missing:
+        i2s_tx16 referenced 1 times.
+***

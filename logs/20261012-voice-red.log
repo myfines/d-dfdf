@@ -1,0 +1,5 @@
+instrument_io\tb_voice.sv:11: error: Unknown module type: voice_engine
+2 error(s) during elaboration.
+*** These modules were missing:
+        voice_engine referenced 1 times.
+***

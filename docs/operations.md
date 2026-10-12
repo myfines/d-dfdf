@@ -310,3 +310,14 @@ openFPGALoader -b tangprimer20k --freq 2500000 --write-sram -v <经核验的码�
 
 - 用户提供声洛科音频客服截图：明确允许从模块3.3V脚输入供电，说明USB5V经LDO转换3.3V，强调该排针输入不能超压。这补充了同款模块供电信息，支持五根杜邦线供电/信号方案。
 - 更新接线表：DATA/P6、BCK/R8、LRCK/P8、GND/DockGND、+3.3V/Dock PMOD0真实3V3；采用此方式时DAC USB-C不接，避免两路3.3V源并接。不需要OTG5V取电，不给GPIO承担供电。尚未接线/上电/测量；未确认型号的PAM功放不套用此方案。
+
+## 2026-10-12：完成 PCM5102A / ADS1015 摇杆接口程序，未烧录
+
+- 用户要求先写好程序。建立独立 instrument_io 工程，原 audio_keys 源码及已验证Flash程序不改动。保持S0-S3单音优先级，外接PCM5102A为标准16位I2S、BCLK1.5MHz、LRCK46.875kHz、32fs；同样音频送左右声道。TI原始手册第15/25页支持该16位/32fs三线模式，但实际模块PLL锁定未测。
+- ADC地址0x48，开漏SCL/T6、SDA/T7，A0/A1配置0xC383/0xD383（单次、±4.096V、1600SPS），每次转换等1ms，再读2字节；两轴成对发布，更新率为每轴数百次/秒，不把配置值当更新率。NACK/clock stretch/卡线超时有界恢复，缺ADC时退回中性控制仍可四键发声。
+- 摇杆X约±10%弯音、Y三角波/锯齿波混合、SW/T8稳定5ms后按住降低一个八度。默认中点825、死区±25码待实物校准；输出1/4数字满幅，保持线路输出限制，板载耳放与PT8211接口禁用。N16心跳，N14为ADC双轴数据有效指示。
+- 先写独立I2S/ADC/声音测试。测试抓到9时钟恢复计数器3位装不下8造成无限循环，扩成4位后通过。ADC测试包括地址/config/字节/首ACK末NACK、两轴、负数/超量程钳位、拉伸、设备NACK、SCL超时、SDA低与重新上线。声音测试独立测音高过零、优先级、弯音、音色、八度、幅度和静音。整机从串行引脚解码，验证BCLK频率、同帧声道、缺ADC退回、释放静音和板载耳放关闭。
+- 仿真运行库需在PATH把已有openfpgaloader UCRT库放在旧MinGW GCC8之前；未修改系统驱动。一次测试脚本生成时PowerShell误处理timescale反引号造成语法错误，已修正；一次整机测试用组合frame_tick边沿计数产生零时刻伪边沿，改为观察真实WS边沿后通过。原始失败日志保留，最终四组PASS见 logs/20261012-102916-instrument-sim.log。
+- 综合中的算术缩位告警改为有界显式位选，最终build exit0，无WARN/ERROR；pnr setup/hold违反端点均0，27MHz目标、报告Fmax64.695MHz。这仅是FPGA内部时序，外部ADC/DAC/线缆时序待测。6个PMOD0信号均bank3/LVCMOS33/3.3V，旧按键电平保留；JTAG/MSPI/RECONFIG_N专用、仅SSPI复用。证据 logs/20261012-instrument-checks.json、build.log、pnr.rpt.txt、review.md。
+- 最终码流 E:/gaoyun/projects/instrument_io/instrument_io/impl/pnr/instrument_io.fs，便捷副本 E:/gaoyun/instrument_io.fs；SHA256 666B33A15B2939D7FB1AA2B4E5254C4D5B6786F064BBA31226096FF8D9FB04CB。码流不提交Git，源码/build/test脚本与所有日志上传。下次接线核对后先测SRAM，不自动写Flash。
+- 本阶段没有JTAG扫描、硬件上电、SRAM/Flash下载或驱动操作，不能称模块已实测发声。首版单音、非标准48kHz、锯齿未抗混叠，不宣称已完成赛事最终多复音乐器。
