@@ -546,3 +546,9 @@ PDF文字已提取，首次控制台输出遇GBK不能编码NBSP的UnicodeEncode
 用户照片为Zave ST-LINK V2金属壳，外壳针脚图标注：1RST、2SWCLK、3SWIM、4SWDIO、5/6GND、7/8 3.3V、9/10 5.0V。依据照片可规划9或10接八路模块5V，5或6接模块GND；模块GND再接Dock真实GND，使ST-Link供电域/模块/FPGA通信参考一致。SCL=T9、SDA=P9预定独立I2C，其余调试脚和ST-Link3.3V不用；不把5V并到Dock3.3V轨，不把ST-LinkVAPP泛称供电。
 
 照片仅证明外壳标注，不证明实际空载电压或供电额定电流；不能套用原厂20pin接口编号到该10pin款，按本机实物编号核对，尚未实测。未操作板卡/接线/烧录；八路驱动未部署，热故障检查仍未完成。
+
+## 2026-10-12 泽而/Zave ST-Link照片供电接线
+
+用户提供红壳Zave/泽而ST-LINK V2照片。外壳明确标1RST/2SWCLK、3SWIM/4SWDIO、5/6GND、7/8 3.3V、9/10 5.0V。可按该实物标注将9或10作为八路模块5V供电候选、5或6作GND；照片并未证明实际电压/额定输出电流，不扩展成供电能力已测。外壳二维图不能直接当插针端面左右顺序，需实物编号/丝印定位。
+
+接线：ST-Link9(5V)->模块5V；ST-Link5(GND)->模块GND；ST-Link6(GND)->Dock真实GND，共地；模块SCL->T9、SDA->P9独立I2C。9/10选一供电，不接3.3V、SWDIO/SWCLK/RESET/SWIM；5V不送Dock3.3V/GPIO。校准单独模块时SDA/SCL悬空、FPGA断电，联调时两端电源一起准备，避免模块独立上电却向未供电FPGA信号口送高电平。当前7799未包含八路驱动且热故障未排除，本轮仅给接线方案，不访问板卡/烧录。
