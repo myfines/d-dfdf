@@ -66,3 +66,5 @@ N16：普通演奏慢闪、编辑较快闪、频谱测试快速闪。N14：ADS�
 当前输出46.875kHz、16bit I2S。数字测试包括模式、13组逻辑/协议/波形/包络/混音/整机验证和32基频分析；这些不代替DAC模拟频谱、<=10ms真实端到端延迟、音质和操控稳定性的仪器验收。三预设是合成音色，不宣称模拟真实钢琴等乐器。
 
 Flash采用已成功的官方GAO-Bridge操作37。使用串口检查后，先关闭串口并重新拔插USB再烧录。必须有Program and Verify flash successfully，再完整断电检查自启动，不能只看100%。稳定旧码流备份在 E:/gaoyun/releases/instrument-verified-3CB9.fs。
+
+全部模块与ST-Link双GND接法汇总：[当前全部接线总表](wiring-all-current.md)。
