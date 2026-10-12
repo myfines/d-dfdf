@@ -1,6 +1,6 @@
 # 外接 PCM5102A + ADS1015 摇杆首版程序
 
-2026-10-12 状态：源码、独立协议仿真、整机仿真以及高云综合/布局布线已完成。**没有下载到硬件，现有 Flash 四键程序未改写。**这是接口联调用的四键单音首版，不是赛事最终多复音引擎。
+2026-10-12 状态：源码、独立协议仿真、整机仿真以及高云综合/布局布线已完成。已通过高云官方 Programmer 下载到 **SRAM**，退出码0，状态0x00006020 / Done Final；外部ADC/DAC实物现象正在等待用户反馈。现有Flash四键程序未改写。这是接口联调用的四键单音首版，不是赛事最终多复音引擎。
 
 ## 接线
 
@@ -57,4 +57,4 @@ pwsh -NoProfile -File E:\gaoyun\d-dfdf\instrument_io\run_tests.ps1
 
 码流在 `E:/gaoyun/projects/instrument_io/instrument_io/impl/pnr/instrument_io.fs`，便捷副本 `E:/gaoyun/instrument_io.fs`；最终身份和内部时序摘要见 `logs/20261012-instrument-checks.json`。FS按仓库约定不提交Git。编译成功不代表模块供电、ADC实测值、模拟声音或外部接口时序已经验证。
 
-下一步：核对接线/供电后，用高云官方 Programmer 的**SRAM Program（operation 2）**测试该码流，暂不写Flash。未接模块也应能看到心跳，但这不证明外部DAC有声音。
+本次用户确认接线与供电后，使用高云官方 Programmer 的 **SRAM Program（operation 2）**，2.5MHz，完成该码流加载，见 `logs/20261012-instrument-sram-program.out.txt`。下一步观察N16心跳、N14 ADC有效灯，并用外部线路输入设备测试声音和摇杆控制。没有写Flash；掉电/RCFG将回到旧Flash四键程序。

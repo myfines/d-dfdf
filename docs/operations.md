@@ -321,3 +321,10 @@ openFPGALoader -b tangprimer20k --freq 2500000 --write-sram -v <经核验的码�
 - 综合中的算术缩位告警改为有界显式位选，最终build exit0，无WARN/ERROR；pnr setup/hold违反端点均0，27MHz目标、报告Fmax64.695MHz。这仅是FPGA内部时序，外部ADC/DAC/线缆时序待测。6个PMOD0信号均bank3/LVCMOS33/3.3V，旧按键电平保留；JTAG/MSPI/RECONFIG_N专用、仅SSPI复用。证据 logs/20261012-instrument-checks.json、build.log、pnr.rpt.txt、review.md。
 - 最终码流 E:/gaoyun/projects/instrument_io/instrument_io/impl/pnr/instrument_io.fs，便捷副本 E:/gaoyun/instrument_io.fs；SHA256 666B33A15B2939D7FB1AA2B4E5254C4D5B6786F064BBA31226096FF8D9FB04CB。码流不提交Git，源码/build/test脚本与所有日志上传。下次接线核对后先测SRAM，不自动写Flash。
 - 本阶段没有JTAG扫描、硬件上电、SRAM/Flash下载或驱动操作，不能称模块已实测发声。首版单音、非标准48kHz、锯齿未抗混叠，不宣称已完成赛事最终多复音乐器。
+
+## 2026-10-12：用户确认接线与供电后，instrument_io 下载到 SRAM
+
+- 用户明确要求下载，并确认PCM DATA/P6、BCK/R8、LRCK/P8；ADS SCL/T6、SDA/T7；摇杆SW/T8；所有模块由Dock真实3V3共地供电、PCM USB-C不接另一路电源。未取得电压/温度实测数据，不声称电气状态已测量。
+- 核对 E:/gaoyun/instrument_io.fs SHA256为666B33A15B2939D7FB1AA2B4E5254C4D5B6786F064BBA31226096FF8D9FB04CB。初次Windows尚无下载器，官方扫描exit49/No Gowin devices；用户连接USB-JTAG后，设备稍后才枚举，A/B均FTDI状态OK。重新只读扫描得到唯一ID0x0000081B、exit0。
+- 使用已验证官方Programmer路径，命令：programmer_cli.exe --device GW2A-18C --cable-index 1 --frequency 2.5MHz --operation_index 2 --fsFile E:/gaoyun/instrument_io.fs。Operation为SRAM Program，编程100%，UserCode0x0000D932，StatusCode0x00006020（Done Final），Finished，耗时4.65秒，exit0。原始日志 logs/20261012-instrument-sram-program.out.txt 与扫描日志。
+- 本次没有Flash擦写、OTP、下载器固件或驱动修改。SRAM掉电/RCFG回到旧Flash音频。已请求用户观察N16心跳/N14 ADC有效灯，以及外接PCM线路设备的四键声音/摇杆变化；反馈尚待确认，不将工具成功当成外部ADC/DAC实物成功。

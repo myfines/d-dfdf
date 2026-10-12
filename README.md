@@ -2,7 +2,7 @@
 
 设备：Sipeed Tang Primer 20K + Dock。目标：2026 高云赛道电子乐器。
 
-2026-10-12 新增 [instrument_io 首版程序](instrument_io/README.md)：外接 PCM5102A 标准 I²S、ADS1015 双轴读取、摇杆弯音/音色和四键单音。四组仿真及高云构建通过；码流已生成，**尚未下载到硬件**，当前 Flash 中仍是下面记录的旧四键程序。
+2026-10-12 新增 [instrument_io 首版程序](instrument_io/README.md)：外接 PCM5102A 标准 I²S、ADS1015 双轴读取、摇杆弯音/音色和四键单音。四组仿真及高云构建通过；现已下载到 **SRAM**，状态0x00006020 / Done Final、exit0，外部模块实物反馈待确认。当前 Flash 中仍是下面记录的旧四键程序。
 
 当前阶段：**音频码流已固化到外置 Flash，掉电上电及 RCFG 后 S0–S3 四键均已确认发声**。`audio_keys` 仍按最低键优先发**单音**；四复音尚未实现。左侧底部 RCFG 是重配置键，不能当演奏键。
 
