@@ -503,3 +503,11 @@ RED为缺adsr_envelope模块；实现后包络单独测试覆盖起音峰值、�
 保存旧7799功耗报告：默认toggle0.125、无VCD/SAIF、环境25°C/无板热模型，估计141.892mW/Tj29.543°C；这些都是模型估计，不是实际功耗或温度，不能用来否定用户触感或确认热安全。参考高云官方功耗分析说明 https://cdn.gowinsemi.com.cn/SUG282E.pdf 与GW2A数据手册 https://www.gowinsemi.com/upload/database_doc/1830/document/6831328fb9769.pdf ，器件供电/结温需在规定条件内，不能把结温限值等同可触摸表面温度。
 
 硬件根因仍未知：需在限流/测温与电源测量条件下核实供电、电流和实际温度，排查异常供电、过流/接触及运行负载，不能凭未动排线排除硬件。无这些条件时保持断电，向厂商/具备条件的硬件人员排查。当前Flash仍7799，软件候选不是已验证热修复。新增hardware-hold.json，并让烧录/串口脚本在未解除实际热故障记录时停止访问硬件；DryRun和解析自测仍可离线使用。该限制源于实际报告的过热，不是权限或自动审批拒绝。
+
+## 2026-10-12 同型号发热公开记录检索
+
+用户问社区是否有类似案例。公开检索Tang Primer20K hot/overheating/temperature/发烫/发热、GitHub/Reddit等，尚未找到与“自定义音频7799、30秒内GW2A烫手、失声、重插恢复”完全一致且已确认根因的社区记录。不把搜索无结果当作不存在。
+
+找到最直接的官方说明：Sipeed Primer20K Lite Blink教程 https://wiki.sipeed.com/hardware/en/tang/tang-primer-20k/examples/lite/blink.html ，明确出厂固件有DDR测试和GPIO翻转，DDR测试会使核心板很热。该记录属于默认固件/Lite教程，与本Dock自定义音频无DDR控制器不能直接等同，尤其不能据此把当前快速烫手认定正常或建议直接继续上电擦除。官方板卡资料 https://dl.sipeed.com/fileList/TANG/Primer_20K/01_Specification/Sipeed%20Tang%20Primer%2020K%20Datasheet%20V1.0.pdf 列温升<30K，但不能用未说明负载条件的指标代替当前实测。
+
+检索到社区作者关于BL702编程后需断电恢复的经历 https://stardance.hackclub.com/projects/9491 ，描述下载器锁住，不是GW2A热故障，不能当同一原因。Habr板卡评测及Sipeed Wiki issue542未找到直接热故障定位内容。结论：存在负载使此核心板明显发热的官方记录，当前热故障仍未定位，保持hardware-hold，不访问设备。
