@@ -40,7 +40,7 @@ module tb_voice;
         octave=1;observe(27,29);octave=0;
         keys=4'b0111;observe(82,85); // G5.
         // Chords and selective release are verified separately in tb_poly.
-        keys=15;repeat(400)frame();if(sample!==0 || active)$fatal(1,"Release failed to become silent");
+        keys=15;repeat(1200)frame();if(sample!==0 || active)$fatal(1,"Release failed to become silent");
         $display("PASS voice: single note frequency, bend, timbre, octave, level limit, neutral failover, silence");$finish;
     end
     initial begin #2000000;$fatal(1,"voice test timeout");end

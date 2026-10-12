@@ -36,9 +36,9 @@ module tb_instrument;
         for(n=0;n<10;n=n+1)begin decode();if(l!=0)nonzero=nonzero+1;end
         if(nonzero==0)$fatal(1,"Missing ADC incorrectly silenced keyboard");
         enabled=1;wait(adc_led);keys=15;
-        repeat(550) @(negedge ws);
+        repeat(1400) @(negedge ws);
         decode();if(l!==0 || r!==0)$fatal(1,"Idle PCM output not silent");
         $display("PASS integration: real BCLK rate, decoded stereo audio, ADC LED, missing-ADC fallback, release, amp disabled");$finish;
     end
-    initial begin #30000000;$fatal(1,"Integration timeout");end
+    initial begin #60000000;$fatal(1,"Integration timeout");end
 endmodule

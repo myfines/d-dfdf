@@ -9,16 +9,16 @@ integer i,expected;
 task frame;begin @(negedge clk);tick=1;@(negedge clk);tick=0;end endtask
 initial begin
 repeat(5)@(negedge clk);rst=1;keys=4'b0110;
-repeat(400)frame();
+repeat(1200)frame();
 for(i=0;i<1000;i=i+1)begin
 frame();expected=$signed(c)+$signed(g);
 if(mixed<expected-1 || mixed>expected+1)$fatal(1,"Chord lost a held voice: got %d expected sum %d",mixed,expected);
 end
-keys=4'b0111;repeat(400)frame();
+keys=4'b0111;repeat(1200)frame();
 for(i=0;i<300;i=i+1)begin frame();if(mixed!==g)$fatal(1,"Releasing C interrupted sustained G");end
-keys=0;repeat(400)frame();
+keys=0;repeat(1200)frame();
 for(i=0;i<5000;i=i+1)begin frame();if(mixed>8192 || mixed< -8192)$fatal(1,"Four voice mix exceeds quarter scale");end
-keys=15;repeat(400)frame();if(mixed!==0 || active)$fatal(1,"All voices must release to silence");
+keys=15;repeat(1200)frame();if(mixed!==0 || active)$fatal(1,"All voices must release to silence");
 $display("PASS poly: independent C+G superposition, selective release, four voice headroom, silence");$finish;
 end
 initial begin #2000000;$fatal(1,"poly timeout");end

@@ -12,4 +12,5 @@ set_option -use_jtag_as_gpio 0
 set_option -use_mspi_as_gpio 0
 set_option -use_reconfign_as_gpio 0
 add_file E:/gaoyun/d-dfdf/instrument_io/uart_status.v
+add_file E:/gaoyun/d-dfdf/instrument_io/adsr_envelope.v
 run all

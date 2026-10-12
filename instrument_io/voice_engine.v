@@ -10,7 +10,7 @@ module voice_lane #(
   output wire signed [15:0] sample,output wire active);
     reg btn_meta,btn_sync;
     reg [31:0] phase;
-    reg [8:0] envelope;
+    wire [8:0] envelope;
     reg sounding;
     reg [15:0] release_count;
     wire [31:0] base_inc=NOTE_INCREMENT;
@@ -27,9 +27,6 @@ module voice_lane #(
     // Folding the phase bits gives a continuous two's-complement triangle,
     // with range -32768..32767 and no arithmetic narrowing.
     wire signed [15:0] triangle=$signed({phase[31],triangle_magnitude^{15{phase[31]}}});
-    localparam [8:0] ATTACK_VALUE=ATTACK_STEP;
-    localparam [8:0] ATTACK_LIMIT=9'd256-ATTACK_VALUE;
-    wire [9:0] attack_sum={1'b0,envelope}+{1'b0,ATTACK_VALUE};
     wire signed [15:0] saw=$signed(phase[31:16]);
     wire signed [25:0] blend_sum=triangle*$signed({1'b0,triangle_weight})+
                                 saw*$signed({2'b00,mix});
@@ -37,10 +34,11 @@ module voice_lane #(
     wire signed [15:0] blend=$signed(blend_sum[23:8]);
     wire signed [26:0] gain_product=blend*$signed({1'b0,envelope});
     assign sample=$signed(gain_product[25:10]);
-    assign active=(envelope!=0);
+    adsr_envelope #(.ATTACK_STEP(ATTACK_STEP)) env(
+        clk,reset_n,frame_tick,sounding,envelope,active);
     always @(posedge clk) begin
         if(!reset_n) begin
-            btn_meta<=1;btn_sync<=1;phase<=0;envelope<=0;
+            btn_meta<=1;btn_sync<=1;phase<=0;
             sounding<=0;release_count<=0;
         end else begin
             btn_meta<=key_n;btn_sync<=btn_meta;
@@ -50,10 +48,6 @@ module voice_lane #(
                     if(release_count==RELEASE_FRAMES) sounding<=0;
                     else release_count<=release_count+1'b1;
                 end
-                if(sounding) begin
-                    if(envelope>=ATTACK_LIMIT) envelope<=9'd256;
-                    else envelope<=attack_sum[8:0];
-                end else if(envelope!=0) envelope<=envelope-1'b1;
                 phase<=phase+phase_inc;
             end
         end
