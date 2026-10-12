@@ -1,0 +1,35 @@
+**********************
+PowerShell transcript start
+Start time: 20261012113444
+Username: ZRK\zrk
+RunAs User: ZRK\zrk
+Configuration Name: 
+Machine: ZRK (Microsoft Windows NT 10.0.26100.0)
+Host Application: C:\Users\zrk\.cache\codex-runtimes\codex-primary-runtime\dependencies\native\powershell\pwsh.dll -Command try { [Console]::OutputEncoding=[System.Text.Encoding]::UTF8 } catch {}
+@'
+from pathlib import Path
+p=Path('instrument_io/instrument_io.v');s=p.read_text();s=s.replace('output reg LED_ALIVE,output wire LED_ADC);','output reg LED_ALIVE,output wire LED_ADC,output wire UART_TX);');needle='    i2s_tx16 tx('
+s=s.replace(needle,'''    // Diagnostic Y low bit reports actual envelope activity, not joystick Y.
+    uart_status monitor(clk,reset_n,controls_valid,adc_error,axis_x,
+        {11'd0,note_active},btn_n,ADC_SCL,ADC_SDA,UART_TX);
+'''+needle);p.write_text(s)
+p=Path('instrument_io/build.tcl');s=p.read_text().replace('run all','add_file E:/gaoyun/d-dfdf/instrument_io/uart_status.v\nrun all');p.write_text(s)
+p=Path('instrument_io/instrument.cst');s=p.read_text();s+='\nIO_LOC "UART_TX" M11;\nIO_PORT "UART_TX" IO_TYPE=LVCMOS33 PULL_MODE=UP DRIVE=4;\n';p.write_text(s)
+p=Path('instrument_io/run_tests.ps1');s=p.read_text().replace("'instrument_io.v')","'instrument_io.v','uart_status.v')");p.write_text(s)
+p=Path('instrument_io/tb_instrument.sv');s=p.read_text().replace('wire bck,ws,data,pa,hb,hw,hd,alive,adc_led;','wire bck,ws,data,pa,hb,hw,hd,alive,adc_led,uart;').replace('hw,hd,alive,adc_led);','hw,hd,alive,adc_led,uart);');p.write_text(s)
+'@ | python -; & ./instrument_io/run_tests.ps1 *> logs/20261012-live-poly-monitor-tests.log; if($LASTEXITCODE -ne 0){throw 'Tests failed'}; & 'E:\gaoyun\tools\gowin\Gowin_V1.9.11.03_Education\Gowin_V1.9.11.03_Education_x64\IDE\bin\gw_sh.exe' instrument_io/build.tcl *> logs/20261012-live-poly-monitor-build.log; "BuildExit=$LASTEXITCODE"; rg 'WARN|ERROR' logs/20261012-live-poly-monitor-build.log
+Process ID: 12028
+PSVersion: 7.6.5
+PSEdition: Core
+GitCommitId: 7.6.5
+OS: Microsoft Windows 10.0.26100
+Platform: Win32NT
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1, 6.0, 7.0
+PSRemotingProtocolVersion: 2.4
+SerializationVersion: 1.1.0.1
+WSManStackVersion: 3.0
+**********************
+**********************
+PowerShell transcript end
+End time: 20261012113451
+**********************

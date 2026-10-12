@@ -64,3 +64,6 @@ pwsh -NoProfile -File E:\gaoyun\d-dfdf\instrument_io\run_tests.ps1
 2026-10-12：四键＋摇杆 instrument_io SRAM 下载后，用户对四键声音、摇杆变化、ADC灯的组合测试反馈为“ok”（未分项描述）。当前 Flash 仍保留此前 audio_keys 程序。
 
 2026-10-12 最新持久化状态：用户授权当前复音版写Flash，官方operation13完成100%、exit0（324.13秒）。当前Flash为instrument_io复音版，SHA256 ADE8A08C908A4B7B0380E28856E07E627B258CDB513D51E176E542F845BA8A4F，掉电自启动测试待用户反馈。S3/音调异常反馈未解决。此前“Flash仍为audio_keys”的记录属于旧状态。
+
+
+S3持续音修正（2026-10-12）：实物复音监测发现旧掩码版本K=F而包络活动Y001；改为每声部一个按键输入和固定音符后，SRAM实测K=F、Y000。UART为COM13、115200/8N1；当前Y字段用于诊断包络是否活动，并非摇杆Y读数。此次修正版只载入SRAM，Flash仍是此前含问题的复音版，待试听后更新。

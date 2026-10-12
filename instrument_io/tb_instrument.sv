@@ -3,13 +3,13 @@ module tb_instrument;
     reg clk=0;always #18.5185 clk=~clk;
     reg [3:0] keys=15;reg joy=1,enabled=1;
     tri1 scl,sda;
-    wire bck,ws,data,pa,hb,hw,hd,alive,adc_led;
+    wire bck,ws,data,pa,hb,hw,hd,alive,adc_led,uart;
     integer configs,n,nonzero;
     reg [15:0] l,r;
     real last_bck=0;
     instrument_io #(.I2C_HALF_TICKS(4),.CONVERSION_TICKS(100),.RETRY_TICKS(200),
         .BUS_TIMEOUT_TICKS(500),.SWITCH_DEBOUNCE_TICKS(10)) dut(
-        clk,keys,joy,scl,sda,bck,ws,data,pa,hb,hw,hd,alive,adc_led);
+        clk,keys,joy,scl,sda,bck,ws,data,pa,hb,hw,hd,alive,adc_led,uart);
     ads1015_model slave(scl,sda,enabled,12'd825,12'd0,configs);
     always @(posedge bck) if(dut.reset_n) begin
         if(last_bck!=0 && (($realtime-last_bck)<666.0 || ($realtime-last_bck)>667.0))

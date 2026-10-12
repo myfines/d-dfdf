@@ -7,7 +7,7 @@ $env:PATH = 'E:\gaoyun\tools\openfpgaloader\ucrt64\bin;E:\gaoyun\tools\iverilog\
 $stamp = Get-Date -Format 'yyyyMMdd-HHmmss'
 $logPath = Join-Path $repoDir "logs\$stamp-instrument-sim.log"
 $outDir = 'E:\gaoyun\tools\smoke'
-$rtl = @('i2s_tx16.v','i2c_register_bus.v','ads1015_reader.v','voice_engine.v','instrument_io.v') |
+$rtl = @('i2s_tx16.v','i2c_register_bus.v','ads1015_reader.v','voice_engine.v','instrument_io.v','uart_status.v') |
     ForEach-Object { Join-Path $PSScriptRoot $_ }
 Start-Transcript -Path $logPath
 try {

@@ -3,20 +3,17 @@
 // Peak output is limited to one quarter scale; this is still a line-level DAC.
 module voice_lane #(
     parameter integer RELEASE_FRAMES=235,
-    parameter integer ATTACK_STEP=6
-)(input wire clk,reset_n,frame_tick,input wire [3:0] btn_n,
+    parameter integer ATTACK_STEP=6,
+    parameter [31:0] NOTE_INCREMENT=32'd47943389
+)(input wire clk,reset_n,frame_tick,input wire key_n,
   input wire controls_valid,input wire [11:0] axis_x,axis_y,input wire octave_down,
   output wire signed [15:0] sample,output wire active);
-    reg [3:0] btn_meta,btn_sync;
+    reg btn_meta,btn_sync;
     reg [31:0] phase;
     reg [8:0] envelope;
     reg sounding;
     reg [15:0] release_count;
-    reg [2:0] held;
-    wire [2:0] pressed=!btn_sync[0]?0:!btn_sync[1]?1:!btn_sync[2]?2:!btn_sync[3]?3:4;
-    wire [2:0] note=(pressed!=4)?pressed:held;
-    wire [31:0] base_inc=note==0?32'd47943389:note==1?32'd53814635:
-                             note==2?32'd60404887:32'd71833926;
+    wire [31:0] base_inc=NOTE_INCREMENT;
     wire [11:0] bounded_x=axis_x>1650?12'd1650:axis_x;
     wire signed [12:0] delta=$signed({1'b0,bounded_x})-13'sd825;
     wire signed [12:0] bend=(!controls_valid || (delta>=-25 && delta<=25))?13'sd0:delta;
@@ -43,12 +40,12 @@ module voice_lane #(
     assign active=(envelope!=0);
     always @(posedge clk) begin
         if(!reset_n) begin
-            btn_meta<=15;btn_sync<=15;phase<=0;envelope<=0;
-            sounding<=0;release_count<=0;held<=0;
+            btn_meta<=1;btn_sync<=1;phase<=0;envelope<=0;
+            sounding<=0;release_count<=0;
         end else begin
-            btn_meta<=btn_n;btn_sync<=btn_meta;
+            btn_meta<=key_n;btn_sync<=btn_meta;
             if(frame_tick) begin
-                if(pressed!=4) begin sounding<=1;release_count<=0;held<=pressed;end
+                if(!btn_sync) begin sounding<=1;release_count<=0;end
                 else if(sounding) begin
                     if(release_count==RELEASE_FRAMES) sounding<=0;
                     else release_count<=release_count+1'b1;
@@ -74,9 +71,11 @@ module voice_engine #(
     wire [3:0] lane_active;
     genvar n;
     generate for(n=0;n<4;n=n+1) begin: voices
-        wire [3:0] lane_keys=btn_n | ~(4'b0001 << n);
-        voice_lane #(.RELEASE_FRAMES(RELEASE_FRAMES),.ATTACK_STEP(ATTACK_STEP)) lane(
-            clk,reset_n,frame_tick,lane_keys,controls_valid,axis_x,axis_y,octave_down,
+        localparam [31:0] NOTE_INC=n==0?32'd47943389:n==1?32'd53814635:
+                                     n==2?32'd60404887:32'd71833926;
+        voice_lane #(.RELEASE_FRAMES(RELEASE_FRAMES),.ATTACK_STEP(ATTACK_STEP),
+                     .NOTE_INCREMENT(NOTE_INC)) lane(
+            clk,reset_n,frame_tick,btn_n[n],controls_valid,axis_x,axis_y,octave_down,
             lane_sample[n],lane_active[n]);
     end endgenerate
     wire signed [17:0] mix_sum=

@@ -9,7 +9,7 @@ module instrument_io #(
   inout wire ADC_SCL,ADC_SDA,
   output wire PCM_BCK,PCM_LRCK,PCM_DATA,
   output wire PA_EN,HP_BCK,HP_WS,HP_DIN,
-  output reg LED_ALIVE,output wire LED_ADC);
+  output reg LED_ALIVE,output wire LED_ADC,output wire UART_TX);
     reg [15:0] power_on=0;
     wire reset_n=power_on[15];
     always @(posedge clk) if(!reset_n) power_on<=power_on+1'b1;
@@ -29,6 +29,9 @@ module instrument_io #(
         clk,reset_n,ADC_SCL,ADC_SDA,axis_x,axis_y,controls_valid,adc_error);
     voice_engine voice(clk,reset_n,frame_tick,btn_n,controls_valid,axis_x,axis_y,
         !sw_stable,audio_sample,note_active);
+    // Diagnostic Y low bit reports actual envelope activity, not joystick Y.
+    uart_status monitor(clk,reset_n,controls_valid,adc_error,axis_x,
+        {11'd0,note_active},btn_n,ADC_SCL,ADC_SDA,UART_TX);
     i2s_tx16 tx(clk,reset_n,audio_sample,audio_sample,PCM_BCK,PCM_LRCK,PCM_DATA,frame_tick);
     always @(posedge clk) begin
         if(!reset_n) begin
