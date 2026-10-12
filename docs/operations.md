@@ -379,3 +379,11 @@ COM13 115200/8N1、DTR/RTS关闭，读取3秒得到12条状态行，均 V1 E0；
 先加入独立C+G叠加/单独松键/四键幅度/全松静音测试，旧优先级引擎失败：Chord lost a held voice got778 expected -5816。实现后五组仿真全通过（I2S、ADS、单音控制、复音、整机）。Gowin构建exit0、无WARN/ERROR，setup/hold违反端点均0，27MHz约束下Fmax43.572MHz。手动审查确认四个键mask保留原键索引，符号扩展18bit求和，输出固定缩放无溢出，协议/供电/引脚未改变。README主接线表修正PCM为USB供电，避免与末尾修正文互相矛盾。
 
 SHA256 ADE8A08C908A4B7B0380E28856E07E627B258CDB513D51E176E542F845BA8A4F；只读扫描成功后，官方2.5MHz operation2 SRAM下载100%、UserCode3A2A、Status6020、exit0、4.67秒。Flash保留。已请求用户验证两键叠加、单独松键以及摇杆。新版声音实测结果待反馈。
+
+## 2026-10-12 当前复音版写入Flash
+
+用户反馈复音似乎正常但S3可能无声、音调感觉下降，随后表示音量降低并明确要求写入Flash。未将这些现象判为测试全部通过；单键幅度下降与四路混音固定除4一致，S3/音调反馈仍待查。按用户要求原样持久化当前复音码流，未另做音量或频率修改。
+
+写前只读扫描唯一ID0x0000081B、exit0，核验码流SHA256 ADE8A08C908A4B7B0380E28856E07E627B258CDB513D51E176E542F845BA8A4F。使用此前成功的官方Programmer FTDI通道、2.5MHz、operation_index13、spiaddr0x000000，未用整片bulk erase/OTP/下载器固件更新。写入进度持续推进，100%，SPI结束地址0x08CE00，Finished，退出码0，324.13秒。日志未单列逐字节校验阶段，不宣称额外独立回读比较已通过。
+
+当前Flash已替换为instrument_io复音版，不再是旧audio_keys。已请求用户断开Dock与PCM USB供电10秒、先PCM后Dock恢复供电，不再下载SRAM，测试发声/摇杆和S3。自动启动功能验证待反馈。
