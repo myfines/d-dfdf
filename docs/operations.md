@@ -328,3 +328,5 @@ openFPGALoader -b tangprimer20k --freq 2500000 --write-sram -v <经核验的码�
 - 核对 E:/gaoyun/instrument_io.fs SHA256为666B33A15B2939D7FB1AA2B4E5254C4D5B6786F064BBA31226096FF8D9FB04CB。初次Windows尚无下载器，官方扫描exit49/No Gowin devices；用户连接USB-JTAG后，设备稍后才枚举，A/B均FTDI状态OK。重新只读扫描得到唯一ID0x0000081B、exit0。
 - 使用已验证官方Programmer路径，命令：programmer_cli.exe --device GW2A-18C --cable-index 1 --frequency 2.5MHz --operation_index 2 --fsFile E:/gaoyun/instrument_io.fs。Operation为SRAM Program，编程100%，UserCode0x0000D932，StatusCode0x00006020（Done Final），Finished，耗时4.65秒，exit0。原始日志 logs/20261012-instrument-sram-program.out.txt 与扫描日志。
 - 本次没有Flash擦写、OTP、下载器固件或驱动修改。SRAM掉电/RCFG回到旧Flash音频。已请求用户观察N16心跳/N14 ADC有效灯，以及外接PCM线路设备的四键声音/摇杆变化；反馈尚待确认，不将工具成功当成外部ADC/DAC实物成功。
+
+- instrument_io SRAM实物首次反馈：用户报告N16闪烁、N14不亮，外接PCM接音箱无声，摇杆无变化。仅确认FPGA心跳；未确认ADS有效读取和DAC音频成功。核对码流UserCode为0xD932，与官方Programmer返回一致，生成引脚报告ADC/T6/T7、PCM/P6/R8/P8均bank3/LVCMOS33，未发现码流文件拿错。已请求模块各自VDD-GND电压、ADDR接地和音箱AUX供电确认；未得到测量前不重复烧录，当前Flash不变。
