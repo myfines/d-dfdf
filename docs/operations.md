@@ -429,3 +429,11 @@ Flash现在为直接单键声部修正版（SRAM标识3CB9），不是之前ADE8
 用户报告“都没反应，LED0/1都亮”，未明确确认此前要求的完整断电步骤是否完成。只读JTAG扫描成功exit0，唯一ID0x0000081B；排空串口历史数据后1.5秒无新UART字节。仅证明JTAG通路当前正常，应用运行尚未确认；不能据LED断言硬件损坏。Flash编程结束可能仍停留烧录临时配置，此为待验证解释。
 
 已请求Dock与PCM全部USB断电10秒，先PCM后Dock上电，先不下载SRAM，检查Flash启动。未新增Flash擦写、驱动修改或SRAM操作。
+
+## 2026-10-12 修正版Flash冷启动未响应，独立校验失败；SRAM恢复
+
+用户确认全断电重启后，COM13排空后无新UART字节；未下载SRAM前，修正版Flash自动启动仍未证实。JTAG仍可读ID81B。将同一9DA141FDAF59E24E1FE10ED352389D8B3D8CE2DC0B1283A2B4A3B317FB99E561修正版装SRAM后，UserCode3CB9/Status6020/exit0，新鲜UART连续V1 E0、K=F、Y000，证明FPGA运行此设计及ADC通信仍正常。
+
+随后执行官方只读operation_index15、2.5MHz、spiaddr0x000000，与同一码流独立比较。进度从1%持续到70%，报Error: SPI Verify failed，退出码67，耗时844.23秒。此前operation13“100%/exit0”不能代替独立校验成功；Flash内容或读取链路存在不一致，具体失败地址未由CLI列出。该失败不单独证明Flash芯片损坏。新旧码流头的设备C、起始地址0、2.5MHz加载速率、CRC/Security/JTAG设置相同，未发现明显启动头差异。
+
+比较结束立即恢复同一码流SRAM：100%、UserCode3CB9、Status6020、exit0、4.64秒。新鲜UART再次V1 E0、Y000、K=F。当前应用在SRAM恢复，未再擦写Flash，Flash启动仍有问题，不将本次持久化标记成功。
