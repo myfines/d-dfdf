@@ -454,3 +454,11 @@ Flash现在为直接单键声部修正版（SRAM标识3CB9），不是之前ADE8
 此前按历史成功码流对照计划扫描成功并启动旧audio_keys operation13，用户在工具运行期间明确要求“烧录复音的，原版本来也在”。该纠正成为当前目标：只烧9DA141...E561修正版复音。旧任务运行约一分钟仅1%（结束前日志最终出现2%），未确认成功；结束指定programmer_cli PID28536。Flash可能部分擦写，不将旧版任务计成功。
 
 为恢复正常运行状态，尝试同一修正版SRAM operation2；CLI无输出、未完成，结束指定PID11152。当前无残留programmer_cli。未启动新的复音Flash写入，也未打开COM13。已请求全USB断电10秒/重连及使能1号ON，恢复下载器后只写用户要求的修正版复音。用户明确不需要旧版对照，不再推进该计划。
+
+## 2026-10-12 干净USB连接＋官方GAO-Bridge修正版复音Flash写入校验成功
+
+用户确认已重连，目标仍是修正版复音。全程未打开COM13。只读扫描成功；核验9DA141FDAF59E24E1FE10ED352389D8B3D8CE2DC0B1283A2B4A3B317FB99E561后SRAM恢复UserCode3CB9、Status6020、exit0、5.05秒。
+
+由于此前bscan独立校验失败，改用高云手册及本机帮助确认支持的operation_index37（exFlash Erase,Program,Verify thru GAO-Bridge），仍为GW2A-18C、2.5MHz、地址0x000000和同一复音码流；不使用bulk erase/OTP/下载器固件更新。日志独立显示Programming Flash进度100%，明确Program and Verify flash successfully、Finished、exit0、20.19秒。这次有工具明确写入＋校验成功证据，尚不代替冷启动功能验证。
+
+同时改变了下载器干净连接和Flash访问路径，因此不能仅凭此次成功断言先前唯一根因是串口占用或bscan缺陷。可复现成功路径现为干净USB状态、不打开COM13、官方GAO-Bridge37。已请求全断电10秒、先PCM后Dock，用户确认使能1号ON，不下载SRAM，验证全松静音、四键和混音。Flash当前为3CB9修正版复音，冷启动反馈待确认。

@@ -71,3 +71,5 @@ S3持续音修正（2026-10-12）：实物复音监测发现旧掩码版本K=F�
 最新Flash状态（2026-10-12）：直接单键声部修正版已用官方operation13写入100%、exit0，耗时324.31秒；SHA256 9DA141FDAF59E24E1FE10ED352389D8B3D8CE2DC0B1283A2B4A3B317FB99E561。此前“Flash仍为问题版”现已过时。修正版掉电启动验证待反馈，音质因音箱限制尚无法判断。
 
 重要状态修正（2026-10-12）：上述Flash写入虽然工具exit0，用户冷启动无响应；随后operation15独立比较到70%报SPI Verify failed、exit67。故当前Flash持久化未验证成功。现已恢复9DA141...E561修正版SRAM，UART/ADC正常；断电或RCFG可能再次无法启动。原因是Flash内容或读链路不一致，尚不能证明芯片损坏。
+
+2026-10-12最新Flash状态：干净USB连接、全程不打开串口，官方operation37 GAO-Bridge将9DA141...E561修正版复音写入Flash并明确校验成功（Program and Verify flash successfully），exit0、20.19秒。冷启动功能验证待反馈。此成功取代此前bscan校验失败的烧录状态；不证明此前单一根因。
