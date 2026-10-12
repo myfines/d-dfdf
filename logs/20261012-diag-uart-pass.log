@@ -1,0 +1,2 @@
+PASS UART: baud/framing and coherent readable snapshot
+instrument_io/tb_uart_status.sv:25: $finish called at 13095000 (1ps)

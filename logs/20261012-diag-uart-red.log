@@ -1,0 +1,5 @@
+instrument_io\tb_uart_status.sv:8: error: Unknown module type: uart_status
+2 error(s) during elaboration.
+*** These modules were missing:
+        uart_status referenced 1 times.
+***

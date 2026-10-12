@@ -330,3 +330,13 @@ openFPGALoader -b tangprimer20k --freq 2500000 --write-sram -v <经核验的码�
 - 本次没有Flash擦写、OTP、下载器固件或驱动修改。SRAM掉电/RCFG回到旧Flash音频。已请求用户观察N16心跳/N14 ADC有效灯，以及外接PCM线路设备的四键声音/摇杆变化；反馈尚待确认，不将工具成功当成外部ADC/DAC实物成功。
 
 - instrument_io SRAM实物首次反馈：用户报告N16闪烁、N14不亮，外接PCM接音箱无声，摇杆无变化。仅确认FPGA心跳；未确认ADS有效读取和DAC音频成功。核对码流UserCode为0xD932，与官方Programmer返回一致，生成引脚报告ADC/T6/T7、PCM/P6/R8/P8均bank3/LVCMOS33，未发现码流文件拿错。已请求模块各自VDD-GND电压、ADDR接地和音箱AUX供电确认；未得到测量前不重复烧录，当前Flash不变。
+
+## 2026-10-12 新接口无声：隔离诊断准备（尚未下载）
+
+用户确认旧 Flash 程序仍能运行；外接 PCM 无声、ADC LED 不亮，暂时不能测电压。不能因此认定接线错误或硬件损坏，也不能排除新 RTL 的问题。
+
+新增 instrument_diag：复用已经实测正常的 audio_keys 板载输出；外接 PCM 连续输出约 440 Hz、四分之一幅度的 I2S 测试音，不由按键或 ADC 门控；ADC 保持读取并在 M11 板载 UART TX 输出 115200/8N1 状态行（V有效、E错误、X/Y值、K按键、S两线电平）。不改变模块接线，不写 Flash。
+
+UART 测试先因模块不存在失败；实现后逐字节采样正确（末尾 0D/0A），但 Icarus 对字符串换行比较出现不一致。混合字符串拼接比较进一步触发 ivl_expr_value 编译器断言和 vvp syntax error。改为固定宽度字节期望值比较后通过；该问题属于诊断测试工具/表达式问题，尚未证明是实物无声根因。
+
+Gowin 构建完成，无 WARN/ERROR。诊断码流 SHA256：FD39A08328F6DE08107700D04741DA3710C866E3B7D43EB8ABA79A7BD70E9F4F。现有 I2S/ADC RTL 未修改。程序未下载、外接声音及 UART 通道未验证。当前 Windows 未枚举到 0403:6010，已请用户接回 USB-JTAG。原有 Flash 保留。

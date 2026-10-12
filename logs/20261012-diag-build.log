@@ -1,0 +1,73 @@
+*** GOWIN Tcl Command Line Console  *** 
+current working directory: E:/gaoyun/projects/instrument_diag/instrument_diag
+add new file: "E:/gaoyun/d-dfdf/instrument_io/instrument_diag.v"
+add new file: "E:/gaoyun/d-dfdf/instrument_io/uart_status.v"
+add new file: "E:/gaoyun/d-dfdf/instrument_io/i2s_tx16.v"
+add new file: "E:/gaoyun/d-dfdf/instrument_io/ads1015_reader.v"
+add new file: "E:/gaoyun/d-dfdf/instrument_io/i2c_register_bus.v"
+add new file: "E:/gaoyun/d-dfdf/audio_keys/audio_keys.v"
+add new file: "E:/gaoyun/d-dfdf/instrument_io/diag.cst"
+add new file: "E:/gaoyun/d-dfdf/instrument_io/instrument.sdc"
+GowinSynthesis start
+Running parser ...
+Analyzing Verilog file 'E:\gaoyun\d-dfdf\instrument_io\instrument_diag.v'
+Analyzing Verilog file 'E:\gaoyun\d-dfdf\instrument_io\uart_status.v'
+Analyzing Verilog file 'E:\gaoyun\d-dfdf\instrument_io\i2s_tx16.v'
+Analyzing Verilog file 'E:\gaoyun\d-dfdf\instrument_io\ads1015_reader.v'
+Analyzing Verilog file 'E:\gaoyun\d-dfdf\instrument_io\i2c_register_bus.v'
+Analyzing Verilog file 'E:\gaoyun\d-dfdf\audio_keys\audio_keys.v'
+Compiling module 'instrument_diag'("E:\gaoyun\d-dfdf\instrument_io\instrument_diag.v":4)
+Compiling module 'audio_keys'("E:\gaoyun\d-dfdf\audio_keys\audio_keys.v":11)
+Compiling module 'ads1015_reader'("E:\gaoyun\d-dfdf\instrument_io\ads1015_reader.v":4)
+Compiling module 'i2c_register_bus'("E:\gaoyun\d-dfdf\instrument_io\i2c_register_bus.v":4)
+Compiling module 'i2s_tx16'("E:\gaoyun\d-dfdf\instrument_io\i2s_tx16.v":4)
+Compiling module 'uart_status'("E:\gaoyun\d-dfdf\instrument_io\uart_status.v":3)
+NOTE  (EX0101) : Current top module is "instrument_diag"
+[5%] Running netlist conversion ...
+Running device independent optimization ...
+[10%] Optimizing Phase 0 completed
+[15%] Optimizing Phase 1 completed
+[25%] Optimizing Phase 2 completed
+Running inference ...
+[30%] Inferring Phase 0 completed
+[40%] Inferring Phase 1 completed
+[50%] Inferring Phase 2 completed
+[55%] Inferring Phase 3 completed
+Running technical mapping ...
+[60%] Tech-Mapping Phase 0 completed
+[65%] Tech-Mapping Phase 1 completed
+[75%] Tech-Mapping Phase 2 completed
+[80%] Tech-Mapping Phase 3 completed
+[90%] Tech-Mapping Phase 4 completed
+[95%] Generate netlist file "E:\gaoyun\projects\instrument_diag\instrument_diag\impl\gwsynthesis\instrument_diag.vg" completed
+[100%] Generate report file "E:\gaoyun\projects\instrument_diag\instrument_diag\impl\gwsynthesis\instrument_diag_syn.rpt.html" completed
+GowinSynthesis finish
+Reading netlist file: "E:\gaoyun\projects\instrument_diag\instrument_diag\impl\gwsynthesis\instrument_diag.vg"
+Parsing netlist file "E:\gaoyun\projects\instrument_diag\instrument_diag\impl\gwsynthesis\instrument_diag.vg" completed
+Processing netlist completed
+Reading constraint file: "E:\gaoyun\d-dfdf\instrument_io\diag.cst"
+Physical Constraint parsed completed
+Running placement......
+[10%] Placement Phase 0 completed
+[20%] Placement Phase 1 completed
+[30%] Placement Phase 2 completed
+[50%] Placement Phase 3 completed
+Running routing......
+[60%] Routing Phase 0 completed
+[70%] Routing Phase 1 completed
+[80%] Routing Phase 2 completed
+[90%] Routing Phase 3 completed
+Running timing analysis......
+[95%] Timing analysis completed
+Placement and routing completed
+Bitstream generation in progress......
+Bitstream generation completed
+Running power analysis......
+[100%] Power analysis completed
+Generate file "E:\gaoyun\projects\instrument_diag\instrument_diag\impl\pnr\instrument_diag.power.html" completed
+Generate file "E:\gaoyun\projects\instrument_diag\instrument_diag\impl\pnr\instrument_diag.pin.html" completed
+Generate file "E:\gaoyun\projects\instrument_diag\instrument_diag\impl\pnr\instrument_diag.rpt.html" completed
+Generate file "E:\gaoyun\projects\instrument_diag\instrument_diag\impl\pnr\instrument_diag.rpt.txt" completed
+Generate file "E:\gaoyun\projects\instrument_diag\instrument_diag\impl\pnr\instrument_diag.tr.html" completed
+Mon Oct 12 10:57:12 2026
+

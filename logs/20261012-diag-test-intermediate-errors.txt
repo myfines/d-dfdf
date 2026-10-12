@@ -1,0 +1,5 @@
+UART test intermediate errors retained:
+FATAL: UART snapshot mismatch despite captured byte 25=0d and byte 26=0a.
+Assertion failed: ivl_expr_value(expr) == IVL_VT_BOOL || ivl_expr_value(expr) == IVL_VT_VECTOR, file ../../iverilog-13_0/tgt-vvp/eval_vec4.c, line 1359
+E:\gaoyun\uart.vvp:524: syntax error
+Resolved test comparison using fixed-width expected bytes. No production I2S/ADC change.
