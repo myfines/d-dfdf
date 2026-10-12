@@ -491,3 +491,15 @@ RED为缺adsr_envelope模块；实现后包络单独测试覆盖起音峰值、�
 最终码流SHA256 436F86922855BD02BA6A10E8649C8483C04D627FE12B7AA00F5C90263617381A、UserCode7799。用户确认USB重连、未再打开COM13，使用新脚本hash/ID检查后官方operation37写入100%，明确Program and Verify flash successfully、exit0、28.12秒，无bulk erase/OTP。用户全断电重启后对心跳慢闪、全松静音、S0–S3按松发声回复“是的”。未再下载SRAM，官方只读operation73读UserCode0x7799、operation74读Status0x6020，退出码均0，确认冷启动确为新版。
 
 更早的C2F9临时整合版曾SRAM加载并UART读到V1 E0/KF/Y000，后补全音符分组与UART位宽后才生成/部署最终7799。不将临时hash当当前Flash。旧已验证3CB9码流已备份E:/gaoyun/releases/instrument-verified-3CB9.fs。新的模式逐项实物试听、DAC模拟32谱峰、真实总延迟、音质仍未测；第三连续表情传感、压力、蓝牙/App不在本硬件实现。没有宣称赛事全部指标已达标。
+
+## 2026-10-12 快速发热与失声：暂停上电，离线活动修正
+
+用户报告完整7799版切换音色/按键后失声，LED仍亮；GW2A大芯片烫到无法正常触碰，从冷机到烫手估计30秒以内，PCM排针3.3V完全断开。用户曾断电重接后声音恢复。未测温度、输入电流或电源轨，不将“恢复”认定安全，也不认定芯片已损坏。已明确要求Dock/PCM全部断电，不继续复现。
+
+失声需与热故障分开：长按SW会进入静音编辑模式，拨弦预设S=0会自然衰减，重启会复位这些设置；这些只是失声候选解释，未读到故障时状态，不能认定。本次代码检查发现测试bank在gates=0时仍每帧更新32相位，普通闲置声部相位仍走、关闭效果时RAM仍写，属不必要活动，不能直接证明它们导致30秒烫手。
+
+先写空闲活动测试，旧实现确实失败“Inactive 32-voice bank still switching”；修正bank仅在gates或包络active时启动一帧、声部仅在门控/包络活动时推进相位、效果关闭时停止RAM访问并清空有效计数防旧回声。14组回归通过，额外聚焦测试确认bank/keyboard/effect空闲状态冻结。独立项目instrument_idle_candidate离线编译exit0、无WARN/ERROR、setup/hold违反端点0，Fmax36.799MHz；候选SHA256 DB898AEC5C0EF8494A1D7A1B645D1D718CBD99840DFF478903B9B3DEDB24DF02。未上板、未写Flash、未改变板卡连接或驱动。
+
+保存旧7799功耗报告：默认toggle0.125、无VCD/SAIF、环境25°C/无板热模型，估计141.892mW/Tj29.543°C；这些都是模型估计，不是实际功耗或温度，不能用来否定用户触感或确认热安全。参考高云官方功耗分析说明 https://cdn.gowinsemi.com.cn/SUG282E.pdf 与GW2A数据手册 https://www.gowinsemi.com/upload/database_doc/1830/document/6831328fb9769.pdf ，器件供电/结温需在规定条件内，不能把结温限值等同可触摸表面温度。
+
+硬件根因仍未知：需在限流/测温与电源测量条件下核实供电、电流和实际温度，排查异常供电、过流/接触及运行负载，不能凭未动排线排除硬件。无这些条件时保持断电，向厂商/具备条件的硬件人员排查。当前Flash仍7799，软件候选不是已验证热修复。新增hardware-hold.json，并让烧录/串口脚本在未解除实际热故障记录时停止访问硬件；DryRun和解析自测仍可离线使用。该限制源于实际报告的过热，不是权限或自动审批拒绝。

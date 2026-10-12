@@ -1,0 +1,44 @@
+**********************
+PowerShell transcript start
+Start time: 20261012171712
+Username: ZRK\zrk
+RunAs User: ZRK\zrk
+Configuration Name: 
+Machine: ZRK (Microsoft Windows NT 10.0.26100.0)
+Host Application: C:\Users\zrk\.cache\codex-runtimes\codex-primary-runtime\dependencies\native\powershell\pwsh.dll -Command try { [Console]::OutputEncoding=[System.Text.Encoding]::UTF8 } catch {}
+@'
+`timescale 1ns/1ps
+module tb_idle_activity;
+reg clk=0,rst=0,tick=0;always #5 clk=~clk;
+wire signed [15:0] s;wire active,busy;
+spectrum_bank bank(clk,rst,tick,32'd0,s,active,busy);
+task frame;begin @(negedge clk);tick=1;@(negedge clk);tick=0;repeat(110)@(negedge clk);end endtask
+integer i;reg [31:0] saved;
+initial begin
+repeat(3)@(negedge clk);rst=1;repeat(3)frame();saved=bank.phases[3];
+for(i=0;i<30;i=i+1)begin frame();if(bank.phases[3]!==saved || bank.phase_reg!==0 || busy)$fatal(1,"Inactive 32-voice bank still switching");end
+$display("PASS idle activity: inactive spectrum bank phase state frozen");$finish;
+end
+endmodule
+'@ | Set-Content instrument_io/tb_idle_activity.sv; $env:PATH='E:\gaoyun\tools\openfpgaloader\ucrt64\bin;E:\gaoyun\tools\iverilog\ucrt64\bin;'+$env:PATH; & E:\gaoyun\tools\iverilog\ucrt64\bin\iverilog.exe -g2012 -s tb_idle_activity -o E:\gaoyun\idle.vvp instrument_io/tb_idle_activity.sv instrument_io/spectrum_bank.v instrument_io/wave_source.v; & E:\gaoyun\tools\iverilog\ucrt64\bin\vvp.exe E:\gaoyun\idle.vvp *> logs/20261012-thermal-idle-red.log; Get-Content logs/20261012-thermal-idle-red.log; @'
+from pathlib import Path
+p=Path('instrument_io/spectrum_bank.v');s=p.read_text().replace('IDLE:if(frame_tick)begin','IDLE:if(frame_tick && (gates!=0 || active))begin');p.write_text(s)
+p=Path('instrument_io/short_delay.v');s=p.read_text().replace('else if(frame_tick)begin','else if(!enabled)begin index<=0;filled<=0;delayed<=0;end\n  else if(frame_tick)begin');p.write_text(s)
+p=Path('instrument_io/voice_engine.v');s=p.read_text().replace('phase<=phase+phase_inc;','if(sounding || envelope!=0 || !btn_sync)phase<=phase+phase_inc;');p.write_text(s)
+p=Path('instrument_io/run_tests.ps1');s=p.read_text().replace("@('router'","@('idle_activity','router'");p.write_text(s)
+'@ | python -; & ./instrument_io/run_tests.ps1 *> logs/20261012-thermal-idle-tests.log; Get-Content logs/20261012-thermal-idle-tests.log -Tail 5
+Process ID: 26424
+PSVersion: 7.6.5
+PSEdition: Core
+GitCommitId: 7.6.5
+OS: Microsoft Windows 10.0.26100
+Platform: Win32NT
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1, 6.0, 7.0
+PSRemotingProtocolVersion: 2.4
+SerializationVersion: 1.1.0.1
+WSManStackVersion: 3.0
+**********************
+**********************
+PowerShell transcript end
+End time: 20261012171822
+**********************

@@ -1,0 +1,7 @@
+{
+  "deployment_blocked": true,
+  "date": "2026-10-12",
+  "reason": "User reports GW2A package too hot to touch within 30 seconds, with intermittent lost audio. Root cause and actual temperature/current are unmeasured. Keep all board supplies off pending hardware checks.",
+  "flash_user_code": "0x7799",
+  "offline_candidate_only": true
+}

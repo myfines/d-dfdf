@@ -1,0 +1,2 @@
+PASS idle activity: inactive bank/keyboard/effect state frozen
+instrument_io/tb_idle_activity.sv:15: $finish called at 36990000 (1ps)

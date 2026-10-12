@@ -59,7 +59,7 @@ module spectrum_bank(input wire clk,reset_n,frame_tick,input wire [31:0] gates,
    state<=IDLE;index<=0;sample<=0;active<=0;phase_reg<=0;level_reg<=0;gate_frame<=0;sum<=0;frame_active<=0;
    for(k=0;k<32;k=k+1)begin phases[k]<=0;levels[k]<=0;end
   end else case(state)
-   IDLE:if(frame_tick)begin gate_frame<=gates;sum<=0;frame_active<=0;index<=0;state<=READ;end
+   IDLE:if(frame_tick && (gates!=0 || active))begin gate_frame<=gates;sum<=0;frame_active<=0;index<=0;state<=READ;end
    READ:begin phase_reg<=phases[index];level_reg<=levels[index];state<=CALC;end
    CALC:begin phases[index]<=phase_reg+increment(index);levels[index]<=next_level;state<=ACCUM;end
    ACCUM:begin

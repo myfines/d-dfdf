@@ -62,7 +62,7 @@ module voice_lane #(
                     if(release_count==RELEASE_FRAMES) sounding<=0;
                     else release_count<=release_count+1'b1;
                 end
-                phase<=phase+phase_inc;
+                if(sounding || envelope!=0 || !btn_sync)phase<=phase+phase_inc;
             end
         end
     end

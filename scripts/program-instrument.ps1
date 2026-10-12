@@ -7,6 +7,11 @@ param(
 )
 $ErrorActionPreference='Stop'
 $repoDir=Split-Path $PSScriptRoot -Parent
+$holdFile=Join-Path $repoDir 'docs\hardware-hold.json'
+if((Test-Path -LiteralPath $holdFile) -and -not $DryRun){
+    $hardwareHold=Get-Content -Raw $holdFile | ConvertFrom-Json
+    if($hardwareHold.deployment_blocked){throw "Thermal incident unresolved: $($hardwareHold.reason)"}
+}
 $cli='E:\gaoyun\tools\gowin\Gowin_V1.9.11.03_Education\Gowin_V1.9.11.03_Education_x64\Programmer\bin\programmer_cli.exe'
 if(-not $ExpectedSha256){
     $manifest=Get-Content -Raw (Join-Path $repoDir 'logs\20261012-complete-release-checks.json') | ConvertFrom-Json

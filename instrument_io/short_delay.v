@@ -14,6 +14,7 @@ module short_delay #(parameter integer DEPTH=2048)(input wire clk,reset_n,frame_
  assign sample=enabled?$signed(sum[17:2]):dry;
  always @(posedge clk)begin
   if(!reset_n)begin index<=0;filled<=0;delayed<=0;end
+  else if(!enabled)begin index<=0;filled<=0;delayed<=0;end
   else if(frame_tick)begin
    delayed<=filled==DEPTH?memory[index]:16'sd0;
    memory[index]<=dry;

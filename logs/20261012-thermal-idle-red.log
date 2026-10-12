@@ -1,0 +1,2 @@
+FATAL: instrument_io/tb_idle_activity.sv:10: Inactive 32-voice bank still switching
+       Time: 4510000  Scope: tb_idle_activity

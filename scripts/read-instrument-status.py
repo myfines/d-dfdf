@@ -20,6 +20,9 @@ def main():
   z=decode("IO V1 E0 X34E Y53F K7 S10");assert z["note_page"]==2 and z["timbre"]==2 and z["mode"]=="test32" and z["pressed_keys"]==[3]
   assert decode("partial line") is None
   print("PASS telemetry decoder: packed modes, pages, presets and active-low keys");return
+ hold=Path(__file__).resolve().parent.parent/"docs"/"hardware-hold.json"
+ if hold.exists() and json.loads(hold.read_text(encoding="utf-8-sig")).get("deployment_blocked"):
+  raise RuntimeError("Thermal incident unresolved; keep board supplies off. No UART access attempted.")
  if not .1<=a.seconds<=10:p.error("--seconds must be 0.1..10")
  import serial
  s=serial.Serial();s.port=a.port;s.baudrate=115200;s.timeout=.02;s.dtr=False;s.rts=False;s.open()

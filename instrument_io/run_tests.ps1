@@ -12,7 +12,7 @@ $rtl = @('i2s_tx16.v','i2c_register_bus.v','ads1015_reader.v','voice_engine.v','
     ForEach-Object { Join-Path $PSScriptRoot $_ }
 Start-Transcript -Path $logPath
 try {
-    foreach ($name in @('router','bank','panel','effect','waves','adsr','i2s','ads1015','voice','poly','pages','controls','instrument')) {
+    foreach ($name in @('idle_activity','router','bank','panel','effect','waves','adsr','i2s','ads1015','voice','poly','pages','controls','instrument')) {
         $top = "tb_$name"
         $tb = Join-Path $PSScriptRoot "$top.sv"
         $image = Join-Path $outDir "instrument-$name.vvp"
