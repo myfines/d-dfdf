@@ -540,3 +540,9 @@ PDF文字已提取，首次控制台输出遇GBK不能编码NBSP的UnicodeEncode
 用户没有现成5V排针，询问能否用ST-Link作供电。查ST官方UM1075 https://www.st.com/resource/en/user_manual/um1075-stsw-link007.pdf ：VAPP是目标板电压参考/检测，标准V2接口的VDD条目标3.3V，不能把这些直接当模块所需5V输出。用户ST-Link具体型号/克隆脚位未知，需照片与输出供电能力确认，不直接授权任意VCC脚供电。
 
 建议明确的USB-A 5V/GND取电转接板，或已确认USB供电开发板的5V输出；无需把5V送入FPGA GPIO或3.3V轨。若现有ST-Link实际提供USB5V电源输出且能力确认，可仅其5V/GND供巡线模块，SWDIO/SWCLK不接本模块/FPGA，通信保持3.3V与共地。未改接线、未访问板卡或烧录。核心热问题仍不以短时功能正常解除。
+
+## 2026-10-12 用户ST-Link实物标注与共地
+
+用户照片为Zave ST-LINK V2金属壳，外壳针脚图标注：1RST、2SWCLK、3SWIM、4SWDIO、5/6GND、7/8 3.3V、9/10 5.0V。依据照片可规划9或10接八路模块5V，5或6接模块GND；模块GND再接Dock真实GND，使ST-Link供电域/模块/FPGA通信参考一致。SCL=T9、SDA=P9预定独立I2C，其余调试脚和ST-Link3.3V不用；不把5V并到Dock3.3V轨，不把ST-LinkVAPP泛称供电。
+
+照片仅证明外壳标注，不证明实际空载电压或供电额定电流；不能套用原厂20pin接口编号到该10pin款，按本机实物编号核对，尚未实测。未操作板卡/接线/烧录；八路驱动未部署，热故障检查仍未完成。
