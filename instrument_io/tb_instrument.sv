@@ -42,4 +42,3 @@ module tb_instrument;
     end
     initial begin #30000000;$fatal(1,"Integration timeout");end
 endmodule
-

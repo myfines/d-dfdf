@@ -42,6 +42,3 @@ module tb_ads1015;
     end
     initial begin #2000000;$fatal(1,"ADC test timeout");end
 endmodule
-
-
-
