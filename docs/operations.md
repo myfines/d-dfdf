@@ -340,3 +340,11 @@ openFPGALoader -b tangprimer20k --freq 2500000 --write-sram -v <经核验的码�
 UART 测试先因模块不存在失败；实现后逐字节采样正确（末尾 0D/0A），但 Icarus 对字符串换行比较出现不一致。混合字符串拼接比较进一步触发 ivl_expr_value 编译器断言和 vvp syntax error。改为固定宽度字节期望值比较后通过；该问题属于诊断测试工具/表达式问题，尚未证明是实物无声根因。
 
 Gowin 构建完成，无 WARN/ERROR。诊断码流 SHA256：FD39A08328F6DE08107700D04741DA3710C866E3B7D43EB8ABA79A7BD70E9F4F。现有 I2S/ADC RTL 未修改。程序未下载、外接声音及 UART 通道未验证。当前 Windows 未枚举到 0403:6010，已请用户接回 USB-JTAG。原有 Flash 保留。
+
+### 诊断 SRAM 已下载，ADC 实物通信成功
+
+用户接回 USB-JTAG 后，两通道 OK，COM13 出现。2.5MHz 只读扫描得到 ID 0x0000081B，exit 0。校验诊断码流 SHA256 后，官方 CLI operation_index 2 完成 SRAM 下载：100%，UserCode F871，Status 6020，exit 0，4.74秒。未写 Flash。
+
+COM13 115200/8N1、DTR/RTS关闭，读取3秒得到12条状态行，均 V1 E0；X=34D/34E（845/846），Y=33B（827），K=F（无键按下）。ADS 寄存器事务已正常应答并产出连续有效数据；尚未测试移动摇杆，也未通过电压测量验证供电。两线瞬时S状态随事务变化属正常采样现象。前一版 LED 不亮的根因尚未确认，不能将此次通过推断为其无软件缺陷。
+
+已请用户分别听外接PCM持续测试音、原Dock四键音频。外接PCM实物出声尚未确认。UART原始字节保存bin，文本为显示副本。
