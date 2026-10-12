@@ -423,3 +423,9 @@ S1保持按住时首次采样读到混合K7/KF/KD，说明此前COM13/FTDI积压
 写前校验SHA256 9DA141FDAF59E24E1FE10ED352389D8B3D8CE2DC0B1283A2B4A3B317FB99E561，只读JTAG扫描exit0。官方2.5MHz operation13、地址0x000000，进度持续推进至100%、SPI结束地址0x08CE00、Finished、exit0、324.31秒。未bulk erase/OTP/下载器固件更新；日志未单列逐字节独立校验，未声称该项通过。
 
 Flash现在为直接单键声部修正版（SRAM标识3CB9），不是之前ADE8版。已请求全断电10秒、先PCM后Dock上电、不下载SRAM，验证空闲静音和S3按松。修正版Flash自启动功能验证待反馈；音质仍无法判断。
+
+### 修正版Flash写入后无响应，先只读检查
+
+用户报告“都没反应，LED0/1都亮”，未明确确认此前要求的完整断电步骤是否完成。只读JTAG扫描成功exit0，唯一ID0x0000081B；排空串口历史数据后1.5秒无新UART字节。仅证明JTAG通路当前正常，应用运行尚未确认；不能据LED断言硬件损坏。Flash编程结束可能仍停留烧录临时配置，此为待验证解释。
+
+已请求Dock与PCM全部USB断电10秒，先PCM后Dock上电，先不下载SRAM，检查Flash启动。未新增Flash擦写、驱动修改或SRAM操作。
