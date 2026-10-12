@@ -36,3 +36,5 @@
 输出16bit、46.875kHz I2S。模拟输出的32谱峰、<=10ms端到端延迟、真实音质及新组合操作的逐项实物验收仍待测量；数字频谱检查不是DAC测量。没有压力传感、第三个独立连续表情维度、手机App或蓝牙功能。编辑参数不跨断电保存，换音色会加载其预设包络。
 
 稳定旧版本备份：`E:/gaoyun/releases/instrument-verified-3CB9.fs`，SHA256 `9DA141FDAF59E24E1FE10ED352389D8B3D8CE2DC0B1283A2B4A3B317FB99E561`。历史排查过程保留在operations.md，不用旧记录判断当前Flash状态。
+
+八路光键候选：独立build_optical_candidate.tcl生成八输入/四复音、T9/P9接口版本，18组回归通过，未部署。默认主工程仍ENABLE_OPTICAL=0；当前Flash仍7799。详见docs/optical-program-candidate.md，热故障暂停仍有效。

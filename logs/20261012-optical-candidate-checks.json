@@ -1,0 +1,12 @@
+{
+  "bitstream": "E:\\gaoyun\\projects\\instrument_optical_candidate\\instrument_optical_candidate\\impl\\pnr\\instrument_optical_candidate.fs",
+  "sha256": "634F999761F85049B0EF3EEB473D53CB972A2B71EE08795B4DDD97C76B7FB234",
+  "deployed": false,
+  "key_inputs": 8,
+  "simultaneous_voices": 4,
+  "boot_wait_seconds": 20,
+  "i2c_address": "0x12",
+  "status_register": "0x30",
+  "physical_module_tested": false,
+  "thermal_root_cause_resolved": false
+}

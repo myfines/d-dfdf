@@ -8,7 +8,7 @@ module tb_voice;
     wire signed [15:0] sample;
     wire active;
     integer crossings,largest_step;
-    voice_engine #(.RELEASE_FRAMES(3),.ATTACK_STEP(128)) dut(clk,reset_n,tick,keys,valid,x,y,octave,sample,active,1'b0,2'd0,9'd6,16'd16,9'd160,16'd4,2'd0);
+    voice_engine #(.RELEASE_FRAMES(3),.ATTACK_STEP(128)) dut(clk,reset_n,tick,keys,valid,x,y,octave,sample,active,1'b0,2'd0,9'd6,16'd16,9'd160,16'd4,2'd0,1'b0,4'd15,12'd0,4'd0);
     task frame;
         begin @(negedge clk);tick=1;@(negedge clk);tick=0;end
     endtask

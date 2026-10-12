@@ -2,9 +2,9 @@
 module tb_poly;
 reg clk=0,rst=0,tick=0;always #5 clk=~clk;
 reg [3:0] keys=15;wire signed [15:0] mixed,c,g;wire active,ac,ag;
-voice_engine #(.RELEASE_FRAMES(3),.ATTACK_STEP(128)) dut(clk,rst,tick,keys,1'b0,12'd825,12'd0,1'b0,mixed,active,1'b0,2'd0,9'd6,16'd16,9'd160,16'd4,2'd0);
-voice_engine #(.RELEASE_FRAMES(3),.ATTACK_STEP(128)) refc(clk,rst,tick,{3'b111,keys[0]},1'b0,12'd825,12'd0,1'b0,c,ac,1'b0,2'd0,9'd6,16'd16,9'd160,16'd4,2'd0);
-voice_engine #(.RELEASE_FRAMES(3),.ATTACK_STEP(128)) refg(clk,rst,tick,{keys[3],3'b111},1'b0,12'd825,12'd0,1'b0,g,ag,1'b0,2'd0,9'd6,16'd16,9'd160,16'd4,2'd0);
+voice_engine #(.RELEASE_FRAMES(3),.ATTACK_STEP(128)) dut(clk,rst,tick,keys,1'b0,12'd825,12'd0,1'b0,mixed,active,1'b0,2'd0,9'd6,16'd16,9'd160,16'd4,2'd0,1'b0,4'd15,12'd0,4'd0);
+voice_engine #(.RELEASE_FRAMES(3),.ATTACK_STEP(128)) refc(clk,rst,tick,{3'b111,keys[0]},1'b0,12'd825,12'd0,1'b0,c,ac,1'b0,2'd0,9'd6,16'd16,9'd160,16'd4,2'd0,1'b0,4'd15,12'd0,4'd0);
+voice_engine #(.RELEASE_FRAMES(3),.ATTACK_STEP(128)) refg(clk,rst,tick,{keys[3],3'b111},1'b0,12'd825,12'd0,1'b0,g,ag,1'b0,2'd0,9'd6,16'd16,9'd160,16'd4,2'd0,1'b0,4'd15,12'd0,4'd0);
 integer i,expected;
 task frame;begin @(negedge clk);tick=1;@(negedge clk);tick=0;end endtask
 initial begin

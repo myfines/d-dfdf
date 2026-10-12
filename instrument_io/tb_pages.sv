@@ -3,7 +3,7 @@ module tb_pages;
 reg clk=0,rst=0,tick=0;always #5 clk=~clk;
 reg [3:0] keys=15;reg [1:0] page=0;
 wire signed [15:0] sample;wire active;
-voice_engine #(.ATTACK_STEP(128),.RELEASE_FRAMES(3)) dut(clk,rst,tick,keys,1'b0,12'd825,12'd0,1'b0,sample,active,1'b0,2'd1,9'd6,16'd16,9'd160,16'd4,page);
+voice_engine #(.ATTACK_STEP(128),.RELEASE_FRAMES(3)) dut(clk,rst,tick,keys,1'b0,12'd825,12'd0,1'b0,sample,active,1'b0,2'd1,9'd6,16'd16,9'd160,16'd4,page,1'b0,4'd15,12'd0,4'd0);
 task frame;begin @(negedge clk);tick=1;@(negedge clk);tick=0;end endtask
 real freq;integer n,p,k,c;reg signed [15:0] prev;
 initial begin

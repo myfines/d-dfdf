@@ -1,0 +1,5 @@
+instrument_io/tb_key_allocator.sv:5: error: Unknown module type: optical_key_allocator
+2 error(s) during elaboration.
+*** These modules were missing:
+        optical_key_allocator referenced 1 times.
+***

@@ -1,0 +1,21 @@
+Transcript started, output file is E:\gaoyun\d-dfdf\logs\20261012-223631-instrument-sim.log
+E:\gaoyun\d-dfdf\instrument_io\instrument_io.v:34: warning: implicit definition of wire 'frame_tick'.
+PASS allocator: eight inputs, four retained voices, no duplicates, queued keys, edge triggers
+E:\gaoyun\d-dfdf\instrument_io\tb_key_allocator.sv:16: $finish called at 150000 (1ps)
+E:\gaoyun\d-dfdf\instrument_io\instrument_io.v:34: warning: implicit definition of wire 'frame_tick'.
+PASS optical reader: boot delay, 0x12/0x30, single byte NACK, channel order, multikey, disconnect, timeout recovery
+E:\gaoyun\d-dfdf\instrument_io\tb_optical_reader.sv:18: $finish called at 44335000 (1ps)
+E:\gaoyun\d-dfdf\instrument_io\instrument_io.v:34: warning: implicit definition of wire 'frame_tick'.
+PASS optical voices: all eight pitches, reused four slots, bounded multikey output, release silence
+E:\gaoyun\d-dfdf\instrument_io\tb_optical_voice.sv:20: $finish called at 1180030000 (1ps)
+E:\gaoyun\d-dfdf\instrument_io\instrument_io.v:34: warning: implicit definition of wire 'frame_tick'.
+E:\gaoyun\d-dfdf\instrument_io\instrument_io.v:23: error: Unable to bind wire/reg/memory `test_mode' in `tb_optical_instrument.dut'
+E:\gaoyun\d-dfdf\instrument_io\instrument_io.v:41:      : A symbol with that name was declared here. Check for declaration after use.
+E:\gaoyun\d-dfdf\instrument_io\instrument_io.v:23: error: Unable to bind wire/reg/memory `edit_mode' in `tb_optical_instrument.dut'
+E:\gaoyun\d-dfdf\instrument_io\instrument_io.v:41:      : A symbol with that name was declared here. Check for declaration after use.
+E:\gaoyun\d-dfdf\instrument_io\instrument_io.v:23: error: Unable to elaborate r-value: ((optical_valid)&&(!(test_mode)))&&(!(edit_mode))
+E:\gaoyun\d-dfdf\instrument_io\instrument_io.v:34: error: Unable to bind wire/reg/memory `frame_tick' in `tb_optical_instrument.dut'
+E:\gaoyun\d-dfdf\instrument_io\instrument_io.v:36:      : A symbol with that name was declared here. Check for declaration after use.
+E:\gaoyun\d-dfdf\instrument_io\instrument_io.v:34: error: Failed to elaborate input port 'frame_tick' expression (frame_tick) in instance dut.allocator of module: optical_key_allocator.
+5 error(s) during elaboration.
+Transcript stopped, output file is E:\gaoyun\d-dfdf\logs\20261012-223631-instrument-sim.log

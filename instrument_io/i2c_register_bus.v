@@ -49,8 +49,9 @@ module i2c_register_bus #(
                     else begin
                         busy<=1;ok<=0;read_data<=0;transaction_ok<=1;
                         tx_payload<=payload;bytes_left<=payload_count;reads_total<=read_count;
-                        kind<=0;read_index<=0;rx_byte<=0;bits_left<=7;
-                        tx_byte<={ADDRESS,1'b0};state<=BUS_WAIT;
+                        kind<=(payload_count==0 && read_count!=0)?2'd2:2'd0;
+                        read_index<=0;rx_byte<=0;bits_left<=7;
+                        tx_byte<={ADDRESS,(payload_count==0 && read_count!=0)};state<=BUS_WAIT;
                     end
                 end
             end else if(wait_high && !scl_sync) begin

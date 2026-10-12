@@ -3,7 +3,7 @@ module tb_idle_activity;
 reg clk=0,rst=0,tick=0;always #5 clk=~clk;
 wire signed [15:0] s,voice_sample,delay_sample;wire active,busy,voice_active;
 voice_engine voice(clk,rst,tick,4'd15,1'b0,12'd825,12'd0,1'b0,voice_sample,voice_active,
- 1'b0,2'd0,9'd6,16'd16,9'd160,16'd4,2'd0);
+ 1'b0,2'd0,9'd6,16'd16,9'd160,16'd4,2'd0,1'b0,4'd15,12'd0,4'd0);
 short_delay #(.DEPTH(8)) effect(clk,rst,tick,1'b0,16'sd0,delay_sample);
 spectrum_bank bank(clk,rst,tick,32'd0,s,active,busy);
 task frame;begin @(negedge clk);tick=1;@(negedge clk);tick=0;repeat(110)@(negedge clk);end endtask

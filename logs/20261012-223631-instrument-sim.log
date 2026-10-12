@@ -1,0 +1,65 @@
+**********************
+PowerShell transcript start
+Start time: 20261012223631
+Username: ZRK\zrk
+RunAs User: ZRK\zrk
+Configuration Name: 
+Machine: ZRK (Microsoft Windows NT 10.0.26100.0)
+Host Application: C:\Users\zrk\.cache\codex-runtimes\codex-primary-runtime\dependencies\native\powershell\pwsh.dll -Command try { [Console]::OutputEncoding=[System.Text.Encoding]::UTF8 } catch {}
+@'
+`timescale 1ns/1ps
+module tb_optical_instrument;
+reg clk=0;always #18.5185 clk=~clk;reg [3:0] keys=15;reg enabled=1;reg [7:0] status=255;
+tri1 ascl,asda,oscl,osda;wire bck,ws,data,pa,hb,hw,hd,alive,adc_led,uart;integer ac,oc,n,nonzero;
+reg [15:0] l,r;
+instrument_io #(.I2C_HALF_TICKS(3),.CONVERSION_TICKS(100),.RETRY_TICKS(50),.BUS_TIMEOUT_TICKS(100),
+ .SWITCH_DEBOUNCE_TICKS(10),.ENABLE_OPTICAL(1),.OPTICAL_BOOT_TICKS(50),.OPTICAL_POLL_TICKS(20)) dut(
+ clk,keys,1'b1,ascl,asda,bck,ws,data,pa,hb,hw,hd,alive,adc_led,uart,oscl,osda);
+ads1015_model adc(ascl,asda,1'b1,12'd825,12'd0,ac);
+optical_sensor_model optical(oscl,osda,enabled,status,oc);
+task decode;integer i;begin @(negedge ws);@(posedge bck);l=0;r=0;
+for(i=0;i<16;i=i+1)begin @(posedge bck);l={l[14:0],data};end
+for(i=0;i<16;i=i+1)begin @(posedge bck);r={r[14:0],data};end
+if(l!==r || $signed(l)>8192 || $signed(l)< -8192)$fatal(1,"Optical PCM frame invalid");end endtask
+initial begin
+wait(adc_led && dut.optical_valid);keys=14;repeat(80)decode();if(l!==0 || dut.note_active)$fatal(1,"Board control key played while optical online");
+keys=15;status=8'h7f;wait(dut.optical_keys_n==8'hfe);nonzero=0;
+for(n=0;n<100;n=n+1)begin decode();if(l!=0)nonzero=nonzero+1;end
+if(nonzero<50)$fatal(1,"Optical key did not reach PCM");
+enabled=0;wait(dut.optical_error);repeat(1400)@(negedge ws);decode();if(l!==0 || dut.note_active)$fatal(1,"Disconnected optical keys stuck sounding");
+keys=14;nonzero=0;for(n=0;n<100;n=n+1)begin decode();if(l!=0)nonzero=nonzero+1;end
+if(nonzero<50)$fatal(1,"Board fallback failed");
+keys=15;enabled=1;status=255;wait(dut.optical_valid);repeat(1400)@(negedge ws);decode();if(l!==0)$fatal(1,"Recovered idle optical bus not silent");
+$display("PASS optical integration: separate ADC/I2C, control-only board keys, decoded stereo, disconnect release, board fallback, recovery");$finish;
+end
+initial begin #100000000;$fatal(1,"Optical integration timeout");end
+endmodule
+'@ | Set-Content instrument_io/tb_optical_instrument.sv; (Get-Content -Raw instrument_io/run_tests.ps1).Replace("'optical_voice','idle_activity'","'optical_voice','optical_instrument','idle_activity'") | Set-Content instrument_io/run_tests.ps1; & ./instrument_io/run_tests.ps1 *> logs/20261012-optical-suite-final.log; Get-Content logs/20261012-optical-suite-final.log -Tail 8
+Process ID: 15460
+PSVersion: 7.6.5
+PSEdition: Core
+GitCommitId: 7.6.5
+OS: Microsoft Windows 10.0.26100
+Platform: Win32NT
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1, 6.0, 7.0
+PSRemotingProtocolVersion: 2.4
+SerializationVersion: 1.1.0.1
+WSManStackVersion: 3.0
+**********************
+E:\gaoyun\d-dfdf\instrument_io\instrument_io.v:34: warning: implicit definition of wire 'frame_tick'.
+E:\gaoyun\d-dfdf\instrument_io\instrument_io.v:34: warning: implicit definition of wire 'frame_tick'.
+E:\gaoyun\d-dfdf\instrument_io\instrument_io.v:34: warning: implicit definition of wire 'frame_tick'.
+E:\gaoyun\d-dfdf\instrument_io\instrument_io.v:34: warning: implicit definition of wire 'frame_tick'.
+E:\gaoyun\d-dfdf\instrument_io\instrument_io.v:23: error: Unable to bind wire/reg/memory `test_mode' in `tb_optical_instrument.dut'
+E:\gaoyun\d-dfdf\instrument_io\instrument_io.v:41:      : A symbol with that name was declared here. Check for declaration after use.
+E:\gaoyun\d-dfdf\instrument_io\instrument_io.v:23: error: Unable to bind wire/reg/memory `edit_mode' in `tb_optical_instrument.dut'
+E:\gaoyun\d-dfdf\instrument_io\instrument_io.v:41:      : A symbol with that name was declared here. Check for declaration after use.
+E:\gaoyun\d-dfdf\instrument_io\instrument_io.v:23: error: Unable to elaborate r-value: ((optical_valid)&&(!(test_mode)))&&(!(edit_mode))
+E:\gaoyun\d-dfdf\instrument_io\instrument_io.v:34: error: Unable to bind wire/reg/memory `frame_tick' in `tb_optical_instrument.dut'
+E:\gaoyun\d-dfdf\instrument_io\instrument_io.v:36:      : A symbol with that name was declared here. Check for declaration after use.
+E:\gaoyun\d-dfdf\instrument_io\instrument_io.v:34: error: Failed to elaborate input port 'frame_tick' expression (frame_tick) in instance dut.allocator of module: optical_key_allocator.
+5 error(s) during elaboration.
+**********************
+PowerShell transcript end
+End time: 20261012223634
+**********************

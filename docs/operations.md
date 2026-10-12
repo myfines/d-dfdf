@@ -565,3 +565,11 @@ PDF文字已提取，首次控制台输出遇GBK不能编码NBSP的UnicodeEncode
 
 ## 2026-10-12 用户要求上传全部接线
 整理docs/wiring-all-current.md，包括全部USB/电源、ST-Link9供巡线5V、5接巡线GND、6接Dock GND的双地接法、PCM四信号/USB供电/3.3V悬空、ADS与摇杆、八路独立T9/P9、空置脚、PMOD0占用和板载信号。明确7799暂无八路驱动、实物连接未确认及热故障未解除。更新现有手册入口；未改变接线或访问板卡。
+
+## 2026-10-12 八路光键程序离线完成
+
+用户要求写程序。实现optical_keys_reader独立0x12/0x30总线、20s稳定等待、指针写STOP后直接读、单字节NACK、逐位二样滤波、失败全松与重试；泛用i2c_register_bus新增payload_count0直接读路径，ADS原路径回归通过。optical_key_allocator保留已按声部并从8输入填满4个槽；复用现有四个voice_lane，增加缓存外部音符频率与重触发，不复制8个DSP引擎。板载组合控制保持，模块未就绪/断连回退原演奏；GPIO独立T9/P9、全开漏。默认低有效与可选高有效均验证。
+
+新增4组加原14组共18组测试通过，包含8音符音高、四复音限幅、主控制键在线静音、双I2C+PCM串行输出、失效释放与恢复。第一次编译因声明在使用之后被Icarus拒绝，保存失败日志后调整顺序通过。额外极性测试/串口新字段解析自测通过。UART Y bit11在线；在线X为8光键掩码，不在线X仍ADC数值，K仍板载4键。
+
+独立instrument_optical_candidate项目构建exit0，无WARN/ERROR；setup/hold端点违反0，Fmax33.020MHz，DSP54%。码流SHA256 634F999761F85049B0EF3EEB473D53CB972A2B71EE08795B4DDD97C76B7FB234。未读取设备、未上电操作、未烧录，当前Flash仍7799、热故障未解除。详细接口与组音说明在docs/optical-program-candidate.md。不能宣称8复音、实物已达标或热故障已修复。

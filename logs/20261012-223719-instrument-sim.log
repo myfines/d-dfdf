@@ -1,0 +1,27 @@
+**********************
+PowerShell transcript start
+Start time: 20261012223720
+Username: ZRK\zrk
+RunAs User: ZRK\zrk
+Configuration Name: 
+Machine: ZRK (Microsoft Windows NT 10.0.26100.0)
+Host Application: C:\Users\zrk\.cache\codex-runtimes\codex-primary-runtime\dependencies\native\powershell\pwsh.dll -Command try { [Console]::OutputEncoding=[System.Text.Encoding]::UTF8 } catch {}
+@'
+from pathlib import Path
+p=Path('instrument_io/instrument_io.v');s=p.read_text();a=s.index('    wire [7:0] optical_keys_n');b=s.index('    wire controls_valid',a);block=s[a:b];s=s[:a]+s[b:];needle='    reg [23:0] heartbeat;\n';s=s.replace(needle,needle+block);p.write_text(s)
+'@ | python -; & ./instrument_io/run_tests.ps1 *> logs/20261012-optical-suite-2.log; Get-Content logs/20261012-optical-suite-2.log -Tail 7
+Process ID: 31536
+PSVersion: 7.6.5
+PSEdition: Core
+GitCommitId: 7.6.5
+OS: Microsoft Windows 10.0.26100
+Platform: Win32NT
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1, 6.0, 7.0
+PSRemotingProtocolVersion: 2.4
+SerializationVersion: 1.1.0.1
+WSManStackVersion: 3.0
+**********************
+**********************
+PowerShell transcript end
+End time: 20261012223915
+**********************

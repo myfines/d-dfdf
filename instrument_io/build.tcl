@@ -19,4 +19,6 @@ add_file E:/gaoyun/d-dfdf/instrument_io/wave_source.v
 add_file E:/gaoyun/d-dfdf/instrument_io/short_delay.v
 add_file E:/gaoyun/d-dfdf/instrument_io/spectrum_bank.v
 add_file E:/gaoyun/d-dfdf/instrument_io/mode_router.v
+add_file E:/gaoyun/d-dfdf/instrument_io/optical_keys_reader.v
+add_file E:/gaoyun/d-dfdf/instrument_io/optical_key_allocator.v
 run all

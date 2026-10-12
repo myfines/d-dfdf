@@ -5,12 +5,15 @@ module instrument_io #(
     parameter integer RETRY_TICKS=270000,
     parameter integer BUS_TIMEOUT_TICKS=270000,
     parameter integer SWITCH_DEBOUNCE_TICKS=135000,
-    parameter integer LONG_PRESS_FRAMES=46875
+    parameter integer LONG_PRESS_FRAMES=46875,
+    parameter ENABLE_OPTICAL=0,OPTICAL_ACTIVE_LOW=1,
+    parameter integer OPTICAL_BOOT_TICKS=540000000,OPTICAL_POLL_TICKS=27000
 )(input wire clk,input wire [3:0] btn_n,input wire JOY_SW_N,
   inout wire ADC_SCL,ADC_SDA,
   output wire PCM_BCK,PCM_LRCK,PCM_DATA,
   output wire PA_EN,HP_BCK,HP_WS,HP_DIN,
-  output reg LED_ALIVE,output wire LED_ADC,output wire UART_TX);
+  output reg LED_ALIVE,output wire LED_ADC,output wire UART_TX,
+  inout wire OPTICAL_SCL,OPTICAL_SDA);
     reg [15:0] power_on=0;
     wire reset_n=power_on[15];
     always @(posedge clk) if(!reset_n) power_on<=power_on+1'b1;
@@ -27,6 +30,22 @@ module instrument_io #(
     reg sw_meta,sw_sync,sw_stable;
     reg [31:0] sw_count;
     reg [23:0] heartbeat;
+    wire [7:0] optical_keys_n,optical_raw;
+    wire optical_valid,optical_error;
+    wire optical_perform=optical_valid && !test_mode && !edit_mode;
+    wire [3:0] optical_slots_n,optical_triggers;
+    wire [11:0] optical_notes;
+    generate if(ENABLE_OPTICAL)begin: optical_interface
+        optical_keys_reader #(.HALF_TICKS(I2C_HALF_TICKS),.TIMEOUT_TICKS(BUS_TIMEOUT_TICKS),
+            .BOOT_TICKS(OPTICAL_BOOT_TICKS),.POLL_TICKS(OPTICAL_POLL_TICKS),.RETRY_TICKS(RETRY_TICKS),
+            .ACTIVE_LOW(OPTICAL_ACTIVE_LOW)) reader(
+            clk,reset_n,OPTICAL_SCL,OPTICAL_SDA,optical_keys_n,optical_raw,optical_valid,optical_error);
+    end else begin: no_optical
+        assign OPTICAL_SCL=1'bz;assign OPTICAL_SDA=1'bz;
+        assign optical_keys_n=8'hff;assign optical_raw=8'hff;assign optical_valid=0;assign optical_error=0;
+    end endgenerate
+    optical_key_allocator allocator(clk,reset_n,frame_tick,
+        optical_perform?optical_keys_n:8'hff,optical_slots_n,optical_notes,optical_triggers);
     // The external PCM5102A uses I2S, not the Dock PT8211's LSB-justified stream.
     // Keep the old headphone amplifier and its data interface inactive.
     assign PA_EN=0;
@@ -44,15 +63,16 @@ module instrument_io #(
         axis_x,test_mode?12'd0:axis_y,test_mode?1'b0:octave_down,keyboard_sample,keyboard_active,
         1'b1,test_mode?2'd1:timbre,test_mode?9'd6:attack_step,
         test_mode?16'd1:decay_interval,test_mode?9'd256:sustain_level,
-        test_mode?16'd4:release_interval,note_page);
+        test_mode?16'd4:release_interval,note_page,
+        optical_perform,optical_slots_n,optical_notes,optical_triggers);
     spectrum_bank bank(clk,reset_n,frame_tick,{32{test_mode}},bank_sample,bank_active,bank_busy);
     mode_router router(clk,reset_n,frame_tick,test_mode?2'd2:edit_mode?2'd1:2'd0,
         keyboard_sample,bank_sample,dry_sample);
     assign note_active=test_mode?bank_active:keyboard_active;
     short_delay effect(clk,reset_n,frame_tick,echo_enable && !test_mode && !edit_mode,dry_sample,audio_sample);
     // UART Y packs mode bits; low bit remains actual envelope activity.
-    uart_status monitor(clk,reset_n,controls_valid,adc_error,axis_x,
-        {1'd0,note_page,timbre,edit_mode,test_mode,octave_down,echo_enable,edit_field,note_active},keys_sync,ADC_SCL,ADC_SDA,UART_TX);
+    uart_status monitor(clk,reset_n,controls_valid,adc_error,optical_valid?{4'd0,optical_keys_n}:axis_x,
+        {optical_valid,note_page,timbre,edit_mode,test_mode,octave_down,echo_enable,edit_field,note_active},keys_sync,ADC_SCL,ADC_SDA,UART_TX);
     i2s_tx16 tx(clk,reset_n,audio_sample,audio_sample,PCM_BCK,PCM_LRCK,PCM_DATA,frame_tick);
     always @(posedge clk) begin
         if(!reset_n) begin

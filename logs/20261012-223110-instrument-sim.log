@@ -1,0 +1,62 @@
+**********************
+PowerShell transcript start
+Start time: 20261012223111
+Username: ZRK\zrk
+RunAs User: ZRK\zrk
+Configuration Name: 
+Machine: ZRK (Microsoft Windows NT 10.0.26100.0)
+Host Application: C:\Users\zrk\.cache\codex-runtimes\codex-primary-runtime\dependencies\native\powershell\pwsh.dll -Command try { [Console]::OutputEncoding=[System.Text.Encoding]::UTF8 } catch {}
+@'
+from pathlib import Path
+p=Path('instrument_io/instrument_optical_top.v');p.write_text('''`timescale 1ns/1ps
+module instrument_optical_top(input wire clk,input wire [3:0] btn_n,input wire JOY_SW_N,
+ inout wire ADC_SCL,ADC_SDA,OPTICAL_SCL,OPTICAL_SDA,
+ output wire PCM_BCK,PCM_LRCK,PCM_DATA,PA_EN,HP_BCK,HP_WS,HP_DIN,LED_ALIVE,LED_ADC,UART_TX);
+ instrument_io #(.ENABLE_OPTICAL(1)) core(clk,btn_n,JOY_SW_N,ADC_SCL,ADC_SDA,
+ PCM_BCK,PCM_LRCK,PCM_DATA,PA_EN,HP_BCK,HP_WS,HP_DIN,LED_ALIVE,LED_ADC,UART_TX,OPTICAL_SCL,OPTICAL_SDA);
+endmodule
+''')
+for name in ['build.tcl','build_idle_candidate.tcl']:
+ p=Path('instrument_io/'+name);s=p.read_text();s=s.replace('run all','add_file E:/gaoyun/d-dfdf/instrument_io/optical_keys_reader.v\nadd_file E:/gaoyun/d-dfdf/instrument_io/optical_key_allocator.v\nrun all');p.write_text(s)
+s=Path('instrument_io/build_idle_candidate.tcl').read_text().replace('instrument_idle_candidate','instrument_optical_candidate').replace('-top_module instrument_io','-top_module instrument_optical_top').replace('run all','add_file E:/gaoyun/d-dfdf/instrument_io/instrument_optical_top.v\nrun all');Path('instrument_io/build_optical_candidate.tcl').write_text(s)
+p=Path('instrument_io/instrument.cst');s=p.read_text();s+='\nIO_LOC "OPTICAL_SCL" T9;\nIO_PORT "OPTICAL_SCL" IO_TYPE=LVCMOS33 PULL_MODE=UP DRIVE=4;\nIO_LOC "OPTICAL_SDA" P9;\nIO_PORT "OPTICAL_SDA" IO_TYPE=LVCMOS33 PULL_MODE=UP DRIVE=4;\n';p.write_text(s)
+'@ | python -; & ./instrument_io/run_tests.ps1 *> logs/20261012-optical-suite-1.log; Get-Content logs/20261012-optical-suite-1.log -Tail 6
+Process ID: 18796
+PSVersion: 7.6.5
+PSEdition: Core
+GitCommitId: 7.6.5
+OS: Microsoft Windows 10.0.26100
+Platform: Win32NT
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1, 6.0, 7.0
+PSRemotingProtocolVersion: 2.4
+SerializationVersion: 1.1.0.1
+WSManStackVersion: 3.0
+**********************
+E:\gaoyun\d-dfdf\instrument_io\instrument_io.v:34: warning: implicit definition of wire 'frame_tick'.
+E:\gaoyun\d-dfdf\instrument_io\instrument_io.v:34: warning: implicit definition of wire 'frame_tick'.
+E:\gaoyun\d-dfdf\instrument_io\instrument_io.v:34: warning: implicit definition of wire 'frame_tick'.
+E:\gaoyun\d-dfdf\instrument_io\instrument_io.v:34: warning: implicit definition of wire 'frame_tick'.
+E:\gaoyun\d-dfdf\instrument_io\instrument_io.v:34: warning: implicit definition of wire 'frame_tick'.
+E:\gaoyun\d-dfdf\instrument_io\instrument_io.v:34: warning: implicit definition of wire 'frame_tick'.
+E:\gaoyun\d-dfdf\instrument_io\instrument_io.v:34: warning: implicit definition of wire 'frame_tick'.
+E:\gaoyun\d-dfdf\instrument_io\instrument_io.v:34: warning: implicit definition of wire 'frame_tick'.
+E:\gaoyun\d-dfdf\instrument_io\instrument_io.v:34: warning: implicit definition of wire 'frame_tick'.
+E:\gaoyun\d-dfdf\instrument_io\instrument_io.v:34: warning: implicit definition of wire 'frame_tick'.
+E:\gaoyun\d-dfdf\instrument_io\instrument_io.v:34: warning: implicit definition of wire 'frame_tick'.
+E:\gaoyun\d-dfdf\instrument_io\instrument_io.v:34: warning: implicit definition of wire 'frame_tick'.
+E:\gaoyun\d-dfdf\instrument_io\instrument_io.v:34: warning: implicit definition of wire 'frame_tick'.
+E:\gaoyun\d-dfdf\instrument_io\instrument_io.v:34: warning: implicit definition of wire 'frame_tick'.
+E:\gaoyun\d-dfdf\instrument_io\instrument_io.v:34: warning: implicit definition of wire 'frame_tick'.
+E:\gaoyun\d-dfdf\instrument_io\instrument_io.v:23: error: Unable to bind wire/reg/memory `test_mode' in `tb_controls.dut'
+E:\gaoyun\d-dfdf\instrument_io\instrument_io.v:41:      : A symbol with that name was declared here. Check for declaration after use.
+E:\gaoyun\d-dfdf\instrument_io\instrument_io.v:23: error: Unable to bind wire/reg/memory `edit_mode' in `tb_controls.dut'
+E:\gaoyun\d-dfdf\instrument_io\instrument_io.v:41:      : A symbol with that name was declared here. Check for declaration after use.
+E:\gaoyun\d-dfdf\instrument_io\instrument_io.v:23: error: Unable to elaborate r-value: ((optical_valid)&&(!(test_mode)))&&(!(edit_mode))
+E:\gaoyun\d-dfdf\instrument_io\instrument_io.v:34: error: Unable to bind wire/reg/memory `frame_tick' in `tb_controls.dut'
+E:\gaoyun\d-dfdf\instrument_io\instrument_io.v:36:      : A symbol with that name was declared here. Check for declaration after use.
+E:\gaoyun\d-dfdf\instrument_io\instrument_io.v:34: error: Failed to elaborate input port 'frame_tick' expression (frame_tick) in instance dut.allocator of module: optical_key_allocator.
+5 error(s) during elaboration.
+**********************
+PowerShell transcript end
+End time: 20261012223127
+**********************

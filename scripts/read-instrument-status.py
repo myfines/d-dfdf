@@ -7,7 +7,8 @@ def decode(line):
  m=re.fullmatch(r"IO V([01]) E([01]) X([0-9A-F]{3}) Y([0-9A-F]{3}) K([0-9A-F]) S([01]{2})",line.strip())
  if not m:return None
  v,e,x,y,k,bus=m.groups();flags=int(y,16)
- return {"adc_ok":v=="1" and e=="0","adc_x":int(x,16),"note_page":(flags>>9)&3,
+ return {"adc_ok":v=="1" and e=="0","adc_x":None if flags&2048 else int(x,16),"optical_online":bool(flags&2048),
+ "optical_pressed_keys":[i for i in range(8) if not int(x,16)&(1<<i)] if flags&2048 else [],"note_page":(flags>>9)&3,
  "timbre":(flags>>7)&3,"mode":"test32" if flags&32 else "edit" if flags&64 else "play",
  "octave_down":bool(flags&16),"delay":bool(flags&8),"adsr_field":"ADSR"[(flags>>1)&3],
  "envelope_active":bool(flags&1),"pressed_keys":[i for i in range(4) if not int(k,16)&(1<<i)],"bus_snapshot":bus}
@@ -18,6 +19,7 @@ def main():
  if a.self_test:
   z=decode("IO V1 E0 X34E Y000 KF S11");assert z["adc_ok"] and z["note_page"]==0 and not z["envelope_active"]
   z=decode("IO V1 E0 X34E Y53F K7 S10");assert z["note_page"]==2 and z["timbre"]==2 and z["mode"]=="test32" and z["pressed_keys"]==[3]
+  z=decode("IO V1 E0 X0FE Y801 KF S11");assert z["optical_online"] and z["optical_pressed_keys"]==[0] and z["adc_x"] is None
   assert decode("partial line") is None
   print("PASS telemetry decoder: packed modes, pages, presets and active-low keys");return
  hold=Path(__file__).resolve().parent.parent/"docs"/"hardware-hold.json"
