@@ -60,3 +60,5 @@ pwsh -NoProfile -File E:\gaoyun\d-dfdf\instrument_io\run_tests.ps1
 本次用户确认接线与供电后，使用高云官方 Programmer 的 **SRAM Program（operation 2）**，2.5MHz，完成该码流加载，见 `logs/20261012-instrument-sram-program.out.txt`。下一步观察N16心跳、N14 ADC有效灯，并用外部线路输入设备测试声音和摇杆控制。没有写Flash；掉电/RCFG将回到旧Flash四键程序。
 
 实物供电修正（2026-10-12）：该 SLK PCM 模块用 USB-C 入口供电，排针 +3.3V 不连接 Dock。保留 DATA/BCK/LRCK/GND 四线。相同诊断码流由排针3.3V供电时无声，改USB供电后用户确认持续测试音。不得并接两路电源；具体内部供电轨尚未测量确认。
+
+2026-10-12：四键＋摇杆 instrument_io SRAM 下载后，用户对四键声音、摇杆变化、ADC灯的组合测试反馈为“ok”（未分项描述）。当前 Flash 仍保留此前 audio_keys 程序。
