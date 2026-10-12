@@ -437,3 +437,11 @@ Flash现在为直接单键声部修正版（SRAM标识3CB9），不是之前ADE8
 随后执行官方只读operation_index15、2.5MHz、spiaddr0x000000，与同一码流独立比较。进度从1%持续到70%，报Error: SPI Verify failed，退出码67，耗时844.23秒。此前operation13“100%/exit0”不能代替独立校验成功；Flash内容或读取链路存在不一致，具体失败地址未由CLI列出。该失败不单独证明Flash芯片损坏。新旧码流头的设备C、起始地址0、2.5MHz加载速率、CRC/Security/JTAG设置相同，未发现明显启动头差异。
 
 比较结束立即恢复同一码流SRAM：100%、UserCode3CB9、Status6020、exit0、4.64秒。新鲜UART再次V1 E0、Y000、K=F。当前应用在SRAM恢复，未再擦写Flash，Flash启动仍有问题，不将本次持久化标记成功。
+
+## 2026-10-12 官方Flash流程与故障排查核对
+
+用户询问官方解决方案。核对官方Sipeed Primer20K LED教程：https://wiki.sipeed.com/hardware/zh/tang/tang-primer-20k/examples/led.html ，要求先使能核心板，使用官方教育版Programmer，External Flash Mode、Generic Flash和.fs文件。官方FAQ https://wiki.sipeed.com/hardware/zh/tang/Tang-Nano-Doc/questions.html 明确：未使能核心板时0、1号LED一直亮且核心板不正常启动；板载下载器JTAG/串口占用可通过重新插拔USB恢复；下载频率建议2.5MHz或以下。这是官方建议，不是此前用户自行约定的固定频率上限。
+
+用户此前“LED0/1都亮”与官方未使能提示吻合，优先核实1号使能拨码，不把此线索直接当根因。JTAG可扫描、SRAM可运行也不取代此物理设置核查。已给官方图片 https://wiki.sipeed.com/hardware/zh/tang/tang-primer-20k/assets/start/switch_1_on.png 并询问ON/OFF。未执行新擦写。
+
+高云现行SUG502-2.5.2E https://cdn.gowinsemi.com.cn/SUG502E.pdf 的GW2A(R)外部Flash章节说明bscan13/15，以及GAO-Bridge36（擦写）/37（擦写校验）。本机CLI帮助亦确认37名称匹配。GAO-Bridge是官方支持的另一路径，非已证实本故障修复方法；目前不能承诺换模式即可成功。接下来顺序应为核实使能与连接，复位下载器并避免串口占用，再视证据采用官方Flash模式且校验通过+冷启动验证；此前70%校验失败不能忽略或归为芯片损坏。
