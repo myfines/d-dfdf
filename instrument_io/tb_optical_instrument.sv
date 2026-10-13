@@ -3,7 +3,7 @@ module tb_optical_instrument;
 reg clk=0;always #18.5185 clk=~clk;reg [3:0] keys=15;reg enabled=1;reg [7:0] status=255;
 tri1 ascl,asda,oscl,osda;wire bck,ws,data,pa,hb,hw,hd,alive,adc_led,uart;integer ac,oc,n,nonzero;
 reg [15:0] l,r;
-instrument_io #(.I2C_HALF_TICKS(3),.CONVERSION_TICKS(100),.RETRY_TICKS(50),.BUS_TIMEOUT_TICKS(100),
+instrument_io #(.SAFE_STARTUP(0),.I2C_HALF_TICKS(3),.CONVERSION_TICKS(100),.RETRY_TICKS(50),.BUS_TIMEOUT_TICKS(100),
  .SWITCH_DEBOUNCE_TICKS(10),.ENABLE_OPTICAL(1),.OPTICAL_BOOT_TICKS(50),.OPTICAL_POLL_TICKS(20)) dut(
  clk,keys,1'b1,ascl,asda,bck,ws,data,pa,hb,hw,hd,alive,adc_led,uart,oscl,osda);
 ads1015_model adc(ascl,asda,1'b1,12'd825,12'd0,ac);

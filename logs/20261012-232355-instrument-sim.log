@@ -1,0 +1,24 @@
+**********************
+PowerShell transcript start
+Start time: 20261012232355
+Username: ZRK\zrk
+RunAs User: ZRK\zrk
+Configuration Name: 
+Machine: ZRK (Microsoft Windows NT 10.0.26100.0)
+Host Application: C:\Users\zrk\.cache\codex-runtimes\codex-primary-runtime\dependencies\native\powershell\pwsh.dll -Command try { [Console]::OutputEncoding=[System.Text.Encoding]::UTF8 } catch {}
+$env:PATH='E:\gaoyun\tools\openfpgaloader\ucrt64\bin;E:\gaoyun\tools\iverilog\ucrt64\bin;'+$env:PATH; $rtl=@(Get-ChildItem instrument_io -Filter '*.v' | ForEach-Object FullName); & E:\gaoyun\tools\iverilog\ucrt64\bin\iverilog.exe -g2012 -s tb_safe_start -o E:\gaoyun\safe.vvp instrument_io/tb_safe_start.sv @rtl instrument_io/ads1015_model.sv instrument_io/optical_sensor_model.sv; & E:\gaoyun\tools\iverilog\ucrt64\bin\vvp.exe E:\gaoyun\safe.vvp *> logs/20261012-safe-start-focused.log; Get-Content logs/20261012-safe-start-focused.log; & ./instrument_io/run_tests.ps1 *> logs/20261012-safe-start-suite.log; Get-Content logs/20261012-safe-start-suite.log -Tail 5
+Process ID: 21012
+PSVersion: 7.6.5
+PSEdition: Core
+GitCommitId: 7.6.5
+OS: Microsoft Windows 10.0.26100
+Platform: Win32NT
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1, 6.0, 7.0
+PSRemotingProtocolVersion: 2.4
+SerializationVersion: 1.1.0.1
+WSManStackVersion: 3.0
+**********************
+**********************
+PowerShell transcript end
+End time: 20261012232549
+**********************

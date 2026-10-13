@@ -22,4 +22,5 @@ add_file E:/gaoyun/d-dfdf/instrument_io/mode_router.v
 add_file E:/gaoyun/d-dfdf/instrument_io/optical_keys_reader.v
 add_file E:/gaoyun/d-dfdf/instrument_io/optical_key_allocator.v
 add_file E:/gaoyun/d-dfdf/instrument_io/instrument_optical_top.v
+add_file E:/gaoyun/d-dfdf/instrument_io/io_arm_control.v
 run all

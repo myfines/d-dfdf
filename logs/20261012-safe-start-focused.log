@@ -1,0 +1,2 @@
+PASS safe startup: no automatic output, explicit arm, no accidental panel action, disarm high impedance
+instrument_io/tb_safe_start.sv:18: $finish called at 347000000 (1ps)

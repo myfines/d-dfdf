@@ -8,11 +8,11 @@ $stamp = Get-Date -Format 'yyyyMMdd-HHmmss'
 $logPath = Join-Path $repoDir "logs\$stamp-instrument-sim.log"
 $outDir = 'E:\gaoyun\tools\smoke'
 New-Item -ItemType Directory -Path $outDir -Force | Out-Null
-$rtl = @('i2s_tx16.v','i2c_register_bus.v','ads1015_reader.v','voice_engine.v','instrument_io.v','uart_status.v','adsr_envelope.v','adsr_runtime.v','instrument_panel.v','wave_source.v','short_delay.v','spectrum_bank.v','mode_router.v','optical_keys_reader.v','optical_key_allocator.v') |
+$rtl = @('i2s_tx16.v','i2c_register_bus.v','ads1015_reader.v','voice_engine.v','instrument_io.v','uart_status.v','adsr_envelope.v','adsr_runtime.v','instrument_panel.v','wave_source.v','short_delay.v','spectrum_bank.v','mode_router.v','optical_keys_reader.v','optical_key_allocator.v','io_arm_control.v') |
     ForEach-Object { Join-Path $PSScriptRoot $_ }
 Start-Transcript -Path $logPath
 try {
-    foreach ($name in @('key_allocator','optical_reader','optical_voice','optical_instrument','idle_activity','router','bank','panel','effect','waves','adsr','i2s','ads1015','voice','poly','pages','controls','instrument')) {
+    foreach ($name in @('safe_start','key_allocator','optical_reader','optical_voice','optical_instrument','idle_activity','router','bank','panel','effect','waves','adsr','i2s','ads1015','voice','poly','pages','controls','instrument')) {
         $top = "tb_$name"
         $tb = Join-Path $PSScriptRoot "$top.sv"
         $image = Join-Path $outDir "instrument-$name.vvp"
