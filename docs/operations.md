@@ -626,3 +626,8 @@ PDF文字已提取，首次控制台输出遇GBK不能编码NBSP的UnicodeEncode
 - 用户报告“这次怎么不响了”。未下载、未改接线、未操作Flash。
 - 清空旧串口数据后短时采样3条：io_armed=true、adc_ok=true、optical_online=false、play模式、全键松开、envelope_active=false。当前无声不能归因为未启用或编辑模式；八路模块此刻未在线。
 - 已要求保持接线、按板载S1验证回退音频，并确认温升、模块电源灯及音频线位置。3.3V供电稳定性、接触、启动等待等尚未排除，不据一次掉线认定损坏。
+
+### 2026-10-13 S1保持检查纠正定位
+- 用户确认PCM LED亮，音频线接音箱AUX，PCM3.3V排针悬空。只读UserCode为CF73。
+- S1保持时采集3条新状态：armed=true、ADC正常、optical_online=true、光键全松、pressed_keys=[1]、envelope_active=false。八路已恢复在线；此时板载键用于功能控制，S1不直接演奏，因此这次S1无声不能证明DAC故障。
+- 前一次八路offline与本次online表明状态有变化，启动等待或间歇通信尚未区分。已要求持续触发一路光键再读包络，未重启或重烧。

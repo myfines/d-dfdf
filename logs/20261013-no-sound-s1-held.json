@@ -1,0 +1,21 @@
+{
+  "samples": 3,
+  "last": {
+    "io_armed": true,
+    "adc_ok": true,
+    "adc_x": null,
+    "optical_online": true,
+    "optical_pressed_keys": [],
+    "note_page": 0,
+    "timbre": 0,
+    "mode": "play",
+    "octave_down": false,
+    "delay": false,
+    "adsr_field": "A",
+    "envelope_active": false,
+    "pressed_keys": [
+      1
+    ],
+    "bus_snapshot": "11"
+  }
+}
