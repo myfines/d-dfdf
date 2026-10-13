@@ -621,3 +621,8 @@ PDF文字已提取，首次控制台输出遇GBK不能编码NBSP的UnicodeEncode
 - 使用已验证的Gowin GAO-Bridge operation37、SPI地址0、2.5MHz。结果exit0，明确“Program and Verify flash successfully”，耗时27.89秒。原始日志20261013-high-active-flash.log。
 - Flash现为高有效八光键安全启用版（构建/此前SRAM标识0xCF73）。已要求全断电10秒、PCM先/Dock后、手动启用后等20秒验收。冷启动结果尚待用户确认。
 - 自动部署暂停标记保留，更新其Flash标识及实机部署事实。无OTP、批量擦除、驱动或下载器固件操作。
+
+### 2026-10-13 新无声反馈的只读定位
+- 用户报告“这次怎么不响了”。未下载、未改接线、未操作Flash。
+- 清空旧串口数据后短时采样3条：io_armed=true、adc_ok=true、optical_online=false、play模式、全键松开、envelope_active=false。当前无声不能归因为未启用或编辑模式；八路模块此刻未在线。
+- 已要求保持接线、按板载S1验证回退音频，并确认温升、模块电源灯及音频线位置。3.3V供电稳定性、接触、启动等待等尚未排除，不据一次掉线认定损坏。
