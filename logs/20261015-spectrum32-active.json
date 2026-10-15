@@ -1,0 +1,215 @@
+{
+  "telemetry": {
+    "io_armed": true,
+    "adc_ok": true,
+    "adc_x": null,
+    "optical_online": true,
+    "optical_pressed_keys": [],
+    "note_page": 1,
+    "timbre": 2,
+    "mode": "test32",
+    "octave_down": false,
+    "delay": false,
+    "adsr_field": "A",
+    "envelope_active": true,
+    "pressed_keys": [],
+    "bus_snapshot": "11"
+  },
+  "peak": 0.881609320640564,
+  "clip_fraction": 0.0,
+  "checks": [
+    {
+      "expected": 129,
+      "hz": 129.0,
+      "local_peak_db": 39.0,
+      "found": true
+    },
+    {
+      "expected": 160,
+      "hz": 160.0,
+      "local_peak_db": 38.9,
+      "found": true
+    },
+    {
+      "expected": 191,
+      "hz": 191.0,
+      "local_peak_db": 39.1,
+      "found": true
+    },
+    {
+      "expected": 222,
+      "hz": 222.0,
+      "local_peak_db": 39.4,
+      "found": true
+    },
+    {
+      "expected": 253,
+      "hz": 253.0,
+      "local_peak_db": 40.0,
+      "found": true
+    },
+    {
+      "expected": 284,
+      "hz": 284.0,
+      "local_peak_db": 40.6,
+      "found": true
+    },
+    {
+      "expected": 315,
+      "hz": 315.0,
+      "local_peak_db": 41.3,
+      "found": true
+    },
+    {
+      "expected": 346,
+      "hz": 346.0,
+      "local_peak_db": 41.3,
+      "found": true
+    },
+    {
+      "expected": 377,
+      "hz": 377.0,
+      "local_peak_db": 41.3,
+      "found": true
+    },
+    {
+      "expected": 408,
+      "hz": 408.0,
+      "local_peak_db": 41.2,
+      "found": true
+    },
+    {
+      "expected": 439,
+      "hz": 439.0,
+      "local_peak_db": 41.1,
+      "found": true
+    },
+    {
+      "expected": 470,
+      "hz": 470.0,
+      "local_peak_db": 40.5,
+      "found": true
+    },
+    {
+      "expected": 501,
+      "hz": 501.0,
+      "local_peak_db": 39.7,
+      "found": true
+    },
+    {
+      "expected": 532,
+      "hz": 532.0,
+      "local_peak_db": 39.4,
+      "found": true
+    },
+    {
+      "expected": 563,
+      "hz": 563.0,
+      "local_peak_db": 39.1,
+      "found": true
+    },
+    {
+      "expected": 594,
+      "hz": 594.0,
+      "local_peak_db": 38.9,
+      "found": true
+    },
+    {
+      "expected": 625,
+      "hz": 625.0,
+      "local_peak_db": 38.9,
+      "found": true
+    },
+    {
+      "expected": 656,
+      "hz": 656.0,
+      "local_peak_db": 38.8,
+      "found": true
+    },
+    {
+      "expected": 687,
+      "hz": 687.0,
+      "local_peak_db": 38.9,
+      "found": true
+    },
+    {
+      "expected": 718,
+      "hz": 718.0,
+      "local_peak_db": 38.8,
+      "found": true
+    },
+    {
+      "expected": 749,
+      "hz": 749.0,
+      "local_peak_db": 38.9,
+      "found": true
+    },
+    {
+      "expected": 780,
+      "hz": 780.0,
+      "local_peak_db": 39.0,
+      "found": true
+    },
+    {
+      "expected": 811,
+      "hz": 811.0,
+      "local_peak_db": 39.2,
+      "found": true
+    },
+    {
+      "expected": 842,
+      "hz": 842.0,
+      "local_peak_db": 39.3,
+      "found": true
+    },
+    {
+      "expected": 873,
+      "hz": 873.0,
+      "local_peak_db": 39.4,
+      "found": true
+    },
+    {
+      "expected": 904,
+      "hz": 904.0,
+      "local_peak_db": 39.6,
+      "found": true
+    },
+    {
+      "expected": 935,
+      "hz": 935.0,
+      "local_peak_db": 40.0,
+      "found": true
+    },
+    {
+      "expected": 966,
+      "hz": 966.0,
+      "local_peak_db": 40.3,
+      "found": true
+    },
+    {
+      "expected": 997,
+      "hz": 997.0,
+      "local_peak_db": 40.8,
+      "found": true
+    },
+    {
+      "expected": 1028,
+      "hz": 1028.0,
+      "local_peak_db": 41.3,
+      "found": true
+    },
+    {
+      "expected": 1059,
+      "hz": 1059.0,
+      "local_peak_db": 41.2,
+      "found": true
+    },
+    {
+      "expected": 1090,
+      "hz": 1090.0,
+      "local_peak_db": 42.1,
+      "found": true
+    }
+  ],
+  "found": 32
+}
