@@ -1,0 +1,17 @@
+{
+  "device": "\u9ea6\u514b\u98ce (Realtek High Definition Audio)",
+  "rate": 48000,
+  "seconds": 3,
+  "peak": [
+    0.0004784112679772079,
+    0.0004784114134963602
+  ],
+  "rms_dbfs": [
+    -84.4534912109375,
+    -84.45347595214844
+  ],
+  "clip_fraction": [
+    0.0,
+    0.0
+  ]
+}
