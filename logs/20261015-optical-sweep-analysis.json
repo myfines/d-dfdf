@@ -1,0 +1,264 @@
+{
+  "timing_note": "host UART timestamps approximate, not latency measurement; audio midpoint offset -0.1s heuristic",
+  "summary": [
+    {
+      "key": 1,
+      "segments": 5,
+      "hz": [
+        523.0,
+        523.0,
+        523.0,
+        523.0,
+        523.0
+      ],
+      "matched": 5
+    },
+    {
+      "key": 2,
+      "segments": 4,
+      "hz": [
+        587.5,
+        587.5,
+        587.5,
+        587.5
+      ],
+      "matched": 4
+    },
+    {
+      "key": 3,
+      "segments": 4,
+      "hz": [
+        659.0,
+        659.0,
+        659.0,
+        659.0
+      ],
+      "matched": 4
+    },
+    {
+      "key": 4,
+      "segments": 3,
+      "hz": [
+        698.5,
+        698.5,
+        698.5
+      ],
+      "matched": 3
+    },
+    {
+      "key": 5,
+      "segments": 2,
+      "hz": [
+        784.0,
+        784.0
+      ],
+      "matched": 2
+    },
+    {
+      "key": 6,
+      "segments": 3,
+      "hz": [
+        880.0,
+        880.0,
+        880.0
+      ],
+      "matched": 3
+    },
+    {
+      "key": 7,
+      "segments": 1,
+      "hz": [
+        988.0
+      ],
+      "matched": 1
+    },
+    {
+      "key": 8,
+      "segments": 0,
+      "hz": [],
+      "matched": 0
+    }
+  ],
+  "segments": [
+    {
+      "key": 1,
+      "start": 1.45,
+      "duration": 0.75,
+      "hz": 523.0,
+      "expected_hz": 523.251,
+      "cents": -0.8
+    },
+    {
+      "key": 1,
+      "start": 17.34,
+      "duration": 0.5,
+      "hz": 523.0,
+      "expected_hz": 523.251,
+      "cents": -0.8
+    },
+    {
+      "key": 2,
+      "start": 18.61,
+      "duration": 1.52,
+      "hz": 587.5,
+      "expected_hz": 587.33,
+      "cents": 0.5
+    },
+    {
+      "key": 3,
+      "start": 20.88,
+      "duration": 0.76,
+      "hz": 659.0,
+      "expected_hz": 659.255,
+      "cents": -0.7
+    },
+    {
+      "key": 4,
+      "start": 22.64,
+      "duration": 1.02,
+      "hz": 698.5,
+      "expected_hz": 698.456,
+      "cents": 0.1
+    },
+    {
+      "key": 6,
+      "start": 27.69,
+      "duration": 1.27,
+      "hz": 880.0,
+      "expected_hz": 880.0,
+      "cents": 0.0
+    },
+    {
+      "key": 1,
+      "start": 35.76,
+      "duration": 1.02,
+      "hz": 523.0,
+      "expected_hz": 523.251,
+      "cents": -0.8
+    },
+    {
+      "key": 2,
+      "start": 37.28,
+      "duration": 1.02,
+      "hz": 587.5,
+      "expected_hz": 587.33,
+      "cents": 0.5
+    },
+    {
+      "key": 3,
+      "start": 38.55,
+      "duration": 1.25,
+      "hz": 659.0,
+      "expected_hz": 659.255,
+      "cents": -0.7
+    },
+    {
+      "key": 4,
+      "start": 40.06,
+      "duration": 1.0,
+      "hz": 698.5,
+      "expected_hz": 698.456,
+      "cents": 0.1
+    },
+    {
+      "key": 5,
+      "start": 41.58,
+      "duration": 1.0,
+      "hz": 784.0,
+      "expected_hz": 783.991,
+      "cents": 0.0
+    },
+    {
+      "key": 6,
+      "start": 43.08,
+      "duration": 0.77,
+      "hz": 880.0,
+      "expected_hz": 880.0,
+      "cents": 0.0
+    },
+    {
+      "key": 1,
+      "start": 47.38,
+      "duration": 0.5,
+      "hz": 523.0,
+      "expected_hz": 523.251,
+      "cents": -0.8
+    },
+    {
+      "key": 2,
+      "start": 48.64,
+      "duration": 0.5,
+      "hz": 587.5,
+      "expected_hz": 587.33,
+      "cents": 0.5
+    },
+    {
+      "key": 3,
+      "start": 49.89,
+      "duration": 0.52,
+      "hz": 659.0,
+      "expected_hz": 659.255,
+      "cents": -0.7
+    },
+    {
+      "key": 4,
+      "start": 50.91,
+      "duration": 0.5,
+      "hz": 698.5,
+      "expected_hz": 698.456,
+      "cents": 0.1
+    },
+    {
+      "key": 5,
+      "start": 52.17,
+      "duration": 0.75,
+      "hz": 784.0,
+      "expected_hz": 783.991,
+      "cents": 0.0
+    },
+    {
+      "key": 6,
+      "start": 53.44,
+      "duration": 0.5,
+      "hz": 880.0,
+      "expected_hz": 880.0,
+      "cents": 0.0
+    },
+    {
+      "key": 7,
+      "start": 54.69,
+      "duration": 0.52,
+      "hz": 988.0,
+      "expected_hz": 987.767,
+      "cents": 0.4
+    },
+    {
+      "key": 1,
+      "start": 57.22,
+      "duration": 0.5,
+      "hz": 523.0,
+      "expected_hz": 523.251,
+      "cents": -0.8
+    },
+    {
+      "key": 2,
+      "start": 58.22,
+      "duration": 0.51,
+      "hz": 587.5,
+      "expected_hz": 587.33,
+      "cents": 0.5
+    },
+    {
+      "key": 3,
+      "start": 59.23,
+      "duration": 0.75,
+      "hz": 659.0,
+      "expected_hz": 659.255,
+      "cents": -0.7
+    }
+  ],
+  "offline_rows": 0,
+  "unarmed_rows": 0,
+  "peak": 0.656646728515625,
+  "clip_fraction": 0.0
+}
