@@ -1,0 +1,613 @@
+{
+  "groups": [
+    {
+      "state": [
+        "play",
+        [],
+        false,
+        "A",
+        [],
+        false
+      ],
+      "start": 0.17,
+      "end": 21.62,
+      "n": 86,
+      "rms_dbfs": -83.2
+    },
+    {
+      "state": [
+        "play",
+        [
+          0
+        ],
+        false,
+        "A",
+        [],
+        true
+      ],
+      "start": 21.88,
+      "end": 21.88,
+      "n": 1
+    },
+    {
+      "state": [
+        "play",
+        [
+          0
+        ],
+        false,
+        "A",
+        [],
+        false
+      ],
+      "start": 22.12,
+      "end": 23.14,
+      "n": 5,
+      "rms_dbfs": -87.8
+    },
+    {
+      "state": [
+        "play",
+        [
+          0,
+          1
+        ],
+        false,
+        "A",
+        [],
+        true
+      ],
+      "start": 23.39,
+      "end": 23.39,
+      "n": 1
+    },
+    {
+      "state": [
+        "play",
+        [
+          0,
+          1
+        ],
+        false,
+        "A",
+        [],
+        false
+      ],
+      "start": 23.64,
+      "end": 24.91,
+      "n": 6,
+      "rms_dbfs": -21.1
+    },
+    {
+      "state": [
+        "play",
+        [
+          0,
+          1,
+          2
+        ],
+        false,
+        "A",
+        [],
+        true
+      ],
+      "start": 25.16,
+      "end": 25.16,
+      "n": 1
+    },
+    {
+      "state": [
+        "play",
+        [
+          0,
+          1,
+          2
+        ],
+        false,
+        "A",
+        [],
+        false
+      ],
+      "start": 25.41,
+      "end": 27.17,
+      "n": 8,
+      "rms_dbfs": -81.7
+    },
+    {
+      "state": [
+        "play",
+        [
+          0,
+          1,
+          2,
+          3
+        ],
+        false,
+        "A",
+        [],
+        true
+      ],
+      "start": 27.42,
+      "end": 27.42,
+      "n": 1
+    },
+    {
+      "state": [
+        "play",
+        [
+          0,
+          1,
+          2,
+          3
+        ],
+        false,
+        "A",
+        [],
+        false
+      ],
+      "start": 27.69,
+      "end": 28.19,
+      "n": 3,
+      "rms_dbfs": -90.6
+    },
+    {
+      "state": [
+        "play",
+        [
+          0,
+          1,
+          2
+        ],
+        false,
+        "A",
+        [],
+        false
+      ],
+      "start": 28.44,
+      "end": 28.94,
+      "n": 3,
+      "rms_dbfs": -84.2
+    },
+    {
+      "state": [
+        "play",
+        [
+          0,
+          1
+        ],
+        false,
+        "A",
+        [],
+        false
+      ],
+      "start": 29.19,
+      "end": 29.95,
+      "n": 4,
+      "rms_dbfs": -83.2
+    },
+    {
+      "state": [
+        "play",
+        [
+          0
+        ],
+        false,
+        "A",
+        [],
+        false
+      ],
+      "start": 30.2,
+      "end": 31.47,
+      "n": 6,
+      "rms_dbfs": -83.1
+    },
+    {
+      "state": [
+        "play",
+        [],
+        false,
+        "A",
+        [],
+        false
+      ],
+      "start": 31.72,
+      "end": 34.75,
+      "n": 13,
+      "rms_dbfs": -83.1
+    },
+    {
+      "state": [
+        "play",
+        [],
+        false,
+        "A",
+        [
+          2
+        ],
+        false
+      ],
+      "start": 35.0,
+      "end": 35.5,
+      "n": 3,
+      "rms_dbfs": -83.1
+    },
+    {
+      "state": [
+        "play",
+        [],
+        true,
+        "A",
+        [
+          2
+        ],
+        false
+      ],
+      "start": 35.75,
+      "end": 36.26,
+      "n": 3,
+      "rms_dbfs": -83.2
+    },
+    {
+      "state": [
+        "play",
+        [],
+        true,
+        "A",
+        [],
+        false
+      ],
+      "start": 36.51,
+      "end": 38.53,
+      "n": 9,
+      "rms_dbfs": -83.2
+    },
+    {
+      "state": [
+        "play",
+        [
+          0
+        ],
+        true,
+        "A",
+        [],
+        true
+      ],
+      "start": 38.78,
+      "end": 39.03,
+      "n": 2,
+      "rms_dbfs": -19.9
+    },
+    {
+      "state": [
+        "play",
+        [],
+        true,
+        "A",
+        [],
+        false
+      ],
+      "start": 39.28,
+      "end": 39.8,
+      "n": 3,
+      "rms_dbfs": -87.9
+    },
+    {
+      "state": [
+        "play",
+        [
+          0
+        ],
+        true,
+        "A",
+        [],
+        true
+      ],
+      "start": 40.05,
+      "end": 40.05,
+      "n": 1
+    },
+    {
+      "state": [
+        "play",
+        [
+          0
+        ],
+        true,
+        "A",
+        [],
+        false
+      ],
+      "start": 40.3,
+      "end": 40.55,
+      "n": 2,
+      "rms_dbfs": -59.3
+    },
+    {
+      "state": [
+        "play",
+        [],
+        true,
+        "A",
+        [],
+        false
+      ],
+      "start": 40.8,
+      "end": 42.06,
+      "n": 6,
+      "rms_dbfs": -83.6
+    },
+    {
+      "state": [
+        "play",
+        [
+          0
+        ],
+        true,
+        "A",
+        [],
+        true
+      ],
+      "start": 42.31,
+      "end": 42.56,
+      "n": 2,
+      "rms_dbfs": -19.5
+    },
+    {
+      "state": [
+        "play",
+        [],
+        true,
+        "A",
+        [],
+        false
+      ],
+      "start": 42.81,
+      "end": 46.36,
+      "n": 15,
+      "rms_dbfs": -83.8
+    },
+    {
+      "state": [
+        "edit",
+        [],
+        true,
+        "A",
+        [],
+        false
+      ],
+      "start": 46.61,
+      "end": 53.42,
+      "n": 28,
+      "rms_dbfs": -83.2
+    },
+    {
+      "state": [
+        "edit",
+        [],
+        true,
+        "A",
+        [
+          0
+        ],
+        false
+      ],
+      "start": 53.67,
+      "end": 54.69,
+      "n": 5,
+      "rms_dbfs": -83.1
+    },
+    {
+      "state": [
+        "edit",
+        [],
+        true,
+        "A",
+        [],
+        false
+      ],
+      "start": 54.94,
+      "end": 55.44,
+      "n": 3,
+      "rms_dbfs": -83.1
+    },
+    {
+      "state": [
+        "edit",
+        [],
+        true,
+        "D",
+        [
+          1
+        ],
+        false
+      ],
+      "start": 55.69,
+      "end": 56.45,
+      "n": 4,
+      "rms_dbfs": -83.1
+    },
+    {
+      "state": [
+        "edit",
+        [],
+        true,
+        "D",
+        [],
+        false
+      ],
+      "start": 56.7,
+      "end": 57.2,
+      "n": 3,
+      "rms_dbfs": -83.1
+    },
+    {
+      "state": [
+        "edit",
+        [],
+        true,
+        "S",
+        [
+          2
+        ],
+        false
+      ],
+      "start": 57.45,
+      "end": 58.47,
+      "n": 5,
+      "rms_dbfs": -83.2
+    },
+    {
+      "state": [
+        "edit",
+        [],
+        true,
+        "S",
+        [],
+        false
+      ],
+      "start": 58.72,
+      "end": 59.22,
+      "n": 3,
+      "rms_dbfs": -83.2
+    },
+    {
+      "state": [
+        "edit",
+        [],
+        true,
+        "R",
+        [
+          3
+        ],
+        false
+      ],
+      "start": 59.47,
+      "end": 60.98,
+      "n": 7,
+      "rms_dbfs": -83.2
+    },
+    {
+      "state": [
+        "edit",
+        [],
+        true,
+        "R",
+        [],
+        false
+      ],
+      "start": 61.23,
+      "end": 64.51,
+      "n": 14,
+      "rms_dbfs": -83.2
+    },
+    {
+      "state": [
+        "play",
+        [],
+        true,
+        "R",
+        [],
+        false
+      ],
+      "start": 64.78,
+      "end": 66.55,
+      "n": 8,
+      "rms_dbfs": -69.2
+    },
+    {
+      "state": [
+        "play",
+        [
+          0
+        ],
+        true,
+        "R",
+        [],
+        true
+      ],
+      "start": 66.8,
+      "end": 67.8,
+      "n": 5,
+      "rms_dbfs": -13.2
+    },
+    {
+      "state": [
+        "play",
+        [],
+        true,
+        "R",
+        [],
+        false
+      ],
+      "start": 68.05,
+      "end": 68.81,
+      "n": 4,
+      "rms_dbfs": -84.4
+    },
+    {
+      "state": [
+        "play",
+        [
+          0
+        ],
+        true,
+        "R",
+        [],
+        true
+      ],
+      "start": 69.06,
+      "end": 69.56,
+      "n": 3,
+      "rms_dbfs": -13.3
+    },
+    {
+      "state": [
+        "play",
+        [],
+        true,
+        "R",
+        [],
+        false
+      ],
+      "start": 69.83,
+      "end": 119.78,
+      "n": 199,
+      "rms_dbfs": -83.2
+    }
+  ],
+  "mode_counts": {
+    "play": 403,
+    "edit": 72
+  },
+  "delay_counts": {
+    "False": 141,
+    "True": 334
+  },
+  "edit_fields": [
+    "A",
+    "D",
+    "R",
+    "S"
+  ],
+  "offline_rows": 0,
+  "adc_bad": 0,
+  "peak": 0.60662841796875,
+  "clip_fraction": 0.0,
+  "last": {
+    "host_seconds": 119.78100000000268,
+    "io_armed": true,
+    "adc_ok": true,
+    "adc_x": null,
+    "optical_online": true,
+    "optical_pressed_keys": [],
+    "note_page": 1,
+    "timbre": 2,
+    "mode": "play",
+    "octave_down": false,
+    "delay": true,
+    "adsr_field": "R",
+    "envelope_active": false,
+    "pressed_keys": [],
+    "bus_snapshot": "11"
+  }
+}
