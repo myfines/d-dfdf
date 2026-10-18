@@ -1,0 +1,17 @@
+test_controls (test_bridge.ProtocolTest.test_controls) ... ok
+test_invalid (test_bridge.ProtocolTest.test_invalid) ... ok
+test_notes (test_bridge.ProtocolTest.test_notes) ... ok
+test_reject_boolean_note_key (test_bridge.ProtocolTest.test_reject_boolean_note_key) ... FAIL
+
+======================================================================
+FAIL: test_reject_boolean_note_key (test_bridge.ProtocolTest.test_reject_boolean_note_key)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "E:\gaoyun\d-dfdf\mobile-companion\tests\test_bridge.py", line 13, in test_reject_boolean_note_key
+    self.assertFalse(bridge.validate({'version':1,'type':'note_on','key':True,'value':1}))
+AssertionError: True is not false
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.001s
+
+FAILED (failures=1)

@@ -732,3 +732,12 @@ PDF文字已提取，首次控制台输出遇GBK不能编码NBSP的UnicodeEncode
 - 随后40秒采集158条均光键全松、无包络，录音峰值0.001724，因此本次未采到四键操作，不算独立释放通过。保留原始FLAC/UART/状态。
 - 用户随后报告已覆盖X1–X4，但在下一次确认/采集前要求先上传；已暂停测试，未再访问板卡。用户可移开白纸；该次覆盖未录取，不标成功。
 - 当前最新综合测试记录此前push遇HTTP408；此次补齐上传。未改程序或Flash。
+
+## 2026-10-18 手机伴侣首版
+- 用户要求同时实现手机触控演奏和外接音频转手机扬声器；本轮 FPGA 不在场，未修改 RTL、引脚或 Flash。
+- 新增原生 Android 应用：8触键/4复音本地预览、三预设、弯音、明亮度、紧急停止；可向电脑开发桥发送协议事件。开发桥仅记录，明确返回 fpga_connected=false，实际 FPGA 控制接收端尚未实现。
+- 外部输入监听默认关闭，只接受外部耳麦/USB输入，拒绝内置麦克风；路由变化、离开页面/应用停止。普通 AUX 线不能直接作为手机输入，模拟接线与延迟未验收。
+- Redmi K30 Android12 已识别。ADB 安装返回 INSTALL_FAILED_USER_RESTRICTED: Install canceled by user；用户表示无法开启USB安装，未绕过系统限制。
+- 改用 adb push 成功复制 APK 到手机 Download/FPGA-Instrument-Companion.apk，待用户通过文件管理器正常安装；尚无手机界面、实际发声或监听成功证据。
+- JDK17 构建、签名验证及 SynthCore 检查通过；Python 协议4测试通过。保留布尔键值校验缺陷的红/绿日志。javac 有 source8 bootstrapclasspath 警告，无构建错误。
+- APK SHA256: BD11D80BC7A06528C6ACDF2B796E82EF20D72868D2DA0F449D286922F527B44C。仓库副本 mobile-companion/apk/instrument-companion-debug.apk，调试签名私钥不入库。
