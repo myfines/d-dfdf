@@ -741,3 +741,8 @@ PDF文字已提取，首次控制台输出遇GBK不能编码NBSP的UnicodeEncode
 - 改用 adb push 成功复制 APK 到手机 Download/FPGA-Instrument-Companion.apk，待用户通过文件管理器正常安装；尚无手机界面、实际发声或监听成功证据。
 - JDK17 构建、签名验证及 SynthCore 检查通过；Python 协议4测试通过。保留布尔键值校验缺陷的红/绿日志。javac 有 source8 bootstrapclasspath 警告，无构建错误。
 - APK SHA256: BD11D80BC7A06528C6ACDF2B796E82EF20D72868D2DA0F449D286922F527B44C。仓库副本 mobile-companion/apk/instrument-companion-debug.apk，调试签名私钥不入库。
+
+## 2026-10-18 官方赛题与GitHub复核
+- fetch确认最新main为a74517a，阅读57d8ba3交接文档与原始操作记录，并核对官方选题二当日页面。
+- 新增docs/competition-audit-20261018.md：主线未偏，基础≤10ms尚缺同步实测；4音/32谱峰已有实录，ADSR独立参数、释放独立性、效果器和温升尚有缺口。
+- 明确Primer20K题目适配资格需官方确认，32测试库不等于32自由演奏，手机软件合成不算FPGA核心成果。暂停优先扩展App，不访问板卡或改Flash。
