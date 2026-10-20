@@ -783,3 +783,9 @@ PDF文字已提取，首次控制台输出遇GBK不能编码NBSP的UnicodeEncode
 - 操作：Get-Content读取AGENTS与扩展/审阅文档；rg --files及定向读取08.Body/06.hand_keypoint_detection.py、固件目录。无硬件命令，未产生硬件日志。
 - 结果：手检测512x512 + 关键点256x256，两独立模型未在资料目录按扩展名检出；镜像内部及nncase匹配尚未验证。详情见docs/k230-bringup-20261020.md。
 - 新增k230/preflight.py，只做板上依赖/文件只读预检，尚未板测。未改RTL/Flash，未识别/写入TF卡，未给外设上电。
+
+## 2026-10-20 K230 USB连接初检
+- 用户反馈：仍为电赛程序，已插USB，委托检查。
+- 命令：Get-CimInstance Win32_SerialPort、Get-Disk、Get-PnpDevice及Get-PnpDeviceProperty；.NET SerialPort COM9/115200，DTR/RTS关闭，先被动读取4秒，再发送两次Ctrl-C及换行尝试控制台。
+- 结果：COM9，USB VID_1209 PID_ABD1，设备总线描述CanMV；Windows仅见系统NVMe，无TF卡磁盘。被动读取无字节；Ctrl-C/换行后无控制台提示，未发送Python语句。不能据此确定固件版本、摄像头状态或故障原因。
+- 实际影响：打开并关闭COM9，Ctrl-C可能中断原程序，未确认是否生效；未写文件、复位、写卡或烧录。待用户说明屏幕状态与USB接口标识，再选择CanMV调试协议或控制台路径。
