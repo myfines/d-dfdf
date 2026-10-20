@@ -809,3 +809,8 @@ PDF文字已提取，首次控制台输出遇GBK不能编码NBSP的UnicodeEncode
 - 用户反馈IDE无画面。串口COM9可由主机打开；确认IDE窗口helloworld_1.py - CanMV IDE K230，进程canmvide，E:/yolo/bin/canmvide.exe。未操作IDE界面。
 - 使用E:/gaoyun/k230_host_probe.py通过USBDBG，将main.py恢复为执行保留的官方关键点源（默认LCD），写后回读启动器一致，打印LCD_MAIN_VERIFIED并运行约6秒。摄像头GC2093、循环约40–69ms，未见异常栈，含deprecated function提示。板上显示与IDE画面仍待用户确认。
 - 现有PipeLine的LCD Display.init已带to_ide=True，无需再次改库。串口已关闭释放，指导用户IDE连接COM9、启用帧缓冲区；避免运行默认helloworld覆盖当前例程。未动原电赛备份、boot、固件、模型或FPGA。日志logs/20261020-k230/k230-lcd-restored-20261021.txt。
+
+## 2026-10-21 IDE连接后画面停止排查
+- 用户截图反馈一连接就卡死。进程canmvide 39120检查Responding=True；COM9尝试打开返回PermissionError13拒绝访问，说明串口已被占用，不再抢占。配置DisableFrameBufferState=false、LastSerialPortState=COM9。以上不等于已证明IDE无卡顿或画面正常。
+- 假设：IDE连接会停止脚本，需加载正确例程后运行；尚未经用户操作复现确认，不认定根因已解决。之前要求不要运行helloworld但未提供IDE正确运行文件，流程缺少步骤。
+- 新增k230/run_hand_keypoints.py，仅执行板上保留的官方关键点源，不写main、不动备份。Start-Process E:/yolo/bin/canmvide.exe E:/gaoyun/d-dfdf/k230/run_hand_keypoints.py，已确认同一IDE窗口标题切为run_hand_keypoints.py。待用户点击运行验证LCD及帧缓冲区；若真实无响应仍需继续排查。
