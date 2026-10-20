@@ -772,3 +772,8 @@ PDF文字已提取，首次控制台输出遇GBK不能编码NBSP的UnicodeEncode
 ### 2026-10-20 协作者提权尝试及SD用途核对
 - 用户要求提高Shengzj2026权限。GitHub API对permission=maintain和admin均返回422 Validation Failed；未成功提权，不能声称管理员已授予。个人仓库通常仅有所有者/协作者两级，需组织仓库才能使用细分角色；本轮未转移仓库所有权。
 - 核对instrument_io源码和当前光键顶层，无SD接口或存储读卡逻辑。现有演奏程序由板载Flash启动，64GB TF卡非当前工程依赖；断电取卡可供K230使用，但写镜像前应备份卡内未知数据。
+
+### 2026-10-20 OLED与ESP接线规划
+- 用户确认OLED四针GND/VCC/SCL/SDA；核查本地SSD1306 IIC资料、官方Dock背面图和SOM/GowinBank2引脚信息，分配PMOD1 T11/P11给OLED、T12/R11给ESP RX/TX。
+- 按用户授权询问同项目ESP任务，收到handoff：大板ESP8266EX而非ESP32，小ESP AT/WiFi扫描通过，3V3供电来源待核实。未访问串口、未改HDL/Flash、未给新接线通电。
+- 新增docs/oled-esp-wiring-20261020.md，包含背面/正面镜像定位、旧接线表过时提示与候选功能，等待供电确认。
