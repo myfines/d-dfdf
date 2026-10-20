@@ -755,3 +755,8 @@ PDF文字已提取，首次控制台输出遇GBK不能编码NBSP的UnicodeEncode
 - 按用户授权，通过GitHub API向Shengzj2026发出myfines/d-dfdf的write邀请；HTTP201，邀请ID338694468，等待对方接受，未授予admin权限。
 - 新增docs/fpga-review-brief-20261020.md，按官方基础/拓展/现场要求区分实现、实测及缺口，标明旧README快照、温升未决、32测试库限制和无硬件操作边界。
 - 本轮未访问FPGA、未编译更改RTL或写Flash；简介与权限邀请不构成功能验收。
+
+### 2026-10-20 ESP/OLED/K230预核
+- 根据用户要求检索官方赛题、模块规格、亚博K230资料并检查本地目录；新增extension-architecture-20261020.md。
+- 已找到亚博专用镜像、手部关键点/手势与串口例程；磁盘仅见系统NVMe，未发现64GB卡，未写盘或访问FPGA。
+- 方案为ESP网络透传、FPGA直接HDL驱OLED、K230可选视觉表达输入；WiFi不冒称蓝牙，32规模/延迟等原缺口不因增加模块自动达标。最低蓝牙成交价未核验，不报虚假精确价。
