@@ -797,3 +797,10 @@ PDF文字已提取，首次控制台输出遇GBK不能编码NBSP的UnicodeEncode
 - 将官方06写至/sdcard/k230_hand_keypoint_official.py，24235字节，逐字节回读一致，SHA256 b8ab965366346f9749682a516514a29d9d7f42cc036fc30391532852c0b3a6c1。原main重命名为/sdcard/main_electronic_contest_backup_20261020.py；新main为加载官方文件的启动器。boot、固件、模型不变。主机命令脚本E:/gaoyun/k230_host_probe.py通过USBDBG停止/执行，上传通过临时Python逐块写入并读回；未重刷卡或FPGA。
 - 新main已手动启动，但未断电验证自动启动。用户反馈仍黑屏，不能称完整成功；已暂停推理检查显示库。板上/sdcard/libs/PipeLine.py所有非virt模式都初始化ST7701；原电赛程序有显示自动尝试逻辑，但该库实际忽略模式差异。待确认用户说的屏幕是物理LCD还是IDE窗口，再定位显示配置。当前运行的是只读显示库检查脚本，摄像头循环已停止。
 - logs/20261020-k230保留本阶段运行原始日志（不含原程序）。恢复原程序可在停止运行后保留新main另名，再将备份main恢复；尚未执行恢复。
+
+## 2026-10-20 K230标准版显示与快照核验
+- 用户不知预览窗口位置，称板上不亮；本地供电说明明确标准版不带屏幕，豪华版带屏。尚未确认用户是否额外接LCD，不把板上不亮直接判为故障。
+- 实际将官方关键点例程display_mode临时改为virt运行；IDE帧请求0x81持续返回0尺寸，旧/新FB_ENABLE请求均未取得预览帧，未宣称IDE预览已通。
+- 使用sensor.snapshot(chn=1).compress(quality=75).save保存单张摄像头JPEG，经串口十六进制回读至E:/gaoyun/k230-live-preview.jpg，31382字节；实际查看为桌面、线缆与旁边物体，确认摄像头真实出图。图片含用户环境，留本机、不入Git；该快照不是带关键点叠加的画面。
+- main启动器已改为在内存将官方源display_mode lcd替换为virt后执行，官方源文件不变。写入前临时文件回读一致；前一LCD启动器另存/sdcard/main_lcd_launcher_backup_20261020.py，原电赛备份仍保留。新启动器已执行；未断电验收，未得到用户手势识别确认。
+- 首次启动器更新在发送Python前串口WriteFile失败(PermissionError13，设备不识别命令)。重新只读查询协议版本成功后重试一次并成功。最新循环约93–150ms，比早前40–70ms更慢；原因尚未分析，不能拿早前速度当最终性能。原始日志logs/20261020-k230/k230-virtual-activation.txt。下一步确认显示硬件、建立可见预览并以手验证关键点，再做连续参数。
