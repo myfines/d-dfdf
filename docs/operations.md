@@ -764,3 +764,7 @@ PDF文字已提取，首次控制台输出遇GBK不能编码NBSP的UnicodeEncode
 ### 2026-10-20 仓库改为私有
 - 按用户明确要求将myfines/d-dfdf设置为private；GitHub API重新读取确认private=true、visibility=private。
 - 未修改协作者权限、源码或硬件。
+
+### 2026-10-20 接收外部实测报告
+- 原样收录用户提供report-20261020.md至docs/external-reviews；新增external-report-review-20261020.md，列出本仓库测试路径、手工交付办法及待证据支撑的延迟/时钟/零点结论。
+- 对方报告引用的延迟RTL、分析脚本、原始录音尚未收到，不将该报告升级为本机全项验收。未修改RTL、未访问设备或烧录。
