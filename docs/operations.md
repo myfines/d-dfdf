@@ -804,3 +804,8 @@ PDF文字已提取，首次控制台输出遇GBK不能编码NBSP的UnicodeEncode
 - 使用sensor.snapshot(chn=1).compress(quality=75).save保存单张摄像头JPEG，经串口十六进制回读至E:/gaoyun/k230-live-preview.jpg，31382字节；实际查看为桌面、线缆与旁边物体，确认摄像头真实出图。图片含用户环境，留本机、不入Git；该快照不是带关键点叠加的画面。
 - main启动器已改为在内存将官方源display_mode lcd替换为virt后执行，官方源文件不变。写入前临时文件回读一致；前一LCD启动器另存/sdcard/main_lcd_launcher_backup_20261020.py，原电赛备份仍保留。新启动器已执行；未断电验收，未得到用户手势识别确认。
 - 首次启动器更新在发送Python前串口WriteFile失败(PermissionError13，设备不识别命令)。重新只读查询协议版本成功后重试一次并成功。最新循环约93–150ms，比早前40–70ms更慢；原因尚未分析，不能拿早前速度当最终性能。原始日志logs/20261020-k230/k230-virtual-activation.txt。下一步确认显示硬件、建立可见预览并以手验证关键点，再做连续参数。
+
+## 2026-10-21 恢复LCD并协助IDE预览
+- 用户反馈IDE无画面。串口COM9可由主机打开；确认IDE窗口helloworld_1.py - CanMV IDE K230，进程canmvide，E:/yolo/bin/canmvide.exe。未操作IDE界面。
+- 使用E:/gaoyun/k230_host_probe.py通过USBDBG，将main.py恢复为执行保留的官方关键点源（默认LCD），写后回读启动器一致，打印LCD_MAIN_VERIFIED并运行约6秒。摄像头GC2093、循环约40–69ms，未见异常栈，含deprecated function提示。板上显示与IDE画面仍待用户确认。
+- 现有PipeLine的LCD Display.init已带to_ide=True，无需再次改库。串口已关闭释放，指导用户IDE连接COM9、启用帧缓冲区；避免运行默认helloworld覆盖当前例程。未动原电赛备份、boot、固件、模型或FPGA。日志logs/20261020-k230/k230-lcd-restored-20261021.txt。
