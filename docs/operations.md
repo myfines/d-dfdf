@@ -777,3 +777,9 @@ PDF文字已提取，首次控制台输出遇GBK不能编码NBSP的UnicodeEncode
 - 用户确认OLED四针GND/VCC/SCL/SDA；核查本地SSD1306 IIC资料、官方Dock背面图和SOM/GowinBank2引脚信息，分配PMOD1 T11/P11给OLED、T12/R11给ESP RX/TX。
 - 按用户授权询问同项目ESP任务，收到handoff：大板ESP8266EX而非ESP32，小ESP AT/WiFi扫描通过，3V3供电来源待核实。未访问串口、未改HDL/Flash、未给新接线通电。
 - 新增docs/oled-esp-wiring-20261020.md，包含背面/正面镜像定位、旧接线表过时提示与候选功能，等待供电确认。
+
+## 2026-10-20 K230独立资料预检
+- 目的：为亚博K230标准版手势扩展确认官方依赖；与OLED/ESP任务分开。
+- 操作：Get-Content读取AGENTS与扩展/审阅文档；rg --files及定向读取08.Body/06.hand_keypoint_detection.py、固件目录。无硬件命令，未产生硬件日志。
+- 结果：手检测512x512 + 关键点256x256，两独立模型未在资料目录按扩展名检出；镜像内部及nncase匹配尚未验证。详情见docs/k230-bringup-20261020.md。
+- 新增k230/preflight.py，只做板上依赖/文件只读预检，尚未板测。未改RTL/Flash，未识别/写入TF卡，未给外设上电。
