@@ -789,3 +789,11 @@ PDF文字已提取，首次控制台输出遇GBK不能编码NBSP的UnicodeEncode
 - 命令：Get-CimInstance Win32_SerialPort、Get-Disk、Get-PnpDevice及Get-PnpDeviceProperty；.NET SerialPort COM9/115200，DTR/RTS关闭，先被动读取4秒，再发送两次Ctrl-C及换行尝试控制台。
 - 结果：COM9，USB VID_1209 PID_ABD1，设备总线描述CanMV；Windows仅见系统NVMe，无TF卡磁盘。被动读取无字节；Ctrl-C/换行后无控制台提示，未发送Python语句。不能据此确定固件版本、摄像头状态或故障原因。
 - 实际影响：打开并关闭COM9，Ctrl-C可能中断原程序，未确认是否生效；未写文件、复位、写卡或烧录。待用户说明屏幕状态与USB接口标识，再选择CanMV调试协议或控制台路径。
+
+## 2026-10-20 K230官方关键点写入与黑屏待查
+- 获用户明确授权使用官方例程写入。核对官方CanMV IDE k230分支源码协议：USBDBG 0x30，12Mbps、DTR使能；COM9版本请求返回(0,4,0)，Python回读为CanMV v1.8-24-g46d59a8，2026-07-30，k230_canmv_yahboom，sys.version 3.4.0。协议版本不可冒作nncase版本。
+- 原main.py(31805字节)和boot.py(73字节)已通过USB回读至E:/gaoyun/k230-private-backup-20261020，不上传含隐私可能的原程序。main SHA256 76baacde214193a1bc1c586145dd5eb4aaf0788831280fd169294f78f1284972；boot SHA256 7d0a9a5a9f58fd73def81c97b47d2d6450cfd8b99c75036e2287d76e93572282。
+- 板上两个手模型均存在。官方05手检测、06关键点各运行约8秒，无异常栈；GC2093摄像头已枚举，检测循环约35ms、关键点约40–70ms。含deprecated function提示。此为循环日志，不是完整视觉或端到端验收。
+- 将官方06写至/sdcard/k230_hand_keypoint_official.py，24235字节，逐字节回读一致，SHA256 b8ab965366346f9749682a516514a29d9d7f42cc036fc30391532852c0b3a6c1。原main重命名为/sdcard/main_electronic_contest_backup_20261020.py；新main为加载官方文件的启动器。boot、固件、模型不变。主机命令脚本E:/gaoyun/k230_host_probe.py通过USBDBG停止/执行，上传通过临时Python逐块写入并读回；未重刷卡或FPGA。
+- 新main已手动启动，但未断电验证自动启动。用户反馈仍黑屏，不能称完整成功；已暂停推理检查显示库。板上/sdcard/libs/PipeLine.py所有非virt模式都初始化ST7701；原电赛程序有显示自动尝试逻辑，但该库实际忽略模式差异。待确认用户说的屏幕是物理LCD还是IDE窗口，再定位显示配置。当前运行的是只读显示库检查脚本，摄像头循环已停止。
+- logs/20261020-k230保留本阶段运行原始日志（不含原程序）。恢复原程序可在停止运行后保留新main另名，再将备份main恢复；尚未执行恢复。
