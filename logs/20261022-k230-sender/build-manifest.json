@@ -1,0 +1,11 @@
+{
+  "candidate": "E:\\gaoyun\\d-dfdf\\build\\k230\\usb_gesture_sender_standalone.py",
+  "bytes": 7619,
+  "sha256": "18da9ffff3506edfdf45b7dda3d6f6f955c45deb1daa7289bf3666972774df8d",
+  "deployed": false,
+  "source_sha256": {
+    "gesture_protocol.py": "76894e3a694715afa6764ccf8708e65c94d522a71152660fa3e7d7443a69a8ec",
+    "usb_gesture_state.py": "0d274a9a6ae29f728a00e26d0b11da8bdc966b6c0ce4a380cbf49f905482314e",
+    "usb_gesture_sender.py": "c1841c40f99bb59af9db22086930c59c7ed531e228857b74cb683fb5ae39ee1f"
+  }
+}
