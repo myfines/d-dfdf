@@ -962,3 +962,8 @@ PDF文字已提取，首次控制台输出遇GBK不能编码NBSP的UnicodeEncode
 - Real USB3317 I/O constraints exposed timing failures masked by clock-only builds. Pipeline reduces setup failures from139 to9; latest remains setup9/hold17, worst setup -6.312ns. Inverted generated-clock experiment was rejected by Gowin and reverted. No constraint waiver applied.
 - This is NOT a deployable E024 instrument image. No programmer/serial/USB device access, no SRAM or Flash writes this phase. E023 remains unchanged. Detailed evidence and next gates: docs/k230-usb-host-probe-20261021.md.
 
+## 2026-10-21 用户接入 FPGA：只读 JTAG 连接检查
+
+- 用户确认可开始；K230 保持未连接。Windows 0403:6010 A/B 均 OK，无残留 programmer/openFPGALoader 进程。
+- 官方 Programmer 在2.5MHz只读扫描，15秒进程超时保护，0.59秒成功找到1个设备，ID 0x0000081B。该ID不能区分GW2A/GW2AR，也不能证明USB PHY或所有功能正常。
+- 未打开串口，未写SRAM/Flash。USB主机候选仍有时序违例，禁止部署；E023未改。原始日志：logs/20261021-usb-host-readonly-scan.log。
