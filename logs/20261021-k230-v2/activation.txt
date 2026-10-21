@@ -1,0 +1,10 @@
+
+---RESULT---
+
+>>> 
+Traceback (most recent call last):
+  File "<stdin>", line 13, in <module>
+OSError: 16
+CanMV v1.8-24-g46d59a8(based on Micropython e00a144) on 2026-07-30; k230_canmv_yahboom with K230
+Type "help()" for more information.
+>>> 

@@ -926,3 +926,12 @@ PDF文字已提取，首次控制台输出遇GBK不能编码NBSP的UnicodeEncode
 - python E:/gaoyun/k230_deploy_v2_host.py trial：实板18秒，GC2093初始化成功，产生TRACK/有效百分比/HOLD/NO HAND；没有摄像头画面与动作的人工对应验收。
 - 停止后读调试输出报 RuntimeError: short debug length；等待后固件查询仍空回复。没有执行activate，main.py仍为官方例程入口；已请求用户重插USB恢复。
 - FPGA、固件、模型、boot.py及电赛备份均未改动。日志见logs/20261021-k230-v2/。
+
+## 2026-10-21 21:37:13 K230 V2 开机入口安装完成
+- 用户重插后COM9恢复，首次停止官方脚本后等待回到REPL，再次身份探测成功。
+- 创建并回读旧入口备份 main_before_pinch_v2_20261021.py（119字节）；原电赛备份31805字节保留。
+- 安装异常：覆盖rename报OSError:16，直接写main报EPERM。未释放的临时文件句柄经gc.collect后，旧main改名及pending改main成功。随后os.sync报AttributeError（此固件无该API）；后续独立回读验证安装已成功，未重试覆盖。
+- 最终 /sdcard/main.py 指向 /sdcard/pinch_preview_v2.py；10474字节，SHA256 ae9593ed7a9e610cd1f121d6f825f03e0797fed995b6e73bad259ab8f94371d2，逐字节与仓库一致。
+- 从main入口执行18秒：摄像头初始化、持续PINCH2日志，无运行异常。本轮主要NO HAND/BAD GEOMETRY/MULTI HAND，未取得有效TRACK；上轮试运行有TRACK，不能因此宣称实际手势效果验收通过。待用户观察单手正对镜头效果；真实断电开机尚未验收。
+- 结束主机采集时不发送停止命令，板上程序保持运行。FPGA、固件、模型及boot.py未改动。
+- 日志：activation.txt、activation-finished.txt、installed-readback.txt、main-launcher-trial.txt。

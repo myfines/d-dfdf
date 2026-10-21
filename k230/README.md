@@ -48,3 +48,5 @@ PINCH,64,TRACK,1,1,0.359,0.778,0.859,62,0,89
 主机：`python -m unittest discover -s k230 -p test_pinch_preview.py`，覆盖归一化、滤波滞回、丢手重获、多手/低置信度/退化几何和位置突变。
 
 2026-10-21：在实际K230短时运行成功，日志包含TRACK/WARMUP/NO HAND。日志证明接口兼容与检测状态输出，不替代用户观察实际手动作与画面对应性。首次停止旧程序发生IDE interrupt和soft reboot，等待其返回控制台后再试运行成功。未替换开机程序。原始日志见logs/20261021-k230-pinch/。
+
+2026-10-21：V2已安装到实板 /sdcard/pinch_preview_v2.py，main.py入口已回读确认；旧入口备份 main_before_pinch_v2_20261021.py，原电赛备份保留。主机12项测试通过。最终入口能初始化摄像头并持续输出日志，实际单手效果及断电重启仍待用户验收。
