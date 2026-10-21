@@ -889,3 +889,8 @@ PDF文字已提取，首次控制台输出遇GBK不能编码NBSP的UnicodeEncode
 - 最终30项RTL回归全部通过（20261021-E023-regression.log及191059原始转录）；新增范围/分片命令、85字节遥测、真实AT命令字节与CIPSEND提示/发送/失联租约测试；旧音频、32声部、ADC、光键、OLED、启动测试通过。Java合成测试、协议测试与本地TCP分片接收测试通过，APK签名构建通过。编译器有Java旧目标/弃用API警告，未当作零警告宣称。
 - Gowin E023布局布线成功：27MHz约束，Fmax33.632MHz，setup/hold违例0，逻辑10250/20736、寄存器4303/16173、DSP13.5/24。归档E:/gaoyun/releases/instrument-E023-20261021；哈希见docs/wifi-E023-build-manifest.json。
 - 未安装手机、未下载SRAM/Flash、未读取硬件；板上E021保持。离线测试不等于真实ESP旧AT固件、安卓界面/多指、Wi-Fi延迟和实机声音已验收。异常发热根因与供电余量尚未解决，不清除deployment_blocked。
+
+## 2026-10-21 E023 Flash实物写入
+- 用户明确要求写入Flash，并对全部断电重连及温度正常确认回复ok。只为已构建归档E023增加AuthorizedE023Flash独立固定SHA256入口，默认thermal hold保留；未改OTP、下载器固件或接线。
+- SHA256 B1226DD66F187B7A562C62DC88FE4813B9FA3E87BAAD86FCAA21A5BB06F95684复核通过。官方Programmer，GW2A-18C、cable-index1、2.5MHz、operation37、地址0；扫描读到0x0000081B。
+- 20261021-192044-instrument-Flash.log明确Program and Verify flash successfully，exit0，31.57秒。扫描日志同时间戳。写入校验成功不等于已完成冷启动和安卓Wi-Fi验收，待用户断电自启动确认；历史热故障根因仍未解决。

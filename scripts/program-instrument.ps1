@@ -5,7 +5,8 @@ param(
     [switch]$UsbReconnected,
     [switch]$DryRun,
     [switch]$SupervisedSram,
-    [switch]$AuthorizedE021Flash
+    [switch]$AuthorizedE021Flash,
+    [switch]$AuthorizedE023Flash
 )
 $ErrorActionPreference='Stop'
 $repoDir=Split-Path $PSScriptRoot -Parent
@@ -15,10 +16,11 @@ if((Test-Path -LiteralPath $holdFile) -and -not $DryRun){
     if($hardwareHold.deployment_blocked){
         $scopedTrial=$SupervisedSram -and $Mode -eq 'SRAM'
         $scopedFlash=$AuthorizedE021Flash -and $UsbReconnected -and $Mode -eq 'Flash'
-        if((-not $scopedTrial -and -not $scopedFlash) -or $ExpectedSha256 -ne '6D89D33520697199C489A78BA5FEB17C31F13B1D3CC9D1A175C7B2718CC42C5D'){
+        $scopedE023=$AuthorizedE023Flash -and $UsbReconnected -and $Mode -eq 'Flash' -and $ExpectedSha256 -eq 'B1226DD66F187B7A562C62DC88FE4813B9FA3E87BAAD86FCAA21A5BB06F95684'
+        if(-not $scopedE023 -and ((-not $scopedTrial -and -not $scopedFlash) -or $ExpectedSha256 -ne '6D89D33520697199C489A78BA5FEB17C31F13B1D3CC9D1A175C7B2718CC42C5D')){
             throw "Thermal incident unresolved: $($hardwareHold.reason)"
         }
-        Write-Warning 'Explicitly authorized fixed-hash E021 trial. Thermal cause remains unresolved; default deployment hold remains in place.'
+        Write-Warning 'Explicitly authorized fixed-hash E021/E023 trial. Thermal cause remains unresolved; default deployment hold remains in place.'
     }
 }
 $cli='E:\gaoyun\tools\gowin\Gowin_V1.9.11.03_Education\Gowin_V1.9.11.03_Education_x64\Programmer\bin\programmer_cli.exe'
