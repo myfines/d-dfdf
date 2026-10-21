@@ -814,3 +814,8 @@ PDF文字已提取，首次控制台输出遇GBK不能编码NBSP的UnicodeEncode
 - 用户截图反馈一连接就卡死。进程canmvide 39120检查Responding=True；COM9尝试打开返回PermissionError13拒绝访问，说明串口已被占用，不再抢占。配置DisableFrameBufferState=false、LastSerialPortState=COM9。以上不等于已证明IDE无卡顿或画面正常。
 - 假设：IDE连接会停止脚本，需加载正确例程后运行；尚未经用户操作复现确认，不认定根因已解决。之前要求不要运行helloworld但未提供IDE正确运行文件，流程缺少步骤。
 - 新增k230/run_hand_keypoints.py，仅执行板上保留的官方关键点源，不写main、不动备份。Start-Process E:/yolo/bin/canmvide.exe E:/gaoyun/d-dfdf/k230/run_hand_keypoints.py，已确认同一IDE窗口标题切为run_hand_keypoints.py。待用户点击运行验证LCD及帧缓冲区；若真实无响应仍需继续排查。
+
+
+## 2026-10-21 K230与Dock USB/UART连接预核
+- 只读查询Dock官方原理图与Sipeed产品页，并查看USB PHY页。结论与修订版不确定性见docs/k230-fpga-link-20261021.md。推荐独立5V供电、经电平/管脚核验的TTL UART共地。没有接线、上电、烧录或改RTL。
+
