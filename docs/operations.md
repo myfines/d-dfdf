@@ -828,3 +828,7 @@ PDF文字已提取，首次控制台输出遇GBK不能编码NBSP的UnicodeEncode
 - 修正成品目标：一个足额5V电源分路供Dock/K230/PCM，一个总开关；不要求用户记忆开关顺序，不从3V3或Dock OTG串接转供。仍须确认实际模块与负载峰值，尚未实装。
 - 直接请求TI官方TXU0101及SN74LVC1G125数据手册并读取：前者任一电源<100mV或断开输出高阻，支持Ioff，可作双板UART隔离候选。现有I2S同样须检查，避免仅修新增UART。首次PDF输出遇控制台gbk UnicodeEncodeError，改UTF8后读取成功；不涉及硬件。
 - 外部搜索工具报错、Sipeed wiki超时，未获得他人同款实装案例。详见docs/k230-system-power-20261021.md。仅资料核对，无接线、供电或FPGA修改。
+
+## 2026-10-21 OTG官方及第三方实现查询
+- requests读取Sipeed官方wiki、官方TangPrimer-20K-example/USB与第三方kami4ka/tang_computer README/docs/usb3317.md，核对设备端例程与键盘主机先例的差别。详情和URL追加docs/k230-fpga-link-20261021.md。
+- 单根USB连接K230有工程实现方向但当前未实现/验收，不能按已有串口程序插线即用；第三方键盘结果未本地复现。无供电、烧录、接线或RTL更改。
