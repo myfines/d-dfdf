@@ -861,3 +861,7 @@ PDF文字已提取，首次控制台输出遇GBK不能编码NBSP的UnicodeEncode
 - 下载器A/B均OK，无残留烧录进程。JTAG 2.5MHz扫描ID81B；operation2写入100%、UserCodeE021、Status6020、exit0、6.63秒，但工具同时打印User code mismatch，不能只凭exit0声称通过。
 - 随后独立只读operation73读回E021、operation74读回6020；异常提示根因未确定，不宣称已做SRAM逐位回读校验。用户现场心跳/温度确认仍待回复。未按启用组合，不启动ESP Wi-Fi。
 - 脚本新增仅限显式SupervisedSram+SRAM+E021固定哈希的受监督入口，默认热保护保留、Flash仍禁止；增加100%/6020与不匹配提示检查，防止exit0掩盖故障。
+
+## 2026-10-21 18:25 用户再次要求开始烧录
+- 重复下载同一固定哈希E021至SRAM，Flash未改、未启用外设。operation2写入100%、exit0、6.47秒，仍有User code mismatch提示。独立operation73读回E021，operation74读回6020。功能/温度现场确认仍待用户，不宣称回读校验或验收完成。日志前缀20261021-182530。
+
