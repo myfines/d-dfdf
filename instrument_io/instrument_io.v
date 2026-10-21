@@ -30,6 +30,12 @@ module instrument_io #(
     wire edit_mode,test_mode,octave_down,echo_enable;
     wire [8:0] attack_step,sustain_level;
     wire [15:0] decay_interval,release_interval;
+    wire [1:0] remote_tone,remote_page;
+    wire remote_echo;wire [3:0] remote_keys;wire [2:0] remote_overrides;
+    wire [1:0] selected_timbre=remote_overrides[0]?remote_tone:timbre;
+    wire selected_echo=remote_overrides[1]?remote_echo:echo_enable;
+    wire [1:0] selected_page=remote_overrides[2]?remote_page:note_page;
+    wire remote_play=(|remote_keys) && !test_mode && !edit_mode;
     wire [3:0] play_keys=(test_mode || edit_mode)?4'd15:keys_sync;
     reg sw_meta,sw_sync,sw_stable;
     reg [31:0] sw_count;
@@ -71,15 +77,16 @@ module instrument_io #(
     // Test mode selects a 32-voice sine bank; ordinary keys are muted.
     voice_engine voice(clk,io_reset_n,frame_tick,play_keys,test_mode?1'b0:controls_valid,
         axis_x,test_mode?12'd0:axis_y,test_mode?1'b0:octave_down,keyboard_sample,keyboard_active,
-        1'b1,test_mode?2'd1:timbre,test_mode?9'd6:attack_step,
+        1'b1,test_mode?2'd1:selected_timbre,test_mode?9'd6:attack_step,
         test_mode?16'd1:decay_interval,test_mode?9'd256:sustain_level,
-        test_mode?16'd4:release_interval,note_page,
-        optical_perform,optical_slots_n,optical_notes,optical_triggers);
+        test_mode?16'd4:release_interval,selected_page,
+        optical_perform || remote_play,remote_play?~remote_keys:optical_slots_n,
+        remote_play?{3'd3,3'd2,3'd1,3'd0}:optical_notes,remote_play?4'd0:optical_triggers);
     spectrum_bank bank(clk,io_reset_n,frame_tick,{32{test_mode}},bank_sample,bank_active,bank_busy);
     mode_router router(clk,io_reset_n,frame_tick,test_mode?2'd2:edit_mode?2'd1:2'd0,
         keyboard_sample,bank_sample,dry_sample);
     assign note_active=test_mode?bank_active:keyboard_active;
-    short_delay effect(clk,io_reset_n,frame_tick,echo_enable && !test_mode && !edit_mode,dry_sample,audio_sample);
+    short_delay effect(clk,io_reset_n,frame_tick,selected_echo && !test_mode && !edit_mode,dry_sample,audio_sample);
     // UART Y packs mode bits; low bit remains actual envelope activity.
     uart_status monitor(clk,reset_n,controls_valid && armed,adc_error,!armed?12'hfff:optical_valid?{4'd0,optical_keys_n}:axis_x,
         {optical_valid,note_page,timbre,edit_mode,test_mode,octave_down,echo_enable,edit_field,note_active},keys_sync,ADC_SCL,ADC_SDA,UART_TX);
@@ -87,13 +94,20 @@ module instrument_io #(
     generate if(ENABLE_UI)begin: extension_ui
         wire rx_valid,tx_busy,tx_start,esp_ready,remote_active,oled_online,esp_tx_raw;
         assign ESP_TX=armed?esp_tx_raw:1'bz;
-        wire [7:0] rx_data,tx_data,remote_volume,esp_diagnostic;
+        wire [7:0] rx_data,tx_data,remote_volume,esp_diagnostic,telemetry_byte;
+        wire [6:0] telemetry_index;wire telemetry_capture;
+        wire [7:0] visible_keys=remote_play?{4'd0,remote_keys}:optical_valid?~optical_keys_n:{4'd0,~keys_sync};
+        wifi_telemetry status_packet(clk,io_reset_n,frame_tick,final_sample,telemetry_capture,
+            visible_keys,{armed,optical_valid,controls_valid,test_mode,edit_mode,selected_echo,note_active,remote_active},
+            axis_x,axis_y,remote_volume,selected_timbre,selected_echo,selected_page,telemetry_index,telemetry_byte);
         uart8n1 serial_port(clk,io_reset_n,ESP_RX,tx_start,tx_data,esp_tx_raw,tx_busy,rx_valid,rx_data);
-        esp_at_control wifi(clk,io_reset_n,rx_valid,rx_data,tx_busy,tx_start,tx_data,esp_ready,remote_volume,remote_active,esp_diagnostic);
+        esp_at_control wifi(clk,io_reset_n,rx_valid,rx_data,tx_busy,tx_start,tx_data,esp_ready,remote_volume,remote_active,esp_diagnostic,
+            telemetry_byte,telemetry_index,telemetry_capture,remote_tone,remote_page,remote_echo,remote_keys,remote_overrides);
         remote_audio_gain gain(clk,io_reset_n,frame_tick,remote_volume,audio_sample,final_sample);
         oled_scope screen(clk,io_reset_n,frame_tick,final_sample,optical_valid?optical_keys_n:{4'hf,keys_sync},
-            {remote_active,esp_ready,echo_enable,test_mode,edit_mode,controls_valid,optical_valid,armed},OLED_SCL,OLED_SDA,oled_online,timbre,remote_volume,esp_diagnostic);
+            {remote_active,esp_ready,selected_echo,test_mode,edit_mode,controls_valid,optical_valid,armed},OLED_SCL,OLED_SDA,oled_online,selected_timbre,remote_volume,esp_diagnostic);
     end else begin: no_extension_ui
+        assign remote_tone=0;assign remote_page=0;assign remote_echo=0;assign remote_keys=0;assign remote_overrides=0;
         assign ESP_TX=1'bz;assign OLED_SCL=1'bz;assign OLED_SDA=1'bz;
         assign final_sample=audio_sample;
     end endgenerate

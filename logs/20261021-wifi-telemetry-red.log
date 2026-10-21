@@ -1,0 +1,5 @@
+instrument_io/tb_wifi_telemetry.sv:6: error: Unknown module type: wifi_telemetry
+2 error(s) during elaboration.
+*** These modules were missing:
+        wifi_telemetry referenced 1 times.
+***

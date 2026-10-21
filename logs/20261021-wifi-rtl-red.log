@@ -1,0 +1,2 @@
+instrument_io/tb_wifi_commands.sv:6: error: Wrong number of ports. Expecting at most 6, got 10.
+1 error(s) during elaboration.

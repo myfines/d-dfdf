@@ -880,3 +880,12 @@ PDF文字已提取，首次控制台输出遇GBK不能编码NBSP的UnicodeEncode
 - 默认参数仿真周期697743时钟、约38.696fps；非实物光学刷新率，未宣称≤5ms可视化延迟。原始显存hex和PNG仿真预览保存，scripts/render-oled-frame.py可重建预览。
 - 最终Gowin构建成功：逻辑9052/20736，寄存器3597/16173，DSP13.5/24；27MHz约束Fmax30.432MHz，setup/hold违例0。E022 SHA256 64974593B5DEB2F9262E6B074678E77DFA10D7E580B6DE586391EB2E50AEDDCE，归档E:/gaoyun/releases/instrument-E022-20261021。未接触下载器、未写SRAM/Flash；板上E021及CF73备份保留。
 
+
+## 2026-10-21 E023 Android / FPGA Wi-Fi双向扩展候选
+- 用户要求结合题目完成安卓Wi-Fi附加功能；复核高云官方match2026题2扩展描述，明确Wi-Fi并非已实现蓝牙，事件CSV并非音频录音回传。新增docs/wifi-app-E023-20261021.md操作与边界。
+- RTL扩展分客户端有界命令解析V/T/E/K/P/Q/L，5秒租约，ESP重启清键，CIPSEND提示符/发送确认超时；85字节实际状态快照含32点最终输出波形。手机键优先于光键，释放恢复光键，编辑/测试模式不进入手机键演奏。保留安全启动和硬件hold。
+- 安卓0.2-wifi原生页面通过Wi-Fi专属socket连接ESP，支持四触屏键、多指、四声部重排、三音色、延时、音量、板载键音区、实际状态/波形、最多5000条事件CSV。页面退出断开，3秒无状态断开，FPGA5秒租约释放。保留旧预览/模拟输入页面并澄清历史说明。
+- RED记录：新协议/遥测尚未实现时测试编译失败，日志wifi-*-red保留；实现中曾出现Verilog保留字sequence、endelse拼写错误，均修正。ESP模拟测试CR使用八进制转义以与真实AT字节13/10一致，未改实际协议去迎合错误mock。
+- 最终30项RTL回归全部通过（20261021-E023-regression.log及191059原始转录）；新增范围/分片命令、85字节遥测、真实AT命令字节与CIPSEND提示/发送/失联租约测试；旧音频、32声部、ADC、光键、OLED、启动测试通过。Java合成测试、协议测试与本地TCP分片接收测试通过，APK签名构建通过。编译器有Java旧目标/弃用API警告，未当作零警告宣称。
+- Gowin E023布局布线成功：27MHz约束，Fmax33.632MHz，setup/hold违例0，逻辑10250/20736、寄存器4303/16173、DSP13.5/24。归档E:/gaoyun/releases/instrument-E023-20261021；哈希见docs/wifi-E023-build-manifest.json。
+- 未安装手机、未下载SRAM/Flash、未读取硬件；板上E021保持。离线测试不等于真实ESP旧AT固件、安卓界面/多指、Wi-Fi延迟和实机声音已验收。异常发热根因与供电余量尚未解决，不清除deployment_blocked。

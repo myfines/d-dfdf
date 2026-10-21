@@ -1,0 +1,15 @@
+{
+  "version": "E023",
+  "hardware_deployed": false,
+  "clock_mhz": 27,
+  "fmax_mhz": 33.632,
+  "setup_violations": 0,
+  "hold_violations": 0,
+  "logic": "10250/20736",
+  "registers": "4303/16173",
+  "DSP": "13.5/24",
+  "files": {
+    "instrument-E023.fs": "B1226DD66F187B7A562C62DC88FE4813B9FA3E87BAAD86FCAA21A5BB06F95684",
+    "instrument-companion-E023.apk": "6E2FB6A3E9DBD48C9E8652441A250729B9FD60884636118A66EEED895D9086CB"
+  }
+}

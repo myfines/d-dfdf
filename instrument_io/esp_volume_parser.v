@@ -2,18 +2,23 @@
 // AT +IPD,<0..4>,<1..4096>: payload. Each client has independent Vhh\n
 // assembly, so normal TCP fragmentation/coalescing is supported.
 module esp_volume_parser #(parameter integer IDLE_TICKS=27000000)(
- input wire clk,reset_n,valid,input wire [7:0] data,output reg update,output reg [7:0] volume);
+ input wire clk,reset_n,valid,input wire [7:0] data,output reg update,output reg [7:0] volume,
+ output reg command_valid,output reg [7:0] command_kind,command_value,output reg [2:0] command_client);
  reg [3:0] state;reg [2:0] client;reg [12:0] length,left;
- reg [2:0] command[0:4];reg [7:0] value[0:4];reg [31:0] idle;integer i;
+ reg [7:0] opcode[0:4];reg [2:0] command[0:4];reg [7:0] value[0:4];reg [31:0] idle;integer i;
+ wire allowed_value=opcode[client]=="V" ||
+ (opcode[client]=="T" && value[client]<3) || (opcode[client]=="E" && value[client]<2) ||
+ (opcode[client]=="K" && value[client]<16) || (opcode[client]=="P" && value[client]<3) ||
+ ((opcode[client]=="Q" || opcode[client]=="L") && value[client]==0);
  wire digit=data>=48 && data<=57;
  wire hex_digit=digit || (data>=65 && data<=70) || (data>=97 && data<=102);
  wire [3:0] nibble=digit?data[3:0]:data[3:0]+4'd9;
  wire [16:0] next_length=length*17'd10+{13'd0,data[3:0]};
  always @(posedge clk)begin
-  if(!reset_n)begin state<=0;client<=0;length<=0;left<=0;idle<=0;update<=0;volume<=255;
-   for(i=0;i<5;i=i+1)begin command[i]<=0;value[i]<=0;end end
+  if(!reset_n)begin state<=0;client<=0;length<=0;left<=0;idle<=0;update<=0;volume<=255;command_valid<=0;command_kind<=0;command_value<=0;command_client<=0;
+   for(i=0;i<5;i=i+1)begin command[i]<=0;value[i]<=0;opcode[i]<=0;end end
   else begin
-   update<=0;
+   update<=0;command_valid<=0;
    if(idle==IDLE_TICKS-1)begin state<=0;idle<=0;for(i=0;i<5;i=i+1)command[i]<=0;end
    else idle<=idle+1'b1;
    if(valid)begin idle<=0;
@@ -31,10 +36,15 @@ module esp_volume_parser #(parameter integer IDLE_TICKS=27000000)(
      8:begin
       left<=left-1'b1;if(left==1)state<=0;
       case(command[client])
-       0:if(data==86)command[client]<=1;else if(data!=10)command[client]<=4;
+       0:if(data=="V" || data=="T" || data=="E" || data=="K" || data=="P" || data=="Q" || data=="L")begin opcode[client]<=data;command[client]<=1;end else if(data!=10)command[client]<=4;
        1:if(hex_digit)begin value[client]<={nibble,4'd0};command[client]<=2;end else command[client]<=data==10?0:4;
        2:if(hex_digit)begin value[client][3:0]<=nibble;command[client]<=3;end else command[client]<=data==10?0:4;
-       3:begin if(data==10)begin volume<=value[client];update<=1;command[client]<=0;end else command[client]<=4;end
+       3:begin if(data==10)begin
+        if(allowed_value)begin
+         command_valid<=1;command_kind<=opcode[client];command_value<=value[client];command_client<=client;
+         if(opcode[client]=="V")begin volume<=value[client];update<=1;end
+        end
+        command[client]<=0;end else command[client]<=4;end
        default:if(data==10)command[client]<=0;
       endcase
      end

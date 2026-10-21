@@ -1,0 +1,2 @@
+PASS bidirectional ESP: exact AT config, CIPSEND prompt, 85-byte actual state, SEND OK, lease release
+instrument_io/tb_wifi_link.sv:37: $finish called at 79200000 (1ps)

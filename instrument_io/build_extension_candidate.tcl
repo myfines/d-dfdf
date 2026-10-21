@@ -31,5 +31,6 @@ add_file E:/gaoyun/d-dfdf/instrument_io/remote_audio_gain.v
 add_file E:/gaoyun/d-dfdf/instrument_io/oled_scope.v
 add_file E:/gaoyun/d-dfdf/instrument_io/instrument_extension_top.v
 add_file E:/gaoyun/d-dfdf/instrument_io/oled_i2c_stream.v
-set_option -user_code 0xE022
+add_file E:/gaoyun/d-dfdf/instrument_io/wifi_telemetry.v
+set_option -user_code 0xE023
 run all

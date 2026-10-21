@@ -35,7 +35,8 @@ public class MainActivity extends Activity {
   root=new LinearLayout(this);root.setOrientation(1);root.setPadding(24,24,24,24);root.setBackgroundColor(Color.rgb(244,246,250));
   setContentView(root);label(root,"FPGA 乐器伴侣",25);label(root,"手机预览 · 外接输入监听",14);
   status=label(root,"未连接 FPGA；手机发声不计作 FPGA 合成",14);
-  LinearLayout tabs=new LinearLayout(this);root.addView(tabs);button(tabs,"触屏演奏",()->showPlay());button(tabs,"手机扬声器",()->showMonitor());
+  LinearLayout tabs=new LinearLayout(this);root.addView(tabs);button(root,"连接 FPGA Wi-Fi",()->startActivity(new android.content.Intent(this,WifiActivity.class)));
+  button(tabs,"触屏演奏",()->showPlay());button(tabs,"手机扬声器",()->showMonitor());
   ScrollView scroll=new ScrollView(this);root.addView(scroll,new LinearLayout.LayoutParams(-1,0,1));body=new LinearLayout(this);body.setOrientation(1);scroll.addView(body);
   button(root,"紧急静音 / 停止",()->{stopAudio();emit("all_off",-1,0);});
   devices=new AudioDeviceCallback(){@Override public void onAudioDevicesRemoved(AudioDeviceInfo[] list){stopAudio();status.setText("设备变化，已停止；请重新选择输入");}};

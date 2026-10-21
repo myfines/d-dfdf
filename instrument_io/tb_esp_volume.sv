@@ -1,7 +1,7 @@
 `timescale 1ns/1ps
 module tb_esp_volume;
 reg clk=0;always #5 clk=~clk;reg reset_n=0,valid=0;reg [7:0] data;wire update;wire [7:0] volume;integer count=0;
-esp_volume_parser #(.IDLE_TICKS(200)) dut(clk,reset_n,valid,data,update,volume);
+esp_volume_parser #(.IDLE_TICKS(200)) dut(.clk(clk),.reset_n(reset_n),.valid(valid),.data(data),.update(update),.volume(volume));
 always @(posedge clk)if(update)count=count+1;
 task send(input [8*128-1:0] s);integer i;begin for(i=127;i>=0;i=i-1)if(s[i*8+:8]!=0)begin @(negedge clk);valid=1;data=s[i*8+:8];@(negedge clk);valid=0;end end endtask
 initial begin repeat(3)@(negedge clk);reset_n=1;

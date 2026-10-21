@@ -2,7 +2,7 @@
 module tb_esp_at;
 reg clk=0;always #5 clk=~clk;reg reset_n=0,rv=0,busy=0;reg [7:0] rd=0;
 wire start,ready,active;wire [7:0] td,volume,diagnostic;integer lines=0;
-esp_at_control #(.BOOT_TICKS(10),.WAIT_TICKS(300),.LEASE_TICKS(80)) dut(clk,reset_n,rv,rd,busy,start,td,ready,volume,active,diagnostic);
+esp_at_control #(.BOOT_TICKS(10),.WAIT_TICKS(300),.LEASE_TICKS(80)) dut(clk,reset_n,rv,rd,busy,start,td,ready,volume,active,diagnostic,8'd0,,,,,,,);
 task rx(input [7:0] b);begin @(negedge clk);rd=b;rv=1;@(negedge clk);rv=0;end endtask
 always begin wait(start);@(negedge clk);busy=1;repeat(2)@(negedge clk);busy=0;
  if(td==10)begin lines=lines+1;if(lines>1)begin repeat(5)@(negedge clk);rx(79);rx(75);rx(13);rx(10);end end

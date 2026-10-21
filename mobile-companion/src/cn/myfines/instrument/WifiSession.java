@@ -1,0 +1,71 @@
+package cn.myfines.instrument;
+
+import java.io.*;
+import java.net.*;
+import java.nio.charset.StandardCharsets;
+
+/** One bounded socket worker; no Android dependency so a mock server can test it. */
+public final class WifiSession implements AutoCloseable {
+ public interface Listener {void status(String message);void snapshot(WifiProtocol.Snapshot snapshot);}
+ public interface SocketSource {Socket create() throws IOException;}
+ private final Listener listener;
+ private volatile boolean running;
+ private volatile Socket socket;
+ private Thread worker;
+ private final Object stateLock=new Object();
+ private int volume=160,tone=0,echo=0,page=0,keys=0;
+ private boolean dirty=true;
+ public WifiSession(Listener listener){this.listener=listener;}
+ public void volume(int value){set('V',value);}
+ public void tone(int value){set('T',value);}
+ public void echo(boolean value){set('E',value?1:0);}
+ public void page(int value){set('P',value);}
+ public void keys(int value){set('K',value);}
+ private void set(char kind,int value){
+  WifiProtocol.command(kind,value);
+  synchronized(stateLock){switch(kind){case 'V':volume=value;break;case 'T':tone=value;break;case 'E':echo=value;break;case 'P':page=value;break;default:keys=value;}dirty=true;}
+ }
+ public synchronized void connect(final String host,final int port,final SocketSource source) {
+  if(running)throw new IllegalStateException("Already connecting");
+  running=true;dirty=true;
+  worker=new Thread(()->run(host,port,source),"FPGA-WiFi");worker.start();
+ }
+ private void run(String host,int port,SocketSource source) {
+  String failure="";
+  try(Socket s=source.create()){
+   socket=s;if(!running)return;
+   s.connect(new InetSocketAddress(host,port),3000);s.setSoTimeout(100);s.setTcpNoDelay(true);
+   InputStream input=s.getInputStream();OutputStream output=s.getOutputStream();
+   listener.status("TCP已连接，等待FPGA真实状态");
+   StringBuilder line=new StringBuilder(85);long sent=0,received=System.nanoTime();boolean first=true;
+   while(running){
+    long now=System.nanoTime();
+    synchronized(stateLock){
+     if(dirty || first || now-sent>=500000000L){
+      String message=WifiProtocol.command('V',volume)+WifiProtocol.command('T',tone)
+       +WifiProtocol.command('E',echo)+WifiProtocol.command('P',page)+WifiProtocol.command('K',keys)+WifiProtocol.command('Q',0);
+      output.write(message.getBytes(StandardCharsets.US_ASCII));output.flush();sent=now;dirty=false;first=false;
+     }
+    }
+    try{
+     int b=input.read();if(b<0)throw new EOFException("设备断开");
+     if(b==10){
+      WifiProtocol.Snapshot state=WifiProtocol.parse(line.toString());line.setLength(0);received=System.nanoTime();listener.snapshot(state);
+     }else{
+      if(b<32 || b>126 || line.length()>=84)throw new IOException("状态帧格式错误");
+      line.append((char)b);
+     }
+    }catch(SocketTimeoutException timeout){/* bounded wait; send lease on next loop */}
+    if(System.nanoTime()-received>3000000000L)throw new IOException("3秒未收到FPGA状态；停止远控");
+   }
+   output.write(WifiProtocol.command('L',0).getBytes(StandardCharsets.US_ASCII));output.flush();
+  }catch(Exception error){if(running)failure="连接停止："+error.getMessage()+"；";}
+  finally{running=false;socket=null; synchronized(stateLock){keys=0;} listener.status(failure+"已断开；FPGA最迟5秒释放远控");}
+ }
+ public boolean isRunning(){return running;}
+ @Override public void close(){
+  running=false;
+  // Do not block the UI thread on network writes; socket close interrupts read/connect.
+  Socket s=socket;if(s!=null)try{s.close();}catch(IOException ignored){}
+ }
+}

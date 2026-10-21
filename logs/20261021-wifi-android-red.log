@@ -1,0 +1,24 @@
+mobile-companion\tests\WifiProtocolTest.java:8: ����: �����WifiProtocol������
+  WifiProtocol.Snapshot s=WifiProtocol.parse(line.toString());
+              ^
+mobile-companion\tests\WifiProtocolTest.java:8: ����: �Ҳ�������
+  WifiProtocol.Snapshot s=WifiProtocol.parse(line.toString());
+                          ^
+  ����:   ���� WifiProtocol
+  λ��: �� WifiProtocolTest
+mobile-companion\tests\WifiProtocolTest.java:10: ����: �Ҳ�������
+  if(!WifiProtocol.command('K',15).equals("K0F\n"))throw new AssertionError("command");
+      ^
+  ����:   ���� WifiProtocol
+  λ��: �� WifiProtocolTest
+mobile-companion\tests\WifiProtocolTest.java:12: ����: �Ҳ�������
+   try {WifiProtocol.parse(bad);throw new AssertionError("invalid accepted");}catch(IllegalArgumentException expected){}
+        ^
+  ����:   ���� WifiProtocol
+  λ��: �� WifiProtocolTest
+mobile-companion\tests\WifiProtocolTest.java:14: ����: �Ҳ�������
+  try {WifiProtocol.command('T',4);throw new AssertionError("range");}catch(IllegalArgumentException expected){}
+       ^
+  ����:   ���� WifiProtocol
+  λ��: �� WifiProtocolTest
+5 ������
