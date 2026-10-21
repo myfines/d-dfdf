@@ -894,3 +894,7 @@ PDF文字已提取，首次控制台输出遇GBK不能编码NBSP的UnicodeEncode
 - 用户明确要求写入Flash，并对全部断电重连及温度正常确认回复ok。只为已构建归档E023增加AuthorizedE023Flash独立固定SHA256入口，默认thermal hold保留；未改OTP、下载器固件或接线。
 - SHA256 B1226DD66F187B7A562C62DC88FE4813B9FA3E87BAAD86FCAA21A5BB06F95684复核通过。官方Programmer，GW2A-18C、cable-index1、2.5MHz、operation37、地址0；扫描读到0x0000081B。
 - 20261021-192044-instrument-Flash.log明确Program and Verify flash successfully，exit0，31.57秒。扫描日志同时间戳。写入校验成功不等于已完成冷启动和安卓Wi-Fi验收，待用户断电自启动确认；历史热故障根因仍未解决。
+
+## 2026-10-21 仓库入口整理
+- 按用户要求提供APK并整理仓库。旧首页仍写早期单音/SRAM状态，已原样移至docs/history/readme-before-E023.md。新首页明确主工程、E023 Flash校验状态、APK、接线、协议、验收边界和目录用途。新增docs/current-release.md固定版本/哈希/回退索引；不把待实测项目标为完成。未移动工程目录或修改硬件。
+- 本机gh不在PATH，未创建GitHub Release；使用已跟踪APK文件页提供下载，不宣称已创建Release。

@@ -1,50 +1,39 @@
-# Tang Primer 20K 开发与操作记录
+# Tang Primer 20K · FPGA 电子乐器
 
-设备：Sipeed Tang Primer 20K + Dock。目标：2026 高云赛道电子乐器。
+2026 高云 FPGA 创新设计赛道“实时多音色合成电子乐器引擎”。主工程为 `instrument_io/`，主板 Tang Primer 20K + Dock，外设包括 PCM5102A、ADS1015、摇杆、八路光键、OLED 和 ESP-01S。
 
-2026-10-12 新增 [instrument_io 首版程序](instrument_io/README.md)：外接 PCM5102A 标准 I²S、ADS1015 双轴读取、摇杆弯音/音色和四键单音。四组仿真及高云构建通过；现已下载到 **SRAM**，状态0x00006020 / Done Final、exit0，外部模块实物反馈待确认。当前 Flash 中仍是下面记录的旧四键程序。
+## 当前版本与下载
 
-当前阶段：**音频码流已固化到外置 Flash，掉电上电及 RCFG 后 S0–S3 四键均已确认发声**。`audio_keys` 仍按最低键优先发**单音**；四复音尚未实现。左侧底部 RCFG 是重配置键，不能当演奏键。
+**当前已写入 Flash：E023（2026-10-21）**。官方 Programmer 写入＋校验成功，用时31.57秒；E023冷启动、安卓安装及真实Wi-Fi双向联调仍待验收。之前版本的实测结果不自动等于E023验收通过。
 
-当前音频码流 `E:\gaoyun\projects\audio_keys\audio_keys\impl\pnr\audio_keys.fs` 的 SHA256 为 `2D155BB754EC8C6238C57320220F5EE24E029907742F575C61FB7C61D5B4162E`。旧码流备份在 `E:\gaoyun\tools\audio_keys-pre-s0-7C1B92AD.fs`，未入库。新版仿真和综合布线通过；JTAG、MSPI、RECONFIG_N 未复用作普通 IO。
+- **[安卓 APK 下载入口](mobile-companion/apk/instrument-companion-debug.apk)**：打开后点 Download raw file；仓库为私密，需登录获授权的 GitHub 账号。应用版本0.2-wifi，最低Android8。
+- [当前版本清单](docs/current-release.md)：身份、哈希、验证范围与回退版本。
+- [E023 Wi-Fi 操作与协议](docs/wifi-app-E023-20261021.md)：手机四键、音量、音色、延时、实际状态和波形监看、事件CSV。
+- [全部接线](docs/wiring-all-current.md) · [OLED/ESP接线](docs/oled-esp-wiring-20261020.md)
+- [完整操作记录](docs/operations.md) · [Flash流程](docs/flash-programming-procedure.md)
 
-2026-09-30 两次 openFPGALoader 外部 Flash 写入中途停住；把 JTAG A 切回 FTDI 后，高云官方 Programmer 正确识别 FPGA ID `0x81B` 与 Flash ID `0x0B4017`，执行外部 Flash BSCAN 擦写/编程到 100%，结束地址 `0x08CE00`，退出码 0。用户随后全板断电 10 秒再上电、没有下载 SRAM，确认 S0–S3 四键都有声；按 RCFG 后四键仍有声。最后只读 JTAG 扫描仍读到一个 `0x81B`。**Flash 自启动和重配置功能已实物验证。**原出厂内容没有可靠的整片备份；本次未单独运行写后的逐字节 Flash 比较。详见 [成功烧录流程](docs/flash-programming-procedure.md) 和 [操作记录](docs/operations.md)。
+## 功能与验收边界
 
-此前用户误按的“S4”是实物丝印 **RCFG**；仅在 SRAM 运行时，按它会重新配置并使音频失声。现在 Flash 已装入相同音频程序，按 RCFG 后四键仍能发声。
+HDL音频合成、包络、复音/32声部路径、硬件延时、摇杆参数控制、八路光键与OLED；安卓Wi-Fi页新增四触屏键及状态回传。30项RTL回归、Java协议/TCP/合成测试和Gowin构建已通过，27MHz约束下Fmax33.632MHz，setup/hold违例0。
 
-- [操作记录](docs/operations.md)
-- [2026 电子乐器设计与采购建议](docs/instrument-plan-2026.md)
-- [用户资料核对与板卡资格依据](docs/reference-review-2026.md)
-- [板载按键映射与芯片到货前的音频工作](docs/button-audio-next.md)
-- [外部 Flash 成功烧录流程](docs/flash-programming-procedure.md)
-- [Flash 早期诊断与技术限制](docs/flash-readiness.md)
-- `logs/`：带时间戳的原始结果
-- `led/`：已编译过的最小点灯源文件与约束
-- `audio_probe/`：板载 PT8211 音频通路探针（440 Hz 三角波，响 1 秒/停 1 秒）
-- `audio_keys/`：四键演奏（即按即响、松开消抖、1 ms/5 ms 包络、耳放门控、心跳灯）
+手机键按住时优先手机，松开恢复光键。Wi-Fi波形是低速监看，事件CSV不是音频录音。尚未完成蓝牙、在线曲谱下载、离线LED曲谱引导、音频录音回传，也没有完成全部题目指标的实测验收。旧[差距核对](docs/competition-gap-20261012.md)按日期查阅，不当作最新验收表。
 
-音频键控进展：仿真 PASS（`logs/20260929-audio-keys-sim.log`：空闲无声、按键 0 半周期实测 957,654 ns 对理论 955,700 ns、按住时 1 ms 抖动不断音、松开后静音），综合布线 0 错 0 警（`logs/20260929-audio-keys-build*.log`）。码流 SHA256 `2D155BB754EC8C6238C57320220F5EE24E029907742F575C61FB7C61D5B4162E`；用户此前确认 SRAM 下 S0–S3 均可发声。
+历史核心板异常发热根因和ESP供电余量未测清；硬件hold保留，不能把仿真通过视为供电安全证明。PCM USB供电时其3V3排针不接。发生异常发热立即全部断电。
 
-已知限制（详见 `docs/operations.md` 2026-09-29 一节）：
+## 目录与复现
 
-- **原厂 Flash 内容未完整备份**：早期只读文件两次不一致，不能恢复出厂镜像；现在已由本项目的音频程序取代。写后没有另跑独立的逐字节 Flash 比较，功能验证依据是全板断电上电和 RCFG 后四键仍有声。
-- **S0 已可用**：T10 需将 SSPI 双用途配置为普通 IO；当前配置只打开 SSPI，四个实体键已试听通过。RCFG 仍不能当演奏键；详见 `docs/button-audio-next.md`。
-- S0/T10 使用 `LVCMOS33`；S1–S3/T3/T2/D7 使用 `LVCMOS15`。音频与 LED 引脚为 3.3 V。
-- 构建注意：`.sdc` 必须保存为 **CRLF** 行尾，否则高云解析器报 `syntax error near token 'clk]'`（已用 `.gitattributes` 固定）。
+| 目录 | 用途 |
+|---|---|
+| `instrument_io/` | 当前主RTL、仿真与Gowin构建入口 |
+| `mobile-companion/` | 安卓源码、测试、构建脚本和APK |
+| `k230/` | K230扩展工作，独立于本次Wi-Fi验收 |
+| `docs/` | 接线、版本、操作说明与题目核对 |
+| `logs/` | 原始测试/烧录日志，保留时间戳 |
+| `scripts/` | 有哈希校验与限定授权的烧录辅助脚本 |
+| `led/`、`audio_probe/`、`audio_keys/`、`s0_probe/` | 历史诊断/早期工程，不是当前发布入口 |
 
-开源下载工具：openFPGALoader v1.1.1，来源 https://github.com/trabucayre/openFPGALoader/releases/tag/v1.1.1 。已成功识别 0x0000081B 并完成 SRAM 配置；该版本对 GW2A 跳过软件 checksum 比较，不应描述为完整回读校验通过。
+PowerShell构建入口：`instrument_io/run_tests.ps1`、`instrument_io/build_extension_candidate.tcl`（Gowin gw_sh）、`mobile-companion/build.ps1`。本机工具路径见脚本，其他电脑需先配置依赖。码流不入Git，归档路径与哈希见版本清单。
 
-此前 SRAM 下载成功时：USB-JTAG 直连电脑，A/MI_00 = WinUSB/oem180.inf，B/MI_01 = FTDIBUS/oem178.inf；使用：
+版本规则：代码与测试日志提交后创建候选标签；写入成功单独记录部署提交；冷启动/功能验证另记实测结果。已归档E021/E022/E023不覆盖，故障回退依据固定哈希，不使用“最近生成的文件”猜版本。APK随对应源码提交，哈希见版本清单。
 
-```powershell
-& 'E:\gaoyun\tools\openfpgaloader\ucrt64\bin\openFPGALoader.exe' -b tangprimer20k --freq 2500000 --write-sram -v <经核验的码流.fs>
-```
-
-点灯码流 SHA256：`0375DCA1C9D62BD721FEC38F076C811FAC9294CDDFD2D1253AB3FAC33F7D355F`（`logs/20260926-direct-sram-100k.*`）。工具报告频率为请求值，未做物理时钟测量，状态寄存器最终为 `0x00006020 / Done Final`。SRAM 断电失效。
-
-当前 Flash 烧录成功时 A、B 都使用 FTDI/oem178.inf，高云官方 Programmer 2.5 MHz。用户没有规定固定 JTAG 速度上限，底线是不损坏板卡；OTP、bulk erase 和下载器固件更新未获授权。新码流若要再次固化，应按[成功烧录流程](docs/flash-programming-procedure.md)核对文件身份、扫描 ID 并做掉电启动验证。
-
-注意：`openFPGALoader --detect -f` 与 `--dump-flash` 会先 `Erase SRAM`，会清掉正在运行的 SRAM 配置。
-
-不提交安装包、厂商二进制、个人照片或大体积构建文件。
-
+旧首页已移至[历史首页](docs/history/readme-before-E023.md)，保留早期点灯、单音、驱动和Flash排查记录。
