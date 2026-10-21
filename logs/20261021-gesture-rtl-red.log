@@ -1,0 +1,9 @@
+error: Failed to open 'E:\gaoyun\tools\iverilog\ucrt64\lib\ivl\system.vpi' because:
+     : �Ҳ���ָ����ģ�顣
+
+
+instrument_io/tb_gesture_link.sv:5: error: Unknown module type: gesture_uart_rx
+2 error(s) during elaboration.
+*** These modules were missing:
+        gesture_uart_rx referenced 1 times.
+***

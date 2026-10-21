@@ -1,0 +1,20 @@
+E
+======================================================================
+ERROR: test_gesture_protocol (unittest.loader._FailedTest.test_gesture_protocol)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_gesture_protocol
+Traceback (most recent call last):
+  File "C:\Users\zrk\AppData\Local\Programs\Python\Python312\Lib\unittest\loader.py", line 396, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\zrk\AppData\Local\Programs\Python\Python312\Lib\unittest\loader.py", line 339, in _get_module_from_name
+    __import__(name)
+  File "E:\gaoyun\d-dfdf\k230\test_gesture_protocol.py", line 2, in <module>
+    from gesture_protocol import encode, decode
+ModuleNotFoundError: No module named 'gesture_protocol'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)

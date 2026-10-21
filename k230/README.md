@@ -50,3 +50,6 @@ PINCH,64,TRACK,1,1,0.359,0.778,0.859,62,0,89
 2026-10-21：在实际K230短时运行成功，日志包含TRACK/WARMUP/NO HAND。日志证明接口兼容与检测状态输出，不替代用户观察实际手动作与画面对应性。首次停止旧程序发生IDE interrupt和soft reboot，等待其返回控制台后再试运行成功。未替换开机程序。原始日志见logs/20261021-k230-pinch/。
 
 2026-10-21：V2已安装到实板 /sdcard/pinch_preview_v2.py，main.py入口已回读确认；旧入口备份 main_before_pinch_v2_20261021.py，原电赛备份保留。主机12项测试通过。最终入口能初始化摄像头并持续输出日志，实际单手效果及断电重启仍待用户验收。
+
+## 手势传输协议仿真候选（2026-10-21）
+新增[协议V1说明](../docs/k230-gesture-protocol-v1.md)、gesture_protocol.py与主机测试。该编码器和FPGA接收器仅离线验证，未接入pinch_preview_v2.py识别循环、未改实板UART或开机入口。现有屏幕预览不代表已向FPGA发送参数。

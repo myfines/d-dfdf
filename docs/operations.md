@@ -935,3 +935,11 @@ PDF文字已提取，首次控制台输出遇GBK不能编码NBSP的UnicodeEncode
 - 从main入口执行18秒：摄像头初始化、持续PINCH2日志，无运行异常。本轮主要NO HAND/BAD GEOMETRY/MULTI HAND，未取得有效TRACK；上轮试运行有TRACK，不能因此宣称实际手势效果验收通过。待用户观察单手正对镜头效果；真实断电开机尚未验收。
 - 结束主机采集时不发送停止命令，板上程序保持运行。FPGA、固件、模型及boot.py未改动。
 - 日志：activation.txt、activation-finished.txt、installed-readback.txt、main-launcher-trial.txt。
+
+## 2026-10-21 K230→FPGA手势协议V1仿真候选
+- 用户要求无论串口或其他方式先完成协议仿真。使用TDD：Python测试先因缺gesture_protocol模块失败；串行RTL测试先因缺gesture_uart_rx失败。原始日志gesture-python-red/gesture-rtl-red保留。首次调用iverilog未配UCRT PATH未运行；补齐既有工具路径后取得真实RED，不以空输出当通过。
+- 新增独立12字节二进制协议、MicroPython兼容编码/解码、CRC16-CCITT-FALSE、字节流解析器和UART包装。版本/范围/保留位/CRC校验，模256序号前向窗口，重复旧包不续租，250ms失联释放、20ms半包超时、低置信度/丢手释放。未直接连接音频或触发音符。
+- 开发编译异常：无空格的Verilog十六进制常量紧接问号被词法解析为常量，及UART位置端口个数错误；已分别加空格/改命名端口修复。前者日志gesture-rtl-green保留，最终日志明确通过，未运行失败编译的旧产物。
+- 15项Python测试通过（含原跟踪测试，标准CRC29B1及96个单bit损坏拒绝）；31项完整RTL回归通过。串行仿真使用Python生成包，覆盖噪声、CRC、重复/旧包、回绕、版本、越界、保留位、半包、丢手、低置信度、重复流不得续租、超时恢复、坏停止位与重置。附加接收234/发送235时钟bit约0.43%偏差测试通过。
+- 评审检查输出仅完整包提交、无效包不刷新租期、解析器内存固定、USB与字节协议分层。当前仿真缩短时间计数，非物理电气/手势总延迟实测。文档docs/k230-gesture-protocol-v1.md注明剩余集成边界。
+- 本轮无串口打开、无上电、无引脚修改、无FPGA构建/下载、无K230实板写入。E023 Flash和K230当前开机程序保持；USB主机/CanMV传输接口仍未实现，手势数据尚未接入音频。

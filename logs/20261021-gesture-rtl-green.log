@@ -1,0 +1,8 @@
+instrument_io/gesture_packet_rx.v:28: warning: Extra digits given for sized hex constant.
+instrument_io/gesture_packet_rx.v:28: warning: Numeric constant truncated to 8 bits.
+instrument_io/gesture_packet_rx.v:28: syntax error
+instrument_io/gesture_packet_rx.v:28: error: Malformed statement
+instrument_io/gesture_packet_rx.v:31: warning: Extra digits given for sized hex constant.
+instrument_io/gesture_packet_rx.v:31: warning: Numeric constant truncated to 8 bits.
+instrument_io/gesture_packet_rx.v:31: syntax error
+instrument_io/gesture_packet_rx.v:31: error: Malformed statement
