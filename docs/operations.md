@@ -908,3 +908,7 @@ PDF文字已提取，首次控制台输出遇GBK不能编码NBSP的UnicodeEncode
 - 正常关闭IDE首次5秒未完成（未强杀），随后自行退出，未用computer-use工具。最终命令启动IDE -auto_connect -auto_run pinch_preview_v2.py，窗口已确认且Responding=True；不等于USB已连接或程序已启动。open_pinch_ide.cmd已改V2，V1保留。
 - GitHub API实际查询：ultralytics62713/AGPL3，mediapipe37358/Apache2，PINTO_model_zoo4629/仓库MIT，nncase899/Apache2，k230_canmv109/未识别许可。具体hand-keypoints搜索YOLO11n-pose-hands99/未识别许可。未找到已确认适配此亚博固件且许可明确的高star替代kmodel，未下载新权重。用途/来源/转换条件/验收边界见docs/k230-gesture-v2-models-20261021.md。不把框架stars当模型精度。
 - 赛题建议：捏合连续映射表达音量或硬件效果强度作为第三维候选；光键触发、摇杆维持原功能；不把离散换音色当第三表情、不称<=10ms。待实物精度对比和UART/FPGA联调才计完成。仅暂存本任务文件，保留其他日志。
+
+## 2026-10-21 OTG同口供电与通信的再次案例核验
+- requests查询官方/第三方README、第三方usb_host.py及GitHub仓库搜索；确认同款Dock USB键盘作者报告同时由VBUS供电并传按键。强调FS/LS、Linux/OHCI及K230协议/功耗差异，并记录原型局限。来源与结论追加docs/k230-fpga-link-20261021.md。
+- 本阶段无硬件、驱动或RTL操作；未查到已验证的Dock-K230同线案例，不宣称插线即用。
