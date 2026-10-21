@@ -819,3 +819,7 @@ PDF文字已提取，首次控制台输出遇GBK不能编码NBSP的UnicodeEncode
 ## 2026-10-21 K230与Dock USB/UART连接预核
 - 只读查询Dock官方原理图与Sipeed产品页，并查看USB PHY页。结论与修订版不确定性见docs/k230-fpga-link-20261021.md。推荐独立5V供电、经电平/管脚核验的TTL UART共地。没有接线、上电、烧录或改RTL。
 
+
+## 2026-10-21 K230-Dock OTG供电/UART资料预核
+- 读取本地Dock3713 Rev1.1官方PDF，渲染/查看USB PHY与BL702电源页；读取亚博供电说明、标准版接口图片与UART例程、原电赛UART引脚配置。无硬件命令，无电源/接线/RTL改动。
+- J8 VBUS直连+5V、CC1/2下拉、数据接USB3317，不是可直接输出UART的USB转串口；不能据共享5V网保证给K230供电。建议K230独立5V、两板UART+GND，待3.3V Bank/实际电平及空闲GPIO核对。详见docs/k230-fpga-link-20261021.md；不执行共享USB供电，保持现有Flash。
