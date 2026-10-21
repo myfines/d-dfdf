@@ -1,0 +1,3 @@
+Stop-after-trial failure: RuntimeError: short debug length (k230_host_probe.py out(), read <4 bytes).
+Follow-up firmware query 0x80: empty reply after 3s settle. COM9 remains enumerated.
+No activation attempted. Pending V2 file readback matched host, 10474 bytes SHA256 ae9593ed7a9e610cd1f121d6f825f03e0797fed995b6e73bad259ab8f94371d2.

@@ -1,0 +1,11 @@
+
+---RESULT---
+
+>>> 
+IDENTITY (name='micropython', version=(1, 21, 0), _machine='k230_canmv_yahboom with K230', _mpy=262)
+MAIN exec(compile(open('/sdcard/k230_hand_keypoint_official.py').read(), '/sdcard/k230_hand_keypoint_official.py', 'exec'))
+
+READY_V2
+CanMV v1.8-24-g46d59a8(based on Micropython e00a144) on 2026-07-30; k230_canmv_yahboom with K230
+Type "help()" for more information.
+>>> 

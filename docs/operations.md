@@ -919,3 +919,10 @@ PDF文字已提取，首次控制台输出遇GBK不能编码NBSP的UnicodeEncode
 - 命令：Get-CimInstance Win32_SerialPort；Get-Process canmvide。结果：COM9 列出，IDE PID 30784；没有打开串口、停止程序或烧写板卡。
 - 已按用户授权通知“排查 Tang Primer 20K JTAG下载”，说明上述范围，要求 FPGA/Flash 保持不动。
 - V2 最终版板上验证及 main.py 持久安装仍未完成；需暂时将 K230 从 Dock OTG 移接电脑直连 USB 才能下载。
+
+## 2026-10-21 21:33:56 K230 V2 直连上传与板上试运行
+- 用户已改为电脑直连；COM9 / VID1209 PIDABD1，固件调试版本0.4.0，MicroPython身份 k230_canmv_yahboom with K230。
+- 12项主机测试通过；待安装文件 /sdcard/pinch_preview_v2_pending.py 逐字节回读一致，10474字节，SHA256 ae9593ed7a9e610cd1f121d6f825f03e0797fed995b6e73bad259ab8f94371d2。
+- python E:/gaoyun/k230_deploy_v2_host.py trial：实板18秒，GC2093初始化成功，产生TRACK/有效百分比/HOLD/NO HAND；没有摄像头画面与动作的人工对应验收。
+- 停止后读调试输出报 RuntimeError: short debug length；等待后固件查询仍空回复。没有执行activate，main.py仍为官方例程入口；已请求用户重插USB恢复。
+- FPGA、固件、模型、boot.py及电赛备份均未改动。日志见logs/20261021-k230-v2/。
