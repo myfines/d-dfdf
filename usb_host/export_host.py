@@ -13,6 +13,6 @@ class ExportHost(Elaboratable):
   m=Module();m.domains.usb=ClockDomain('usb');m.submodules.host=self.host;return m
 
 top=ExportHost();b=top.bus;h=top.host
-ports=[ClockSignal('usb'),ResetSignal('usb'),b.data.i,b.data.o,b.data.oe,b.dir.i,b.nxt.i,b.stp.o,h.data.valid,h.data.ready,h.data.payload,h.ready]
+ports=[ClockSignal('usb'),ResetSignal('usb'),b.data.i,b.data.o,b.data.oe,b.dir.i,b.nxt.i,b.stp.o,h.data.valid,h.data.ready,h.data.payload,h.ready,h.diagnostic]
 Path('E:/gaoyun/tools/smoke/k230_usb_host_generated.v').write_text(verilog.convert(top,name='k230_usb_host_generated',ports=ports))
 print('Exported E:/gaoyun/tools/smoke/k230_usb_host_generated.v')

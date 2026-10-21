@@ -1,6 +1,7 @@
 `timescale 1ns/1ps
 module k230_usb_host_generated(input wire usb_clk,usb_rst,input wire [7:0] ulpi_data_i,input wire ulpi_dir,ulpi_nxt,data__ready,
- output wire [7:0] ulpi_data_o,output wire ulpi_data_oe,ulpi_stp,output reg data__valid=0,output reg [7:0] data__payload=0,output reg ready=0);
+ output wire [7:0] ulpi_data_o,output wire ulpi_data_oe,ulpi_stp,output reg data__valid=0,output reg [7:0] data__payload=0,output reg ready=0,output wire [15:0] diagnostic);
+ assign diagnostic=16'h1234;
  assign ulpi_data_o=0;assign ulpi_data_oe=0;assign ulpi_stp=0;
 endmodule
 module tb_probe_report;
@@ -28,7 +29,7 @@ module tb_probe_report;
   @(negedge usb_clk);force dut.heartbeat=0;
   @(negedge usb_clk);release dut.heartbeat;
   wait(count==27);
-  if(captured[18]!=8'ha6||captured[19]!=1||captured[20]!=2)$fatal(1,"periodic idle health report");
+  if(captured[18]!=8'ha7||captured[19]!=8'h12||captured[20]!=8'h34||captured[21]!=2)$fatal(1,"periodic idle health report");
   check=0;for(i=18;i<26;i=i+1)check=check^captured[i];if(check!=captured[26])$fatal(1,"health XOR");
   force dut.usb_pll_locked=0;#1;
   if(dut.usb_reset!==2'b11)$fatal(1,"PLL loss must reset host asynchronously");

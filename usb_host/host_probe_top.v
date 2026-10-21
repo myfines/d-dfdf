@@ -25,7 +25,7 @@ module host_probe_top(input wire clk,input wire ulpi_clk,ulpi_dir,ulpi_nxt,
  always @(posedge usb_core_clk or negedge usb_pll_locked)
   if(!usb_pll_locked)usb_reset<=2'b11;
   else usb_reset<={usb_reset[0],~ulpi_rst};
- wire [7:0] data_o,data;wire oe,valid,ready,active,update;
+ wire [7:0] data_o,data;wire oe,valid,ready,active,update;wire [15:0] usb_diagnostic;
  reg ready_q=0,valid_q=0;reg [7:0] data_q=0;
  always @(posedge usb_core_clk)begin
   if(usb_reset[1])begin ready_q<=0;valid_q<=0;data_q<=0;end
@@ -36,7 +36,7 @@ module host_probe_top(input wire clk,input wire ulpi_clk,ulpi_dir,ulpi_nxt,
  k230_usb_host_generated host(.usb_clk(usb_core_clk),.usb_rst(usb_reset[1]),
   .ulpi_data_i(ulpi_data),.ulpi_data_o(data_o),.ulpi_data_oe(oe),
   .ulpi_dir(ulpi_dir),.ulpi_nxt(ulpi_nxt),.ulpi_stp(ulpi_stp),
-  .data__valid(valid),.data__payload(data),.data__ready(1'b1),.ready(ready));
+  .data__valid(valid),.data__payload(data),.data__ready(1'b1),.ready(ready),.diagnostic(usb_diagnostic));
  gesture_packet_rx #(.LEASE_TICKS(15000000),.GAP_TICKS(1200000)) parser(
   usb_core_clk,~usb_reset[1] && ready_q,valid_q,data_q,active,update,seq,pinch,y,confidence);
  reg [25:0] heartbeat=0;
@@ -47,6 +47,7 @@ module host_probe_top(input wire clk,input wire ulpi_clk,ulpi_dir,ulpi_nxt,
  reg [63:0] report;reg [7:0] check;reg [3:0] report_index=0;
  reg tx_start=0;wire tx_busy;wire [7:0] tx_data=report_index==9?check:report[63:56];
  wire [63:0] next_report={8'ha6,seq,{6'd0,ready,active},confidence,{6'd0,pinch[9:8]},pinch[7:0],{6'd0,y[9:8]},y[7:0]};
+ wire [63:0] report_data=update?next_report:{8'ha7,usb_diagnostic[15:8],usb_diagnostic[7:0],{6'd0,ready,active},32'd0};
  uart8n1 #(.BIT_TICKS(521)) diagnostic(.clk(usb_core_clk),.reset_n(~usb_reset[1]),.rx(1'b1),.tx_start(tx_start),.tx_data(tx_data),.tx(UART_TX),.tx_busy(tx_busy));
  always @(posedge usb_core_clk)begin
   if(usb_reset[1])begin report_index<=0;tx_start<=0;report<=0;check<=0;end
@@ -54,7 +55,7 @@ module host_probe_top(input wire clk,input wire ulpi_clk,ulpi_dir,ulpi_nxt,
    tx_start<=0;
    // Periodic reports permit a read-only clock/aliveness check without K230.
    if((update || heartbeat[23:0]==0) && report_index==0)begin
-    report<=next_report;check<=next_report[63:56]^next_report[55:48]^next_report[47:40]^next_report[39:32]^next_report[31:24]^next_report[23:16]^next_report[15:8]^next_report[7:0];report_index<=1;
+    report<=report_data;check<=report_data[63:56]^report_data[55:48]^report_data[47:40]^report_data[39:32]^report_data[31:24]^report_data[23:16]^report_data[15:8]^report_data[7:0];report_index<=1;
    end else if(report_index!=0 && !tx_busy && !tx_start)tx_start<=1;
    // uart samples tx_start on the following edge; advance only after that edge.
    if(tx_start)begin
@@ -67,3 +68,4 @@ module host_probe_top(input wire clk,input wire ulpi_clk,ulpi_dir,ulpi_nxt,
  assign PA_EN=0;assign PCM_BCK=0;assign PCM_LRCK=0;assign PCM_DATA=0;
  assign HP_BCK=0;assign HP_WS=0;assign HP_DIN=0;
 endmodule
+

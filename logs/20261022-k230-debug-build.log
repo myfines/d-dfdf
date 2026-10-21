@@ -1,0 +1,23 @@
+*** GOWIN Tcl Command Line Console  *** 
+current working directory: E:/gaoyun/projects/k230_usb_host_probe/k230_usb_host_probe
+add new file: "E:/gaoyun/tools/smoke/k230_usb_host_generated.v"
+add new file: "E:/gaoyun/d-dfdf/usb_host/host_probe_top.v"
+add new file: "E:/gaoyun/d-dfdf/instrument_io/gesture_packet_rx.v"
+add new file: "E:/gaoyun/d-dfdf/instrument_io/uart8n1.v"
+add new file: "E:/gaoyun/d-dfdf/usb_host/host_probe.cst"
+add new file: "E:/gaoyun/d-dfdf/usb_host/host_probe.sdc"
+GowinSynthesis start
+Running parser ...
+Analyzing Verilog file 'E:\gaoyun\tools\smoke\k230_usb_host_generated.v'
+Analyzing Verilog file 'E:\gaoyun\d-dfdf\usb_host\host_probe_top.v'
+ERROR (EX3884) : 'diagnostic' is already declared("E:\gaoyun\d-dfdf\usb_host\host_probe_top.v":51)
+Previous declaration of 'diagnostic' is from here("E:\gaoyun\d-dfdf\usb_host\host_probe_top.v":28)
+ERROR (EX3928) : Module 'host_probe_top' is ignored due to previous errors("E:\gaoyun\d-dfdf\usb_host\host_probe_top.v":70)
+Verilog file 'E:\gaoyun\d-dfdf\usb_host\host_probe_top.v' ignored due to errors
+Analyzing Verilog file 'E:\gaoyun\d-dfdf\instrument_io\gesture_packet_rx.v'
+Analyzing Verilog file 'E:\gaoyun\d-dfdf\instrument_io\uart8n1.v'
+GowinSynthesis finish
+
+    while executing
+"run all"
+    (file "usb_host/build_probe.tcl" line 13)

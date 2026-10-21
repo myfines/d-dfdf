@@ -1,0 +1,2 @@
+PASS probe diagnostic: HS bytes -> RTL CRC -> UART valid/lost-hand/periodic health reports; PLL loss reset
+usb_host/tb_probe_report.sv:36: $finish called at 2341648997 (1ps)

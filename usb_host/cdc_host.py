@@ -16,6 +16,7 @@ from guh.protocol.descriptors import EndpointTransferType, InterfaceClass
 class K230CDCHost(wiring.Component):
  data: Out(stream.Signature(unsigned(8)))
  ready: Out(1)
+ diagnostic: Out(unsigned(16))
  def __init__(self,*,bus=None,handle_clocking=True):
   self.enumerator=USBHostEnumerator(bus=None,handle_clocking=handle_clocking,device_address=0x12,config_number=1,
    parser=USBDescriptorParser(endpoint_filter=EndpointFilter.IN,transfer_type=EndpointTransferType.BULK,interface_class=InterfaceClass.CDC_DATA),rx_fifo_depth=1024)
@@ -28,6 +29,11 @@ class K230CDCHost(wiring.Component):
  def sie(self):return self.enumerator.sie
  def elaborate(self,platform):
   m=Module();m.submodules.enum=enum=self.enumerator;c=enum.ctrl
+  phy=self.sie.utmi;status=self.sie.ctrl.status
+  m.d.comb+=self.diagnostic.eq(Cat(phy.line_state,enum.status.speed,
+   enum.status.enumerated,enum.parser.o.valid,self.sie.reset_ctrl.reset_active,
+   status.disconnected,status.response.as_value(),status.idle,
+   phy.rx_active,phy.rx_error,phy.tx_valid))
   phase=Signal();index=Signal(4);pid=Signal(DataPID,init=DataPID.DATA0)
   watchdog=Signal(range(180000000));last_sof=Signal(11)
   m.submodules.packet=packet=Memory(shape=unsigned(8),depth=512,init=[])
