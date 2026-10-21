@@ -1,0 +1,34 @@
+PRIOR: 
+
+
+>>> 
+
+USB_INSPECT_BEGIN (name='micropython', version=(1, 21, 0), _machine='k230_canmv_yahboom with K230', _mpy=262)
+
+MODULE usb ['__class__', '__name__', '__dict__', 'Keyboard', 'Mouse', 'Serial', 'Touch']
+
+API usb Serial ['__class__', '__name__', 'close', 'open', 'read', 'readinto', 'readline', 'write', '__bases__', '__del__', '__dict__']
+
+MODULE machine ['__class__', '__name__', '__dict__', 'ADC', 'FFT', 'FPIOA', 'I2C', 'I2C_Slave', 'LED', 'LSM6DSM', 'OTP', 'PWM', 'Pin', 'RTC', 'SPI', 'SPI_LCD', 'TOUCH', 'Timer', 'UART', 'WDT', 'bitstream', 'bootloader', 'chipid', 'dht_readinto', 'mem_copy', 'reset', 'temperature']
+
+MODULE_UNAVAILABLE pyb ImportError("no module named 'pyb'",)
+
+MODULE uos ['__class__', '__name__', 'remove', 'sep', '__dict__', 'EXITPOINT_DISABLE', 'EXITPOINT_ENABLE', 'EXITPOINT_ENABLE_SLEEP', 'VfsPosix', 'chdir', 'cpu_usage', 'dupterm', 'errno', 'exitpoint', 'getcwd', 'ilistdir', 'listdir', 'log', 'mkdir', 'mkfs', 'mount', 'rename', 'rmdir', 'stat', 'statvfs', 'tid', 'umount', 'uname', 'unlink', 'urandom']
+
+API uos dupterm ['__class__']
+
+MODULE sys ['__class__', '__name__', '__dict__', 'argv', 'atexit', 'byteorder', 'exc_info', 'executable', 'exit', 'getsizeof', 'implementation', 'maxsize', 'modules', 'path', 'platform', 'print_exception', 'ps1', 'ps2', 'stderr', 'stdin', 'stdout', 'tracebacklimit', 'version', 'version_info']
+
+MODULE uctypes ['__class__', '__name__', '__dict__', 'ARRAY', 'BFINT16', 'BFINT32', 'BFINT8', 'BFUINT16', 'BFUINT32', 'BFUINT8', 'BF_LEN', 'BF_POS', 'BIG_ENDIAN', 'FLOAT32', 'FLOAT64', 'INT', 'INT16', 'INT32', 'INT64', 'INT8', 'LITTLE_ENDIAN', 'LONG', 'LONGLONG', 'NATIVE', 'PTR', 'SHORT', 'UINT', 'UINT16', 'UINT32', 'UINT64', 'UINT8', 'ULONG', 'ULONGLONG', 'USHORT', 'VOID', 'addressof', 'bytearray_at', 'bytes_at', 'sizeof', 'string_at', 'struct']
+
+PATH /dev ['w1', 'w0', 'ap', 'sta', 'spi1_dev', 'ttyGS0', 'sd12', 'sd11', 'sd10', 'sd1', 'touch0', 'ai_2d_device', 'gnne_device', 'vg_lite', 'nonai_2d_device', 'pm', 'vivdw200', 'dpu_device', 'vicap_device', 'connector', 'vo_device', 'acodec_device', 'adec_device', 'aenc_device', 'ao_device', 'ai_device', 'vdec_device', 'venc_device', 'gsdma_device', 'vvo_device', 'vvi_device', 'vicap', 'vivisp0', 'sensor_gc2093_csi2', 'vb_device', 'sys', 'mmz_userdev', 'log', 'canmv_misc', 'netmgmt', 'onewire', 'ws2812', 'shm', 'mem', 'random', 'urandom', 'zero', 'null', 'ptmx', 'ota', 'regulator_kpu', 'regulator_cpu', 'watchdog1', 'hwtimer5', 'hwtimer4', 'hwtimer3', 'hwtimer2', 'hwtimer1', 'hwtimer0', 'gpio', 'fft', 'i2c4', 'i2c3', 'i2c2', 'i2c1', 'i2c0', 'adc', 'spi2', 'spi1', 'spi0', 'ts', 'pwm', 'console', 'uart4', 'uart3', 'uart2', 'uart1', 'uart0', 'aes', 'hwrng', 'pufs', 'hash']
+
+PATH /sdcard ['main.py', 'pinch_preview_v2.py', 'main_electronic_contest_backup_20261020.py', 'main_lcd_launcher_backup_20261020.py', 'main_before_pinch_v2_20261021.py', 'main_official_before_v2_20261021.py']
+
+USB_INSPECT_DONE
+
+CanMV v1.8-24-g46d59a8(based on Micropython e00a144) on 2026-07-30; k230_canmv_yahboom with K230
+
+Type "help()" for more information.
+
+>>> 

@@ -943,3 +943,15 @@ PDF文字已提取，首次控制台输出遇GBK不能编码NBSP的UnicodeEncode
 - 15项Python测试通过（含原跟踪测试，标准CRC29B1及96个单bit损坏拒绝）；31项完整RTL回归通过。串行仿真使用Python生成包，覆盖噪声、CRC、重复/旧包、回绕、版本、越界、保留位、半包、丢手、低置信度、重复流不得续租、超时恢复、坏停止位与重置。附加接收234/发送235时钟bit约0.43%偏差测试通过。
 - 评审检查输出仅完整包提交、无效包不刷新租期、解析器内存固定、USB与字节协议分层。当前仿真缩短时间计数，非物理电气/手势总延迟实测。文档docs/k230-gesture-protocol-v1.md注明剩余集成边界。
 - 本轮无串口打开、无上电、无引脚修改、无FPGA构建/下载、无K230实板写入。E023 Flash和K230当前开机程序保持；USB主机/CanMV传输接口仍未实现，手势数据尚未接入音频。
+
+## 2026-10-21 23:10:37 K230 USB只读能力探测及RAM端点发送验证
+- 用户限定：单USB供电+通信；不增UART，不改FPGA/Flash/固件，先读取描述符再验证真实数据。协议基线d453ae2未改。
+- scripts/k230-usb-descriptors.py通过Windows Hub查询IOCTL读取真实描述符：1209:ABD1，当前High-Speed，配置1；CDC控制接口0/数据接口1，81 IN和01 OUT Bulk512，82通知8；接口2 Still Image/MTP。无第二CDC/HID。设备限定描述符配置数0，Other-Speed查询WinError31，FS未验。
+- COM9首次打开拒绝访问，确认IDE占用后正常CloseMainWindow退出；随后读取运行时usb.Serial及/dev/ttyGS0。没有混入二进制至USBDBG会话。经真实文本执行确认普通REPL，再进入原生raw REPL有界加载RAM代码。
+- 固定参数40包480字节CRC全过；识别无效结果300包3600字节全零且序号回绕通过；用户放手后的完整120包中86个有效，CRC/范围/序号0错误，无效字段全零。实际有效手势发送约7.49Hz，不是稳定20Hz；仅1个有效包置信度>=60。
+- 重开COM并改115200/8N1得到40包480字节CRC全过（合成测试）。最初采样标记处理漏掉无前导换行的标记，已修复并离线复核原始捕获；没有据此改写设备。
+- 中间friendly REPL长源码输入未执行；改用raw REPL分块。有手300包目标一轮24秒超时，仅189包未结束，明确不计为完整通过。失败原始捕获全部保留。
+- 21项Python测试通过；主机验证用独立binascii.crc_hqx，按17字节分片输入字节流解析；新流解析和新鲜度映射先红后绿测试。编译检查通过。最终调度sleep避免负数的小改动仅经静态检查，未重复实板测试，实测数据对应此前等价正常路径。
+- 没有USB总线控制抓包；Windows串口逻辑参数已知，EP0最小SET_LINE_CODING/CONTROL_LINE_STATE序列只能给候选映射，未冒充逐请求验证。USB bus reset/FS/FPGA host未验。
+- 恢复既有main屏幕预览：回读main、V2、boot、电赛和旧入口备份、两模型SHA256，详见契约。初始7秒窗口不足以等模型哈希及推理初始化，随后被动9秒读到33行PINCH2含TRACK，无Traceback，确认运行恢复；未写SD任何文件。
+- 文档docs/k230-usb-interface-contract-20261021.md；原始描述符、CDC二进制捕获、API输出、接收校验、测试记录在logs/20261021-k230-usb/。没有持久部署USB发送，FPGA及Flash全程不动。

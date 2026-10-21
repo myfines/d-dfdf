@@ -51,5 +51,7 @@ PINCH,64,TRACK,1,1,0.359,0.778,0.859,62,0,89
 
 2026-10-21：V2已安装到实板 /sdcard/pinch_preview_v2.py，main.py入口已回读确认；旧入口备份 main_before_pinch_v2_20261021.py，原电赛备份保留。主机12项测试通过。最终入口能初始化摄像头并持续输出日志，实际单手效果及断电重启仍待用户验收。
 
+USB只读探测及RAM临时发送测试见[当前固件USB接口契约](../docs/k230-usb-interface-contract-20261021.md)。已在IDE退出后的独占CDC会话收到真实12字节手势包；当前SD开机程序仍是上面的屏幕预览，没有持久启用二进制发送。USB host、最小类控制序列、Full-Speed及20Hz尚未验收，FPGA未改动。`usb_gesture_preview_probe.py`由主机探针组合加载，不是可直接替换main.py的文件。
+
 ## 手势传输协议仿真候选（2026-10-21）
 新增[协议V1说明](../docs/k230-gesture-protocol-v1.md)、gesture_protocol.py与主机测试。该编码器和FPGA接收器仅离线验证，未接入pinch_preview_v2.py识别循环、未改实板UART或开机入口。现有屏幕预览不代表已向FPGA发送参数。

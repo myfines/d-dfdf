@@ -1,0 +1,135 @@
+{
+  "port": 4,
+  "vid": "0x1209",
+  "pid": "0xabd1",
+  "device_descriptor_hex": "12010002ef0201400912d1ab000101020301",
+  "current_configuration": 1,
+  "speed_code": 2,
+  "device_address": 32,
+  "speed": "high",
+  "connection_status": 1,
+  "configuration_descriptor_hex": "0902690003010080fa080b000202020100090400000102020102052400100105240100010424020205240600010705820308000a09040100020a00000007050102000200070581020002000904020003060101000705030200020007058302000200070584031c0006",
+  "device_qualifier_hex": "0a060002ef0201400000",
+  "other_speed_configuration_error": "[WinError 31] \u8fde\u5230\u7cfb\u7edf\u4e0a\u7684\u8bbe\u5907\u6ca1\u6709\u53d1\u6325\u4f5c\u7528\u3002",
+  "supported_languages_hex": "04030904",
+  "descriptors": [
+    {
+      "offset": 0,
+      "type": 2,
+      "hex": "0902690003010080fa"
+    },
+    {
+      "offset": 9,
+      "type": 11,
+      "hex": "080b000202020100"
+    },
+    {
+      "offset": 17,
+      "type": 4,
+      "hex": "090400000102020102",
+      "interface": 0,
+      "alternate": 0,
+      "endpoints": 1,
+      "class_code": 2,
+      "subclass": 2,
+      "protocol": 1
+    },
+    {
+      "offset": 26,
+      "type": 36,
+      "hex": "0524001001"
+    },
+    {
+      "offset": 31,
+      "type": 36,
+      "hex": "0524010001"
+    },
+    {
+      "offset": 36,
+      "type": 36,
+      "hex": "04240202"
+    },
+    {
+      "offset": 40,
+      "type": 36,
+      "hex": "0524060001"
+    },
+    {
+      "offset": 45,
+      "type": 5,
+      "hex": "0705820308000a",
+      "address": "0x82",
+      "transfer_type": 3,
+      "max_packet_size": 8,
+      "interval": 10
+    },
+    {
+      "offset": 52,
+      "type": 4,
+      "hex": "09040100020a000000",
+      "interface": 1,
+      "alternate": 0,
+      "endpoints": 2,
+      "class_code": 10,
+      "subclass": 0,
+      "protocol": 0
+    },
+    {
+      "offset": 61,
+      "type": 5,
+      "hex": "07050102000200",
+      "address": "0x1",
+      "transfer_type": 2,
+      "max_packet_size": 512,
+      "interval": 0
+    },
+    {
+      "offset": 68,
+      "type": 5,
+      "hex": "07058102000200",
+      "address": "0x81",
+      "transfer_type": 2,
+      "max_packet_size": 512,
+      "interval": 0
+    },
+    {
+      "offset": 75,
+      "type": 4,
+      "hex": "090402000306010100",
+      "interface": 2,
+      "alternate": 0,
+      "endpoints": 3,
+      "class_code": 6,
+      "subclass": 1,
+      "protocol": 1
+    },
+    {
+      "offset": 84,
+      "type": 5,
+      "hex": "07050302000200",
+      "address": "0x3",
+      "transfer_type": 2,
+      "max_packet_size": 512,
+      "interval": 0
+    },
+    {
+      "offset": 91,
+      "type": 5,
+      "hex": "07058302000200",
+      "address": "0x83",
+      "transfer_type": 2,
+      "max_packet_size": 512,
+      "interval": 0
+    },
+    {
+      "offset": 98,
+      "type": 5,
+      "hex": "070584031c0006",
+      "address": "0x84",
+      "transfer_type": 3,
+      "max_packet_size": 28,
+      "interval": 6
+    }
+  ]
+}
+ERRORS []

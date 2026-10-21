@@ -1,0 +1,359 @@
+[
+  {
+    "file": "live-gesture-capture.bin",
+    "error": "no begin marker"
+  },
+  {
+    "file": "live-gesture-raw-repl-capture.bin",
+    "complete": true,
+    "bytes": 3600,
+    "frames": 300,
+    "valid_frames": 0,
+    "crc_errors": 0,
+    "field_errors": 0,
+    "discarded": 0,
+    "trailing": 0,
+    "sequence_gaps": 0,
+    "invalid_zero": true,
+    "valid_confidence_ge60": 0,
+    "valid_ranges": {},
+    "first": [
+      {
+        "seq": 0,
+        "valid": 0,
+        "pinch": 0,
+        "y": 0,
+        "confidence": 0,
+        "hex": "a55a010000000000000076ed"
+      },
+      {
+        "seq": 1,
+        "valid": 0,
+        "pinch": 0,
+        "y": 0,
+        "confidence": 0,
+        "hex": "a55a0101000000000000ce8c"
+      },
+      {
+        "seq": 2,
+        "valid": 0,
+        "pinch": 0,
+        "y": 0,
+        "confidence": 0,
+        "hex": "a55a0102000000000000160e"
+      }
+    ],
+    "last": [
+      {
+        "seq": 42,
+        "valid": 0,
+        "pinch": 0,
+        "y": 0,
+        "confidence": 0,
+        "hex": "a55a012a000000000000eb55"
+      },
+      {
+        "seq": 43,
+        "valid": 0,
+        "pinch": 0,
+        "y": 0,
+        "confidence": 0,
+        "hex": "a55a012b0000000000005334"
+      }
+    ],
+    "sender_elapsed_ms": 15791,
+    "effective_hz": 18.934836299157748,
+    "late_reschedules": 7
+  },
+  {
+    "file": "live-hand-complete-capture.bin",
+    "complete": true,
+    "bytes": 1440,
+    "frames": 120,
+    "valid_frames": 86,
+    "crc_errors": 0,
+    "field_errors": 0,
+    "discarded": 0,
+    "trailing": 0,
+    "sequence_gaps": 0,
+    "invalid_zero": true,
+    "valid_confidence_ge60": 1,
+    "valid_ranges": {
+      "pinch": [
+        336,
+        1000
+      ],
+      "y": [
+        528,
+        796
+      ],
+      "confidence": [
+        24,
+        60
+      ]
+    },
+    "first": [
+      {
+        "seq": 0,
+        "valid": 0,
+        "pinch": 0,
+        "y": 0,
+        "confidence": 0,
+        "hex": "a55a010000000000000076ed"
+      },
+      {
+        "seq": 1,
+        "valid": 0,
+        "pinch": 0,
+        "y": 0,
+        "confidence": 0,
+        "hex": "a55a0101000000000000ce8c"
+      },
+      {
+        "seq": 2,
+        "valid": 1,
+        "pinch": 336,
+        "y": 785,
+        "confidence": 36,
+        "hex": "a55a01020101500311248130"
+      }
+    ],
+    "last": [
+      {
+        "seq": 118,
+        "valid": 1,
+        "pinch": 603,
+        "y": 796,
+        "confidence": 45,
+        "hex": "a55a017601025b031c2dd32f"
+      },
+      {
+        "seq": 119,
+        "valid": 1,
+        "pinch": 637,
+        "y": 794,
+        "confidence": 55,
+        "hex": "a55a017701027d031a376244"
+      }
+    ],
+    "sender_elapsed_ms": 15888,
+    "effective_hz": 7.4899295065458205,
+    "late_reschedules": 69
+  },
+  {
+    "file": "live-hand-confirmed-capture.bin",
+    "complete": false,
+    "bytes": 2268,
+    "frames": 189,
+    "valid_frames": 105,
+    "crc_errors": 0,
+    "field_errors": 0,
+    "discarded": 0,
+    "trailing": 0,
+    "sequence_gaps": 0,
+    "invalid_zero": true,
+    "valid_confidence_ge60": 0,
+    "valid_ranges": {
+      "pinch": [
+        572,
+        1000
+      ],
+      "y": [
+        496,
+        621
+      ],
+      "confidence": [
+        24,
+        55
+      ]
+    },
+    "first": [
+      {
+        "seq": 0,
+        "valid": 0,
+        "pinch": 0,
+        "y": 0,
+        "confidence": 0,
+        "hex": "a55a010000000000000076ed"
+      },
+      {
+        "seq": 1,
+        "valid": 0,
+        "pinch": 0,
+        "y": 0,
+        "confidence": 0,
+        "hex": "a55a0101000000000000ce8c"
+      },
+      {
+        "seq": 2,
+        "valid": 0,
+        "pinch": 0,
+        "y": 0,
+        "confidence": 0,
+        "hex": "a55a0102000000000000160e"
+      }
+    ],
+    "last": [
+      {
+        "seq": 187,
+        "valid": 1,
+        "pinch": 892,
+        "y": 606,
+        "confidence": 40,
+        "hex": "a55a01bb01037c025e288f39"
+      },
+      {
+        "seq": 188,
+        "valid": 1,
+        "pinch": 965,
+        "y": 621,
+        "confidence": 36,
+        "hex": "a55a01bc0103c5026d240591"
+      }
+    ]
+  },
+  {
+    "file": "synthetic-capture.bin",
+    "complete": true,
+    "bytes": 480,
+    "frames": 40,
+    "valid_frames": 40,
+    "crc_errors": 0,
+    "field_errors": 0,
+    "discarded": 0,
+    "trailing": 0,
+    "sequence_gaps": 0,
+    "invalid_zero": true,
+    "valid_confidence_ge60": 40,
+    "valid_ranges": {
+      "pinch": [
+        0,
+        975
+      ],
+      "y": [
+        25,
+        1000
+      ],
+      "confidence": [
+        95,
+        95
+      ]
+    },
+    "first": [
+      {
+        "seq": 0,
+        "valid": 1,
+        "pinch": 0,
+        "y": 1000,
+        "confidence": 95,
+        "hex": "a55a010001000003e85f581c"
+      },
+      {
+        "seq": 1,
+        "valid": 1,
+        "pinch": 25,
+        "y": 975,
+        "confidence": 95,
+        "hex": "a55a010101001903cf5f97dc"
+      },
+      {
+        "seq": 2,
+        "valid": 1,
+        "pinch": 50,
+        "y": 950,
+        "confidence": 95,
+        "hex": "a55a010201003203b65fd4ce"
+      }
+    ],
+    "last": [
+      {
+        "seq": 38,
+        "valid": 1,
+        "pinch": 950,
+        "y": 50,
+        "confidence": 95,
+        "hex": "a55a01260103b600325f0ce9"
+      },
+      {
+        "seq": 39,
+        "valid": 1,
+        "pinch": 975,
+        "y": 25,
+        "confidence": 95,
+        "hex": "a55a01270103cf00195fdf96"
+      }
+    ]
+  },
+  {
+    "file": "synthetic-reconnect-115200-capture.bin",
+    "complete": true,
+    "bytes": 480,
+    "frames": 40,
+    "valid_frames": 40,
+    "crc_errors": 0,
+    "field_errors": 0,
+    "discarded": 0,
+    "trailing": 0,
+    "sequence_gaps": 0,
+    "invalid_zero": true,
+    "valid_confidence_ge60": 40,
+    "valid_ranges": {
+      "pinch": [
+        0,
+        975
+      ],
+      "y": [
+        25,
+        1000
+      ],
+      "confidence": [
+        95,
+        95
+      ]
+    },
+    "first": [
+      {
+        "seq": 0,
+        "valid": 1,
+        "pinch": 0,
+        "y": 1000,
+        "confidence": 95,
+        "hex": "a55a010001000003e85f581c"
+      },
+      {
+        "seq": 1,
+        "valid": 1,
+        "pinch": 25,
+        "y": 975,
+        "confidence": 95,
+        "hex": "a55a010101001903cf5f97dc"
+      },
+      {
+        "seq": 2,
+        "valid": 1,
+        "pinch": 50,
+        "y": 950,
+        "confidence": 95,
+        "hex": "a55a010201003203b65fd4ce"
+      }
+    ],
+    "last": [
+      {
+        "seq": 38,
+        "valid": 1,
+        "pinch": 950,
+        "y": 50,
+        "confidence": 95,
+        "hex": "a55a01260103b600325f0ce9"
+      },
+      {
+        "seq": 39,
+        "valid": 1,
+        "pinch": 975,
+        "y": 25,
+        "confidence": 95,
+        "hex": "a55a01270103cf00195fdf96"
+      }
+    ]
+  }
+]
