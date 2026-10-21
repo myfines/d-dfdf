@@ -865,3 +865,10 @@ PDF文字已提取，首次控制台输出遇GBK不能编码NBSP的UnicodeEncode
 ## 2026-10-21 18:25 用户再次要求开始烧录
 - 重复下载同一固定哈希E021至SRAM，Flash未改、未启用外设。operation2写入100%、exit0、6.47秒，仍有User code mismatch提示。独立operation73读回E021，operation74读回6020。功能/温度现场确认仍待用户，不宣称回读校验或验收完成。日志前缀20261021-182530。
 
+
+## 2026-10-21 18:34 E021 Flash持久化
+- 用户澄清Wi-Fi是在断电后才测试，明确要求重烧Flash；故不能将先前搜不到AP归因于AT/接线故障。选用已归档E021，不使用工作区尚未验证的OLED/ESP诊断修改。
+- 固定哈希6D89D33520697199C489A78BA5FEB17C31F13B1D3CC9D1A175C7B2718CC42C5D，2.5MHz operation37（GAO-Bridge）写入并校验成功，exit0、28.18秒，明确Program and Verify flash successfully。日志20261021-183440-instrument-Flash.log。未执行OTP或下载器固件更新。
+- 已确认旧CF73本地候选哈希B6A4D22C1EEB8343C0C97870C45059BAA3F1198F758271A82BFA0C09FA07E547并复制到E:/gaoyun/releases/instrument-E021-20261021/fallback-CF73.fs；它是已知构建备份，不是本次Flash实物回读。
+- 用户本轮已确认SRAM心跳、静音、不烫及启用后OLED响应。Flash冷启动和Wi-Fi待实物确认；历史热故障/ESP3V3预算仍未解决。新增固定E021哈希专用Flash显式授权入口，默认hold未清除。
+
