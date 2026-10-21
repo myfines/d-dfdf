@@ -4,9 +4,11 @@
 module esp_at_control #(parameter integer BOOT_TICKS=54000000,WAIT_TICKS=27000000,LEASE_TICKS=135000000)(
  input wire clk,reset_n,rx_valid,input wire [7:0] rx_data,input wire tx_busy,
  output reg tx_start,output reg [7:0] tx_data,output reg ready,
- output reg [7:0] volume,output wire remote_active);
+ output reg [7:0] volume,output wire remote_active,output wire [7:0] diagnostic);
  reg [2:0] state,command_index;reg [6:0] index;reg [31:0] timer,lease;
  reg [2:0] boot_match;
+ reg rx_seen,timed_out;
+ assign diagnostic={ready,rx_seen,timed_out,2'b00,command_index};
  reg [1:0] reply;wire update;wire [7:0] requested;
  assign remote_active=lease!=0;
  esp_volume_parser parser(clk,reset_n && ready,rx_valid,rx_data,update,requested);
@@ -135,12 +137,13 @@ module esp_at_control #(parameter integer BOOT_TICKS=54000000,WAIT_TICKS=2700000
    9'd340:command_byte=8'd10;
    default:command_byte=0;endcase end endfunction
  always @(posedge clk)begin
-  if(!reset_n)begin state<=0;command_index<=0;index<=0;timer<=0;reply<=0;boot_match<=0;ready<=0;tx_start<=0;tx_data<=0;volume<=255;lease<=0;end
+  if(!reset_n)begin rx_seen<=0;timed_out<=0;state<=0;command_index<=0;index<=0;timer<=0;reply<=0;boot_match<=0;ready<=0;tx_start<=0;tx_data<=0;volume<=255;lease<=0;end
   else begin
    tx_start<=0;
    if(lease!=0)begin lease<=lease-1'b1;if(lease==1)volume<=255;end
    if(update)begin volume<=requested;lease<=LEASE_TICKS;end
    if(rx_valid)begin
+    rx_seen<=1;
     case(boot_match)
      0:boot_match<=rx_data==114?1:0;
      1:boot_match<=rx_data==101?2:0;
@@ -165,7 +168,7 @@ module esp_at_control #(parameter integer BOOT_TICKS=54000000,WAIT_TICKS=2700000
       if(rx_valid && reply==3 && rx_data==10)begin
        if(command_index==5)begin ready<=1;state<=5;end
        else begin command_index<=command_index+1'b1;index<=0;state<=1;reply<=0;end
-      end else if(timer==WAIT_TICKS-1)begin state<=0;timer<=0;command_index<=0;ready<=0;end
+      end else if(timer==WAIT_TICKS-1)begin timed_out<=1;state<=0;timer<=0;command_index<=0;ready<=0;end
       else timer<=timer+1'b1;
     end
     5:begin end

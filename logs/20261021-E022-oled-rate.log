@@ -1,0 +1,3 @@
+OLED HALF_TICKS=36 transfer_cycles=682341 period_cycles=697743 equivalent_27MHz_fps=38.696196
+PASS OLED absence recovery, full refresh, open-drain reset
+instrument_io/tb_oled_scope.sv:69: $finish called at 14519490000 (1ps)

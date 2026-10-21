@@ -1,0 +1,2 @@
+PASS scope capture: zero-cross, decimation, clamp, freeze, silence timeout
+instrument_io/tb_scope_capture.sv:23: $finish called at 110700000 (1ps)

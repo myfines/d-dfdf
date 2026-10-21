@@ -30,5 +30,6 @@ add_file E:/gaoyun/d-dfdf/instrument_io/esp_at_control.v
 add_file E:/gaoyun/d-dfdf/instrument_io/remote_audio_gain.v
 add_file E:/gaoyun/d-dfdf/instrument_io/oled_scope.v
 add_file E:/gaoyun/d-dfdf/instrument_io/instrument_extension_top.v
-set_option -user_code 0xE021
+add_file E:/gaoyun/d-dfdf/instrument_io/oled_i2c_stream.v
+set_option -user_code 0xE022
 run all

@@ -872,3 +872,11 @@ PDF文字已提取，首次控制台输出遇GBK不能编码NBSP的UnicodeEncode
 - 已确认旧CF73本地候选哈希B6A4D22C1EEB8343C0C97870C45059BAA3F1198F758271A82BFA0C09FA07E547并复制到E:/gaoyun/releases/instrument-E021-20261021/fallback-CF73.fs；它是已知构建备份，不是本次Flash实物回读。
 - 用户本轮已确认SRAM心跳、静音、不烫及启用后OLED响应。Flash冷启动和Wi-Fi待实物确认；历史热故障/ESP3V3预算仍未解决。新增固定E021哈希专用Flash显式授权入口，默认hold未清除。
 
+
+## 2026-10-21 E022高帧率OLED候选
+- 用户确认E021可用后要求借鉴开源波形方案。查阅Adafruit SSD1306、huseyink/ssd1306、FPGA示例及Solomon SSD1306原厂手册表13-6，参考批量传输/非阻塞思路，独立编写RTL，未拷入第三方代码。资料与取舍docs/oled-E022-20261021.md。
+- 显存改为地址+0x40+1024字节一笔开漏事务；命令亦使用有界开漏发送。参数36，数据保持≥9个27MHz周期；无应答、时钟卡住、重置释放均有测试。过零触发、4倍抽取、完整捕获冻结、双快照、连线、峰值条、音色/音量/AT步骤及RX标记。ESP诊断仅可见状态，不把RX字节等同AT成功。
+- 首次RED缺少stream模块和diagnostic端口，原始日志保留；测试适配连续写屏后通过。曾因PowerShell未给-P参数加引号导致iverilog参数解析失败，改引号后编译通过，未使用失败编译的旧产物。27项回归通过，最终幅度微调后采集/实际像素/默认时序分别重测通过。
+- 默认参数仿真周期697743时钟、约38.696fps；非实物光学刷新率，未宣称≤5ms可视化延迟。原始显存hex和PNG仿真预览保存，scripts/render-oled-frame.py可重建预览。
+- 最终Gowin构建成功：逻辑9052/20736，寄存器3597/16173，DSP13.5/24；27MHz约束Fmax30.432MHz，setup/hold违例0。E022 SHA256 64974593B5DEB2F9262E6B074678E77DFA10D7E580B6DE586391EB2E50AEDDCE，归档E:/gaoyun/releases/instrument-E022-20261021。未接触下载器、未写SRAM/Flash；板上E021及CF73备份保留。
+

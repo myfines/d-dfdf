@@ -87,12 +87,12 @@ module instrument_io #(
     generate if(ENABLE_UI)begin: extension_ui
         wire rx_valid,tx_busy,tx_start,esp_ready,remote_active,oled_online,esp_tx_raw;
         assign ESP_TX=armed?esp_tx_raw:1'bz;
-        wire [7:0] rx_data,tx_data,remote_volume;
+        wire [7:0] rx_data,tx_data,remote_volume,esp_diagnostic;
         uart8n1 serial_port(clk,io_reset_n,ESP_RX,tx_start,tx_data,esp_tx_raw,tx_busy,rx_valid,rx_data);
-        esp_at_control wifi(clk,io_reset_n,rx_valid,rx_data,tx_busy,tx_start,tx_data,esp_ready,remote_volume,remote_active);
+        esp_at_control wifi(clk,io_reset_n,rx_valid,rx_data,tx_busy,tx_start,tx_data,esp_ready,remote_volume,remote_active,esp_diagnostic);
         remote_audio_gain gain(clk,io_reset_n,frame_tick,remote_volume,audio_sample,final_sample);
         oled_scope screen(clk,io_reset_n,frame_tick,final_sample,optical_valid?optical_keys_n:{4'hf,keys_sync},
-            {remote_active,esp_ready,echo_enable,test_mode,edit_mode,controls_valid,optical_valid,armed},OLED_SCL,OLED_SDA,oled_online);
+            {remote_active,esp_ready,echo_enable,test_mode,edit_mode,controls_valid,optical_valid,armed},OLED_SCL,OLED_SDA,oled_online,timbre,remote_volume,esp_diagnostic);
     end else begin: no_extension_ui
         assign ESP_TX=1'bz;assign OLED_SCL=1'bz;assign OLED_SDA=1'bz;
         assign final_sample=audio_sample;

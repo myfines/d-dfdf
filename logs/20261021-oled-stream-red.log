@@ -1,0 +1,5 @@
+instrument_io/tb_oled_stream.sv:9: error: Unknown module type: oled_i2c_stream
+2 error(s) during elaboration.
+*** These modules were missing:
+        oled_i2c_stream referenced 1 times.
+***
