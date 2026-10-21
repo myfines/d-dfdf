@@ -898,3 +898,13 @@ PDF文字已提取，首次控制台输出遇GBK不能编码NBSP的UnicodeEncode
 ## 2026-10-21 仓库入口整理
 - 按用户要求提供APK并整理仓库。旧首页仍写早期单音/SRAM状态，已原样移至docs/history/readme-before-E023.md。新首页明确主工程、E023 Flash校验状态、APK、接线、协议、验收边界和目录用途。新增docs/current-release.md固定版本/哈希/回退索引；不把待实测项目标为完成。未移动工程目录或修改硬件。
 - 本机gh不在PATH，未创建GitHub Release；使用已跟踪APK文件页提供下载，不宣称已创建Release。
+
+## 2026-10-21 手势V2、赛题映射与开源模型调查
+- 用户反馈间歇丢手，要求查仓库/高star适配模型并写新程序。读取赛题审阅与旧run：V1一帧无效清空+3帧重获，官方run过滤靠边小框，属于可能放大掉线的代码因素，尚未证明模型漏检根因。
+- 新增k230/pinch_preview_v2.py单文件：新目标0.30/续跟0.18、3稳定帧、弱候选限定已锁定手附近；HOLD旧值<=200ms且valid=0、超时/长帧停顿重获、多手/非法几何无效；去旧边缘宽度过滤，保留框尺寸24x36与边界，掌宽16px。追加raw_boxes/box_reject/age_ms/raw_peak诊断，未换模型、未启UART、未改main/固件/FPGA。
+- 测试先缺模块RED；又新增长停顿用例重现FAIL后修复。最终python -m unittest discover -s k230 -p test_pinch*.py，12项通过，日志logs/20261021-k230-v2/unittest.txt。选择器测试确保弱背景框不能首次取得控制、不能遮蔽强框、多强手不随便切换。
+- 初版V2（尚未弱候选筛选）板上运行出现4–6原始候选而持续MULTI HAND；已据此收紧取得控制权/空间关联，最终版尚未板测。第一次停止旧程序出现IDE interrupt/soft reboot，第二次初版成功；两次原始日志保留logs/20261021-k230-v2。
+- 后续停止初版尝试读取分数时E:/gaoyun/k230_host_probe.py报告RuntimeError: short debug length；COM9仍在但版本请求无回包。一次USBDBG_SYS_RESET已发送，之后仍无回包；921600官方备用速率也无响应。仅针对USB VID1209 PIDABD1的pnputil /restart-device被Access is denied拒绝，未改驱动、未禁用设备、未强制提权。恢复需要实体USB重新连接，未虚构已恢复。
+- 正常关闭IDE首次5秒未完成（未强杀），随后自行退出，未用computer-use工具。最终命令启动IDE -auto_connect -auto_run pinch_preview_v2.py，窗口已确认且Responding=True；不等于USB已连接或程序已启动。open_pinch_ide.cmd已改V2，V1保留。
+- GitHub API实际查询：ultralytics62713/AGPL3，mediapipe37358/Apache2，PINTO_model_zoo4629/仓库MIT，nncase899/Apache2，k230_canmv109/未识别许可。具体hand-keypoints搜索YOLO11n-pose-hands99/未识别许可。未找到已确认适配此亚博固件且许可明确的高star替代kmodel，未下载新权重。用途/来源/转换条件/验收边界见docs/k230-gesture-v2-models-20261021.md。不把框架stars当模型精度。
+- 赛题建议：捏合连续映射表达音量或硬件效果强度作为第三维候选；光键触发、摇杆维持原功能；不把离散换音色当第三表情、不称<=10ms。待实物精度对比和UART/FPGA联调才计完成。仅暂存本任务文件，保留其他日志。

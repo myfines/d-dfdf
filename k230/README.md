@@ -1,5 +1,13 @@
 # 捏合预览 V1
 
+## 最新V2（2026-10-21）
+
+一键启动现指向`pinch_preview_v2.py`，旧`pinch_preview.py`完整保留用于对照。V2采用新目标0.30/续跟0.18置信度滞回，去掉官方靠边宽度过滤，保留最小尺寸/边界检查；弱框只能在已有锁定位置附近参与续跟，不用于首次取得控制。两强目标仍无效。HOLD最多200ms，屏幕显示旧百分比且valid=0，超时清空；明显换位、多手、非法几何不沿用旧结果。
+
+`PINCH2`日志前11个数据列与V1相同，末尾追加raw_boxes、box_reject、age_ms、raw_peak，帮助分清检测漏框、过滤与短暂旧值。HOLD不计入识别成功。当前12项离线测试通过；第一版低阈值实验板测产生4–6候选，已增加弱框筛选，但最终版因板上USB调试暂不响应尚未完成板测/精度对比，不能称已解决丢手。模型选择及赛题用途见`docs/k230-gesture-v2-models-20261021.md`。
+
+以下保留V1说明，V2新阈值与HOLD以上述说明为准。
+
 电脑已配置可双击 `open_pinch_ide.cmd` 启动（本机IDE路径E:/yolo/bin/canmvide.exe）。使用IDE官方启动参数 `-auto_connect -auto_run`；要让启动参数生效，须从IDE已退出状态启动。保持K230连接COM9。2026-10-21已备份并调整IDE配置：启用帧缓冲区、缩放，串行终端面板高度260。正常关闭后从命令行重启，确认窗口pinch_preview.py、进程有响应且COM9被占用；未使用computer-use抓图或点击，不据此声称已经目视验收实时画面。
 
 CanMV IDE打开 `pinch_preview.py`，连接COM9后点击运行。所有自编代码在一个文件内，不必上传额外模块；依赖此前已在板上回读验证的 `/sdcard/k230_hand_keypoint_official.py` 及官方手检测/关键点模型。保留LCD及原有to_ide输出，不改main.py、UART或FPGA。
