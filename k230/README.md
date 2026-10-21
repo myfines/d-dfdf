@@ -1,5 +1,7 @@
 # 捏合预览 V1
 
+电脑已配置可双击 `open_pinch_ide.cmd` 启动（本机IDE路径E:/yolo/bin/canmvide.exe）。使用IDE官方启动参数 `-auto_connect -auto_run`；要让启动参数生效，须从IDE已退出状态启动。保持K230连接COM9。2026-10-21已备份并调整IDE配置：启用帧缓冲区、缩放，串行终端面板高度260。正常关闭后从命令行重启，确认窗口pinch_preview.py、进程有响应且COM9被占用；未使用computer-use抓图或点击，不据此声称已经目视验收实时画面。
+
 CanMV IDE打开 `pinch_preview.py`，连接COM9后点击运行。所有自编代码在一个文件内，不必上传额外模块；依赖此前已在板上回读验证的 `/sdcard/k230_hand_keypoint_official.py` 及官方手检测/关键点模型。保留LCD及原有to_ide输出，不改main.py、UART或FPGA。
 
 画面显示骨架、拇指尖至食指尖连线、OPEN百分比和进度条。只接受一只手，连续3帧有效后TRACK；没有手、多手、低置信度、几何异常立即无效，恢复后重新稳定。检测置信度门槛0.35，掌宽至少20像素。此模型没有逐关键点置信度；掌宽归一化只能减轻距离影响，手掌转侧、遮挡或误检仍会影响结果。

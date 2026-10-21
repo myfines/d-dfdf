@@ -847,3 +847,10 @@ PDF文字已提取，首次控制台输出遇GBK不能编码NBSP的UnicodeEncode
 - 首次OLED快照旋转资源超限59083/20736，改为固定快照+单读地址；第二次输入端口ESP_RX非法DRIVE约束已删除。两次失败原始日志保留。最终Gowin构建成功，逻辑7995/20736（39%），寄存器3454/16173，BSRAM5/46，DSP13.25/24；27MHz约束实际Fmax32.283MHz，setup/hold违例端点均0。
 - 候选UserCode0xE021，FS SHA256 6D89D33520697199C489A78BA5FEB17C31F13B1D3CC9D1A175C7B2718CC42C5D。机器记录logs/20261021-extension-verification.json，最终构建及PnR/时序报告同时保存。OLED约2–3帧/秒，不宣称题目≤5ms可视化或实物端到端验收。
 
+
+## 2026-10-21 按用户要求直接配置电脑预览，禁用computer-use
+- 未使用computer-use/CUA/桌面截图/模拟鼠标键盘工具。命令行读取CanMV配置及官方源openmvplugin.cpp/openmvpluginconnect.cpp，确认-auto_connect/-auto_run受支持，连接完成后autoRun调用startClicked。
+- 原配置OutputPanePlaceHolder Height=0，串行终端虽visible但高度为零；StopScriptConnectDisconnect=true。先用进程正常关闭请求CloseMainWindow并等其退出，未强制终止；备份INI到E:/gaoyun/CanMVIDEK230-before-pinch-autoview-20261021.ini，未上传用户全量配置。
+- INI保持DisableFrameBufferState=false、LastSerialPortState=COM9，改ZoomState=true、终端Height=260。通过Start-Process E:/yolo/bin/canmvide.exe -auto_connect -auto_run E:/gaoyun/d-dfdf/k230/pinch_preview.py启动。
+- 确认新IDE进程32044 Responding=True、窗口pinch_preview.py，COM9打开返回拒绝访问，未抢占。此为自动启动配置和进程/端口证据，未目视确认当前实时画面/数据。无改板上main、固件或FPGA。
+- 增加k230/open_pinch_ide.cmd供后续从IDE已退出状态一键启动，说明追加k230/README.md。其他并发文件不暂存。
