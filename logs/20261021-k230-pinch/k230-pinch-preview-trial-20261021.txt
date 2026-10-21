@@ -1,0 +1,19 @@
+PRIOR: total took 41.43 ms
+total took 39.99 ms
+total took 42.25 ms
+total took 69.32 ms
+total took 41.21 ms
+total took 30.47 ms
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+  File "/sdcard/k230_hand_keypoint_official.py", line 376, in <module>
+  File "/sdcard/k230_hand_keypoint_official.py", line 266, in run
+  File "/sdcard/libs/AIBase.py", line 73, in run
+  File "/sdcard/libs/AIBase.py", line 54, in inference
+  File "/sdcard/libs/PipeLine.py", line 25, in __exit__
+Exception: IDE interrupt
+MPY: soft reboot
+
+CanMV v1.8-24-g46d59a8(based on Micropython e00a144) on 2026-07-30; k230_canmv_yahboom with K230
+Type "help()" for more information.
+>>> 

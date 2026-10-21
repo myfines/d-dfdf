@@ -832,3 +832,10 @@ PDF文字已提取，首次控制台输出遇GBK不能编码NBSP的UnicodeEncode
 ## 2026-10-21 OTG官方及第三方实现查询
 - requests读取Sipeed官方wiki、官方TangPrimer-20K-example/USB与第三方kami4ka/tang_computer README/docs/usb3317.md，核对设备端例程与键盘主机先例的差别。详情和URL追加docs/k230-fpga-link-20261021.md。
 - 单根USB连接K230有工程实现方向但当前未实现/验收，不能按已有串口程序插线即用；第三方键盘结果未本地复现。无供电、烧录、接线或RTL更改。
+
+## 2026-10-21 K230捏合量IDE预览V1
+- 用户要求实际编写并在IDE看到数据。新增k230/pinch_preview.py单文件：复用SD官方类，LCD与IDE显示，点4/8距离除以点5/17掌宽，检测置信度0.35、掌宽>=20px、3稳定帧、120ms时间平滑、捏合滞回、丢手/多手无效、位置大跳变重新稳定。0.15~1.30为待校准百分比映射，不输出UART/音符，不替换main或备份。
+- TDD：先运行python -m unittest discover -s k230 -p test_pinch_preview.py，因模块未实现ModuleNotFoundError失败；实现后5项通过，原始最终输出logs/20261021-k230-pinch/unittest.txt。覆盖缩放归一化、丢手重获、多手/低置信度/退化、滤波滞回、位置跳变。
+- COM9空闲后使用E:/gaoyun/k230_host_probe.py对新文件试运行8秒。首次停止旧官方循环触发IDE interrupt与MPY soft reboot，新程序未成功启动；返回控制台后第二次7秒成功，出现PINCH TRACK/WARMUP/NO HAND等日志，无新异常。原始两次日志均保留logs/20261021-k230-pinch。只证明板上接口/计算输出兼容，未声称已确认用户动作对应性/最终精度。
+- Start-Process E:/yolo/bin/canmvide.exe -ArgumentList E:/gaoyun/d-dfdf/k230/pinch_preview.py，窗口标题已确认pinch_preview.py。用户在IDE连接后运行此文件，在帧缓冲区看进度条，在串行终端看限速约5Hz日志。说明与列定义见k230/README.md。
+- 当前并发任务修改instrument_io、scripts及其他logs，本次不触碰、不暂存这些文件；无FPGA接线、供电、烧录或固件更改。
