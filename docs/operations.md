@@ -854,3 +854,10 @@ PDF文字已提取，首次控制台输出遇GBK不能编码NBSP的UnicodeEncode
 - INI保持DisableFrameBufferState=false、LastSerialPortState=COM9，改ZoomState=true、终端Height=260。通过Start-Process E:/yolo/bin/canmvide.exe -auto_connect -auto_run E:/gaoyun/d-dfdf/k230/pinch_preview.py启动。
 - 确认新IDE进程32044 Responding=True、窗口pinch_preview.py，COM9打开返回拒绝访问，未抢占。此为自动启动配置和进程/端口证据，未目视确认当前实时画面/数据。无改板上main、固件或FPGA。
 - 增加k230/open_pinch_ide.cmd供后续从IDE已退出状态一键启动，说明追加k230/README.md。其他并发文件不暂存。
+
+## 2026-10-21 E021受监督SRAM下载与版本保存
+- 用户要求版本管理并开始烧录，随后确认当前温度正常、ESP仍接Dock3V3。本次授权仅用于受监督E021 SRAM试载，不解决/清除历史热故障与ESP电源预算问题，Flash未写。
+- 已推送注释标签candidate-E021-20261021，指向源码e095204；候选码流和manifest另存E:/gaoyun/releases/instrument-E021-20261021，写入前SHA256匹配6D89D33520697199C489A78BA5FEB17C31F13B1D3CC9D1A175C7B2718CC42C5D。
+- 下载器A/B均OK，无残留烧录进程。JTAG 2.5MHz扫描ID81B；operation2写入100%、UserCodeE021、Status6020、exit0、6.63秒，但工具同时打印User code mismatch，不能只凭exit0声称通过。
+- 随后独立只读operation73读回E021、operation74读回6020；异常提示根因未确定，不宣称已做SRAM逐位回读校验。用户现场心跳/温度确认仍待回复。未按启用组合，不启动ESP Wi-Fi。
+- 脚本新增仅限显式SupervisedSram+SRAM+E021固定哈希的受监督入口，默认热保护保留、Flash仍禁止；增加100%/6020与不匹配提示检查，防止exit0掩盖故障。
