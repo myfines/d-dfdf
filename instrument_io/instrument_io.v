@@ -6,14 +6,15 @@ module instrument_io #(
     parameter integer BUS_TIMEOUT_TICKS=270000,
     parameter integer SWITCH_DEBOUNCE_TICKS=135000,
     parameter integer LONG_PRESS_FRAMES=46875,
-    parameter SAFE_STARTUP=1,ENABLE_OPTICAL=0,OPTICAL_ACTIVE_LOW=1,
+    parameter SAFE_STARTUP=1,ENABLE_OPTICAL=0,OPTICAL_ACTIVE_LOW=1,ENABLE_UI=0,
     parameter integer OPTICAL_BOOT_TICKS=540000000,OPTICAL_POLL_TICKS=27000
 )(input wire clk,input wire [3:0] btn_n,input wire JOY_SW_N,
   inout wire ADC_SCL,ADC_SDA,
   output wire PCM_BCK,PCM_LRCK,PCM_DATA,
   output wire PA_EN,HP_BCK,HP_WS,HP_DIN,
   output reg LED_ALIVE,output wire LED_ADC,output wire UART_TX,
-  inout wire OPTICAL_SCL,OPTICAL_SDA);
+  inout wire OPTICAL_SCL,OPTICAL_SDA,
+  inout wire OLED_SCL,OLED_SDA,input wire ESP_RX,output wire ESP_TX);
     reg [15:0] power_on=0;
     wire reset_n=power_on[15];
     always @(posedge clk) if(!reset_n) power_on<=power_on+1'b1;
@@ -82,7 +83,21 @@ module instrument_io #(
     // UART Y packs mode bits; low bit remains actual envelope activity.
     uart_status monitor(clk,reset_n,controls_valid && armed,adc_error,!armed?12'hfff:optical_valid?{4'd0,optical_keys_n}:axis_x,
         {optical_valid,note_page,timbre,edit_mode,test_mode,octave_down,echo_enable,edit_field,note_active},keys_sync,ADC_SCL,ADC_SDA,UART_TX);
-    i2s_tx16 tx(clk,io_reset_n,audio_sample,audio_sample,pcm_bck_raw,pcm_lrck_raw,pcm_data_raw,frame_tick);
+    wire signed [15:0] final_sample;
+    generate if(ENABLE_UI)begin: extension_ui
+        wire rx_valid,tx_busy,tx_start,esp_ready,remote_active,oled_online,esp_tx_raw;
+        assign ESP_TX=armed?esp_tx_raw:1'bz;
+        wire [7:0] rx_data,tx_data,remote_volume;
+        uart8n1 serial_port(clk,io_reset_n,ESP_RX,tx_start,tx_data,esp_tx_raw,tx_busy,rx_valid,rx_data);
+        esp_at_control wifi(clk,io_reset_n,rx_valid,rx_data,tx_busy,tx_start,tx_data,esp_ready,remote_volume,remote_active);
+        remote_audio_gain gain(clk,io_reset_n,frame_tick,remote_volume,audio_sample,final_sample);
+        oled_scope screen(clk,io_reset_n,frame_tick,final_sample,optical_valid?optical_keys_n:{4'hf,keys_sync},
+            {remote_active,esp_ready,echo_enable,test_mode,edit_mode,controls_valid,optical_valid,armed},OLED_SCL,OLED_SDA,oled_online);
+    end else begin: no_extension_ui
+        assign ESP_TX=1'bz;assign OLED_SCL=1'bz;assign OLED_SDA=1'bz;
+        assign final_sample=audio_sample;
+    end endgenerate
+    i2s_tx16 tx(clk,io_reset_n,final_sample,final_sample,pcm_bck_raw,pcm_lrck_raw,pcm_data_raw,frame_tick);
     assign PCM_BCK=armed?pcm_bck_raw:1'bz;
     assign PCM_LRCK=armed?pcm_lrck_raw:1'bz;
     assign PCM_DATA=armed?pcm_data_raw:1'bz;

@@ -1,0 +1,2 @@
+PASS local TCP client: repeated correct V80 newline; out-of-range rejected. No physical ESP used.
+Earlier test-only assertion expected exactly 2 renewals but observed 3 near deadline; verify content and renewal instead of OS scheduling.

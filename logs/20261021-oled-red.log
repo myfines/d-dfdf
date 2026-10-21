@@ -1,0 +1,5 @@
+instrument_io/tb_oled_scope.sv:6: error: Unknown module type: oled_scope
+2 error(s) during elaboration.
+*** These modules were missing:
+        oled_scope referenced 1 times.
+***

@@ -9,7 +9,7 @@ module tb_instrument;
     real last_bck=0;
     instrument_io #(.SAFE_STARTUP(0),.I2C_HALF_TICKS(4),.CONVERSION_TICKS(100),.RETRY_TICKS(200),
         .BUS_TIMEOUT_TICKS(500),.SWITCH_DEBOUNCE_TICKS(10)) dut(
-        clk,keys,joy,scl,sda,bck,ws,data,pa,hb,hw,hd,alive,adc_led,uart,optical_scl,optical_sda);
+        clk,keys,joy,scl,sda,bck,ws,data,pa,hb,hw,hd,alive,adc_led,uart,optical_scl,optical_sda,,,1'b1,);
     ads1015_model slave(scl,sda,enabled,12'd825,12'd0,configs);
     always @(posedge bck) if(dut.reset_n) begin
         if(last_bck!=0 && (($realtime-last_bck)<666.0 || ($realtime-last_bck)>667.0))

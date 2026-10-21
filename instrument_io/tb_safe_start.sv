@@ -4,7 +4,7 @@ reg clk=0;always #5 clk=~clk;reg [3:0] keys=15;reg sw=1;
 tri1 ascl,asda,oscl,osda;wire b,w,d,pa,hb,hw,hd,alive,led,uart;integer ac,oc;
 instrument_io #(.SAFE_STARTUP(1),.ENABLE_OPTICAL(1),.I2C_HALF_TICKS(3),.CONVERSION_TICKS(100),
  .RETRY_TICKS(50),.BUS_TIMEOUT_TICKS(100),.SWITCH_DEBOUNCE_TICKS(3),.OPTICAL_BOOT_TICKS(50),.OPTICAL_POLL_TICKS(20)) dut(
- clk,keys,sw,ascl,asda,b,w,d,pa,hb,hw,hd,alive,led,uart,oscl,osda);
+ clk,keys,sw,ascl,asda,b,w,d,pa,hb,hw,hd,alive,led,uart,oscl,osda,,,1'b1,);
 ads1015_model adc(ascl,asda,1'b1,12'd825,12'd0,ac);
 optical_sensor_model optical(oscl,osda,1'b1,8'hff,oc);
 task click(input [3:0] held);begin keys=held;repeat(10)@(negedge clk);sw=0;repeat(20)@(negedge clk);sw=1;repeat(20)@(negedge clk);keys=15;end endtask

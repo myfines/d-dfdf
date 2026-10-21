@@ -5,7 +5,7 @@ reg [3:0] keys=15;reg joy=1;reg [11:0] y=825;
 tri1 scl,sda;tri1 optical_scl,optical_sda;wire bck,ws,data,pa,hb,hw,hd,alive,adc_led,uart;integer configs,n;
 instrument_io #(.SAFE_STARTUP(0),.I2C_HALF_TICKS(4),.CONVERSION_TICKS(100),.RETRY_TICKS(200),
  .BUS_TIMEOUT_TICKS(500),.SWITCH_DEBOUNCE_TICKS(10),.LONG_PRESS_FRAMES(10)) dut(
- clk,keys,joy,scl,sda,bck,ws,data,pa,hb,hw,hd,alive,adc_led,uart,optical_scl,optical_sda);
+ clk,keys,joy,scl,sda,bck,ws,data,pa,hb,hw,hd,alive,adc_led,uart,optical_scl,optical_sda,,,1'b1,);
 ads1015_model slave(scl,sda,1'b1,12'd825,y,configs);
 task frames(input integer count);begin repeat(count)@(negedge ws);#1;end endtask
 task click;begin joy=0;frames(3);joy=1;frames(3);end endtask

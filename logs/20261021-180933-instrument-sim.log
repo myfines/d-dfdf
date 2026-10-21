@@ -1,0 +1,51 @@
+**********************
+PowerShell transcript start
+Start time: 20261021180933
+Username: ZRK\zrk
+RunAs User: ZRK\zrk
+Configuration Name: 
+Machine: ZRK (Microsoft Windows NT 10.0.26100.0)
+Host Application: C:\Users\zrk\.cache\codex-runtimes\codex-primary-runtime\dependencies\native\powershell\pwsh.dll -Command try { [Console]::OutputEncoding=[System.Text.Encoding]::UTF8 } catch {}
+@'
+from pathlib import Path
+p=Path('instrument_io/esp_at_control.v');s=p.read_text().replace('reg [1:0] reply;','reg [2:0] boot_match;\n reg [1:0] reply;').replace('timer<=0;reply<=0;ready<=0;','timer<=0;reply<=0;boot_match<=0;ready<=0;')
+s=s.replace('if(rx_valid)begin\n    if(rx_data==79)', '''if(rx_valid)begin
+    case(boot_match)
+     0:boot_match<=rx_data==114?1:0;
+     1:boot_match<=rx_data==101?2:0;
+     2:boot_match<=rx_data==97?3:0;
+     3:boot_match<=rx_data==100?4:0;
+     4:boot_match<=rx_data==121?5:0;
+     5:boot_match<=rx_data==13?6:0;
+     default:boot_match<=0;
+    endcase
+    if(rx_data==79)''')
+s=s.replace('endcase\n  end\n end\nendmodule','''endcase
+   if(rx_valid && ready && boot_match==6 && rx_data==10)begin
+    ready<=0;state<=0;timer<=0;command_index<=0;index<=0;reply<=0;volume<=255;lease<=0;
+   end
+  end
+ end
+endmodule''')
+p.write_text(s,encoding='utf8')
+p=Path('instrument_io/tb_esp_at.sv');s=p.read_text().replace('reset_n=0;@(negedge clk);if(ready)', '''rx(114);rx(101);rx(97);rx(100);rx(121);rx(13);rx(10);
+repeat(2)@(negedge clk);if(ready)$fatal(1,"ESP reboot did not restart config");
+reset_n=0;@(negedge clk);if(ready)''');p.write_text(s,encoding='utf8')
+'@ | python -; Get-Content logs/20261021-extension-build.log -Tail 8; & ./instrument_io/run_tests.ps1 *> logs/20261021-extension-suite-verified.log; Write-Output "SuiteExit=$LASTEXITCODE"; Get-Content logs/20261021-extension-suite-verified.log -Tail 5
+Process ID: 14564
+PSVersion: 7.6.5
+PSEdition: Core
+GitCommitId: 7.6.5
+OS: Microsoft Windows 10.0.26100
+Platform: Win32NT
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1, 6.0, 7.0
+PSRemotingProtocolVersion: 2.4
+SerializationVersion: 1.1.0.1
+WSManStackVersion: 3.0
+**********************
+E:\gaoyun\d-dfdf\instrument_io\oled_scope.v:54: warning: @* is sensitive to all 128 words in array 'snapshot'.
+E:\gaoyun\d-dfdf\instrument_io\oled_scope.v:54: warning: @* is sensitive to all 128 words in array 'snapshot'.
+**********************
+PowerShell transcript end
+End time: 20261021181139
+**********************

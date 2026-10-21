@@ -1,0 +1,13 @@
+{
+  "date": "2026-10-21",
+  "user_code": "0xE021",
+  "candidate": "E:\\gaoyun\\projects\\instrument_extension_candidate\\instrument_extension_candidate\\impl\\pnr\\instrument_extension_candidate.fs",
+  "sha256": "6D89D33520697199C489A78BA5FEB17C31F13B1D3CC9D1A175C7B2718CC42C5D",
+  "simulation_passes": 25,
+  "build_exit": 0,
+  "timing_summary": "Numbers of Paths Analyzed 10124 Numbers of Endpoints Analyzed 9714 Numbers of Falling Endpoints 0 Numbers of Setup Violated Endpoints 0 Numbers of Hold Violated Endpoints 0 Clock Summary: NO. Clock Name Type Period Frequency(MHz) Rise Fall Source Master Objects 1 clk27 Base 37.037 27.000 0.000 18.518 clk Max Frequency Summary: NO. Clock Name Constraint Actual Fmax Logic Level Entity 1 clk27 27.000(MHz) 32.283(MHz) 18 TOP Total Negative Slack Summary: Clock Name Analysis Type Endpoints TNS Number of Endpoints clk27 Setup 0.000 0 clk27 Hold 0.000 0 ",
+  "hardware_tested": false,
+  "flash_modified": false,
+  "power_budget_verified": false,
+  "thermal_root_cause_resolved": false
+}

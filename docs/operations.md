@@ -839,3 +839,11 @@ PDF文字已提取，首次控制台输出遇GBK不能编码NBSP的UnicodeEncode
 - COM9空闲后使用E:/gaoyun/k230_host_probe.py对新文件试运行8秒。首次停止旧官方循环触发IDE interrupt与MPY soft reboot，新程序未成功启动；返回控制台后第二次7秒成功，出现PINCH TRACK/WARMUP/NO HAND等日志，无新异常。原始两次日志均保留logs/20261021-k230-pinch。只证明板上接口/计算输出兼容，未声称已确认用户动作对应性/最终精度。
 - Start-Process E:/yolo/bin/canmvide.exe -ArgumentList E:/gaoyun/d-dfdf/k230/pinch_preview.py，窗口标题已确认pinch_preview.py。用户在IDE连接后运行此文件，在帧缓冲区看进度条，在串行终端看限速约5Hz日志。说明与列定义见k230/README.md。
 - 当前并发任务修改instrument_io、scripts及其他logs，本次不触碰、不暂存这些文件；无FPGA接线、供电、烧录或固件更改。
+## 2026-10-21 OLED与ESP-01S离线扩展候选 E021
+
+- 用户确认除K230外接线完成并要求写程序。本轮不访问硬件、不下载SRAM、不写Flash；保留hardware-hold和旧构建入口。ESP从Dock3V3取电的峰值预算及历史发热原因仍未核实。
+- 新增独立extension顶层/约束/构建脚本：FPGA生成SSD1306波形及键/状态图；ESP原AT固件配置局域网AP/TCP，Vhh换行控制音量，支持分包、客户端隔离、超时回退、重启重配。K230未接入。使用说明docs/extension-candidate-20261021.md。
+- 25项RTL仿真通过（原19+新增6），日志20261021-extension-suite-verified.log；Python客户端本机TCP内容/续租/越界拒绝通过，未连接实际ESP。客户端首次测试对调度次数断言过严，修正测试后通过，保留说明。
+- 首次OLED快照旋转资源超限59083/20736，改为固定快照+单读地址；第二次输入端口ESP_RX非法DRIVE约束已删除。两次失败原始日志保留。最终Gowin构建成功，逻辑7995/20736（39%），寄存器3454/16173，BSRAM5/46，DSP13.25/24；27MHz约束实际Fmax32.283MHz，setup/hold违例端点均0。
+- 候选UserCode0xE021，FS SHA256 6D89D33520697199C489A78BA5FEB17C31F13B1D3CC9D1A175C7B2718CC42C5D。机器记录logs/20261021-extension-verification.json，最终构建及PnR/时序报告同时保存。OLED约2–3帧/秒，不宣称题目≤5ms可视化或实物端到端验收。
+
