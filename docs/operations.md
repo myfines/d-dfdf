@@ -823,3 +823,8 @@ PDF文字已提取，首次控制台输出遇GBK不能编码NBSP的UnicodeEncode
 ## 2026-10-21 K230-Dock OTG供电/UART资料预核
 - 读取本地Dock3713 Rev1.1官方PDF，渲染/查看USB PHY与BL702电源页；读取亚博供电说明、标准版接口图片与UART例程、原电赛UART引脚配置。无硬件命令，无电源/接线/RTL改动。
 - J8 VBUS直连+5V、CC1/2下拉、数据接USB3317，不是可直接输出UART的USB转串口；不能据共享5V网保证给K230供电。建议K230独立5V、两板UART+GND，待3.3V Bank/实际电平及空闲GPIO核对。详见docs/k230-fpga-link-20261021.md；不执行共享USB供电，保持现有Flash。
+
+## 2026-10-21 用户要求单电源与顺序无关设计
+- 修正成品目标：一个足额5V电源分路供Dock/K230/PCM，一个总开关；不要求用户记忆开关顺序，不从3V3或Dock OTG串接转供。仍须确认实际模块与负载峰值，尚未实装。
+- 直接请求TI官方TXU0101及SN74LVC1G125数据手册并读取：前者任一电源<100mV或断开输出高阻，支持Ioff，可作双板UART隔离候选。现有I2S同样须检查，避免仅修新增UART。首次PDF输出遇控制台gbk UnicodeEncodeError，改UTF8后读取成功；不涉及硬件。
+- 外部搜索工具报错、Sipeed wiki超时，未获得他人同款实装案例。详见docs/k230-system-power-20261021.md。仅资料核对，无接线、供电或FPGA修改。
