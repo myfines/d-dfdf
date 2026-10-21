@@ -1,0 +1,2 @@
+PASS probe diagnostic: captured HS USB bytes -> actual RTL gesture CRC -> serialized UART reports with XOR, valid and lost hand
+usb_host/tb_probe_report.sv:28: $finish called at 1559862603 (1ps)

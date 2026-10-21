@@ -1,0 +1,7 @@
+[
+  "USB/usb_serial/src/gowin_rpll/gowin_rpll.v",
+  "USB/usb_serial/src/top.v",
+  "USB/usb_serial/src/usb_example.cst",
+  "USB/usb_serial/src/usb_example.sdc",
+  "USB/usb_serial/src/usb_wrapper.v"
+]

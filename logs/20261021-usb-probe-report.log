@@ -1,0 +1,2 @@
+FATAL: usb_host/tb_probe_report.sv:24: lost hand report
+       Time: 1559795939  Scope: tb_probe_report

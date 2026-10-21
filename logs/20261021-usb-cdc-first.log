@@ -1,0 +1,59 @@
+E
+======================================================================
+ERROR: test_high_speed_cdc (test_cdc_host.CDCTest.test_high_speed_cdc)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "E:\gaoyun\d-dfdf\usb_host\test_cdc_host.py", line 30, in test_high_speed_cdc
+    sim=Simulator(m);sim.add_clock(1/60e6);sim.add_testbench(bench)
+        ^^^^^^^^^^^^
+  File "E:\gaoyun\tools\usb-host-venv\Lib\site-packages\amaranth\sim\core.py", line 78, in __init__
+    self._design  = Fragment.get(toplevel, platform=None).prepare()
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\gaoyun\tools\usb-host-venv\Lib\site-packages\amaranth\hdl\_ir.py", line 63, in get
+    new_obj = obj.elaborate(platform)
+              ^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\gaoyun\tools\usb-host-venv\Lib\site-packages\amaranth\hdl\_dsl.py", line 694, in elaborate
+    fragment.add_subfragment(Fragment.get(submodule, platform), name, src_loc=src_loc)
+                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\gaoyun\tools\usb-host-venv\Lib\site-packages\amaranth\hdl\_ir.py", line 63, in get
+    new_obj = obj.elaborate(platform)
+              ^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\gaoyun\tools\usb-host-venv\Lib\site-packages\amaranth\hdl\_xfrm.py", line 357, in elaborate
+    fragment = Fragment.get(self._elaboratable_, platform)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\gaoyun\tools\usb-host-venv\Lib\site-packages\amaranth\hdl\_ir.py", line 63, in get
+    new_obj = obj.elaborate(platform)
+              ^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\gaoyun\d-dfdf\usb_host\cdc_host.py", line 82, in elaborate
+    with m.Case(TransferResponse.ACK):m.d.usb+=[pid.eq(~pid),watchdog.eq(0)];m.next='POLL'
+                                                       ^^^^
+TypeError: bad operand type for unary ~: 'EnumView'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.106s
+
+FAILED (errors=1)
+E:\gaoyun\d-dfdf\usb_host\cdc_host.py:18: UnusedElaboratable: <guh.usbh.descriptor.USBDescriptorParser object at 0x000001E512AD36E0> created but never used
+  parser=USBDescriptorParser(endpoint_filter=EndpointFilter.IN,transfer_type=EndpointTransferType.BULK,interface_class=0x0a),rx_fifo_depth=1024)
+UnusedElaboratable: Enable tracemalloc to get the object allocation traceback
+E:\gaoyun\d-dfdf\usb_host\cdc_host.py:17: UnusedElaboratable: <guh.usbh.enumerator.USBHostEnumerator object at 0x000001E512AD3DA0> created but never used
+  self.enumerator=USBHostEnumerator(device_address=0x12,config_number=1,
+UnusedElaboratable: Enable tracemalloc to get the object allocation traceback
+E:\gaoyun\tools\guh-host-reference\guh\usbh\enumerator.py:74: UnusedElaboratable: <guh.usbh.sie.USBSIE object at 0x000001E512AFC0E0> created but never used
+  self.sie = USBSIE(bus=bus, handle_clocking=handle_clocking,
+UnusedElaboratable: Enable tracemalloc to get the object allocation traceback
+E:\gaoyun\tools\guh-host-reference\guh\usbh\sie.py:356: UnusedElaboratable: <guh.usbh.reset.USBResetController object at 0x000001E512AFCCB0> created but never used
+  self.reset_ctrl = USBResetController(
+UnusedElaboratable: Enable tracemalloc to get the object allocation traceback
+E:\gaoyun\d-dfdf\usb_host\test_cdc_host.py:13: UnusedElaboratable: <fake_k230.FakeK230 object at 0x000001E512AFE3F0> created but never used
+  m=Module();host=K230CDCHost();device=FakeK230()
+UnusedElaboratable: Enable tracemalloc to get the object allocation traceback
+E:\gaoyun\d-dfdf\usb_host\fake_k230.py:29: UnusedElaboratable: <fake_k230.CDCControl object at 0x000001E512AFF320> created but never used
+  self.utmi=UTMIInterface();self.control=CDCControl()
+UnusedElaboratable: Enable tracemalloc to get the object allocation traceback
+E:\gaoyun\d-dfdf\usb_host\test_cdc_host.py:15: UnusedElaboratable: <amaranth.hdl._xfrm.TransformedElaboratable object at 0x000001E512B0AD20> created but never used
+  m.submodules.device=DomainRenamer({'usb':'sync'})(device)
+UnusedElaboratable: Enable tracemalloc to get the object allocation traceback
+E:\gaoyun\d-dfdf\usb_host\cdc_host.py:23: UnusedElaboratable: <amaranth.hdl._dsl.Module object at 0x000001E512B5CE60> created but never used
+  m=Module();m.submodules.enum=enum=self.enumerator;c=enum.ctrl
+UnusedElaboratable: Enable tracemalloc to get the object allocation traceback

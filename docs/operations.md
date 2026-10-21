@@ -955,3 +955,10 @@ PDF文字已提取，首次控制台输出遇GBK不能编码NBSP的UnicodeEncode
 - 没有USB总线控制抓包；Windows串口逻辑参数已知，EP0最小SET_LINE_CODING/CONTROL_LINE_STATE序列只能给候选映射，未冒充逐请求验证。USB bus reset/FS/FPGA host未验。
 - 恢复既有main屏幕预览：回读main、V2、boot、电赛和旧入口备份、两模型SHA256，详见契约。初始7秒窗口不足以等模型哈希及推理初始化，随后被动9秒读到33行PINCH2含TRACK，无Traceback，确认运行恢复；未写SD任何文件。
 - 文档docs/k230-usb-interface-contract-20261021.md；原始描述符、CDC二进制捕获、API输出、接收校验、测试记录在logs/20261021-k230-usb/。没有持久部署USB发送，FPGA及Flash全程不动。
+# 2026-10-21 USB HS host prototype (offline only)
+
+- Added independent K230 CDC host, captured-descriptor fake device, four packet-level tests and RTL gesture/UART diagnostic. Four USB tests pass (113.6s); actual parser/report test passes. External guh/LUNA commits pinned in usb_host/README.md; licenses retained.
+- Earlier simulation failures (EnumView handling, interface-class type, enum assertion) retained in logs/20261021-usb-cdc-{first,second,third}.log. Shared fixture race was resolved by running RTL after the host suite. RESETB polarity caught and fixed before hardware use.
+- Real USB3317 I/O constraints exposed timing failures masked by clock-only builds. Pipeline reduces setup failures from139 to9; latest remains setup9/hold17, worst setup -6.312ns. Inverted generated-clock experiment was rejected by Gowin and reverted. No constraint waiver applied.
+- This is NOT a deployable E024 instrument image. No programmer/serial/USB device access, no SRAM or Flash writes this phase. E023 remains unchanged. Detailed evidence and next gates: docs/k230-usb-host-probe-20261021.md.
+

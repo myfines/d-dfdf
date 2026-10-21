@@ -1,0 +1,82 @@
+Collecting luna-usb@ git+https://github.com/greatscottgadgets/luna@main
+  Cloning https://github.com/greatscottgadgets/luna (to revision main) to c:\users\zrk\appdata\local\temp\pip-install-0njmfki9\luna-usb_2d13cd5775e64b419fd158a40718404b
+  Running command git clone --filter=blob:none --quiet https://github.com/greatscottgadgets/luna 'C:\Users\zrk\AppData\Local\Temp\pip-install-0njmfki9\luna-usb_2d13cd5775e64b419fd158a40718404b'
+  Resolved https://github.com/greatscottgadgets/luna to commit 82a8f733296603b70ba56755206e13092609c6f0
+  Running command git submodule update --init --recursive -q
+  Installing build dependencies: started
+  Installing build dependencies: still running...
+  Installing build dependencies: finished with status 'done'
+  Getting requirements to build wheel: started
+  Getting requirements to build wheel: finished with status 'done'
+  Preparing metadata (pyproject.toml): started
+  Preparing metadata (pyproject.toml): finished with status 'done'
+Collecting amaranth==0.5.8 (from amaranth[builtin-yosys]==0.5.8)
+  Downloading amaranth-0.5.8-py3-none-any.whl.metadata (4.3 kB)
+Collecting parameterized
+  Downloading parameterized-0.9.0-py2.py3-none-any.whl.metadata (18 kB)
+Collecting pytest
+  Downloading pytest-9.1.1-py3-none-any.whl.metadata (7.6 kB)
+Collecting jschon~=0.11.1 (from amaranth==0.5.8->amaranth[builtin-yosys]==0.5.8)
+  Downloading jschon-0.11.1-py3-none-any.whl.metadata (5.4 kB)
+Collecting pyvcd<0.5,>=0.2.2 (from amaranth==0.5.8->amaranth[builtin-yosys]==0.5.8)
+  Downloading pyvcd-0.4.2-py3-none-any.whl.metadata (4.3 kB)
+Collecting Jinja2~=3.0 (from amaranth==0.5.8->amaranth[builtin-yosys]==0.5.8)
+  Using cached jinja2-3.1.6-py3-none-any.whl.metadata (2.9 kB)
+Collecting amaranth-yosys>=0.40 (from amaranth[builtin-yosys]==0.5.8)
+  Downloading amaranth_yosys-0.50.0.0.post129-py3-none-any.whl.metadata (2.5 kB)
+Collecting colorama>=0.4 (from pytest)
+  Using cached colorama-0.4.6-py2.py3-none-any.whl.metadata (17 kB)
+Collecting iniconfig>=1.0.1 (from pytest)
+  Downloading iniconfig-2.3.1-py3-none-any.whl.metadata (2.8 kB)
+Collecting packaging>=22 (from pytest)
+  Using cached packaging-26.3-py3-none-any.whl.metadata (3.5 kB)
+Collecting pluggy<2,>=1.5 (from pytest)
+  Downloading pluggy-1.7.0-py3-none-any.whl.metadata (5.0 kB)
+Collecting pygments>=2.7.2 (from pytest)
+  Using cached pygments-2.21.0-py3-none-any.whl.metadata (2.5 kB)
+Collecting libusb1>1.9.2 (from luna-usb@ git+https://github.com/greatscottgadgets/luna@main)
+  Downloading libusb1-3.4.0-py3-none-win_amd64.whl.metadata (16 kB)
+Collecting pyserial>=3.5 (from luna-usb@ git+https://github.com/greatscottgadgets/luna@main)
+  Using cached pyserial-3.5-py2.py3-none-any.whl.metadata (1.6 kB)
+Collecting pyusb>1.1.1 (from luna-usb@ git+https://github.com/greatscottgadgets/luna@main)
+  Using cached pyusb-1.3.1-py3-none-any.whl.metadata (2.5 kB)
+Collecting usb-protocol~=0.9.2 (from luna-usb@ git+https://github.com/greatscottgadgets/luna@main)
+  Downloading usb_protocol-0.9.2-py3-none-any.whl.metadata (1.9 kB)
+Collecting wasmtime<50,>=1 (from amaranth-yosys>=0.40->amaranth[builtin-yosys]==0.5.8)
+  Downloading wasmtime-49.0.0-py3-none-win_amd64.whl.metadata (5.1 kB)
+Collecting MarkupSafe>=2.0 (from Jinja2~=3.0->amaranth==0.5.8->amaranth[builtin-yosys]==0.5.8)
+  Using cached markupsafe-3.0.4-cp312-cp312-win_amd64.whl.metadata (2.8 kB)
+Collecting rfc3986 (from jschon~=0.11.1->amaranth==0.5.8->amaranth[builtin-yosys]==0.5.8)
+  Downloading rfc3986-2.0.0-py2.py3-none-any.whl.metadata (6.6 kB)
+Collecting construct~=2.10 (from usb-protocol~=0.9.2->luna-usb@ git+https://github.com/greatscottgadgets/luna@main)
+  Using cached construct-2.10.70-py3-none-any.whl.metadata (4.2 kB)
+Downloading amaranth-0.5.8-py3-none-any.whl (254 kB)
+Downloading parameterized-0.9.0-py2.py3-none-any.whl (20 kB)
+Downloading pytest-9.1.1-py3-none-any.whl (386 kB)
+Downloading amaranth_yosys-0.50.0.0.post129-py3-none-any.whl (11.1 MB)
+   ---------------------------------------- 11.1/11.1 MB 1.1 MB/s eta 0:00:00
+Using cached colorama-0.4.6-py2.py3-none-any.whl (25 kB)
+Downloading iniconfig-2.3.1-py3-none-any.whl (7.6 kB)
+Using cached jinja2-3.1.6-py3-none-any.whl (134 kB)
+Downloading jschon-0.11.1-py3-none-any.whl (66 kB)
+Downloading libusb1-3.4.0-py3-none-win_amd64.whl (141 kB)
+Using cached packaging-26.3-py3-none-any.whl (129 kB)
+Downloading pluggy-1.7.0-py3-none-any.whl (27 kB)
+Using cached pygments-2.21.0-py3-none-any.whl (1.3 MB)
+Using cached pyserial-3.5-py2.py3-none-any.whl (90 kB)
+Using cached pyusb-1.3.1-py3-none-any.whl (58 kB)
+Downloading pyvcd-0.4.2-py3-none-any.whl (24 kB)
+Downloading usb_protocol-0.9.2-py3-none-any.whl (53 kB)
+Using cached construct-2.10.70-py3-none-any.whl (63 kB)
+Using cached markupsafe-3.0.4-cp312-cp312-win_amd64.whl (14 kB)
+Downloading wasmtime-49.0.0-py3-none-win_amd64.whl (8.3 MB)
+   ---------------------------------------- 8.3/8.3 MB 1.2 MB/s eta 0:00:00
+Downloading rfc3986-2.0.0-py2.py3-none-any.whl (31 kB)
+Building wheels for collected packages: luna-usb
+  Building wheel for luna-usb (pyproject.toml): started
+  Building wheel for luna-usb (pyproject.toml): finished with status 'done'
+  Created wheel for luna-usb: filename=luna_usb-0.2.3.post10+git.82a8f733-py3-none-any.whl size=346410 sha256=765c4e4572addc8d47b33428d6db00b481ac960c0a5c2107cedb0277c737883c
+  Stored in directory: C:\Users\zrk\AppData\Local\Temp\pip-ephem-wheel-cache-7du96vce\wheels\b3\a8\ac\d5fce9b6828f005d8cf95f92e85d07077160663e9b482edd53
+Successfully built luna-usb
+Installing collected packages: pyserial, libusb1, wasmtime, rfc3986, pyvcd, pyusb, pygments, pluggy, parameterized, packaging, MarkupSafe, iniconfig, construct, colorama, usb-protocol, pytest, jschon, Jinja2, amaranth-yosys, amaranth, luna-usb
+Successfully installed Jinja2-3.1.6 MarkupSafe-3.0.4 amaranth-0.5.8 amaranth-yosys-0.50.0.0.post129 colorama-0.4.6 construct-2.10.70 iniconfig-2.3.1 jschon-0.11.1 libusb1-3.4.0 luna-usb-0.2.3.post10+git.82a8f733 packaging-26.3 parameterized-0.9.0 pluggy-1.7.0 pygments-2.21.0 pyserial-3.5 pytest-9.1.1 pyusb-1.3.1 pyvcd-0.4.2 rfc3986-2.0.0 usb-protocol-0.9.2 wasmtime-49.0.0

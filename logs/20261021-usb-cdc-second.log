@@ -1,0 +1,67 @@
+E
+======================================================================
+ERROR: test_high_speed_cdc (test_cdc_host.CDCTest.test_high_speed_cdc)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "E:\gaoyun\d-dfdf\usb_host\test_cdc_host.py", line 30, in test_high_speed_cdc
+    sim=Simulator(m);sim.add_clock(1/60e6);sim.add_testbench(bench)
+        ^^^^^^^^^^^^
+  File "E:\gaoyun\tools\usb-host-venv\Lib\site-packages\amaranth\sim\core.py", line 78, in __init__
+    self._design  = Fragment.get(toplevel, platform=None).prepare()
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\gaoyun\tools\usb-host-venv\Lib\site-packages\amaranth\hdl\_ir.py", line 63, in get
+    new_obj = obj.elaborate(platform)
+              ^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\gaoyun\tools\usb-host-venv\Lib\site-packages\amaranth\hdl\_dsl.py", line 694, in elaborate
+    fragment.add_subfragment(Fragment.get(submodule, platform), name, src_loc=src_loc)
+                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\gaoyun\tools\usb-host-venv\Lib\site-packages\amaranth\hdl\_ir.py", line 63, in get
+    new_obj = obj.elaborate(platform)
+              ^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\gaoyun\tools\usb-host-venv\Lib\site-packages\amaranth\hdl\_xfrm.py", line 357, in elaborate
+    fragment = Fragment.get(self._elaboratable_, platform)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\gaoyun\tools\usb-host-venv\Lib\site-packages\amaranth\hdl\_ir.py", line 63, in get
+    new_obj = obj.elaborate(platform)
+              ^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\gaoyun\tools\usb-host-venv\Lib\site-packages\amaranth\hdl\_xfrm.py", line 357, in elaborate
+    fragment = Fragment.get(self._elaboratable_, platform)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\gaoyun\tools\usb-host-venv\Lib\site-packages\amaranth\hdl\_ir.py", line 63, in get
+    new_obj = obj.elaborate(platform)
+              ^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\gaoyun\tools\usb-host-venv\Lib\site-packages\amaranth\hdl\_dsl.py", line 694, in elaborate
+    fragment.add_subfragment(Fragment.get(submodule, platform), name, src_loc=src_loc)
+                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\gaoyun\tools\usb-host-venv\Lib\site-packages\amaranth\hdl\_ir.py", line 63, in get
+    new_obj = obj.elaborate(platform)
+              ^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\gaoyun\tools\usb-host-venv\Lib\site-packages\amaranth\hdl\_dsl.py", line 694, in elaborate
+    fragment.add_subfragment(Fragment.get(submodule, platform), name, src_loc=src_loc)
+                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\gaoyun\tools\usb-host-venv\Lib\site-packages\amaranth\hdl\_ir.py", line 63, in get
+    new_obj = obj.elaborate(platform)
+              ^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\gaoyun\tools\guh-host-reference\guh\usbh\descriptor.py", line 156, in elaborate
+    interface_match = (iface_class == self._interface_class)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\gaoyun\tools\usb-host-venv\Lib\site-packages\amaranth\lib\enum.py", line 302, in __eq__
+    raise TypeError("an EnumView can only be compared to value or other EnumView of the same enum type")
+TypeError: an EnumView can only be compared to value or other EnumView of the same enum type
+
+----------------------------------------------------------------------
+Ran 1 test in 0.107s
+
+FAILED (errors=1)
+E:\gaoyun\d-dfdf\usb_host\test_cdc_host.py:13: UnusedElaboratable: <fake_k230.FakeK230 object at 0x0000025D4D2CE360> created but never used
+  m=Module();host=K230CDCHost();device=FakeK230()
+UnusedElaboratable: Enable tracemalloc to get the object allocation traceback
+E:\gaoyun\d-dfdf\usb_host\fake_k230.py:29: UnusedElaboratable: <fake_k230.CDCControl object at 0x0000025D4D2CF950> created but never used
+  self.utmi=UTMIInterface();self.control=CDCControl()
+UnusedElaboratable: Enable tracemalloc to get the object allocation traceback
+E:\gaoyun\d-dfdf\usb_host\test_cdc_host.py:15: UnusedElaboratable: <amaranth.hdl._xfrm.TransformedElaboratable object at 0x0000025D4D2D7170> created but never used
+  m.submodules.device=DomainRenamer({'usb':'sync'})(device)
+UnusedElaboratable: Enable tracemalloc to get the object allocation traceback
+E:\gaoyun\tools\guh-host-reference\guh\usbh\descriptor.py:75: UnusedElaboratable: <amaranth.hdl._dsl.Module object at 0x0000025D4D44FEC0> created but never used
+  m = Module()
+UnusedElaboratable: Enable tracemalloc to get the object allocation traceback

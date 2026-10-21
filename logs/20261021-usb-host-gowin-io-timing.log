@@ -1,0 +1,119 @@
+*** GOWIN Tcl Command Line Console  *** 
+current working directory: E:/gaoyun/projects/k230_usb_host_probe/k230_usb_host_probe
+add new file: "E:/gaoyun/tools/smoke/k230_usb_host_generated.v"
+add new file: "E:/gaoyun/d-dfdf/usb_host/host_probe_top.v"
+add new file: "E:/gaoyun/d-dfdf/instrument_io/gesture_packet_rx.v"
+add new file: "E:/gaoyun/d-dfdf/instrument_io/uart8n1.v"
+add new file: "E:/gaoyun/d-dfdf/usb_host/host_probe.cst"
+add new file: "E:/gaoyun/d-dfdf/usb_host/host_probe.sdc"
+GowinSynthesis start
+Running parser ...
+Analyzing Verilog file 'E:\gaoyun\tools\smoke\k230_usb_host_generated.v'
+Analyzing Verilog file 'E:\gaoyun\d-dfdf\usb_host\host_probe_top.v'
+Analyzing Verilog file 'E:\gaoyun\d-dfdf\instrument_io\gesture_packet_rx.v'
+Analyzing Verilog file 'E:\gaoyun\d-dfdf\instrument_io\uart8n1.v'
+WARN  (EX3073) : Port 'rx_valid' remains unconnected for this instance("E:\gaoyun\d-dfdf\usb_host\host_probe_top.v":29)
+Compiling module 'host_probe_top'("E:\gaoyun\d-dfdf\usb_host\host_probe_top.v":3)
+Compiling module 'k230_usb_host_generated'("E:\gaoyun\tools\smoke\k230_usb_host_generated.v":6)
+Compiling module 'k230_usb_host_generated.host'("E:\gaoyun\tools\smoke\k230_usb_host_generated.v":62)
+WARN  (EX3780) : Using initial value of '$auto$verilog_backend.cc:2355:dump_module$1' since it is never assigned("E:\gaoyun\tools\smoke\k230_usb_host_generated.v":63)
+Extracting RAM for identifier 'packet'("E:\gaoyun\tools\smoke\k230_usb_host_generated.v":297)
+Compiling module 'k230_usb_host_generated.host.enum'("E:\gaoyun\tools\smoke\k230_usb_host_generated.v":1822)
+WARN  (EX3780) : Using initial value of '$auto$verilog_backend.cc:2355:dump_module$2' since it is never assigned("E:\gaoyun\tools\smoke\k230_usb_host_generated.v":1823)
+Extracting RAM for identifier 'setup_packets'("E:\gaoyun\tools\smoke\k230_usb_host_generated.v":2134)
+Compiling module 'k230_usb_host_generated.host.enum.parser'("E:\gaoyun\tools\smoke\k230_usb_host_generated.v":3811)
+WARN  (EX3780) : Using initial value of '$auto$verilog_backend.cc:2355:dump_module$3' since it is never assigned("E:\gaoyun\tools\smoke\k230_usb_host_generated.v":3812)
+Compiling module 'k230_usb_host_generated.host.enum.sie'("E:\gaoyun\tools\smoke\k230_usb_host_generated.v":4444)
+WARN  (EX3780) : Using initial value of '$auto$verilog_backend.cc:2355:dump_module$4' since it is never assigned("E:\gaoyun\tools\smoke\k230_usb_host_generated.v":4445)
+Compiling module 'k230_usb_host_generated.host.enum.sie.data_crc'("E:\gaoyun\tools\smoke\k230_usb_host_generated.v":5943)
+WARN  (EX3780) : Using initial value of '$auto$verilog_backend.cc:2355:dump_module$5' since it is never assigned("E:\gaoyun\tools\smoke\k230_usb_host_generated.v":5944)
+Compiling module 'k230_usb_host_generated.host.enum.sie.handshake_detector'("E:\gaoyun\tools\smoke\k230_usb_host_generated.v":6330)
+WARN  (EX3780) : Using initial value of '$auto$verilog_backend.cc:2355:dump_module$6' since it is never assigned("E:\gaoyun\tools\smoke\k230_usb_host_generated.v":6331)
+Compiling module 'k230_usb_host_generated.host.enum.sie.handshake_generator'("E:\gaoyun\tools\smoke\k230_usb_host_generated.v":6621)
+WARN  (EX3780) : Using initial value of '$auto$verilog_backend.cc:2355:dump_module$7' since it is never assigned("E:\gaoyun\tools\smoke\k230_usb_host_generated.v":6622)
+Compiling module 'k230_usb_host_generated.host.enum.sie.receiver'("E:\gaoyun\tools\smoke\k230_usb_host_generated.v":6765)
+WARN  (EX3780) : Using initial value of '$auto$verilog_backend.cc:2355:dump_module$8' since it is never assigned("E:\gaoyun\tools\smoke\k230_usb_host_generated.v":6766)
+Compiling module 'k230_usb_host_generated.host.enum.sie.reset_ctrl'("E:\gaoyun\tools\smoke\k230_usb_host_generated.v":7313)
+WARN  (EX3780) : Using initial value of '$auto$verilog_backend.cc:2355:dump_module$9' since it is never assigned("E:\gaoyun\tools\smoke\k230_usb_host_generated.v":7314)
+Compiling module 'k230_usb_host_generated.host.enum.sie.rx_fifo'("E:\gaoyun\tools\smoke\k230_usb_host_generated.v":7845)
+WARN  (EX3780) : Using initial value of '$auto$verilog_backend.cc:2355:dump_module$10' since it is never assigned("E:\gaoyun\tools\smoke\k230_usb_host_generated.v":7846)
+Extracting RAM for identifier 'storage'("E:\gaoyun\tools\smoke\k230_usb_host_generated.v":7968)
+Compiling module 'k230_usb_host_generated.host.enum.sie.sof_controller'("E:\gaoyun\tools\smoke\k230_usb_host_generated.v":9127)
+WARN  (EX3780) : Using initial value of '$auto$verilog_backend.cc:2355:dump_module$11' since it is never assigned("E:\gaoyun\tools\smoke\k230_usb_host_generated.v":9128)
+Compiling module 'k230_usb_host_generated.host.enum.sie.timer'("E:\gaoyun\tools\smoke\k230_usb_host_generated.v":9432)
+WARN  (EX3780) : Using initial value of '$auto$verilog_backend.cc:2355:dump_module$12' since it is never assigned("E:\gaoyun\tools\smoke\k230_usb_host_generated.v":9433)
+Compiling module 'k230_usb_host_generated.host.enum.sie.token_generator'("E:\gaoyun\tools\smoke\k230_usb_host_generated.v":9610)
+WARN  (EX3780) : Using initial value of '$auto$verilog_backend.cc:2355:dump_module$13' since it is never assigned("E:\gaoyun\tools\smoke\k230_usb_host_generated.v":9611)
+Compiling module 'k230_usb_host_generated.host.enum.sie.translator'("E:\gaoyun\tools\smoke\k230_usb_host_generated.v":10059)
+WARN  (EX3780) : Using initial value of '$auto$verilog_backend.cc:2355:dump_module$14' since it is never assigned("E:\gaoyun\tools\smoke\k230_usb_host_generated.v":10061)
+Compiling module 'k230_usb_host_generated.host.enum.sie.translator.control_translator'("E:\gaoyun\tools\smoke\k230_usb_host_generated.v":10517)
+WARN  (EX3780) : Using initial value of '$auto$verilog_backend.cc:2355:dump_module$15' since it is never assigned("E:\gaoyun\tools\smoke\k230_usb_host_generated.v":10518)
+Compiling module 'k230_usb_host_generated.host.enum.sie.translator.register_window'("E:\gaoyun\tools\smoke\k230_usb_host_generated.v":10816)
+WARN  (EX3780) : Using initial value of '$auto$verilog_backend.cc:2355:dump_module$16' since it is never assigned("E:\gaoyun\tools\smoke\k230_usb_host_generated.v":10817)
+Compiling module 'k230_usb_host_generated.host.enum.sie.translator.rxevent_decoder'("E:\gaoyun\tools\smoke\k230_usb_host_generated.v":11243)
+WARN  (EX3780) : Using initial value of '$auto$verilog_backend.cc:2355:dump_module$17' since it is never assigned("E:\gaoyun\tools\smoke\k230_usb_host_generated.v":11244)
+Compiling module 'k230_usb_host_generated.host.enum.sie.translator.transmit_translator'("E:\gaoyun\tools\smoke\k230_usb_host_generated.v":11439)
+WARN  (EX3780) : Using initial value of '$auto$verilog_backend.cc:2355:dump_module$18' since it is never assigned("E:\gaoyun\tools\smoke\k230_usb_host_generated.v":11440)
+Compiling module 'k230_usb_host_generated.host.enum.sie.transmitter'("E:\gaoyun\tools\smoke\k230_usb_host_generated.v":11667)
+WARN  (EX3780) : Using initial value of '$auto$verilog_backend.cc:2355:dump_module$19' since it is never assigned("E:\gaoyun\tools\smoke\k230_usb_host_generated.v":11668)
+Compiling module 'k230_usb_host_generated.host.enum.sie.tx_fifo'("E:\gaoyun\tools\smoke\k230_usb_host_generated.v":11975)
+WARN  (EX3780) : Using initial value of '$auto$verilog_backend.cc:2355:dump_module$20' since it is never assigned("E:\gaoyun\tools\smoke\k230_usb_host_generated.v":11976)
+Extracting RAM for identifier 'storage'("E:\gaoyun\tools\smoke\k230_usb_host_generated.v":12099)
+Compiling module 'k230_usb_host_generated.host.enum.sie.tx_multiplexer'("E:\gaoyun\tools\smoke\k230_usb_host_generated.v":12298)
+WARN  (EX3780) : Using initial value of '$auto$verilog_backend.cc:2355:dump_module$21' since it is never assigned("E:\gaoyun\tools\smoke\k230_usb_host_generated.v":12299)
+Compiling module 'k230_usb_host_generated.host.enum.sie.tx_multiplexer.encoder'("E:\gaoyun\tools\smoke\k230_usb_host_generated.v":12383)
+WARN  (EX3780) : Using initial value of '$auto$verilog_backend.cc:2355:dump_module$22' since it is never assigned("E:\gaoyun\tools\smoke\k230_usb_host_generated.v":12384)
+Compiling module 'gesture_packet_rx(LEASE_TICKS=15000000,GAP_TICKS=1200000)'("E:\gaoyun\d-dfdf\instrument_io\gesture_packet_rx.v":3)
+Compiling module 'uart8n1(BIT_TICKS=521)'("E:\gaoyun\d-dfdf\instrument_io\uart8n1.v":3)
+NOTE  (EX0101) : Current top module is "host_probe_top"
+[5%] Running netlist conversion ...
+Running device independent optimization ...
+[10%] Optimizing Phase 0 completed
+[15%] Optimizing Phase 1 completed
+[25%] Optimizing Phase 2 completed
+Running inference ...
+[30%] Inferring Phase 0 completed
+[40%] Inferring Phase 1 completed
+[50%] Inferring Phase 2 completed
+[55%] Inferring Phase 3 completed
+Running technical mapping ...
+[60%] Tech-Mapping Phase 0 completed
+[65%] Tech-Mapping Phase 1 completed
+[75%] Tech-Mapping Phase 2 completed
+[80%] Tech-Mapping Phase 3 completed
+[90%] Tech-Mapping Phase 4 completed
+WARN  (NL0002) : The module "k230_usb_host_generated.host.enum.sie.tx_multiplexer" instantiated to "tx_multiplexer" is swept in optimizing("E:\gaoyun\tools\smoke\k230_usb_host_generated.v":5207)
+WARN  (NL0002) : The module "k230_usb_host_generated.host.enum.sie.tx_multiplexer.encoder" instantiated to "encoder" is swept in optimizing("E:\gaoyun\tools\smoke\k230_usb_host_generated.v":12355)
+[95%] Generate netlist file "E:\gaoyun\projects\k230_usb_host_probe\k230_usb_host_probe\impl\gwsynthesis\k230_usb_host_probe.vg" completed
+[100%] Generate report file "E:\gaoyun\projects\k230_usb_host_probe\k230_usb_host_probe\impl\gwsynthesis\k230_usb_host_probe_syn.rpt.html" completed
+GowinSynthesis finish
+Reading netlist file: "E:\gaoyun\projects\k230_usb_host_probe\k230_usb_host_probe\impl\gwsynthesis\k230_usb_host_probe.vg"
+Parsing netlist file "E:\gaoyun\projects\k230_usb_host_probe\k230_usb_host_probe\impl\gwsynthesis\k230_usb_host_probe.vg" completed
+Processing netlist completed
+Reading constraint file: "E:\gaoyun\d-dfdf\usb_host\host_probe.cst"
+Physical Constraint parsed completed
+Running placement......
+[10%] Placement Phase 0 completed
+[20%] Placement Phase 1 completed
+[30%] Placement Phase 2 completed
+[50%] Placement Phase 3 completed
+Running routing......
+[60%] Routing Phase 0 completed
+[70%] Routing Phase 1 completed
+[80%] Routing Phase 2 completed
+WARN  (PR1014) : Generic routing resource will be used to clock signal 'ulpi_clk_d' by the specified constraint. And then it may lead to the excessive delay or skew
+[90%] Routing Phase 3 completed
+Running timing analysis......
+[95%] Timing analysis completed
+Placement and routing completed
+Bitstream generation in progress......
+Bitstream generation completed
+Running power analysis......
+[100%] Power analysis completed
+Generate file "E:\gaoyun\projects\k230_usb_host_probe\k230_usb_host_probe\impl\pnr\k230_usb_host_probe.power.html" completed
+Generate file "E:\gaoyun\projects\k230_usb_host_probe\k230_usb_host_probe\impl\pnr\k230_usb_host_probe.pin.html" completed
+Generate file "E:\gaoyun\projects\k230_usb_host_probe\k230_usb_host_probe\impl\pnr\k230_usb_host_probe.rpt.html" completed
+Generate file "E:\gaoyun\projects\k230_usb_host_probe\k230_usb_host_probe\impl\pnr\k230_usb_host_probe.rpt.txt" completed
+Generate file "E:\gaoyun\projects\k230_usb_host_probe\k230_usb_host_probe\impl\pnr\k230_usb_host_probe.tr.html" completed
+Wed Oct 21 23:34:18 2026
+
