@@ -912,3 +912,10 @@ PDF文字已提取，首次控制台输出遇GBK不能编码NBSP的UnicodeEncode
 ## 2026-10-21 OTG同口供电与通信的再次案例核验
 - requests查询官方/第三方README、第三方usb_host.py及GitHub仓库搜索；确认同款Dock USB键盘作者报告同时由VBUS供电并传按键。强调FS/LS、Linux/OHCI及K230协议/功耗差异，并记录原型局限。来源与结论追加docs/k230-fpga-link-20261021.md。
 - 本阶段无硬件、驱动或RTL操作；未查到已验证的Dock-K230同线案例，不宣称插线即用。
+
+## 2026-10-21 21:30:39 K230 单源 OTG 接法确认
+- 用户确认：Dock 自身 USB 供电，K230 只连接 Dock OTG，没有第二路 USB/5V；用户报告可启动并识别手势。
+- 判断：可继续当前供电联调；未测负载瞬态电压、电流及温升，不作长期供电验收。USB 数据 host/协议尚未实现。
+- 命令：Get-CimInstance Win32_SerialPort；Get-Process canmvide。结果：COM9 列出，IDE PID 30784；没有打开串口、停止程序或烧写板卡。
+- 已按用户授权通知“排查 Tang Primer 20K JTAG下载”，说明上述范围，要求 FPGA/Flash 保持不动。
+- V2 最终版板上验证及 main.py 持久安装仍未完成；需暂时将 K230 从 Dock OTG 移接电脑直连 USB 才能下载。
