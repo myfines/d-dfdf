@@ -1,0 +1,28 @@
+test_complete_translator_shared_bus (test_ulpi_timing.ULPITimingTest.test_complete_translator_shared_bus) ... FAIL
+test_transmitter_pin_equivalence (test_ulpi_timing.ULPITimingTest.test_transmitter_pin_equivalence) ... ok
+
+======================================================================
+FAIL: test_complete_translator_shared_bus (test_ulpi_timing.ULPITimingTest.test_complete_translator_shared_bus)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "E:\gaoyun\d-dfdf\usb_host\test_ulpi_timing.py", line 50, in test_complete_translator_shared_bus
+    sim.run()
+  File "E:\gaoyun\tools\usb-host-venv\Lib\site-packages\amaranth\sim\core.py", line 302, in run
+    while self.advance():
+          ^^^^^^^^^^^^^^
+  File "E:\gaoyun\tools\usb-host-venv\Lib\site-packages\amaranth\sim\core.py", line 342, in advance
+    return self._engine.advance()
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\gaoyun\tools\usb-host-venv\Lib\site-packages\amaranth\sim\pysim.py", line 707, in advance
+    testbench.run()
+  File "E:\gaoyun\tools\usb-host-venv\Lib\site-packages\amaranth\sim\_async.py", line 762, in run
+    self.waits_on = self.coroutine.send(None)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\gaoyun\d-dfdf\usb_host\test_ulpi_timing.py", line 45, in bench
+    self.assertEqual(ctx.get(a.data.o), ctx.get(b.data.o), cycle)
+AssertionError: 0 != 65 : 606
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.759s
+
+FAILED (failures=1)

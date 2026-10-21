@@ -1,0 +1,2 @@
+FATAL: usb_host/tb_pll_phase.sv:19: PLL duty
+       Time: 50426950  Scope: tb_pll_phase

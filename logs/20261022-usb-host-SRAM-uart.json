@@ -1,0 +1,19 @@
+{
+  "bytes": 99,
+  "valid_health_frames": 11,
+  "first3": [
+    "a600000000000000a6",
+    "a600000000000000a6",
+    "a600000000000000a6"
+  ],
+  "last2": [
+    "a600000000000000a6",
+    "a600000000000000a6"
+  ],
+  "port": "COM13",
+  "seconds": 3,
+  "dtr": false,
+  "rts": false,
+  "tx_bytes": 0,
+  "nonoverlapping_frames": true
+}

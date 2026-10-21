@@ -1,8 +1,10 @@
-# K230 USB HS host prototype — NOT a deployable instrument release
+# K230 USB HS host diagnostic — not an instrument release
 
 Independent host diagnostic, usercode E024. Current instrument Flash E023 is untouched.
-The hardware build has **9 setup and 17 hold violations** with USB3317 I/O delays.
-Do not program the generated bitstream or treat successful synthesis as timing closure.
+2026-10-22: timing closure reached with USB3317 I/O delays, setup/hold violations
+both zero (minimum slack 1.481ns/0.325ns). Seven tests pass, plus report RTL and
+vendor PLL model. An SRAM-only diagnostic trial runs on the board; Flash is unchanged.
+K230 has not yet been attached; real enumeration and instrument integration remain unverified.
 
 ## Reproduce on this workstation
 
@@ -19,7 +21,7 @@ Run the RTL report test after the Python suite: it consumes the final test's cap
 ucrt64/bin directories to PATH for their runtime DLLs, then:
 
 ```powershell
-iverilog -g2012 -s tb_probe_report -o E:/gaoyun/tools/smoke/usb-probe-report.vvp usb_host/tb_probe_report.sv usb_host/host_probe_top.v instrument_io/gesture_packet_rx.v instrument_io/uart8n1.v
+iverilog -g2012 -DPROBE_SIM -s tb_probe_report -o E:/gaoyun/tools/smoke/usb-probe-report.vvp usb_host/tb_probe_report.sv usb_host/host_probe_top.v instrument_io/gesture_packet_rx.v instrument_io/uart8n1.v
 vvp E:/gaoyun/tools/smoke/usb-probe-report.vvp
 ```
 
@@ -45,6 +47,23 @@ It is not K230 firmware, a YOLO model, a physical ULPI model, or proof of live i
 The minimal CDC class request sequence still needs real-device confirmation.
 The diagnostic mutes all audio outputs and reports valid gestures over UART;
 it is not integrated into the instrument.
+
+The local luna_ulpi_timing.py copy retains LUNA's BSD notice. Only command-data
+decode is changed: data_idle keeps control-register ownership but omits DIR;
+physical data is tri-stated while DIR is high. Whole-translator equivalence tests
+compare every driven data cycle, STP/OE, receive outputs and handshake signals.
+The TX queue stores explicit end-of-packet words and removes the combinational
+PHY-NXT-to-SIE-ready path, including under long stalls.
+
+Hardware uses rPLL CLKOUTP=315 degrees (PSDA14), duty8. Positive-phase timing
+labels wrap after clock-tree insertion: pin outputs use paired setup2/hold1 cycle
+assignment to the next physical PHY edge, not an internal multicycle exception.
+Input and combinational DIR-to-pin paths remain single-cycle. See the timing note.
+
+Diagnostic UART: 115200 8N1, 9 bytes A6 seq flags confidence pinchBE16 yBE16 XOR8.
+flags bit0=active, bit1=CDC ready; remaining bits zero. Periodic health reports
+every 2^24 / 60MHz seconds. Consume nonoverlapping 9-byte frames (the final XOR
+can also equal A6). Do not write commands to the diagnostic UART.
 
 K230 must run an exclusive binary CDC sender (12-byte A5 5A frames), with IDE
 USBDBG/REPL text disabled. The current preview/print program is not that sender.

@@ -5,7 +5,7 @@ module k230_usb_host_generated(input wire usb_clk,usb_rst,input wire [7:0] ulpi_
 endmodule
 module tb_probe_report;
  reg clk=0,usb_clk=0;always #18.518 clk=~clk;always #8.333 usb_clk=~usb_clk;
- wire [7:0] bus;wire serial;wire rv;wire [7:0] rd;reg [7:0] captured[0:17];integer count=0,i;reg [7:0] check;
+ wire [7:0] bus;wire serial;wire rv;wire [7:0] rd;reg [7:0] captured[0:26];integer count=0,i;reg [7:0] check;
  host_probe_top dut(.clk(clk),.ulpi_clk(usb_clk),.ulpi_dir(1'b0),.ulpi_nxt(1'b0),.ulpi_data(bus),.UART_TX(serial));
  uart8n1 #(.BIT_TICKS(521)) monitor(.clk(usb_clk),.reset_n(~dut.usb_reset[1]),.rx(serial),.tx_start(1'b0),.tx_data(8'd0),.rx_valid(rv),.rx_data(rd));
  always @(posedge usb_clk)if(rv)begin captured[count]=rd;count=count+1;end
@@ -21,11 +21,18 @@ module tb_probe_report;
    if(i==11)wait(count==9);
   end
   wait(count==18);
-  if(captured[0]!=8'ha6||captured[1]!=0||captured[2]!=1||captured[3]!=95||captured[4]!=2||captured[5]!=238||captured[6]!=0||captured[7]!=250)$fatal(1,"valid gesture report");
-  if(captured[9]!=8'ha6||captured[10]!=1||captured[11]!=0||captured[12]!=0)$fatal(1,"lost hand report");
+  if(captured[0]!=8'ha6||captured[1]!=0||captured[2]!=3||captured[3]!=95||captured[4]!=2||captured[5]!=238||captured[6]!=0||captured[7]!=250)$fatal(1,"valid gesture report");
+  if(captured[9]!=8'ha6||captured[10]!=1||captured[11]!=2||captured[12]!=0)$fatal(1,"lost hand report");
   check=0;for(i=0;i<8;i=i+1)check=check^captured[i];if(check!=captured[8])$fatal(1,"report XOR1");
   check=0;for(i=9;i<17;i=i+1)check=check^captured[i];if(check!=captured[17])$fatal(1,"report XOR2");
-  $display("PASS probe diagnostic: captured HS USB bytes -> actual RTL gesture CRC -> serialized UART reports with XOR, valid and lost hand");$finish;
+  @(negedge usb_clk);force dut.heartbeat=0;
+  @(negedge usb_clk);release dut.heartbeat;
+  wait(count==27);
+  if(captured[18]!=8'ha6||captured[19]!=1||captured[20]!=2)$fatal(1,"periodic idle health report");
+  check=0;for(i=18;i<26;i=i+1)check=check^captured[i];if(check!=captured[26])$fatal(1,"health XOR");
+  force dut.usb_pll_locked=0;#1;
+  if(dut.usb_reset!==2'b11)$fatal(1,"PLL loss must reset host asynchronously");
+  $display("PASS probe diagnostic: HS bytes -> RTL CRC -> UART valid/lost-hand/periodic health reports; PLL loss reset");$finish;
  end
  initial begin #10000000;$fatal(1,"probe report timeout");end
 endmodule

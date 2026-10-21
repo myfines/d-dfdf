@@ -1,0 +1,4 @@
+[main b971b4f] Record successful read-only FPGA JTAG scan before USB host trial
+ 3 files changed, 14 insertions(+)
+ create mode 100644 logs/20261021-usb-host-readonly-scan.log
+ create mode 100644 logs/20261021-usb-host-readonly-scan.stderr.log

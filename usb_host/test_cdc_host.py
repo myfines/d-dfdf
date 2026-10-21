@@ -13,7 +13,7 @@ class CDCTest(unittest.TestCase):
   m=Module();host=K230CDCHost();device=FakeK230(split=split,wide=wide)
   m.submodules.host=DomainRenamer({'usb':'sync'})(host)
   m.submodules.device=DomainRenamer({'usb':'sync'})(device)
-  events=test_util.connect_utmi(m,host.sie.utmi,device.utmi)
+  events=test_util.connect_utmi(m,host.sie.utmi.downstream,device.utmi)
   received=[]
   async def bench(ctx):
    ctx.set(host.data.ready,1)
@@ -53,7 +53,7 @@ class CDCTest(unittest.TestCase):
    from pathlib import Path
    Path('E:/gaoyun/tools/smoke/usb-gesture-received.hex').write_text(''.join('%02x\n'%b for b in received[:24]))
   sim=Simulator(m);sim.add_clock(1/60e6);sim.add_testbench(bench)
-  sim.add_process(test_util.make_packet_capture_process(host.sie.utmi,device.utmi,events,'k230-cdc-%d%d%d%d.pcap'%(split,delay,stall,wide)))
+  sim.add_process(test_util.make_packet_capture_process(host.sie.utmi.downstream,device.utmi,events,'k230-cdc-%d%d%d%d.pcap'%(split,delay,stall,wide)))
   sim.run()
 
  def test_high_speed_cdc(self):self.run_cdc()

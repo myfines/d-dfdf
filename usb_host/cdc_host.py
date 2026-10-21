@@ -7,6 +7,8 @@ from amaranth.lib.memory import Memory
 from amaranth.lib.cdc import ResetInserter
 from amaranth.lib.wiring import Out
 from guh.usbh.enumerator import USBHostEnumerator
+from utmi_tx_pipeline import UTMITxPipeline
+from luna_ulpi_timing import UTMITranslator
 from guh.usbh.descriptor import USBDescriptorParser, EndpointFilter
 from guh.usbh.sie import TransferType, TransferResponse, DataPID
 from guh.protocol.descriptors import EndpointTransferType, InterfaceClass
@@ -15,8 +17,12 @@ class K230CDCHost(wiring.Component):
  data: Out(stream.Signature(unsigned(8)))
  ready: Out(1)
  def __init__(self,*,bus=None,handle_clocking=True):
-  self.enumerator=USBHostEnumerator(bus=bus,handle_clocking=handle_clocking,device_address=0x12,config_number=1,
+  self.enumerator=USBHostEnumerator(bus=None,handle_clocking=handle_clocking,device_address=0x12,config_number=1,
    parser=USBDescriptorParser(endpoint_filter=EndpointFilter.IN,transfer_type=EndpointTransferType.BULK,interface_class=InterfaceClass.CDC_DATA),rx_fifo_depth=1024)
+  sie=self.enumerator.sie
+  if bus is not None: sie.utmi=UTMITranslator(ulpi=bus,handle_clocking=handle_clocking)
+  sie.utmi=UTMITxPipeline(sie.utmi,elaborate_downstream=bus is not None)
+  sie.translator=sie.utmi
   super().__init__()
  @property
  def sie(self):return self.enumerator.sie
@@ -107,5 +113,3 @@ class K230CDCHost(wiring.Component):
    with m.State('FAULT'):
     m.d.usb+=watchdog.eq(179999999)
   return ResetInserter({'usb':(watchdog==179999999)|c.status.disconnected})(m)
-
-

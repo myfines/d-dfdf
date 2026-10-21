@@ -1,0 +1,6 @@
+test_stalls_packet_boundaries_and_registered_ready (test_tx_pipeline.TxPipelineTest.test_stalls_packet_boundaries_and_registered_ready) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.100s
+
+OK

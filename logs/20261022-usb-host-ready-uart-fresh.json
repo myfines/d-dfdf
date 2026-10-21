@@ -1,0 +1,21 @@
+{
+  "bytes": 99,
+  "expected_idle_frames": 11,
+  "first3": [
+    "a600000000000000a6",
+    "a600000000000000a6",
+    "a600000000000000a6"
+  ],
+  "last2": [
+    "a600000000000000a6",
+    "a600000000000000a6"
+  ],
+  "port": "COM13",
+  "seconds": 3,
+  "writes": 0,
+  "driver_backlog_discarded": 0,
+  "dtr": false,
+  "rts": false,
+  "cdc_ready": false,
+  "expected_sequence": 0
+}

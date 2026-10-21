@@ -1,0 +1,22 @@
+{
+  "kind": "standalone SRAM USB host diagnostic; not instrument",
+  "usercode": "E024",
+  "bitstream": "E:\\gaoyun\\releases\\k230-usb-host-probe-E024-20261022\\usb-host-probe-E024.fs",
+  "sha256": "7B763C07E3DCDD738B7781AB0D2F9F2706E1192DC1A46450FC6F17B91B2687B5",
+  "setup_violations": 0,
+  "hold_violations": 0,
+  "setup_slack_ns": 1.481,
+  "hold_slack_ns": 0.325,
+  "usb_tests": 7,
+  "usb_test_seconds": 120.582,
+  "rtl_reports": "valid, no-hand, health, PLL loss reset PASS",
+  "pll_model": "period16.667ns phase14.585ns high8.334ns PASS",
+  "flash_written": false,
+  "hardware_programmed": true,
+  "ulpi_end_to_end_hardware_verified": false,
+  "health_frames": 11,
+  "cdc_ready_without_k230": false,
+  "programmer_warning": "User code mismatch; actual readback E024, UART health confirmed; no bitwise verify performed",
+  "health_window_seconds": 3,
+  "health_log": "logs/20261022-usb-host-ready-uart-fresh.json"
+}

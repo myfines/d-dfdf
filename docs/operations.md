@@ -967,3 +967,11 @@ PDF文字已提取，首次控制台输出遇GBK不能编码NBSP的UnicodeEncode
 - 用户确认可开始；K230 保持未连接。Windows 0403:6010 A/B 均 OK，无残留 programmer/openFPGALoader 进程。
 - 官方 Programmer 在2.5MHz只读扫描，15秒进程超时保护，0.59秒成功找到1个设备，ID 0x0000081B。该ID不能区分GW2A/GW2AR，也不能证明USB PHY或所有功能正常。
 - 未打开串口，未写SRAM/Flash。USB主机候选仍有时序违例，禁止部署；E023未改。原始日志：logs/20261021-usb-host-readonly-scan.log。
+## 2026-10-22 USB HS 主机时序修复及授权 SRAM 诊断
+
+- 用户要求直接修复，且在下载前确认“核心板不烫，K230未接”。保持Flash与默认热故障hold不变，仅做固定E024独立诊断SRAM试验。
+- PLL相位/UTMI显式EOP缓冲/ULPI命令译码优化后，最终真实I/O约束setup0/hold0，余量1.481/0.325ns。315度PLL输出对应的PHY输出采样使用setup2/hold1配对周期约束；输入、组合DIR输出、内部路径没有多周期放宽。详见docs/k230-usb-host-timing-fix-20261022.md。
+- 7项回归120.582秒通过，另外UART周期健康/PLL失锁复位RTL通过；高云官方rPLL模型周期16.667ns、相位14.585ns、high8.334ns。完整总线等价测试先发现寄存器优先级错误，修正后通过；全部失败证据保留。
+- SRAM操作index2，2.5MHz，两次各6.41秒，退出0并读回E024，但均有User code mismatch警告，不记作无警告校验通过，不曾执行位流回读验证。最终哈希7B763C07E3DCDD738B7781AB0D2F9F2706E1192DC1A46450FC6F17B91B2687B5。
+- COM13只读，DTR/RTS关闭，未发送字节；清缓存新窗口3秒99字节，11帧精确匹配空闲A600000000000000A6。中间缓存采集含旧数据且帧头/XOR可能混淆，计数不作健康证明；最终日志ready-uart-fresh为准。
+- K230仍未连接，硬件枚举/CDC/手势未验证。诊断版暂不发声，E023 Flash未写，掉电或RCFG会恢复E023。没有宣称过去的发热根因已排除。
