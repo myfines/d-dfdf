@@ -32,5 +32,8 @@ add_file E:/gaoyun/d-dfdf/instrument_io/oled_scope.v
 add_file E:/gaoyun/d-dfdf/instrument_io/instrument_extension_top.v
 add_file E:/gaoyun/d-dfdf/instrument_io/oled_i2c_stream.v
 add_file E:/gaoyun/d-dfdf/instrument_io/wifi_telemetry.v
-set_option -user_code 0xE023
+add_file E:/gaoyun/d-dfdf/instrument_io/gesture_packet_rx.v
+add_file E:/gaoyun/d-dfdf/instrument_io/gesture_uart_rx.v
+add_file E:/gaoyun/d-dfdf/instrument_io/gesture_expression.v
+set_option -user_code 0xE025
 run all

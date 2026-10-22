@@ -1,5 +1,5 @@
 `timescale 1ns/1ps
-// Candidate only: no physical pin assignment or connection to the audio top.
+// UART transport for the shared gesture parser; E025 assigns its input to M14.
 module gesture_uart_rx #(
  parameter integer BIT_TICKS=234,LEASE_TICKS=6750000,GAP_TICKS=540000
 )(input wire clk,reset_n,rx,output wire active,update,

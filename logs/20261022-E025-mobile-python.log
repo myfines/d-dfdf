@@ -1,0 +1,9 @@
+test_controls (test_bridge.ProtocolTest.test_controls) ... ok
+test_invalid (test_bridge.ProtocolTest.test_invalid) ... ok
+test_notes (test_bridge.ProtocolTest.test_notes) ... ok
+test_reject_boolean_note_key (test_bridge.ProtocolTest.test_reject_boolean_note_key) ... ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.000s
+
+OK

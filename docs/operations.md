@@ -991,3 +991,15 @@ PDF文字已提取，首次控制台输出遇GBK不能编码NBSP的UnicodeEncode
 - 新增UART候选、单文件构建器、未安装的启动入口示例、4项测试。延用12字节CRC协议、原始置信度>=0.60和过期/HOLD清零；保留LCD/模型。目标20Hz未板测，不宣称已达到。
 - 命令：python -m unittest discover -s k230 -p "test_*.py" -v；31项通过。构建及py_compile通过，原始日志logs/20261022-k230-uart/。
 - 候选7743字节，SHA256 6c5a3ea5cddc2a4369124c142e6ad05f6848bc8f1aa132eb2097a569bd8272d7。备份、分阶段验证、恢复步骤见docs/k230-uart-sender-20261022.md。
+
+
+## 2026-10-22 17:18:20 +08:00 E025 UART手势与安卓0.3完整工程候选（未部署）
+- 用户授权先完成UART工程、规划GPIO并协调K230聊天，同时完成APK；当前只做文件、仿真与构建，没有打开串口或下载硬件。
+- K230聊天按授权完成TX-only UART候选7a4af32，31项主机测试通过；EXPORT IO9/TX1→FPGA M14，GND→GND，IO10/5V/3V3不互连，OTG保留既有供电。IO9输出电平尚无实测/明确板级原理图，未把3.3V电源脚当作TX证据。FPGA M14经PNR确认Bank1/LVCMOS33，PMOD1背面外排第3信号孔，不占用OLED/ESP。
+- instrument_extension_top启用gesture_uart_rx；1152008N1，234周期/bit@27MHz；复用CRC/序号/60%门限/250ms失联释放。手势不产生音符，只控制捏合音量和高度明亮度，丢手恢复本地。保留八路/四键/包络/复音/32声部/OLED/Wi-Fi。
+- APK0.3新增手势状态、序号、置信度、捏合/高度条、帮助及CSV字段；兼容E023 85字节S帧，E025为96字节G帧，FPGA CIPSEND长度同步。没有新增Wi-Fi音频或声称赛题所有扩展已完成。
+- 测试先红后绿：新表达模块缺失、Java手势字段缺失；新旧TCP双帧测试发现旧84字符上限漏改，修复到95后通过。保留失败日志。一次Python源码读取用默认GBK遇到UnicodeDecodeError，后续显式UTF-8重做并重新构建。一次PowerShell未引用Icarus -P参数导致编译失败，引用完整参数后通过，未涉及硬件。
+- 命令：instrument_io/run_tests.ps1；gw_sh.exe instrument_io/build_extension_candidate.tcl；mobile-companion/build.ps1；python -m unittest discover -s mobile-companion/tests -v。最终34组RTL、Java协议/TCP/合成、4项Python测试通过；234/235周期实际波特率偏差回归通过。
+- Gowin 27MHz约束setup/hold违例0，Fmax27.927MHz。接收器未使用TX输出及已有模32索引截断警告保留，无编译错误；不把时序报告当作实板验证。
+- 码流用户码E025，本机E:/gaoyun/releases/instrument-E025-20261022/instrument-E025.fs；APK版本与旧0.2归档在mobile-companion/apk/。哈希与状态logs/20261022-E025-manifest.json；原始测试、构建、引脚和时序报告为同前缀日志。
+- 自查代码的协议长度、边界、丢手、无自主音符、GPIO占用和应用兼容性；未写Flash/SRAM、未安装手机或K230程序。E023 Flash/旧归档未改，历史热故障根因未解除。下一步是IO电平核实、K230开机部署、用户接线后SRAM联调；不能称整机完成验收。

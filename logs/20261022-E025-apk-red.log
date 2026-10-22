@@ -1,0 +1,37 @@
+PASS idle, four voices, headroom, panic, release, pitch
+E:\gaoyun\d-dfdf\mobile-companion\tests\WifiProtocolTest.java:17: ����: �Ҳ�������
+  if(!g.gestureAvailable||!g.gestureActive||g.gestureSequence!=254||g.pinch!=750||g.gestureY!=250||g.confidence!=95)throw new AssertionError("gesture decode");
+       ^
+  ����:   ���� gestureAvailable
+  λ��: ����ΪSnapshot�ı��� g
+E:\gaoyun\d-dfdf\mobile-companion\tests\WifiProtocolTest.java:17: ����: �Ҳ�������
+  if(!g.gestureAvailable||!g.gestureActive||g.gestureSequence!=254||g.pinch!=750||g.gestureY!=250||g.confidence!=95)throw new AssertionError("gesture decode");
+                            ^
+  ����:   ���� gestureActive
+  λ��: ����ΪSnapshot�ı��� g
+E:\gaoyun\d-dfdf\mobile-companion\tests\WifiProtocolTest.java:17: ����: �Ҳ�������
+  if(!g.gestureAvailable||!g.gestureActive||g.gestureSequence!=254||g.pinch!=750||g.gestureY!=250||g.confidence!=95)throw new AssertionError("gesture decode");
+                                             ^
+  ����:   ���� gestureSequence
+  λ��: ����ΪSnapshot�ı��� g
+E:\gaoyun\d-dfdf\mobile-companion\tests\WifiProtocolTest.java:17: ����: �Ҳ�������
+  if(!g.gestureAvailable||!g.gestureActive||g.gestureSequence!=254||g.pinch!=750||g.gestureY!=250||g.confidence!=95)throw new AssertionError("gesture decode");
+                                                                     ^
+  ����:   ���� pinch
+  λ��: ����ΪSnapshot�ı��� g
+E:\gaoyun\d-dfdf\mobile-companion\tests\WifiProtocolTest.java:17: ����: �Ҳ�������
+  if(!g.gestureAvailable||!g.gestureActive||g.gestureSequence!=254||g.pinch!=750||g.gestureY!=250||g.confidence!=95)throw new AssertionError("gesture decode");
+                                                                                   ^
+  ����:   ���� gestureY
+  λ��: ����ΪSnapshot�ı��� g
+E:\gaoyun\d-dfdf\mobile-companion\tests\WifiProtocolTest.java:17: ����: �Ҳ�������
+  if(!g.gestureAvailable||!g.gestureActive||g.gestureSequence!=254||g.pinch!=750||g.gestureY!=250||g.confidence!=95)throw new AssertionError("gesture decode");
+                                                                                                    ^
+  ����:   ���� confidence
+  λ��: ����ΪSnapshot�ı��� g
+E:\gaoyun\d-dfdf\mobile-companion\tests\WifiProtocolTest.java:18: ����: �Ҳ�������
+  if(s.gestureAvailable)throw new AssertionError("legacy invented gesture");
+      ^
+  ����:   ���� gestureAvailable
+  λ��: ����ΪSnapshot�ı��� s
+7 ������

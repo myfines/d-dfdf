@@ -1,7 +1,7 @@
 `timescale 1ns/1ps
 // Local WPA2 demo AP/TCP server; config retries never stall the audio core.
 // Demo password is public configuration, not a user credential.
-module esp_at_control #(parameter integer BOOT_TICKS=54000000,WAIT_TICKS=27000000,LEASE_TICKS=135000000,SEND_TICKS=2700000)(
+module esp_at_control #(parameter integer BOOT_TICKS=54000000,WAIT_TICKS=27000000,LEASE_TICKS=135000000,SEND_TICKS=2700000,TELEMETRY_BYTES=85)(
  input wire clk,reset_n,rx_valid,input wire [7:0] rx_data,input wire tx_busy,
  output reg tx_start,output reg [7:0] tx_data,output reg ready,
  output reg [7:0] volume,output wire remote_active,output wire [7:0] diagnostic,
@@ -20,7 +20,7 @@ module esp_at_control #(parameter integer BOOT_TICKS=54000000,WAIT_TICKS=2700000
   3:send_command_byte="C";4:send_command_byte="I";5:send_command_byte="P";
   6:send_command_byte="S";7:send_command_byte="E";8:send_command_byte="N";
   9:send_command_byte="D";10:send_command_byte="=";11:send_command_byte=48+{5'd0,send_client};
-  12:send_command_byte=",";13:send_command_byte="8";14:send_command_byte="5";
+  12:send_command_byte=",";13:send_command_byte=48+(TELEMETRY_BYTES/10);14:send_command_byte=48+(TELEMETRY_BYTES%10);
   15:send_command_byte=13;default:send_command_byte=10;
  endcase end endfunction
  assign remote_active=lease!=0;
@@ -206,7 +206,7 @@ module esp_at_control #(parameter integer BOOT_TICKS=54000000,WAIT_TICKS=2700000
       else if(timer==WAIT_TICKS-1)begin state<=5;timer<=0;end else timer<=timer+1'b1;
     10:if(!tx_busy && !tx_start)begin tx_data<=telemetry_data;tx_start<=1;state<=11;end
     11:if(tx_busy)state<=12;
-    12:if(!tx_busy)begin if(index==84)begin timer<=0;reply<=0;state<=13;end else begin index<=index+1'b1;state<=10;end end
+    12:if(!tx_busy)begin if(index==TELEMETRY_BYTES-1)begin timer<=0;reply<=0;state<=13;end else begin index<=index+1'b1;state<=10;end end
     13:if(rx_valid && reply==3 && rx_data==10)begin state<=5;timer<=0;end
        else if(timer==WAIT_TICKS-1)begin state<=5;timer<=0;end else timer<=timer+1'b1;
     default:state<=0;

@@ -1,0 +1,72 @@
+Transcript started, output file is E:\gaoyun\d-dfdf\logs\20261022-171127-instrument-sim.log
+PASS gesture integrated: physical UART, CRC rejection, no autonomous note, local notes, timeout fallback
+E:\gaoyun\d-dfdf\instrument_io\tb_gesture_instrument.sv:30: $finish called at 838130000 (1ps)
+PASS bidirectional ESP: exact AT config, CIPSEND prompt, 96-byte actual state, SEND OK, lease release
+E:\gaoyun\d-dfdf\instrument_io\tb_wifi_gesture_link.sv:38: $finish called at 79640000 (1ps)
+PASS gesture expression: neutral fallback, bounds, smoothing
+E:\gaoyun\d-dfdf\instrument_io\tb_gesture_expression.sv:17: $finish called at 15070000 (1ps)
+PASS gesture: Python CRC vectors through serial RX, noise, duplicate, corruption, wrap, replay, version, range, loss, gap, timeout, restart, flags, framing, reset
+E:\gaoyun\d-dfdf\instrument_io\tb_gesture_link.sv:41: $finish called at 789340000 (1ps)
+PASS bidirectional ESP: exact AT config, CIPSEND prompt, 85-byte actual state, SEND OK, lease release
+E:\gaoyun\d-dfdf\instrument_io\tb_wifi_link.sv:37: $finish called at 79200000 (1ps)
+PASS WiFi commands: parameters, client, range, fragments
+E:\gaoyun\d-dfdf\instrument_io\tb_wifi_commands.sv:15: $finish called at 2190000 (1ps)
+PASS telemetry: coherent fields, 32 actual audio samples, 85-byte framing
+E:\gaoyun\d-dfdf\instrument_io\tb_wifi_telemetry.sv:15: $finish called at 1735000 (1ps)
+PASS scope capture: zero-cross, decimation, clamp, freeze, silence timeout
+E:\gaoyun\d-dfdf\instrument_io\tb_scope_capture.sv:23: $finish called at 110700000 (1ps)
+PASS OLED stream: 1024 ordered bytes, one START, NACK, timeout, reset
+E:\gaoyun\d-dfdf\instrument_io\tb_oled_stream.sv:39: $finish called at 1750130000 (1ps)
+PASS extension safe startup: no automatic output, explicit arm, no accidental panel action, disarm high impedance
+E:\gaoyun\d-dfdf\instrument_io\tb_extension_safe.sv:20: $finish called at 347000000 (1ps)
+PASS ESP config retry, OK handshake, command, lease, reset
+E:\gaoyun\d-dfdf\instrument_io\tb_esp_at.sv:20: $finish called at 10140000 (1ps)
+PASS gain unity, slew, mute, negative sample
+E:\gaoyun\d-dfdf\instrument_io\tb_remote_gain.sv:8: $finish called at 5231000 (1ps)
+PASS UART loopback
+E:\gaoyun\d-dfdf\instrument_io\tb_uart8n1.sv:6: $finish called at 5080000 (1ps)
+PASS esp_volume framing, fragments, clients, invalid data, timeout
+E:\gaoyun\d-dfdf\instrument_io\tb_esp_volume.sv:14: $finish called at 4370000 (1ps)
+OLED HALF_TICKS=3 transfer_cycles=74679 period_cycles=76452 equivalent_27MHz_fps=353.162769
+PASS OLED absence recovery, full refresh, open-drain reset
+E:\gaoyun\d-dfdf\instrument_io\tb_oled_scope.sv:69: $finish called at 1609030000 (1ps)
+PASS safe startup: no automatic output, explicit arm, no accidental panel action, disarm high impedance
+E:\gaoyun\d-dfdf\instrument_io\tb_safe_start.sv:18: $finish called at 347000000 (1ps)
+PASS allocator: eight inputs, four retained voices, no duplicates, queued keys, edge triggers
+E:\gaoyun\d-dfdf\instrument_io\tb_key_allocator.sv:16: $finish called at 150000 (1ps)
+PASS optical reader: boot delay, 0x12/0x30, single byte NACK, channel order, multikey, disconnect, timeout recovery
+E:\gaoyun\d-dfdf\instrument_io\tb_optical_reader.sv:23: $finish called at 94330000 (1ps)
+PASS optical voices: all eight pitches, reused four slots, bounded multikey output, release silence
+E:\gaoyun\d-dfdf\instrument_io\tb_optical_voice.sv:20: $finish called at 1180030000 (1ps)
+PASS optical integration: separate ADC/I2C, control-only board keys, decoded stereo, disconnect release, board fallback, recovery
+E:\gaoyun\d-dfdf\instrument_io\tb_optical_instrument.sv:24: $finish called at 73067177475 (1ps)
+PASS idle activity: inactive bank/keyboard/effect state frozen
+E:\gaoyun\d-dfdf\instrument_io\tb_idle_activity.sv:15: $finish called at 36990000 (1ps)
+PASS router: fade to zero before mode switch, edit silence, bounded gain, return
+E:\gaoyun\d-dfdf\instrument_io\tb_router.sv:14: $finish called at 890000 (1ps)
+PASS 32 bank: 32 active oscillators, per-frame budget, bounded samples, released silence
+E:\gaoyun\d-dfdf\instrument_io\tb_bank.sv:14: $finish called at 9580510000 (1ps)
+PASS panel: presets, octave, echo, ADSR editing, long-press disambiguation, test toggle
+E:\gaoyun\d-dfdf\instrument_io\tb_panel.sv:24: $finish called at 1290000 (1ps)
+PASS delay: initialized silence, delayed impulse, gain, exact bypass
+E:\gaoyun\d-dfdf\instrument_io\tb_effect.sv:15: $finish called at 411000 (1ps)
+PASS waveforms: bounded known samples, fundamental, sine purity, distinct saw harmonics
+E:\gaoyun\d-dfdf\instrument_io\tb_waves.sv:19: $finish called at 768000 (1ps)
+PASS ADSR: peak, decay, stable sustain, release, retrigger, idle
+E:\gaoyun\d-dfdf\instrument_io\tb_adsr.sv:16: $finish called at 17230000 (1ps)
+PASS I2S: delay, signed stereo words, 16-bit slots, coherent frames
+E:\gaoyun\d-dfdf\instrument_io\tb_i2s.sv:36: $finish called at 9735000 (1ps)
+PASS ADS1015: address/config, signed-byte framing, both axes, stretch, NACK, stuck bus recovery
+E:\gaoyun\d-dfdf\instrument_io\tb_ads1015.sv:41: $finish called at 187270000 (1ps)
+PASS voice: single note frequency, bend, timbre, octave, level limit, neutral failover, silence
+E:\gaoyun\d-dfdf\instrument_io\tb_voice.sv:44: $finish called at 745450000 (1ps)
+PASS poly: independent C+G superposition, selective release, four voice headroom, silence
+E:\gaoyun\d-dfdf\instrument_io\tb_poly.sv:22: $finish called at 222050000 (1ps)
+PASS pages: all 12 chromatic pitches selectable with four keys
+E:\gaoyun\d-dfdf\instrument_io\tb_pages.sv:23: $finish called at 1608030000 (1ps)
+PASS controls integration: debounced combinations, runtime ADSR, edit mute, 32-voice routing, return to silence
+E:\gaoyun\d-dfdf\instrument_io\tb_controls.sv:25: $finish called at 168002646733 (1ps)
+PASS integration: real BCLK rate, decoded stereo audio, ADC LED, missing-ADC fallback, release, amp disabled
+E:\gaoyun\d-dfdf\instrument_io\tb_instrument.sv:41: $finish called at 33812823555 (1ps)
+ALL INSTRUMENT TESTS PASSED
+Transcript stopped, output file is E:\gaoyun\d-dfdf\logs\20261022-171127-instrument-sim.log

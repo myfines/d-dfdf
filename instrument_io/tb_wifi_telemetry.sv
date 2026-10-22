@@ -3,7 +3,7 @@ module tb_wifi_telemetry;
 reg clk=0;always #5 clk=~clk;reg reset_n=0,capture=0;reg [6:0] index=0;wire [7:0] data;
 integer i;reg [8*20-1:0] prefix="S00010F8101234580210";
 // Explicit expected prefix: S,0001,0F,81,012,345,80,2,1,0.
-wifi_telemetry dut(clk,reset_n,1'b1,16'sd8192,capture,8'h0f,8'h81,12'h012,12'h345,8'h80,2'd2,1'b1,2'd0,index,data);
+wifi_telemetry dut(clk,reset_n,1'b1,16'sd8192,capture,8'h0f,8'h81,12'h012,12'h345,8'h80,2'd2,1'b1,2'd0,index,data,1'b0,8'd0,10'd0,10'd0,8'd0);
 initial begin repeat(4)@(negedge clk);reset_n=1;repeat(160)@(negedge clk);
  capture=1;@(negedge clk);capture=0;
  prefix={"S","0001","0F","81","012","345","80","2","1","0"};

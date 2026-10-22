@@ -7,7 +7,7 @@ integer packets=0,remaining=0;reg [8*64-1:0] command=0;reg [8*85-1:0] payload=0;
 esp_at_control #(.BOOT_TICKS(10),.WAIT_TICKS(300),.LEASE_TICKS(5000),.SEND_TICKS(1000)) dut(
  clk,reset_n,rv,rd,busy,start,td,ready,volume,active,diag,
  telemetry,index,capture,tone,page,echo,keys,overrides);
-wifi_telemetry source(clk,reset_n,1'b1,16'sd8192,capture,8'h0f,8'h81,12'h012,12'h345,volume,tone,echo,page,index,telemetry);
+wifi_telemetry source(clk,reset_n,1'b1,16'sd8192,capture,8'h0f,8'h81,12'h012,12'h345,volume,tone,echo,page,index,telemetry,1'b0,8'd0,10'd0,10'd0,8'd0);
 task rx(input [7:0] b);begin @(negedge clk);rd=b;rv=1;@(negedge clk);rv=0;end endtask
 task send(input [8*128-1:0] s);integer i;begin for(i=127;i>=0;i=i-1)if(s[i*8+:8]!=0)rx(s[i*8+:8]);end endtask
 always begin

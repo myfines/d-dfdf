@@ -1,0 +1,5 @@
+instrument_io/tb_gesture_expression.sv:6: error: Unknown module type: gesture_expression
+2 error(s) during elaboration.
+*** These modules were missing:
+        gesture_expression referenced 1 times.
+***

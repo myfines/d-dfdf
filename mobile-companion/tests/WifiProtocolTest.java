@@ -12,6 +12,13 @@ public final class WifiProtocolTest {
    try {WifiProtocol.parse(bad);throw new AssertionError("invalid accepted");}catch(IllegalArgumentException expected){}
   }
   try {WifiProtocol.command('T',4);throw new AssertionError("range");}catch(IllegalArgumentException expected){}
+  String extended="G"+line.substring(1)+"1FE2EE0FA5F";
+  WifiProtocol.Snapshot g=WifiProtocol.parse(extended);
+  if(!g.gestureAvailable||!g.gestureActive||g.gestureSequence!=254||g.pinch!=750||g.gestureY!=250||g.confidence!=95)throw new AssertionError("gesture decode");
+  if(s.gestureAvailable)throw new AssertionError("legacy invented gesture");
+  for(String tail:new String[]{"2FE2EE0FA5F","1FEFFF0FA5F","1FE2EE0FAFF"}) {
+   try{WifiProtocol.parse("G"+line.substring(1)+tail);throw new AssertionError("invalid gesture accepted");}catch(IllegalArgumentException expected){}
+  }
   System.out.println("PASS WiFi protocol: actual snapshot fields, waveform, invalid/range checks");
  }
 }

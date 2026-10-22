@@ -5,7 +5,7 @@ tri1 ascl,asda,oscl,osda;wire bck,ws,data,pa,hb,hw,hd,alive,adc_led,uart;integer
 reg [15:0] l,r;
 instrument_io #(.SAFE_STARTUP(0),.I2C_HALF_TICKS(3),.CONVERSION_TICKS(100),.RETRY_TICKS(50),.BUS_TIMEOUT_TICKS(100),
  .SWITCH_DEBOUNCE_TICKS(10),.ENABLE_OPTICAL(1),.OPTICAL_BOOT_TICKS(50),.OPTICAL_POLL_TICKS(20)) dut(
- clk,keys,1'b1,ascl,asda,bck,ws,data,pa,hb,hw,hd,alive,adc_led,uart,oscl,osda,,,1'b1,);
+ clk,keys,1'b1,ascl,asda,bck,ws,data,pa,hb,hw,hd,alive,adc_led,uart,oscl,osda,,,1'b1,,1'b1);
 ads1015_model adc(ascl,asda,1'b1,12'd825,12'd0,ac);
 optical_sensor_model optical(oscl,osda,enabled,status,oc);
 task decode;integer i;begin @(negedge ws);@(posedge bck);l=0;r=0;

@@ -6,7 +6,8 @@ module instrument_io #(
     parameter integer BUS_TIMEOUT_TICKS=270000,
     parameter integer SWITCH_DEBOUNCE_TICKS=135000,
     parameter integer LONG_PRESS_FRAMES=46875,
-    parameter SAFE_STARTUP=1,ENABLE_OPTICAL=0,OPTICAL_ACTIVE_LOW=1,ENABLE_UI=0,
+    parameter SAFE_STARTUP=1,ENABLE_OPTICAL=0,OPTICAL_ACTIVE_LOW=1,ENABLE_UI=0,ENABLE_GESTURE=0,
+    parameter integer GESTURE_BIT_TICKS=234,GESTURE_LEASE_TICKS=6750000,GESTURE_GAP_TICKS=540000,
     parameter integer OPTICAL_BOOT_TICKS=540000000,OPTICAL_POLL_TICKS=27000
 )(input wire clk,input wire [3:0] btn_n,input wire JOY_SW_N,
   inout wire ADC_SCL,ADC_SDA,
@@ -14,7 +15,7 @@ module instrument_io #(
   output wire PA_EN,HP_BCK,HP_WS,HP_DIN,
   output reg LED_ALIVE,output wire LED_ADC,output wire UART_TX,
   inout wire OPTICAL_SCL,OPTICAL_SDA,
-  inout wire OLED_SCL,OLED_SDA,input wire ESP_RX,output wire ESP_TX);
+  inout wire OLED_SCL,OLED_SDA,input wire ESP_RX,output wire ESP_TX,input wire K230_RX);
     reg [15:0] power_on=0;
     wire reset_n=power_on[15];
     always @(posedge clk) if(!reset_n) power_on<=power_on+1'b1;
@@ -36,6 +37,20 @@ module instrument_io #(
     wire selected_echo=remote_overrides[1]?remote_echo:echo_enable;
     wire [1:0] selected_page=remote_overrides[2]?remote_page:note_page;
     wire remote_play=(|remote_keys) && !test_mode && !edit_mode;
+    wire gesture_active,gesture_update;wire [7:0] gesture_seq,gesture_confidence;
+    wire [9:0] gesture_pinch,gesture_y;wire [7:0] gesture_gain;
+    wire [11:0] gesture_color;wire gesture_apply=gesture_active && !test_mode && !edit_mode;
+    generate if(ENABLE_GESTURE)begin: gesture_input
+        gesture_uart_rx #(.BIT_TICKS(GESTURE_BIT_TICKS),.LEASE_TICKS(GESTURE_LEASE_TICKS),.GAP_TICKS(GESTURE_GAP_TICKS)) receiver(clk,io_reset_n,K230_RX,gesture_active,gesture_update,
+            gesture_seq,gesture_pinch,gesture_y,gesture_confidence);
+    end else begin: no_gesture
+        assign gesture_active=0;assign gesture_update=0;assign gesture_seq=0;
+        assign gesture_pinch=0;assign gesture_y=0;assign gesture_confidence=0;
+    end endgenerate
+    gesture_expression expression(clk,io_reset_n,frame_tick,gesture_apply,
+        gesture_pinch,gesture_y,gesture_gain,gesture_color);
+    wire signed [15:0] expression_sample;
+    remote_audio_gain expression_gain(clk,io_reset_n,frame_tick,gesture_gain,audio_sample,expression_sample);
     wire [3:0] play_keys=(test_mode || edit_mode)?4'd15:keys_sync;
     reg sw_meta,sw_sync,sw_stable;
     reg [31:0] sw_count;
@@ -75,8 +90,8 @@ module instrument_io #(
         timbre,note_page,edit_mode,test_mode,octave_down,echo_enable,edit_field,
         attack_step,decay_interval,sustain_level,release_interval);
     // Test mode selects a 32-voice sine bank; ordinary keys are muted.
-    voice_engine voice(clk,io_reset_n,frame_tick,play_keys,test_mode?1'b0:controls_valid,
-        axis_x,test_mode?12'd0:axis_y,test_mode?1'b0:octave_down,keyboard_sample,keyboard_active,
+    voice_engine voice(clk,io_reset_n,frame_tick,play_keys,test_mode?1'b0:(controls_valid || gesture_apply),
+        controls_valid?axis_x:12'd825,test_mode?12'd0:gesture_apply?gesture_color:axis_y,test_mode?1'b0:octave_down,keyboard_sample,keyboard_active,
         1'b1,test_mode?2'd1:selected_timbre,test_mode?9'd6:attack_step,
         test_mode?16'd1:decay_interval,test_mode?9'd256:sustain_level,
         test_mode?16'd4:release_interval,selected_page,
@@ -97,19 +112,20 @@ module instrument_io #(
         wire [7:0] rx_data,tx_data,remote_volume,esp_diagnostic,telemetry_byte;
         wire [6:0] telemetry_index;wire telemetry_capture;
         wire [7:0] visible_keys=remote_play?{4'd0,remote_keys}:optical_valid?~optical_keys_n:{4'd0,~keys_sync};
-        wifi_telemetry status_packet(clk,io_reset_n,frame_tick,final_sample,telemetry_capture,
+        wifi_telemetry #(.EXTENDED(ENABLE_GESTURE)) status_packet(clk,io_reset_n,frame_tick,final_sample,telemetry_capture,
             visible_keys,{armed,optical_valid,controls_valid,test_mode,edit_mode,selected_echo,note_active,remote_active},
-            axis_x,axis_y,remote_volume,selected_timbre,selected_echo,selected_page,telemetry_index,telemetry_byte);
+            axis_x,axis_y,remote_volume,selected_timbre,selected_echo,selected_page,telemetry_index,telemetry_byte,
+            gesture_active,gesture_seq,gesture_pinch,gesture_y,gesture_confidence);
         uart8n1 serial_port(clk,io_reset_n,ESP_RX,tx_start,tx_data,esp_tx_raw,tx_busy,rx_valid,rx_data);
-        esp_at_control wifi(clk,io_reset_n,rx_valid,rx_data,tx_busy,tx_start,tx_data,esp_ready,remote_volume,remote_active,esp_diagnostic,
+        esp_at_control #(.TELEMETRY_BYTES(ENABLE_GESTURE?96:85)) wifi(clk,io_reset_n,rx_valid,rx_data,tx_busy,tx_start,tx_data,esp_ready,remote_volume,remote_active,esp_diagnostic,
             telemetry_byte,telemetry_index,telemetry_capture,remote_tone,remote_page,remote_echo,remote_keys,remote_overrides);
-        remote_audio_gain gain(clk,io_reset_n,frame_tick,remote_volume,audio_sample,final_sample);
+        remote_audio_gain gain(clk,io_reset_n,frame_tick,remote_volume,expression_sample,final_sample);
         oled_scope screen(clk,io_reset_n,frame_tick,final_sample,optical_valid?optical_keys_n:{4'hf,keys_sync},
             {remote_active,esp_ready,selected_echo,test_mode,edit_mode,controls_valid,optical_valid,armed},OLED_SCL,OLED_SDA,oled_online,selected_timbre,remote_volume,esp_diagnostic);
     end else begin: no_extension_ui
         assign remote_tone=0;assign remote_page=0;assign remote_echo=0;assign remote_keys=0;assign remote_overrides=0;
         assign ESP_TX=1'bz;assign OLED_SCL=1'bz;assign OLED_SDA=1'bz;
-        assign final_sample=audio_sample;
+        assign final_sample=expression_sample;
     end endgenerate
     i2s_tx16 tx(clk,io_reset_n,final_sample,final_sample,pcm_bck_raw,pcm_lrck_raw,pcm_data_raw,frame_tick);
     assign PCM_BCK=armed?pcm_bck_raw:1'bz;

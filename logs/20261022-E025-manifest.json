@@ -1,0 +1,31 @@
+{
+  "version": "E025 / Android 0.3-uart-gesture",
+  "date": "2026-10-22",
+  "deployed": false,
+  "flash_changed": false,
+  "user_code": "0xE025",
+  "gpio": {
+    "fpga_rx": "M14",
+    "bank": 1,
+    "io_type": "LVCMOS33",
+    "k230_tx": "EXPORT IO9 / TX1",
+    "k230_io9_voltage_measured": false
+  },
+  "uart": {
+    "baud": 115200,
+    "format": "8N1",
+    "clock_hz": 27000000,
+    "bit_ticks": 234
+  },
+  "rtl_test_groups": 34,
+  "setup_violations": 0,
+  "hold_violations": 0,
+  "fmax_mhz": 27.927,
+  "bitstream": "E:\\gaoyun\\releases\\instrument-E025-20261022\\instrument-E025.fs",
+  "bitstream_sha256": "d74ada653e4f3bf3d6b4713e69fbd3908a398e3421b5f20a0813510f96177c4e",
+  "apk": "mobile-companion/apk/instrument-companion-0.3-uart-gesture.apk",
+  "apk_sha256": "181e4fbb8bcc7fe15c5932e1764f139add4c89672ae9b3a5b9599b3b304e00b0",
+  "k230_source_commit": "7a4af32",
+  "usb_host_included": false,
+  "hardware_validation": "Pending. Neither new FPGA nor K230 sender installed; no phone runtime acceptance."
+}

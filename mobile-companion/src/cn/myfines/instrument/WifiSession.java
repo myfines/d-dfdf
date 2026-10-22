@@ -37,7 +37,7 @@ public final class WifiSession implements AutoCloseable {
    s.connect(new InetSocketAddress(host,port),3000);s.setSoTimeout(100);s.setTcpNoDelay(true);
    InputStream input=s.getInputStream();OutputStream output=s.getOutputStream();
    listener.status("TCP已连接，等待FPGA真实状态");
-   StringBuilder line=new StringBuilder(85);long sent=0,received=System.nanoTime();boolean first=true;
+   StringBuilder line=new StringBuilder(96);long sent=0,received=System.nanoTime();boolean first=true;
    while(running){
     long now=System.nanoTime();
     synchronized(stateLock){
@@ -52,7 +52,7 @@ public final class WifiSession implements AutoCloseable {
      if(b==10){
       WifiProtocol.Snapshot state=WifiProtocol.parse(line.toString());line.setLength(0);received=System.nanoTime();listener.snapshot(state);
      }else{
-      if(b<32 || b>126 || line.length()>=84)throw new IOException("状态帧格式错误");
+      if(b<32 || b>126 || line.length()>=95)throw new IOException("状态帧格式错误");
       line.append((char)b);
      }
     }catch(SocketTimeoutException timeout){/* bounded wait; send lease on next loop */}

@@ -1,0 +1,9 @@
+PASS idle, four voices, headroom, panic, release, pitch
+PASS WiFi protocol: actual snapshot fields, waveform, invalid/range checks
+PASS WiFi TCP worker: control bytes, fragmented FPGA status, disconnect
+����: [options] δ�� -source 8 һ������������·��
+ע: E:\gaoyun\d-dfdf\mobile-companion\src\cn\myfines\instrument\WifiActivity.javaʹ�û򸲸����ѹ�ʱ�� API��
+ע: �й���ϸ��Ϣ, ��ʹ�� -Xlint:deprecation ���±��롣
+1 ������
+ 'classes.dex'...
+APK: E:\gaoyun\d-dfdf\mobile-companion\build\instrument-companion.apk

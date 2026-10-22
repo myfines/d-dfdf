@@ -1,0 +1,4 @@
+PASS idle, four voices, headroom, panic, release, pitch
+PASS WiFi protocol: actual snapshot fields, waveform, invalid/range checks
+Exception in thread "main" java.lang.AssertionError: snapshot not delivered
+	at cn.myfines.instrument.WifiSessionTest.main(WifiSessionTest.java:24)
