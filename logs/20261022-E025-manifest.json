@@ -9,7 +9,8 @@
     "bank": 1,
     "io_type": "LVCMOS33",
     "k230_tx": "EXPORT IO9 / TX1",
-    "k230_io9_voltage_measured": false
+    "k230_io9_voltage_measured": false,
+    "connector_position": "PMOD1 inner row, third signal hole in official rear view, USB ports at bottom"
   },
   "uart": {
     "baud": 115200,
