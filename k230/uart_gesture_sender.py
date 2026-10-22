@@ -2,11 +2,14 @@
 from usb_gesture_sender import PacketState, write_frame, V2_SHA256
 
 UART_TX_PIN=9
+UART_RX_PIN=10
 UART_BAUD=115200
 
 def open_uart_tx(machine_module):
     fpioa=machine_module.FPIOA()
     fpioa.set_function(UART_TX_PIN,fpioa.UART1_TXD,ie=0,oe=1,pu=1)
+    # CanMV UART requires an RX mux even for write-only use; IO10 stays unwired.
+    fpioa.set_function(UART_RX_PIN,fpioa.UART1_RXD,ie=1,oe=0,pu=1)
     uart=machine_module.UART
     return uart(uart.UART1,baudrate=UART_BAUD,bits=uart.EIGHTBITS,
                 parity=uart.PARITY_NONE,stop=uart.STOPBITS_ONE)

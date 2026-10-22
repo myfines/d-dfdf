@@ -1,0 +1,1 @@
+{'reports': 0, 'first': [], 'last': [], 'PINCH2_lines': 0, 'traceback': False, 'stopped': True}

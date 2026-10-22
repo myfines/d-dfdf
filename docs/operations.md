@@ -1020,3 +1020,13 @@ PDF文字已提取，首次控制台输出遇GBK不能编码NBSP的UnicodeEncode
 - 用户报告USB和两根串口线已接。只读Get-PnpDevice -PresentOnly查询：当前本电脑未列出0403:6010、1209:ABD1或COM13；不能下载或读取板上状态，未开串口/烧录。
 - 读取最新18977e4位置更正：M14是PMOD1内排第3信号孔，外排对应M15；已明确向用户纠正此前口误并请求核对。K230 UART发送程序是否已部署尚待确认。IO9电平没有新增实测证据。
 - 等待用户确认准确接点及USB-JTAG连至本机，再继续；未更改GPIO、电源、驱动或Flash。原始摘要logs/20261022-E025-connection-check.json。
+
+
+## 2026-10-22 K230 UART persistent script deployment
+
+- COM9 / VID1209:PIDABD1 identified; original main SHA256 cc8e17d9e95a03340a4fbcc895f0740cab4d1b051227b749e002da92ca2b5375. Original models and V2 source hashes checked. No firmware image or FPGA Flash written.
+- Backed up original entry to `/sdcard/main_before_uart_E025_20261022_190536.py` and host `logs/20261022-k230-uart-deploy/main-original.py`; main replaced with UART launcher, read back verified SHA256 511777bd5dc930001bd6d938c0511a6ed94a5e5197955350743fb462ae78235b. This FAT implementation cannot rename over existing main; backup verified before remove+rename (not an atomic overwrite).
+- Actual CanMV firmware rejected TX-only mux with `UART(1) rx not configured, see machine.FPIOA`. Fixed UART1 RX mux on IO10 as input (ie=1,oe=0), physically unwired; TX remains IO9, 115200 8N1. Regression test checks both mux directions. Initial candidate saved on SD as `uart_gesture_sender_before_rx_fix.py`.
+- Retained errors: os.sync unavailable, FAT rename EEXIST, first trial camera already initialized, RX mux assertion, stage retry ENOENT after successful rename. Final candidate bytes were hash-checked before rename; installed main successfully executed final candidate. Camera ownership cleared with machine.reset; software reset landed at REPL, so it does NOT establish autonomous cold-boot success.
+- Final stored-main runtime: 14 UART reports; accepted packet count 21 ->216, 64 PINCH2 lines, no Traceback/stopped. Reports valid=0/confidence=0: no valid hand demonstrated. Accepted writes are not physical line capture or FPGA CRC acceptance. Rate during observed AI workload below target20Hz.
+- FPGA USB-JTAG absent, E025 FPGA download and end-to-end gesture test still pending; old FPGA Flash unchanged. Next: verify K230 power-on startup, then connect Dock USB-JTAG and test E025 in SRAM before Flash.

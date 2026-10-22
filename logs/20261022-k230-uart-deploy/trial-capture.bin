@@ -1,0 +1,6 @@
+
+raw REPL; CTRL-B to exit
+>OKUART_GESTURE candidate: UART1 IO9/TX1 115200 8N1; RX unwired
+'NoneType' object has no attribute 'stop'
+UART_GESTURE stopped; FPGA lease must expire; error= OSError('sensor(2) is already inited.',)
+>

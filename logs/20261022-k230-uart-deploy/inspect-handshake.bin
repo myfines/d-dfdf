@@ -1,0 +1,18 @@
+PINCH2,2414,NO HAND,0,0,--,--,--,--,0,34,0,0,0,0.000
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+  File "/sdcard/pinch_preview_v2.py", line 232, in <module>
+  File "/sdcard/pinch_preview_v2.py", line 228, in main
+  File "/sdcard/libs/PipeLine.py", line 138, in destroy
+  File "media/sensor.py", line 1, in stop
+KeyboardInterrupt: 
+CanMV v1.8-24-g46d59a8(based on Micropython e00a144) on 2026-07-30; k230_canmv_yahboom with K230
+Type "help()" for more information.
+>>> 
+CanMV v1.8-24-g46d59a8(based on Micropython e00a144) on 2026-07-30; k230_canmv_yahboom with K230
+Type "help()" for more information.
+>>> 
+>>> 
+>>> print('UART_'+'DEPLOY_READY')
+UART_DEPLOY_READY
+>>> 

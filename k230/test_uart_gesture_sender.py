@@ -4,6 +4,7 @@ from uart_gesture_sender import open_uart_tx, UartLink, PacketState
 
 class FakeFpioa:
     UART1_TXD=91
+    UART1_RXD=92
     calls=[]
     def set_function(self,*args,**kwargs):self.calls.append((args,kwargs))
 
@@ -16,11 +17,11 @@ class FakeUart:
     def deinit(self):self.closed=True
 
 class UartTests(unittest.TestCase):
-    def test_only_tx_is_muxed_and_8n1_is_explicit(self):
+    def test_required_rx_is_input_and_8n1_is_explicit(self):
         class Machine: FPIOA=FakeFpioa;UART=FakeUart
         FakeFpioa.calls=[]
         port=open_uart_tx(Machine)
-        self.assertEqual(FakeFpioa.calls,[((9,91),dict(ie=0,oe=1,pu=1))])
+        self.assertEqual(FakeFpioa.calls,[((9,91),dict(ie=0,oe=1,pu=1)),((10,92),dict(ie=1,oe=0,pu=1))])
         self.assertEqual(port.args,(1,))
         self.assertEqual(port.kwargs,dict(baudrate=115200,bits=8,parity=None,stop=1))
 

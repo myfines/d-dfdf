@@ -1,0 +1,1 @@
+{'reports': 14, 'first': [(b'21', b'20', b'0', b'0'), (b'33', b'32', b'0', b'0'), (b'46', b'45', b'0', b'0')], 'last': [(b'202', b'201', b'0', b'0'), (b'216', b'215', b'0', b'0')], 'PINCH2_lines': 64, 'traceback': False, 'stopped': False}

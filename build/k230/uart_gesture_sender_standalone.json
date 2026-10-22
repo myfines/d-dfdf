@@ -1,7 +1,7 @@
 {
   "candidate": "E:\\gaoyun\\d-dfdf\\build\\k230\\uart_gesture_sender_standalone.py",
-  "bytes": 7743,
-  "sha256": "6c5a3ea5cddc2a4369124c142e6ad05f6848bc8f1aa132eb2097a569bd8272d7",
+  "bytes": 7906,
+  "sha256": "e88ea108a08d80d27c64377d0a92eacf9a189d4d62c723fb9abf039846615e91",
   "deployed": false,
   "uart": 1,
   "tx_gpio": 9,
@@ -14,6 +14,6 @@
     "gesture_protocol.py": "76894e3a694715afa6764ccf8708e65c94d522a71152660fa3e7d7443a69a8ec",
     "usb_gesture_state.py": "0d274a9a6ae29f728a00e26d0b11da8bdc966b6c0ce4a380cbf49f905482314e",
     "usb_gesture_sender.py": "c1841c40f99bb59af9db22086930c59c7ed531e228857b74cb683fb5ae39ee1f",
-    "uart_gesture_sender.py": "cdf502a340ad0fa837fd351255652df04e186134b076b0a33fef742dcf92f117"
+    "uart_gesture_sender.py": "78ee9b4533d5b22ffa19935c06730e8ef9bce4c85d736c693f49810e1feb9dc7"
   }
 }
