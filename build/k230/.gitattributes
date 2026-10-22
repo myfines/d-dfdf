@@ -1,1 +1,2 @@
 usb_gesture_sender_standalone.py -text
+uart_gesture_sender_standalone.py -text

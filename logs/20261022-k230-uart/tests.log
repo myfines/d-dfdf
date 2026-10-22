@@ -1,0 +1,36 @@
+test_invalid_and_no_hand (test_gesture_protocol.ProtocolTest.test_invalid_and_no_hand) ... ok
+test_known_crc (test_gesture_protocol.ProtocolTest.test_known_crc) ... ok
+test_roundtrip_and_crc (test_gesture_protocol.ProtocolTest.test_roundtrip_and_crc) ... ok
+test_large_position_jump_rewarms (test_pinch_preview.PinchTests.test_large_position_jump_rewarms) ... ok
+test_loss_invalidates_and_requires_reacquisition (test_pinch_preview.PinchTests.test_loss_invalidates_and_requires_reacquisition) ... ok
+test_multi_low_confidence_and_degenerate (test_pinch_preview.PinchTests.test_multi_low_confidence_and_degenerate) ... ok
+test_scale_invariance (test_pinch_preview.PinchTests.test_scale_invariance) ... ok
+test_smoothing_and_hysteresis (test_pinch_preview.PinchTests.test_smoothing_and_hysteresis) ... ok
+test_confidence_hysteresis (test_pinch_v2.ContinuityTests.test_confidence_hysteresis) ... ok
+test_corrupt_geometry_never_held (test_pinch_v2.ContinuityTests.test_corrupt_geometry_never_held) ... ok
+test_gap_is_held_but_never_fresh (test_pinch_v2.ContinuityTests.test_gap_is_held_but_never_fresh) ... ok
+test_long_frame_stall_requires_reacquisition (test_pinch_v2.ContinuityTests.test_long_frame_stall_requires_reacquisition) ... ok
+test_multi_does_not_hold_and_cannot_switch (test_pinch_v2.ContinuityTests.test_multi_does_not_hold_and_cannot_switch) ... ok
+test_return_different_location_must_rewarm (test_pinch_v2.ContinuityTests.test_return_different_location_must_rewarm) ... ok
+test_weak_distractors_cannot_acquire_or_hide_strong_hand (test_pinch_v2.ContinuityTests.test_weak_distractors_cannot_acquire_or_hide_strong_hand) ... ok
+test_binary_partial_write_has_no_line_ending (test_uart_gesture_sender.UartTests.test_binary_partial_write_has_no_line_ending) ... ok
+test_old_and_low_confidence_still_zero (test_uart_gesture_sender.UartTests.test_old_and_low_confidence_still_zero) ... ok
+test_only_tx_is_muxed_and_8n1_is_explicit (test_uart_gesture_sender.UartTests.test_only_tx_is_muxed_and_8n1_is_explicit) ... ok
+test_standalone_has_uart_but_no_usb_device_api (test_uart_gesture_sender.UartTests.test_standalone_has_uart_but_no_usb_device_api) ... ok
+test_eagain_retry_and_invalid_write_length (test_usb_gesture_sender.SenderTests.test_eagain_retry_and_invalid_write_length) ... ok
+test_low_confidence_is_zero_and_threshold_is_unchanged (test_usb_gesture_sender.SenderTests.test_low_confidence_is_zero_and_threshold_is_unchanged) ... ok
+test_partial_write_preserves_bytes (test_usb_gesture_sender.SenderTests.test_partial_write_preserves_bytes) ... ok
+test_stale_hold_and_wrap (test_usb_gesture_sender.SenderTests.test_stale_hold_and_wrap) ... ok
+test_stalled_write_times_out (test_usb_gesture_sender.SenderTests.test_stalled_write_times_out) ... ok
+test_standalone_build_has_no_external_codec_import (test_usb_gesture_sender.SenderTests.test_standalone_build_has_no_external_codec_import) ... ok
+test_clamp_and_vertical_definition (test_usb_gesture_state.StateTests.test_clamp_and_vertical_definition) ... ok
+test_invalid_and_stale_zero (test_usb_gesture_state.StateTests.test_invalid_and_stale_zero) ... ok
+test_invalid_geometry_and_multi (test_usb_gesture_state.StateTests.test_invalid_geometry_and_multi) ... ok
+test_corruption_noise_and_recovery (test_usb_stream.StreamTests.test_corruption_noise_and_recovery) ... ok
+test_fragment_merge_and_wrap (test_usb_stream.StreamTests.test_fragment_merge_and_wrap) ... ok
+test_independent_standard_crc_and_range (test_usb_stream.StreamTests.test_independent_standard_crc_and_range) ... ok
+
+----------------------------------------------------------------------
+Ran 31 tests in 0.057s
+
+OK

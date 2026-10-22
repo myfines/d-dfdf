@@ -984,3 +984,10 @@ PDF文字已提取，首次控制台输出遇GBK不能编码NBSP的UnicodeEncode
 - 新增6项测试先出现缺模块红测，完成实现后全套27项通过；单文件可离线编译及非main加载。原始结果logs/20261022-k230-sender/。
 - 重要运行前提：单USB换线会断电，RAM发送器不能跨换线保存；当前原main仍是文本预览。下一步需按单独部署阶段先电脑验包、备份并验证开机入口，之后才能换Dock实测。本阶段未执行这些动作。
 - 其他聊天正在修改usb_host文件及硬件日志；本提交不包含那些文件。详情docs/k230-usb-sender-candidate-20261022.md。
+
+## 2026-10-22 K230 UART候选准备（未部署）
+- 按用户在FPGA聊天中“先写用串口的程序、计划gpio、回去插线”的授权，仅准备主机文件；未访问或写入K230、FPGA、Android或Flash。
+- 确认亚博标准板EXPORT IO9为TX1/UART1_TXD，IO10为RX1；候选仅复用IO9，115200 8N1，数据加GND，OTG继续供电。具体IO9信号电压未获得原理图或实测确认，不能以3V3电源脚说明替代。
+- 新增UART候选、单文件构建器、未安装的启动入口示例、4项测试。延用12字节CRC协议、原始置信度>=0.60和过期/HOLD清零；保留LCD/模型。目标20Hz未板测，不宣称已达到。
+- 命令：python -m unittest discover -s k230 -p "test_*.py" -v；31项通过。构建及py_compile通过，原始日志logs/20261022-k230-uart/。
+- 候选7743字节，SHA256 6c5a3ea5cddc2a4369124c142e6ad05f6848bc8f1aa132eb2097a569bd8272d7。备份、分阶段验证、恢复步骤见docs/k230-uart-sender-20261022.md。
