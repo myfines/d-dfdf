@@ -1014,3 +1014,9 @@ PDF文字已提取，首次控制台输出遇GBK不能编码NBSP的UnicodeEncode
 - 重新逐项核对官方Dock背面照片docs/images/dock-back-official.png，并读取Dock-3713原理图M14/M15对应IOT40A/B。发现之前PMOD1排针坐标表有误：M14实际为靠板中心内排第3孔，外排第3孔为M15。之前“外排第3孔”表述撤回；用户尚未报告连接，已立即告知先不要按旧位置接。
 - 正确背面视角、USB在下：外排P11/R11/M15/L13/GND/3V3，内排T12/T11/M14/M13/GND/3V3。OLED T11内排第2、ESP T12内排第1，原表这两个位置也同步更正，信号球位不变。
 - 新建确定坐标的示意图images/m14-location-diagram.png，未修改官方原图。更正E025接线文档、旧OLED/ESP坐标和manifest位置，通知K230聊天。码流CST仍为M14，FS/APK内容未变；没有设备操作。
+
+
+## 2026-10-22T18:58:33+08:00 E025接线后连接检查
+- 用户报告USB和两根串口线已接。只读Get-PnpDevice -PresentOnly查询：当前本电脑未列出0403:6010、1209:ABD1或COM13；不能下载或读取板上状态，未开串口/烧录。
+- 读取最新18977e4位置更正：M14是PMOD1内排第3信号孔，外排对应M15；已明确向用户纠正此前口误并请求核对。K230 UART发送程序是否已部署尚待确认。IO9电平没有新增实测证据。
+- 等待用户确认准确接点及USB-JTAG连至本机，再继续；未更改GPIO、电源、驱动或Flash。原始摘要logs/20261022-E025-connection-check.json。

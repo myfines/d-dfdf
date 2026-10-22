@@ -1,0 +1,10 @@
+{
+  "timestamp": "2026-10-22T18:58:33+08:00",
+  "fpga_downloader_0403_6010_present": false,
+  "k230_1209_abd1_present": false,
+  "serial_port_com13_present": false,
+  "action": "Read-only PnP inventory; no serial opened, no programming",
+  "pin_correction_commit": "18977e4",
+  "required_fpga_rx": "M14, PMOD1 inner row third signal hole",
+  "k230_sender_deployment": "Not confirmed by user"
+}
