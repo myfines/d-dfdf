@@ -1064,3 +1064,8 @@ User confirmed requested reconnect and no abnormal heat. Verified fixed archived
 ## 2026-10-22 User accepts E026 gesture repair; reports old APK frame error
 
 User confirms requested E026 pinch continuity/audio/release test works. Reports one phone with old APK now rejects frames, another phone reportedly using same APK works. E026 sends G95-character status line (96 includingLF), while pre0.3 client expects S84-character line. Current0.3 parser supports both; old-client incompatibility explains frame errors but does not by itself explain phone-to-phone difference. Installed APK hashes/versions and actual TCP stream on phones not inspected; do not attribute to phone hardware or cache without evidence. Recommend current archived0.3 APK, then reproduce if still failing.
+
+
+## 2026-10-22 Competition closeout and Android0.4 usability
+
+User confirms E026 gesture and current APK work. Re-read official topic2, reviewed FPGA-Music and tiny-synth project descriptions (no external code copied). Updated requirement gap checklist and copy-ready truthful introduction. Android0.4 launches WifiActivity directly, clear connection action labels, named presets, inline guide, local preview moved to auxiliary tools. Java synth/protocol/TCP tests, APK build/sign verify passed; phone UI not inspected. E026/Flash unchanged. Artifacts docs/competition-closeout-20261022.md, docs/work-introduction-20261022.md, apk0.4, logs/20261022-app-0.4-*.

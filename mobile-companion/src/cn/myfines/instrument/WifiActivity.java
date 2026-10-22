@@ -15,6 +15,7 @@ import java.util.*;
 /** Direct ESP TCP control; all musical audio remains on the FPGA. */
 public final class WifiActivity extends Activity {
  private LinearLayout root;
+ private Button connectButton;
  private TextView connection,actual,keysText,gestureText,recordText;
  private EditText host;
  private ProgressBar pinchBar,heightBar;
@@ -35,15 +36,16 @@ public final class WifiActivity extends Activity {
   super.onCreate(state);getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
   ScrollView scroll=new ScrollView(this);root=new LinearLayout(this);root.setOrientation(1);root.setPadding(20,16,20,16);root.setBackgroundColor(Color.rgb(10,20,32));scroll.addView(root);setContentView(scroll);
   text("FPGA · Wi-Fi 演奏台",26);
-  text("先连接 FPGA-Instrument Wi-Fi，再连接下方设备。声音由FPGA的DAC输出；手机不作无线喇叭。普通控制兼容E023，K230手势显示需E025。",14);
+  text("连接 FPGA-Instrument 热点，然后点“连接乐器”。声音从外接音箱输出。",14);
   connection=text("未连接",16);host=new EditText(this);host.setSingleLine(true);host.setText("192.168.4.1");host.setTextColor(Color.WHITE);root.addView(host);
-  button("连接 / 断开",()->{if(session!=null&&session.isRunning())disconnect();else connect();});
+  connectButton=button("连接乐器",()->{if(session!=null&&session.isRunning())disconnect();else connect();});
+  button("第一次使用 / 操作说明",()->showGuide());
   actual=text("尚无FPGA实际状态",16);keysText=text("光键：—",18);
   wave=new WaveView(this);root.addView(wave,new LinearLayout.LayoutParams(-1,240));
   text("下方为目标参数；上方回传值才是实际状态。",13);
   text("音量（默认160/255）",16);SeekBar volume=new SeekBar(this);volume.setMax(255);volume.setProgress(160);root.addView(volume);
   volume.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener(){public void onStartTrackingTouch(SeekBar s){}public void onStopTrackingTouch(SeekBar s){}public void onProgressChanged(SeekBar s,int v,boolean user){if(user){desiredVolume=v;if(session!=null)session.volume(v);}}});
-  Spinner tones=new Spinner(this);ArrayAdapter<String> adapter=new ArrayAdapter<>(this,android.R.layout.simple_spinner_dropdown_item,new String[]{"音色1","音色2","音色3"});tones.setAdapter(adapter);root.addView(tones);
+  Spinner tones=new Spinner(this);ArrayAdapter<String> adapter=new ArrayAdapter<>(this,android.R.layout.simple_spinner_dropdown_item,new String[]{"柔和三角","正弦","锯齿拨弦"});tones.setAdapter(adapter);root.addView(tones);
   tones.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){public void onNothingSelected(AdapterView<?> p){}public void onItemSelected(AdapterView<?> p,View v,int n,long id){desiredTone=n;if(session!=null)session.tone(n);}});
   Switch echo=new Switch(this);echo.setText("FPGA硬件延时");echo.setTextColor(Color.WHITE);root.addView(echo);echo.setOnCheckedChangeListener((b,on)->{desiredEcho=on;if(session!=null)session.echo(on);});
   Spinner pages=new Spinner(this);pages.setAdapter(new ArrayAdapter<>(this,android.R.layout.simple_spinner_dropdown_item,new String[]{"板载键音区1","板载键音区2","板载键音区3"}));root.addView(pages);
@@ -55,6 +57,7 @@ public final class WifiActivity extends Activity {
    pads[i]=new Button(this);pads[i].setText("键"+(i+1)+"\n声部"+(mapping[i]+1));keyboard.addView(pads[i],new LinearLayout.LayoutParams(0,180,1));
    pads[i].setOnTouchListener((v,event)->{int a=event.getActionMasked();if(a==MotionEvent.ACTION_DOWN){held[pad]=true;sendKeys();v.setAlpha(.5f);return true;}if(a==MotionEvent.ACTION_UP||a==MotionEvent.ACTION_CANCEL){held[pad]=false;sendKeys();v.setAlpha(1);return true;}return true;});
   }
+  button("辅助工具：本地预览 / 输入监听",()->startActivity(new Intent(this,MainActivity.class)));
   button("自定义触屏键位",()->{release();new AlertDialog.Builder(this).setTitle("选择要修改的触屏键").setItems(new String[]{"键1","键2","键3","键4"},(d,n)->new AlertDialog.Builder(this).setTitle("映射到声部").setItems(new String[]{"声部1","声部2","声部3","声部4"},(d2,m)->{mapping[n]=m;getPreferences(0).edit().putInt("pad"+n,m).apply();pads[n].setText("键"+(n+1)+"\n声部"+(m+1));}).show()).show();});
   button("释放触屏键",()->release());
   gestureText=text("K230：等待FPGA手势状态（需E025及串口接线）",14);
@@ -67,6 +70,15 @@ public final class WifiActivity extends Activity {
   button("开始 / 停止演奏事件记录",()->{recording=!recording;if(recording){events.clear();recordStart=SystemClock.elapsedRealtime();lastEvent="";}recordText.setText(recording?"正在记录FPGA回传事件":"记录已停止："+events.size()+"条");});
   button("导出事件CSV",()->{recording=false;Intent intent=new Intent(Intent.ACTION_CREATE_DOCUMENT);intent.setType("text/csv");intent.addCategory(Intent.CATEGORY_OPENABLE);intent.putExtra(Intent.EXTRA_TITLE,"fpga-performance.csv");startActivityForResult(intent,73);});
  }
+ private void showGuide(){
+  new AlertDialog.Builder(this).setTitle("演奏指南").setMessage(
+   "启用：按住 S1+S2，按下并松开摇杆，再松开两键。只做一次，等待约20秒。\n\n"+
+   "光键选音；摇杆左右弯音、上下改变明亮度。触屏支持多指，松开恢复光键。\n\n"+
+   "手势：按住演奏键，单手捏合调音量、上下移动调明亮度；移开手恢复本地控制。手势本身不触发音符。\n\n"+
+   "音色、音量、延时和音区可直接在本页调整。释放触屏键只释放手机按下的键。\n\n"+
+   "CSV是控制事件记录，不是录音。辅助工具提供手机本地预览和输入监听。")
+   .setPositiveButton("开始演奏",null).show();
+ }
  private void clearGesture(){
   gestureText.setText("K230：尚无当前连接的有效状态");pinchBar.setProgress(0);heightBar.setProgress(0);
  }
@@ -78,14 +90,14 @@ public final class WifiActivity extends Activity {
   if(wifi==null){connection.setText("未找到已连接的Wi-Fi，请先连接设备热点");return;}
   final Network network=wifi;final int current=++generation;
   session=new WifiSession(new WifiSession.Listener(){
-   public void status(String s){ui.post(()->{if(current==generation){connection.setText(s);clearGesture();}});}
+   public void status(String s){ui.post(()->{if(current==generation){connection.setText(s);connectButton.setText("连接乐器");clearGesture();}});}
    public void snapshot(WifiProtocol.Snapshot s){ui.post(()->{if(current==generation)show(s);});}
   });
   session.volume(desiredVolume);session.tone(desiredTone);session.echo(desiredEcho);session.page(desiredPage);
-  connection.setText("连接中…");session.connect(address,9000,()->network.getSocketFactory().createSocket());
+  connectButton.setText("取消连接");connection.setText("连接中…");session.connect(address,9000,()->network.getSocketFactory().createSocket());
  }
  private void show(WifiProtocol.Snapshot s){
-  connection.setText("FPGA回传在线 · 序号 "+s.sequence);
+  connectButton.setText("断开乐器");connection.setText("乐器已连接");
   actual.setText("实际音量 "+s.volume+" / 音色 "+(s.timbre+1)+" / 延时 "+(s.echo?"开":"关")+"\n摇杆 "+s.x+", "+s.y+" / 音区 "+(s.page+1)+" / 状态 "+String.format(Locale.ROOT,"%02X",s.flags));
   keysText.setText("实际键位 "+String.format(Locale.ROOT,"%8s",Integer.toBinaryString(s.keys)).replace(' ','0'));wave.set(s.wave);
   gestureText.setText(!s.gestureAvailable?"K230：旧固件未提供状态":
@@ -100,7 +112,7 @@ public final class WifiActivity extends Activity {
  }
  private void sendKeys(){int mask=0;for(int i=0;i<4;i++)if(held[i])mask|=1<<mapping[i];if(session!=null)session.keys(mask);}
  private void release(){Arrays.fill(held,false);sendKeys();for(Button pad:pads)if(pad!=null)pad.setAlpha(1);}
- private void disconnect(){generation++;release();clearGesture();if(session!=null)session.close();connection.setText("已断开；最迟5秒回到本地控制");}
+ private void disconnect(){generation++;release();clearGesture();if(session!=null)session.close();connectButton.setText("连接乐器");connection.setText("已断开，恢复本地演奏");}
  @Override protected void onPause(){recording=false;disconnect();super.onPause();}
  @Override protected void onActivityResult(int request,int result,Intent data){super.onActivityResult(request,result,data);if(request==73&&result==RESULT_OK&&data!=null){try(OutputStream out=getContentResolver().openOutputStream(data.getData())){if(out==null)throw new IOException("无法打开文件");out.write("receive_ms,sequence,keys,timbre,echo,page,volume,x,y,flags,gesture_available,gesture_active,gesture_sequence,pinch,gesture_y,confidence\n".getBytes(StandardCharsets.UTF_8));for(String line:events)out.write((line+"\n").getBytes(StandardCharsets.UTF_8));recordText.setText("CSV已导出："+events.size()+"条");}catch(IOException e){recordText.setText("导出失败："+e.getMessage());}}}
  private static final class WaveView extends View {
