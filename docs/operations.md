@@ -1003,3 +1003,8 @@ PDF文字已提取，首次控制台输出遇GBK不能编码NBSP的UnicodeEncode
 - Gowin 27MHz约束setup/hold违例0，Fmax27.927MHz。接收器未使用TX输出及已有模32索引截断警告保留，无编译错误；不把时序报告当作实板验证。
 - 码流用户码E025，本机E:/gaoyun/releases/instrument-E025-20261022/instrument-E025.fs；APK版本与旧0.2归档在mobile-companion/apk/。哈希与状态logs/20261022-E025-manifest.json；原始测试、构建、引脚和时序报告为同前缀日志。
 - 自查代码的协议长度、边界、丢手、无自主音符、GPIO占用和应用兼容性；未写Flash/SRAM、未安装手机或K230程序。E023 Flash/旧归档未改，历史热故障根因未解除。下一步是IO电平核实、K230开机部署、用户接线后SRAM联调；不能称整机完成验收。
+
+
+## 2026-10-22 K230实物丝印与PDF核对（只读资料）
+- 用户要求按板上丝印定位。使用PDF技能读取并渲染本地FPIOA引脚分配.pdf第2–3页，对照标准版说明书第3图。首次控制台打印遇GBK无法编码NBSP，改UTF-8后读取成功；无硬件操作。
+- 明确双排12针IO32/IO33是UART3 TX/RX；当前UART候选使用四针EXPORT的IO9/UART1_TXD，不能混用。补充双排丝印表和EXPORT定位到E025接线文档；不改程序、不下载。UART3控制台占用和IO9实测电平仍未确认。
