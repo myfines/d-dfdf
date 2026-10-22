@@ -1035,3 +1035,8 @@ PDF文字已提取，首次控制台输出遇GBK不能编码NBSP的UnicodeEncode
 ## 2026-10-22 E025 supervised SRAM installation
 
 User connected FPGA only and requested continuing. FTDI A/B enumerated OK; scan found one 0x0000081B device. No residual programmer process. Archived E025 bitstream SHA256 D74ADA653E4F3BF3D6B4713E69FBD3908A398E3421B5F20A0813510F96177C4E verified before operation2 SRAM program at2.5MHz. Bounded CLI returned exit0,100%,usercode E025,status0x6020; retained User code mismatch warning. Independent operation73 read User Code E025; operation74 read status0x6020. Flash unchanged. Thermal incident unresolved; no hold file edits. Existing fixed E021/E023 helper does not cover E025; directly invoked official CLI under current explicit supervised SRAM authorization with fixed hash and bounded timeout. Physical heartbeat/silence/temperature confirmation requested; K230 disconnected, no physical gesture integration claimed. Evidence logs/20261022-E025-{device-scan,SRAM,read-73,read-74}*.log.
+
+
+## 2026-10-22 User reports intermittent pinch validity with skeleton retained
+
+User reports hand skeleton persists while pinch value is usually invalid. Static code confirms V2 acquisition .30 / tracking .18, but PacketState applies raw score >=.60 and FPGA parser independently requires60. Thus visible tracking and control validity differ by design; sample freshness150ms adds an independent release condition. No live K230 USB console is present, so dominant runtime rejection reason remains unmeasured. No threshold changed or confidence altered. Requested K230 chat diagnose visible raw score/rejection reason and bounded hysteresis policy before coordinating both endpoints.
