@@ -7,7 +7,7 @@ ROOT=Path(__file__).resolve().parents[1]
 
 def build(output):
     shared=(ROOT/'k230/usb_gesture_sender.py').read_text(encoding='utf-8')
-    wanted={'MIN_CONFIDENCE','V2_SHA256','PacketState','write_frame'}
+    wanted={'V2_SHA256','write_frame'}
     pieces=[];found=set()
     for node in ast.parse(shared).body:
         name=None
@@ -17,9 +17,9 @@ def build(output):
             pieces.append(ast.get_source_segment(shared,node));found.add(name)
     if found!=wanted:raise RuntimeError('Shared sender definitions changed')
     uart=(ROOT/'k230/uart_gesture_sender.py').read_text(encoding='utf-8')
-    line='from usb_gesture_sender import PacketState, write_frame, V2_SHA256\n'
+    line='from usb_gesture_sender import write_frame, V2_SHA256\n'
     if uart.count(line)!=1:raise RuntimeError('Unexpected UART imports')
-    uart=uart.replace(line,'')
+    uart=uart.replace(line,'').replace('from gesture_protocol import encode\n','').replace('from usb_gesture_state import gesture_fields\n','')
     source=['# Generated UART candidate. NOT deployed.\n']
     source.extend((ROOT/'k230'/name).read_text(encoding='utf-8') for name in ('gesture_protocol.py','usb_gesture_state.py'))
     # Retain the tested shared algorithm, with transport-appropriate error labels.
@@ -30,7 +30,7 @@ def build(output):
     output.parent.mkdir(parents=True,exist_ok=True);output.write_bytes(data)
     names=('gesture_protocol.py','usb_gesture_state.py','usb_gesture_sender.py','uart_gesture_sender.py')
     manifest=dict(candidate=str(output),bytes=len(data),sha256=hashlib.sha256(data).hexdigest(),deployed=False,
-                  uart=1,tx_gpio=9,rx_wired=False,baudrate=115200,bits=8,parity=None,stop=1,
+                  sending='synchronous_per_tracker_update',min_raw_confidence=.18,uart=1,tx_gpio=9,rx_gpio=10,rx_wired=False,baudrate=115200,bits=8,parity=None,stop=1,
                   source_sha256={name:hashlib.sha256((ROOT/'k230'/name).read_bytes()).hexdigest() for name in names})
     output.with_suffix('.json').write_text(json.dumps(manifest,indent=2),encoding='utf-8')
     return manifest

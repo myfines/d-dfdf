@@ -1040,3 +1040,8 @@ User connected FPGA only and requested continuing. FTDI A/B enumerated OK; scan 
 ## 2026-10-22 User reports intermittent pinch validity with skeleton retained
 
 User reports hand skeleton persists while pinch value is usually invalid. Static code confirms V2 acquisition .30 / tracking .18, but PacketState applies raw score >=.60 and FPGA parser independently requires60. Thus visible tracking and control validity differ by design; sample freshness150ms adds an independent release condition. No live K230 USB console is present, so dominant runtime rejection reason remains unmeasured. No threshold changed or confidence altered. Requested K230 chat diagnose visible raw score/rejection reason and bounded hysteresis policy before coordinating both endpoints.
+
+## 2026-10-22 UART同步逐帧候选修正（离线）
+- 按用户在FPGA侧要求恢复单机识别行为的同步，UART仅每次tracker.update后同步发送，不再启用后台线程或150ms旧状态重复发送；真实TRACK/有效几何/原始分数>=.18，获取.30由V2负责。HOLD/无效立即清零。保留IO10输入兼容，不改V2慢帧和屏幕状态。
+- 先测试出现缺少FrameSender红测；实现后python -m unittest discover -s k230 -p "test_*.py" -v全套32项通过，构建及py_compile通过。日志logs/20261022-k230-uart-sync/。
+- 新候选6319字节，SHA256 de7aefb6406658549538fe1d7f51b903aa48451dc729356eb245d564d7a5ff0f。详见docs/k230-uart-sync-20261022.md。FPGA18门限需由对方协调，本轮未改FPGA、Android或设备；未声称实机修复通过。

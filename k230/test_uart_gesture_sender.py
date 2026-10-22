@@ -1,6 +1,6 @@
 import unittest
-from gesture_protocol import decode
-from uart_gesture_sender import open_uart_tx, UartLink, PacketState
+from gesture_protocol import decode, encode
+from uart_gesture_sender import open_uart_tx, UartLink, FrameSender
 
 class FakeFpioa:
     UART1_TXD=91
@@ -27,19 +27,39 @@ class UartTests(unittest.TestCase):
 
     def test_binary_partial_write_has_no_line_ending(self):
         port=FakeUart();link=UartLink(port);clock=[0]
-        packet=PacketState().next_frame(0,lambda a,b:a-b)
+        packet=encode(0,False,0,0,0)
         link.send(packet,lambda:clock[0],lambda a,b:a-b,lambda n:clock.__setitem__(0,clock[0]+n))
         self.assertEqual(bytes(port.data),packet)
         self.assertEqual(len(port.data),12)
         self.assertEqual(decode(port.data),(0,False,0,0,0))
         link.close();self.assertTrue(port.closed)
 
-    def test_old_and_low_confidence_still_zero(self):
-        state=PacketState();points=[100.0]*42
-        state.publish(dict(status='TRACK',valid=True,value=.8),[points],[.59],0)
-        self.assertEqual(decode(state.next_frame(1,lambda a,b:a-b)),(0,False,0,0,0))
-        state.publish(dict(status='TRACK',valid=True,value=.8),[points],[.9],10)
-        self.assertEqual(decode(state.next_frame(161,lambda a,b:a-b)),(1,False,0,0,0))
+    def test_real_tracker_hysteresis_and_one_packet_per_update(self):
+        from pinch_preview_v2 import PinchTracker
+        from test_pinch_preview import hand
+        port=FakeUart();sender=FrameSender(UartLink(port),lambda:0,lambda a,b:a-b,lambda n:None)
+        tracker=PinchTracker()
+        scores=[.2999,.30,.30,.30,.18,.1799]
+        for i,score in enumerate(scores):
+            result=tracker.update([hand()],[score],50)
+            before=dict(result)
+            packet=sender.send_result(result,[hand()],[score])
+            decoded=decode(packet)
+            self.assertEqual(decoded[0],i)
+            self.assertEqual(decoded[1],result['valid'] and result['status']=='TRACK')
+            self.assertEqual(result,before)
+            self.assertEqual(len(port.data),12*(i+1))
+            if decoded[1]:self.assertEqual(decoded[4],int(score*100+.5))
+            else:self.assertEqual(decoded[2:],(0,0,0))
+        self.assertTrue(decode(port.data[48:60])[1])
+
+    def test_hold_geometry_multi_and_invalid_are_zero(self):
+        port=FakeUart();sender=FrameSender(UartLink(port),lambda:0,lambda a,b:a-b,lambda n:None)
+        for status in ('HOLD','BAD GEOMETRY','MULTI HAND','WARMUP'):
+            packet=sender.send_result(dict(status=status,valid=False,value=.8),[[100.0]*42],[.9])
+            self.assertEqual(decode(packet)[1:],(False,0,0,0))
+        packet=sender.send_result(dict(status='TRACK',valid=True,value=.8),[[100.0]*42],[.1799])
+        self.assertEqual(decode(packet)[1:],(False,0,0,0))
 
     def test_standalone_has_uart_but_no_usb_device_api(self):
         import importlib.util,pathlib,tempfile
@@ -52,6 +72,10 @@ class UartTests(unittest.TestCase):
             self.assertNotIn('import usb',source)
             self.assertNotIn('from usb_gesture_sender import',source)
             self.assertNotIn('USBDBG',source)
+            self.assertNotIn('_thread',source)
+            self.assertNotIn('class PacketState',source)
+            self.assertNotIn('UART LOW CONF',source)
+            self.assertEqual(m['sending'],'synchronous_per_tracker_update')
             ns={'__name__':'offline_uart_review'};exec(compile(source,str(output),'exec'),ns)
             self.assertFalse(m['deployed']);self.assertIn('open_uart_tx',ns)
 

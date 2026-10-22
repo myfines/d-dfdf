@@ -1,5 +1,7 @@
 """UART1 TX-only gesture candidate; no board writes or USB data transport."""
-from usb_gesture_sender import PacketState, write_frame, V2_SHA256
+from usb_gesture_sender import write_frame, V2_SHA256
+from gesture_protocol import encode
+from usb_gesture_state import gesture_fields
 
 UART_TX_PIN=9
 UART_RX_PIN=10
@@ -21,45 +23,28 @@ class UartLink:
         write_frame(self.port,packet,ticks_ms,ticks_diff,sleep_ms)
     def close(self):self.port.deinit()
 
+class FrameSender:
+    """Exactly one fresh packet per completed tracker update; no replay timer."""
+    def __init__(self,link,ticks_ms,ticks_diff,sleep_ms):
+        self.link=link;self.ticks_ms=ticks_ms;self.ticks_diff=ticks_diff
+        self.sleep_ms=sleep_ms;self.sequence=0;self.accepted=0
+
+    def send_result(self,result,hands,scores):
+        fields=gesture_fields(result,hands,scores,0)
+        # Tracker owns .30 acquisition/.18 retention; never substitute its score.
+        if fields[0] and not .18<=float(scores[0])<=1:
+            fields=(False,0,0,0)
+        packet=encode(self.sequence,*fields)
+        self.link.send(packet,self.ticks_ms,self.ticks_diff,self.sleep_ms)
+        self.sequence=(self.sequence+1)&255;self.accepted+=1
+        return packet
+
+
 def run():
-    import time,machine,_thread,ubinascii
+    import time,machine,ubinascii
     try:import uhashlib as hashlib
     except ImportError:import hashlib
-    state=PacketState();lock=_thread.allocate_lock()
-    control={'started':False,'done':False,'stop':False,'error':None,'accepted':0}
-
-    class SenderStopped(Exception):pass
-
-    def transmit():
-        link=None
-        try:
-            link=UartLink(open_uart_tx(machine))
-            deadline=time.ticks_ms();last_report=deadline
-            while not control['stop']:
-                remaining=time.ticks_diff(deadline,time.ticks_ms())
-                if remaining>0:
-                    time.sleep_ms(min(5,remaining));continue
-                with lock:
-                    packet=state.next_frame(time.ticks_ms(),time.ticks_diff)
-                link.send(packet,time.ticks_ms,time.ticks_diff,time.sleep_ms)
-                control['accepted']+=1
-                now=time.ticks_ms()
-                if time.ticks_diff(now,last_report)>=1000:
-                    # Ordinary console/IDE output, never sent through UART1.
-                    print('UART_GESTURE accepted=%d seq=%d valid=%d confidence=%d' %
-                          (control['accepted'],packet[3],packet[4],packet[9]))
-                    last_report=now
-                deadline=time.ticks_add(deadline,50)
-                if time.ticks_diff(now,deadline)>50:
-                    deadline=time.ticks_add(now,50)
-        except BaseException as exc:
-            control['error']='UART1 '+repr(exc)
-        finally:
-            if link is not None:
-                try:link.close()
-                except BaseException:pass
-            control['done']=True
-
+    link=None;error=None
     try:
         path='/sdcard/pinch_preview_v2.py'
         with open(path,'rb') as source_file:source=source_file.read()
@@ -67,35 +52,35 @@ def run():
             raise RuntimeError('V2 source hash mismatch')
         namespace={'__name__':'uart_gesture_preview'}
         exec(compile(source,path,'exec'),namespace)
+        link=UartLink(open_uart_tx(machine))
+        sender=FrameSender(link,time.ticks_ms,time.ticks_diff,time.sleep_ms)
         base=namespace['PinchTracker']
+        report=[time.ticks_ms()]
 
         class ObservedTracker(base):
             def update(self,hands,scores,dt_ms):
-                if control['done']:raise SenderStopped()
                 result=super().update(hands,scores,dt_ms)
-                with lock:
-                    state.publish(result,hands,scores,time.ticks_ms())
-                    uart_valid=state.fields[0]
-                if not control['started']:
-                    _thread.start_new_thread(transmit,())
-                    control['started']=True
-                if result['valid'] and not uart_valid:
-                    result=dict(result)
-                    result.update(status='UART LOW CONF',valid=False,value=None)
+                packet=sender.send_result(result,hands,scores)
+                now=time.ticks_ms()
+                if time.ticks_diff(now,report[0])>=1000:
+                    raw=scores[0] if len(scores)==1 else None
+                    print('UART_GESTURE accepted=%d seq=%d valid=%d confidence=%d status=%s raw=%s loop_dt=%d' %
+                          (sender.accepted,packet[3],packet[4],packet[9],result['status'],str(raw),dt_ms))
+                    report[0]=now
                 return result
 
         namespace['PinchTracker']=ObservedTracker
-        print('UART_GESTURE candidate: UART1 IO9/TX1 115200 8N1; RX unwired')
+        print('UART_GESTURE synchronous: one packet/frame; IO9 TX; IO10 input unwired')
         namespace['main']()
     except BaseException as exc:
-        if control['error'] is None:control['error']=repr(exc)
+        error=repr(exc)
     finally:
-        control['stop']=True
-        deadline=time.ticks_add(time.ticks_ms(),2000)
-        while control['started'] and not control['done'] and time.ticks_diff(deadline,time.ticks_ms())>0:
-            time.sleep_ms(10)
-    globals()['LAST_UART_ERROR']=control['error']
-    print('UART_GESTURE stopped; FPGA lease must expire; error=',control['error'])
-    return control['error']
+        if link is not None:
+            try:link.close()
+            except BaseException as exc:
+                if error is None:error=repr(exc)
+    globals()['LAST_UART_ERROR']=error
+    print('UART_GESTURE stopped; FPGA lease must expire; error=',error)
+    return error
 
 if __name__=='__main__':run()
