@@ -3,7 +3,7 @@ import argparse,json,time,hashlib,re
 from pathlib import Path
 import serial
 ROOT=Path(__file__).resolve().parents[1]
-LOG=ROOT/'logs/20261022-k230-uart-deploy'
+LOG=ROOT/'logs/20261022-k230-uart-sync-deploy'
 
 def collect(s,seconds):
  out=bytearray();end=time.monotonic()+seconds
@@ -43,7 +43,7 @@ print('DEPLOYJSON '+ujson.dumps({'files':records,'has_machine_reset':hasattr(mac
    duration=25
   elif args.phase=='stage':
    source=(ROOT/'build/k230/uart_gesture_sender_standalone.py').read_bytes()
-   expected='e88ea108a08d80d27c64377d0a92eacf9a189d4d62c723fb9abf039846615e91'
+   expected='de7aefb6406658549538fe1d7f51b903aa48451dc729356eb245d564d7a5ff0f'
    if hashlib.sha256(source).hexdigest()!=expected:raise RuntimeError('Local candidate changed')
    target='/sdcard/uart_gesture_sender_standalone.py';temp=target+'.upload'
    code="import os,uhashlib,ubinascii\nf=open(%r,'wb')\n"%temp
@@ -58,8 +58,8 @@ except OSError:existing=None
 if existing is None:os.rename(%r,%r)
 elif existing==uploaded:os.remove(%r)
 else:
- assert ubinascii.hexlify(uhashlib.sha256(existing).digest()).decode()=='6c5a3ea5cddc2a4369124c142e6ad05f6848bc8f1aa132eb2097a569bd8272d7'
- os.rename('/sdcard/uart_gesture_sender_standalone.py','/sdcard/uart_gesture_sender_before_rx_fix.py')
+ assert ubinascii.hexlify(uhashlib.sha256(existing).digest()).decode()=='e88ea108a08d80d27c64377d0a92eacf9a189d4d62c723fb9abf039846615e91'
+ os.rename('/sdcard/uart_gesture_sender_standalone.py','/sdcard/uart_gesture_sender_before_sync_fix.py')
  os.rename('/sdcard/uart_gesture_sender_standalone.py.upload','/sdcard/uart_gesture_sender_standalone.py')
 if hasattr(os,'sync'):os.sync()
 print('STAGE_OK',len(uploaded),%r)

@@ -1,0 +1,9 @@
+{
+  "usercode": "E026",
+  "sha256": "6b73a937b3b2cc03060b6b64b143b13854d9723abaf7ee554832bdde3fceb2a7",
+  "bytes": 7264152,
+  "path": "E:\\gaoyun\\releases\\instrument-E026-20261022\\instrument-E026.fs",
+  "gesture_min_confidence": 18,
+  "k230_sender_sha256": "de7aefb6406658549538fe1d7f51b903aa48451dc729356eb245d564d7a5ff0f",
+  "fpga_deployed": false
+}

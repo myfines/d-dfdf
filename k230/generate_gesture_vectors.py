@@ -11,7 +11,7 @@ def generate(path):
  unknown=bytearray(encode(1,True,1,2,90));unknown[2]=2
  over=bytearray(encode(1,True,1,2,90));over[5:7]=bytes((3,233))
  flags=bytearray(encode(1,True,1,2,90));flags[4]=2
- frames=[first,corrupt,encode(255,True,500,500,95),encode(0,True,1000,0,100),repaired(unknown),repaired(over),encode(1,False,0,0,0),encode(2,True,300,600,90),repaired(flags),encode(0,True,900,900,59)]
+ frames=[first,corrupt,encode(255,True,500,500,95),encode(0,True,1000,0,100),repaired(unknown),repaired(over),encode(1,False,0,0,0),encode(2,True,300,600,90),repaired(flags),encode(0,True,900,900,59),encode(10,True,500,500,17),encode(11,True,500,500,18)]
  Path(path).write_text(''.join('%02x\n'%b for frame in frames for b in frame))
 
 if __name__=='__main__':

@@ -1045,3 +1045,12 @@ User reports hand skeleton persists while pinch value is usually invalid. Static
 - 按用户在FPGA侧要求恢复单机识别行为的同步，UART仅每次tracker.update后同步发送，不再启用后台线程或150ms旧状态重复发送；真实TRACK/有效几何/原始分数>=.18，获取.30由V2负责。HOLD/无效立即清零。保留IO10输入兼容，不改V2慢帧和屏幕状态。
 - 先测试出现缺少FrameSender红测；实现后python -m unittest discover -s k230 -p "test_*.py" -v全套32项通过，构建及py_compile通过。日志logs/20261022-k230-uart-sync/。
 - 新候选6319字节，SHA256 de7aefb6406658549538fe1d7f51b903aa48451dc729356eb245d564d7a5ff0f。详见docs/k230-uart-sync-20261022.md。FPGA18门限需由对方协调，本轮未改FPGA、Android或设备；未声称实机修复通过。
+
+
+## 2026-10-22 Pinch regression repair: synchronous UART + E026 receiver
+
+Replaced installed K230 sender after inspecting existing SHA e88ea108a08d80d27c64377d0a92eacf9a189d4d62c723fb9abf039846615e91, backed old sender to /sdcard/uart_gesture_sender_before_sync_fix.py. New6319byte sender readback SHA de7aefb6406658549538fe1d7f51b903aa48451dc729356eb245d564d7a5ff0f. main.py unchanged; V2/models unchanged. No background thread, each real tracker update sends once; genuine tracker TRACK/valid with raw>=.18 only, preserving original .30 acquisition/.18 retention. Invalid/HOLD releases immediately, no confidence substitution. UART IO10 remains input/unwired.
+
+Initial explicit re-execution after reset hit camera already initialized (auto-entry had started); retained error capture. Subsequent machine.reset plus passive capture proved saved entry runs:19 reports, accepted1->358, no traceback/stopped. Observed invalid NO HAND/MULTI HAND/BAD GEOMETRY, loop samples37..91ms. No valid-hand continuity result claimed. Soft-reset startup observed; physical power-cycle still pending.
+
+FPGA E026 compiled to local releases/instrument-E026-20261022/instrument-E026.fs, SHA6b73a937b3b2cc03060b6b64b143b13854d9723abaf7ee554832bdde3fceb2a7. Extension top sets receiver floor18; generic parser/default60 retained for other designs. Lease250ms/CRC/replay/range checks unchanged. 34 RTL groups passed; additional real serial baud234/235 test verifies17 rejection/18 acceptance and59 acceptance in matched configuration. Fmax27.116MHz vs27MHz constraint, setup/hold TNS0 endpoints0; narrow margin recorded. Build warnings retained. FPGA not yet deployed, user asked to reconnect it. Full physical gesture validation remains pending. Flash unchanged.

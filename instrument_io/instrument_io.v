@@ -7,7 +7,7 @@ module instrument_io #(
     parameter integer SWITCH_DEBOUNCE_TICKS=135000,
     parameter integer LONG_PRESS_FRAMES=46875,
     parameter SAFE_STARTUP=1,ENABLE_OPTICAL=0,OPTICAL_ACTIVE_LOW=1,ENABLE_UI=0,ENABLE_GESTURE=0,
-    parameter integer GESTURE_BIT_TICKS=234,GESTURE_LEASE_TICKS=6750000,GESTURE_GAP_TICKS=540000,
+    parameter integer GESTURE_MIN_CONFIDENCE=60,GESTURE_BIT_TICKS=234,GESTURE_LEASE_TICKS=6750000,GESTURE_GAP_TICKS=540000,
     parameter integer OPTICAL_BOOT_TICKS=540000000,OPTICAL_POLL_TICKS=27000
 )(input wire clk,input wire [3:0] btn_n,input wire JOY_SW_N,
   inout wire ADC_SCL,ADC_SDA,
@@ -41,7 +41,7 @@ module instrument_io #(
     wire [9:0] gesture_pinch,gesture_y;wire [7:0] gesture_gain;
     wire [11:0] gesture_color;wire gesture_apply=gesture_active && !test_mode && !edit_mode;
     generate if(ENABLE_GESTURE)begin: gesture_input
-        gesture_uart_rx #(.BIT_TICKS(GESTURE_BIT_TICKS),.LEASE_TICKS(GESTURE_LEASE_TICKS),.GAP_TICKS(GESTURE_GAP_TICKS)) receiver(clk,io_reset_n,K230_RX,gesture_active,gesture_update,
+        gesture_uart_rx #(.MIN_CONFIDENCE(GESTURE_MIN_CONFIDENCE),.BIT_TICKS(GESTURE_BIT_TICKS),.LEASE_TICKS(GESTURE_LEASE_TICKS),.GAP_TICKS(GESTURE_GAP_TICKS)) receiver(clk,io_reset_n,K230_RX,gesture_active,gesture_update,
             gesture_seq,gesture_pinch,gesture_y,gesture_confidence);
     end else begin: no_gesture
         assign gesture_active=0;assign gesture_update=0;assign gesture_seq=0;

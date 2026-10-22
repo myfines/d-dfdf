@@ -35,5 +35,5 @@ add_file E:/gaoyun/d-dfdf/instrument_io/wifi_telemetry.v
 add_file E:/gaoyun/d-dfdf/instrument_io/gesture_packet_rx.v
 add_file E:/gaoyun/d-dfdf/instrument_io/gesture_uart_rx.v
 add_file E:/gaoyun/d-dfdf/instrument_io/gesture_expression.v
-set_option -user_code 0xE025
+set_option -user_code 0xE026
 run all
