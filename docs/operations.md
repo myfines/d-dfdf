@@ -1059,3 +1059,8 @@ FPGA E026 compiled to local releases/instrument-E026-20261022/instrument-E026.fs
 ## 2026-10-22 E026 SRAM installed after user reconnect
 
 User confirmed requested reconnect and no abnormal heat. Verified fixed archived SHA6b73a937b3b2cc03060b6b64b143b13854d9723abaf7ee554832bdde3fceb2a7, FTDI A/B OK and singleJTAG ID0x0000081B. Official CLI operation2 at2.5MHz completed100%,exit0,usercodeE026,status0x6020; retained User code mismatch warning. Independent op73 readsE026 and op74 reads0x6020. Flash unchanged; thermal hold remains. Both K230 synchronous sender and FPGA18 receiver now installed; user physical continuous-pinch/audio/lost-hand test requested, not yet confirmed. Evidence logs/20261022-E026-{scan,SRAM,read-73,read-74}*.log.
+
+
+## 2026-10-22 User accepts E026 gesture repair; reports old APK frame error
+
+User confirms requested E026 pinch continuity/audio/release test works. Reports one phone with old APK now rejects frames, another phone reportedly using same APK works. E026 sends G95-character status line (96 includingLF), while pre0.3 client expects S84-character line. Current0.3 parser supports both; old-client incompatibility explains frame errors but does not by itself explain phone-to-phone difference. Installed APK hashes/versions and actual TCP stream on phones not inspected; do not attribute to phone hardware or cache without evidence. Recommend current archived0.3 APK, then reproduce if still failing.
