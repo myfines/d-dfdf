@@ -6,11 +6,13 @@
   "gesture_min_confidence": 18,
   "k230_sender_sha256": "de7aefb6406658549538fe1d7f51b903aa48451dc729356eb245d564d7a5ff0f",
   "fpga_deployed": true,
-  "storage": "SRAM only",
+  "storage": "Flash; power-cycle verified",
   "readback_usercode": "E026",
   "readback_status": "0x00006020",
   "physical_gesture_verified": true,
   "flash_program_verify": true,
   "flash_date": "2026-10-23",
-  "flash_coldboot_verified": false
+  "flash_coldboot_verified": true,
+  "coldboot_usercode": "E026",
+  "coldboot_status": "0x00006020"
 }

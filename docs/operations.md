@@ -1084,3 +1084,8 @@ User completed requested all-board reconnect. Fixed archived hash verified, scan
 ## 2026-10-23 E026 Flash program and verify success
 
 After successful SRAM restoration user confirmed gesture/audio normal and explicitly requested Flash. No UART opened since all-board reconnect. Fixed E026 SHA6b73a937b3b2cc03060b6b64b143b13854d9723abaf7ee554832bdde3fceb2a7 verified, scan ID0x0000081B. Official GW2A-18C cable1 2.5MHz operation37 GAO-Bridge, SPI address0x000000, completed100%,exit0, explicit Program and Verify flash successfully,28.4s. No OTP/download-cable firmware operation. Historical thermal hold not altered; scoped user authorization used directly with fixed image/bounded timeout. Requested complete USB power-cycle, no further SRAM downloads, local+gesture functional check and subsequent read-only boot usercode. Flash content verified; cold boot still pending. Logs/20261023-E026-{flash-scan,Flash}*.log.
+
+
+## 2026-10-23 E026 Flash cold-boot acceptance
+
+User completed requested full power-cycle without SRAM download and confirmed local optical/joystick, K230 pinch control and no abnormal heat. Subsequent read-only official op73 returnsE026 and op74 0x6020; no configuration writes this turn. E026 Flash programming, verification, cold-boot identity and user functional acceptance now complete. Evidence logs/20261023-E026-coldboot-read-{73,74}*.log. Short functional acceptance does not provide a measured thermal-root-cause result.
