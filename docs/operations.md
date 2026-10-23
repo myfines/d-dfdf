@@ -1094,3 +1094,8 @@ User completed requested full power-cycle without SRAM download and confirmed lo
 ## 2026-10-23 Wi-Fi SSID missing diagnosis
 
 User reports missing network after E026 cold-boot acceptance. Read-only COM13 capture:12 decoded samples, armed=true ADC_OK=true optical_online=true play mode, keys released. Thus not merely unarmed startup. PC WLAN scan did not list FPGA-Instrument in current results (snapshot only, no inference of ESP damage). OLED already exposes ready ON vs AT command index, RX Y/N and timeout !; requested exact display and ESP LED state before power-cycle or wiring changes. No FPGA/ESP writes. Raw serial capture logs/20261023-wifi-state.bin retained; surrounding WLAN identifiers kept local, not uploaded.
+
+
+## 2026-10-23 ESP display AT0 RX:Y
+
+User observes AT0 RX:Y and ESP LED on. This proves RX activity was latched, not a valid AT reply, correct baud or healthy supply. RTL resets command_index to0 on any configuration timeout, so AT0 snapshot cannot distinguish initial handshake failure from later-command retry. Requested ten-second stage progression and timeout ! observation before selecting recovery; no hardware writes.
