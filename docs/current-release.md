@@ -1,5 +1,19 @@
 # 当前发布与部署状态
 
+更新：2026-10-23。FPGA E026 Flash已完成写入校验和断电自启动验收，用户确认光键、摇杆和K230捏合功能正常；只读用户码E026、状态0x6020。证据：logs/20261023-E026-Flash.log及20261023-E026-coldboot-read-*.log。
+
+FPGA SHA256：`6b73a937b3b2cc03060b6b64b143b13854d9723abaf7ee554832bdde3fceb2a7`。本机归档：E:/gaoyun/releases/instrument-E026-20261022/instrument-E026.fs。
+
+Android当前推荐：[FPGA乐器1.2-piano](../mobile-companion/apk/instrument-user-preferred-20261023.apk)，用户提供，包名com.fpga.instrument，versionCode3。签名验证通过，[SHA256及来源](../mobile-companion/apk/preferred-release.json)。它不是本目录旧Java工程的构建产物，对应源码未提供；不覆盖cn.myfines.instrument原伴侣应用。
+
+本轮不修改ESP初始化/握手逻辑，未执行任何硬件写入。RCFG(S4)重配置与全系统断电不是相同操作；用户选择保留现有行为，Wi-Fi故障的串口原始根因未实测证实。
+
+以下为旧版本归档记录，不代表当前部署：
+
+---
+
+# 当前发布与部署状态
+
 更新：2026-10-21；主版本E023，配套Android0.2-wifi。候选标签candidate-E023-20261021，源码提交1a90c3c，Flash部署记录fb2809e。
 
 | 项目 | 身份与状态 |

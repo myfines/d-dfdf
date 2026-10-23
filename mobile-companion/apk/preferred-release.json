@@ -1,0 +1,13 @@
+{
+  "display_name": "FPGA乐器",
+  "package": "com.fpga.instrument",
+  "version_name": "1.2-piano",
+  "version_code": 3,
+  "sha256": "02c07734556b00bf38946c2c3c0bddd64414ad485387ce017d0155b731985ea7",
+  "bytes": 90921,
+  "signature_verified": true,
+  "certificate_sha256": "bcbf5d4a3669f9140dd9af56df329bcb162c680669c3c28c5a826cce975678df",
+  "source": "user supplied FPGA乐器.apk.1",
+  "matching_source_available": false,
+  "user_preferred": true
+}

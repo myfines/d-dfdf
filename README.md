@@ -4,9 +4,9 @@
 
 ## 当前版本与下载
 
-**当前已写入 Flash：E023（2026-10-21）**。官方 Programmer 写入＋校验成功，用时31.57秒；E023冷启动、安卓安装及真实Wi-Fi双向联调仍待验收。之前版本的实测结果不自动等于E023验收通过。
+**当前已验收 Flash：E026（2026-10-23）**。已完成写入校验、断电自启动、光键/摇杆/K230手势功能确认，冷启动只读用户码E026、状态0x6020。
 
-- **[安卓 APK 下载入口](mobile-companion/apk/instrument-companion-debug.apk)**：打开后点 Download raw file；仓库为私密，需登录获授权的 GitHub 账号。应用版本0.2-wifi，最低Android8。
+- **[推荐安卓APK：FPGA乐器1.2-piano](mobile-companion/apk/instrument-user-preferred-20261023.apk)**：用户提供并指定；签名已验证，独立包名com.fpga.instrument。打开文件页选择Download raw file，私密仓库需授权登录。[哈希/来源](mobile-companion/apk/preferred-release.json)。对应源码尚未提供，旧伴侣应用继续归档保留。
 - [当前版本清单](docs/current-release.md)：身份、哈希、验证范围与回退版本。
 - [E023 Wi-Fi 操作与协议](docs/wifi-app-E023-20261021.md)：手机四键、音量、音色、延时、实际状态和波形监看、事件CSV。
 - [全部接线](docs/wiring-all-current.md) · [OLED/ESP接线](docs/oled-esp-wiring-20261020.md)

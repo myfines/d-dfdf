@@ -1099,3 +1099,8 @@ User reports missing network after E026 cold-boot acceptance. Read-only COM13 ca
 ## 2026-10-23 ESP display AT0 RX:Y
 
 User observes AT0 RX:Y and ESP LED on. This proves RX activity was latched, not a valid AT reply, correct baud or healthy supply. RTL resets command_index to0 on any configuration timeout, so AT0 snapshot cannot distinguish initial handshake failure from later-command retry. Requested ten-second stage progression and timeout ! observation before selecting recovery; no hardware writes.
+
+
+## 2026-10-23 User-selected piano APK and ESP diagnosis stopped
+
+User attributed missing SSID to RCFG(S4) reconfiguration without matched peripheral restart, explicitly requested no protocol/handshake modifications. Diagnosis stopped; previous turn only read sources, no diagnostic bitstream built or deployed. Received FPGA乐器.apk.1,90921bytes,SHA25602c07734556b00bf38946c2c3c0bddd64414ad485387ce017d0155b731985ea7; archived exact bytes as instrument-user-preferred-20261023.apk. aapt identifies com.fpga.instrument,versionCode3/versionName1.2-piano; apksigner verify succeeds, certSHA256bcbf5d4a3669f9140dd9af56df329bcb162c680669c3c28c5a826cce975678df. Original nonASCII-path aapt call failed, retried on ASCII archive; JAVA_HOME configured for verifier. User selected as preferred; matching sources absent, previous cn.myfines.instrument builds preserved. Updated root/mobile README and current release to actual accepted E026 Flash status. No hardware writes.
