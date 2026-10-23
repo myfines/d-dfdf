@@ -9,5 +9,8 @@
   "storage": "SRAM only",
   "readback_usercode": "E026",
   "readback_status": "0x00006020",
-  "physical_gesture_verified": false
+  "physical_gesture_verified": true,
+  "flash_program_verify": true,
+  "flash_date": "2026-10-23",
+  "flash_coldboot_verified": false
 }

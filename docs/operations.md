@@ -1079,3 +1079,8 @@ User reports camera works but no FPGA expression change. FTDI A/B present. Read-
 ## 2026-10-23 E026 SRAM recovery after reconnect
 
 User completed requested all-board reconnect. Fixed archived hash verified, scan ID0x0000081B. Official2.5MHz operation2 SRAM retry completed100% in6.46s,exit0,usercodeE026,status0x6020; retained usercode mismatch warning. Independent op73 E026/op74 0x6020 confirm version/configuration. Flash unchanged. Requested physical pinch/audio/no-abnormal-heat confirmation before persistence; previous6% failed attempt retained separately. Evidence logs/20261023-E026-{retry-scan,SRAM-retry,retry-read-73,retry-read-74}*.log.
+
+
+## 2026-10-23 E026 Flash program and verify success
+
+After successful SRAM restoration user confirmed gesture/audio normal and explicitly requested Flash. No UART opened since all-board reconnect. Fixed E026 SHA6b73a937b3b2cc03060b6b64b143b13854d9723abaf7ee554832bdde3fceb2a7 verified, scan ID0x0000081B. Official GW2A-18C cable1 2.5MHz operation37 GAO-Bridge, SPI address0x000000, completed100%,exit0, explicit Program and Verify flash successfully,28.4s. No OTP/download-cable firmware operation. Historical thermal hold not altered; scoped user authorization used directly with fixed image/bounded timeout. Requested complete USB power-cycle, no further SRAM downloads, local+gesture functional check and subsequent read-only boot usercode. Flash content verified; cold boot still pending. Logs/20261023-E026-{flash-scan,Flash}*.log.
