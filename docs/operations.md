@@ -1089,3 +1089,8 @@ After successful SRAM restoration user confirmed gesture/audio normal and explic
 ## 2026-10-23 E026 Flash cold-boot acceptance
 
 User completed requested full power-cycle without SRAM download and confirmed local optical/joystick, K230 pinch control and no abnormal heat. Subsequent read-only official op73 returnsE026 and op74 0x6020; no configuration writes this turn. E026 Flash programming, verification, cold-boot identity and user functional acceptance now complete. Evidence logs/20261023-E026-coldboot-read-{73,74}*.log. Short functional acceptance does not provide a measured thermal-root-cause result.
+
+
+## 2026-10-23 Wi-Fi SSID missing diagnosis
+
+User reports missing network after E026 cold-boot acceptance. Read-only COM13 capture:12 decoded samples, armed=true ADC_OK=true optical_online=true play mode, keys released. Thus not merely unarmed startup. PC WLAN scan did not list FPGA-Instrument in current results (snapshot only, no inference of ESP damage). OLED already exposes ready ON vs AT command index, RX Y/N and timeout !; requested exact display and ESP LED state before power-cycle or wiring changes. No FPGA/ESP writes. Raw serial capture logs/20261023-wifi-state.bin retained; surrounding WLAN identifiers kept local, not uploaded.
