@@ -1069,3 +1069,8 @@ User confirms requested E026 pinch continuity/audio/release test works. Reports 
 ## 2026-10-22 Competition closeout and Android0.4 usability
 
 User confirms E026 gesture and current APK work. Re-read official topic2, reviewed FPGA-Music and tiny-synth project descriptions (no external code copied). Updated requirement gap checklist and copy-ready truthful introduction. Android0.4 launches WifiActivity directly, clear connection action labels, named presets, inline guide, local preview moved to auxiliary tools. Java synth/protocol/TCP tests, APK build/sign verify passed; phone UI not inspected. E026/Flash unchanged. Artifacts docs/competition-closeout-20261022.md, docs/work-introduction-20261022.md, apk0.4, logs/20261022-app-0.4-*.
+
+
+## 2026-10-23 Gesture inactive after power-cycle: old Flash E023 running
+
+User reports camera works but no FPGA expression change. FTDI A/B present. Read-only official op73 reports E023, proving current FPGA lacks E026 UART integration: E026 was only installed in volatile SRAM. Attempted fixed-hash E026 SRAM restoration at2.5MHz; programmer stalled6%, terminated after25s bounded wait. No successful restoration claimed, Flash untouched. Requested all-board USB power cycle before retry; do not test audio meanwhile. Retained logs/20261023-gesture-read-usercode* and 20261023-E026-SRAM-restore*. Root of loss across power-cycle is version persistence, not demonstrated camera/model failure.
