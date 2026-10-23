@@ -1074,3 +1074,8 @@ User confirms E026 gesture and current APK work. Re-read official topic2, review
 ## 2026-10-23 Gesture inactive after power-cycle: old Flash E023 running
 
 User reports camera works but no FPGA expression change. FTDI A/B present. Read-only official op73 reports E023, proving current FPGA lacks E026 UART integration: E026 was only installed in volatile SRAM. Attempted fixed-hash E026 SRAM restoration at2.5MHz; programmer stalled6%, terminated after25s bounded wait. No successful restoration claimed, Flash untouched. Requested all-board USB power cycle before retry; do not test audio meanwhile. Retained logs/20261023-gesture-read-usercode* and 20261023-E026-SRAM-restore*. Root of loss across power-cycle is version persistence, not demonstrated camera/model failure.
+
+
+## 2026-10-23 E026 SRAM recovery after reconnect
+
+User completed requested all-board reconnect. Fixed archived hash verified, scan ID0x0000081B. Official2.5MHz operation2 SRAM retry completed100% in6.46s,exit0,usercodeE026,status0x6020; retained usercode mismatch warning. Independent op73 E026/op74 0x6020 confirm version/configuration. Flash unchanged. Requested physical pinch/audio/no-abnormal-heat confirmation before persistence; previous6% failed attempt retained separately. Evidence logs/20261023-E026-{retry-scan,SRAM-retry,retry-read-73,retry-read-74}*.log.
