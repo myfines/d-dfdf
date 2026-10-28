@@ -1,0 +1,10 @@
+{
+  "user_confirmed_power_cycle_and_enable": true,
+  "no_SRAM_download_after_flash": true,
+  "public_api_online": true,
+  "telemetry_length": 96,
+  "age_seconds": 0.12,
+  "flash_usercode": "E031",
+  "status_register": "6020",
+  "public_https_control_verified": true
+}

@@ -1,0 +1,14 @@
+{
+  "online": true,
+  "telemetry_length": 96,
+  "observed_volume": "40",
+  "observed_timbre": "1",
+  "waveform_hex": "8080808080808080808080808080808080808080808080808080808080808080",
+  "audio_peak": 0.547027587890625,
+  "audio_rms": 0.1890047937631607,
+  "dominant_hz": 261.5,
+  "source": "Real FPGA telemetry and PC Realtek input; commands via public HTTPS relay",
+  "release_peak": 0.02154541015625,
+  "release_rms": 0.0028762563597410917,
+  "release_dbfs": -50.82344816092122
+}

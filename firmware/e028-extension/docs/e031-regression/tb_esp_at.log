@@ -1,0 +1,2 @@
+PASS ESP config retry, OK handshake, command, lease, reset
+E:\gaoyun\releases\e028-flash-record\firmware\e028-extension/sim/tb_esp_at.sv:20: $finish called at 10140000 (1ps)

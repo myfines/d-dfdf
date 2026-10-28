@@ -24,6 +24,7 @@ module instrument_core #(
     parameter OPTICAL_ACTIVE_LOW = 0,
     parameter ENABLE_UI = 1,
     parameter ENABLE_GESTURE = 1,
+    parameter ENABLE_WEB_RELAY = 0,
     parameter LINK_MODE = 0,          // 0 = ESP-01S AT/TCP, 1 = transparent BLE-UART
     parameter integer LEASE_TICKS = 135000000
 )(
@@ -304,9 +305,17 @@ module instrument_core #(
     assign ESP_TX = (LINK_MODE == 0 && armed) ? uart_tx_serial : 1'bz;
 
     wire [2:0] cmd_client_unused;
+    wire raw_cmd_valid;wire[7:0] raw_cmd_kind;wire[31:0] raw_cmd_value;
+    wire http_request,http_command;wire[2:0] http_client;wire[1:0] http_route;
+    wire[7:0] http_kind;wire[31:0] http_value;
+    esp_http_request http_parser(clk,io_reset_n && (LINK_MODE==0),rx_valid,rx_data,
+        http_request,http_client,http_route,http_command,http_kind,http_value);
+    assign cmd_valid=raw_cmd_valid|http_command;
+    assign cmd_kind=http_command?http_kind:raw_cmd_kind;
+    assign cmd_value=http_command?http_value:raw_cmd_value;
     esp_command_parser #(.RAW_MODE(LINK_MODE)) parser(
         .clk(clk), .reset_n(io_reset_n), .valid(rx_valid), .data(rx_data),
-        .cmd_valid(cmd_valid), .cmd_kind(cmd_kind), .cmd_value(cmd_value),
+        .cmd_valid(raw_cmd_valid), .cmd_kind(raw_cmd_kind), .cmd_value(raw_cmd_value),
         .cmd_client(cmd_client_unused));
 
     generate if(LINK_MODE == 0) begin: wifi_link
@@ -318,11 +327,16 @@ module instrument_core #(
         wire [7:0] esp_diagnostic;
         wire [7:0] dummy_keys;
 
+        if(ENABLE_WEB_RELAY)begin: cloud
+            esp_cloud_control wifi(clk,io_reset_n,rx_valid,rx_data,tx_busy,tx_start,tx_data,
+                esp_ready,telemetry_byte,telemetry_index,telemetry_capture,esp_diagnostic);
+        end else begin: local_ap
         esp_at_control #(.TELEMETRY_BYTES(ENABLE_GESTURE ? 96 : 85)) wifi(
             clk, io_reset_n, rx_valid, rx_data, tx_busy, tx_start, tx_data,
             esp_ready, dummy_volume, dummy_active, esp_diagnostic,
             telemetry_byte, telemetry_index, telemetry_capture,
             dummy_timbre, dummy_page, dummy_echo, dummy_keys, dummy_overrides);
+        end
     end else begin: ble_link
         assign esp_ready = 1'b1;
         assign telemetry_capture = 1'b0;

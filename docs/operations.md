@@ -1104,3 +1104,12 @@ User observes AT0 RX:Y and ESP LED on. This proves RX activity was latched, not 
 ## 2026-10-23 User-selected piano APK and ESP diagnosis stopped
 
 User attributed missing SSID to RCFG(S4) reconfiguration without matched peripheral restart, explicitly requested no protocol/handshake modifications. Diagnosis stopped; previous turn only read sources, no diagnostic bitstream built or deployed. Received FPGA乐器.apk.1,90921bytes,SHA25602c07734556b00bf38946c2c3c0bddd64414ad485387ce017d0155b731985ea7; archived exact bytes as instrument-user-preferred-20261023.apk. aapt identifies com.fpga.instrument,versionCode3/versionName1.2-piano; apksigner verify succeeds, certSHA256bcbf5d4a3669f9140dd9af56df329bcb162c680669c3c28c5a826cce975678df. Original nonASCII-path aapt call failed, retried on ASCII archive; JAVA_HOME configured for verifier. User selected as preferred; matching sources absent, previous cn.myfines.instrument builds preserved. Updated root/mobile README and current release to actual accepted E026 Flash status. No hardware writes.
+
+
+### 2026-10-28 E031互联网网页控制与Flash部署
+
+用户要求电脑不连接ESP热点，已恢复并保持ahu.dot1x。ESP连接用户提供的2.4GHz热点。AT实读版本1.2.0.0/SDK1.5.4.1；TLS未互通。配置生成器曾未真正切换TCP，新增失败测试复现并修复。最终TCP/80主动轮询版上传96字节真实遥测；公网HTTPS网页API设置V40/T01/M00001000，实录261.5Hz，停音后RMS约-50.82dBFS。
+
+核对ID0x0000081B、GW2A-18C和哈希F3443A81EBA8FE8B4CD6E920F81E358E96B77D327D41E17894837A58EB5B15D6后，官方Programmer --operation_index 37 --spiaddr 0x000000 --frequency 2.5MHz成功写入校验Flash，27.92秒；独立op73 E031、op74 6020。用户断电重启并启用，未重新下载SRAM；重新上线并回报网页T02设置，冷启动控制通过。原始日志与验收JSON见firmware/e028-extension/docs/e031-regression，部署说明见e031-internet-control.md。
+
+无bulk erase、OTP或下载器/ESP固件更新。Wi-Fi密码、令牌、配置ROM、真实FS仅保存在E:/gaoyun/private/esp-web，不入Git。当前为临时隧道/本机中转，设备HTTP非端到端加密。

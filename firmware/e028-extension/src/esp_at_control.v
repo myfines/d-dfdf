@@ -8,13 +8,32 @@ module esp_at_control #(parameter integer BOOT_TICKS=54000000,WAIT_TICKS=2700000
  input wire [7:0] telemetry_data,output wire [6:0] telemetry_index,output reg telemetry_capture,
  output reg [1:0] remote_timbre,remote_page,output reg remote_echo,
  output reg [7:0] remote_keys,output reg [2:0] overrides);
- reg [3:0] state;reg [2:0] command_index;reg [6:0] index;reg [31:0] timer,lease;
+ reg [4:0] state;reg [2:0] command_index;reg [13:0] index;reg [31:0] timer,lease;
  reg [2:0] boot_match;
  reg rx_seen,timed_out;
  assign diagnostic={ready,rx_seen,timed_out,2'b00,command_index};
  reg [1:0] reply;wire update,command_valid;wire [7:0] requested,kind,value;wire [2:0] source_client;
  reg [2:0] target_client,send_client;reg [31:0] send_timer;
- assign telemetry_index=index;
+
+ wire http_request,http_command_unused;wire[2:0] http_client;wire[1:0] http_route;wire[7:0] http_kind_unused;wire[31:0] http_value_unused;
+ esp_http_request http_rx(clk,reset_n,rx_valid,rx_data,http_request,http_client,http_route,http_command_unused,http_kind_unused,http_value_unused);
+ reg http_pending,http_sending;reg[2:0] pending_client;reg[1:0] pending_route,send_route;
+ reg[13:0] http_length,http_offset;wire[7:0] http_rom_data;
+ localparam HTTP_PAGE_OFFSET=0, HTTP_PAGE_LENGTH=1956;
+ localparam HTTP_ACK_OFFSET=1956, HTTP_ACK_LENGTH=126;
+ localparam HTTP_STATUS_OFFSET=2082, HTTP_STATUS_LENGTH=124;
+ localparam HTTP_BAD_OFFSET=2206, HTTP_BAD_LENGTH=149;
+ wire[13:0] rom_address=http_offset+index;
+ esp_http_rom http_rom(clk,rom_address,http_rom_data);
+ function[7:0] http_send_byte;input[4:0] pos;begin case(pos)
+ 0:http_send_byte="A";1:http_send_byte="T";2:http_send_byte="+";3:http_send_byte="C";4:http_send_byte="I";5:http_send_byte="P";6:http_send_byte="S";7:http_send_byte="E";8:http_send_byte="N";9:http_send_byte="D";10:http_send_byte="=";11:http_send_byte=48+send_client;12:http_send_byte=",";
+ 13:http_send_byte=48+http_length/1000;14:http_send_byte=48+(http_length/100)%10;15:http_send_byte=48+(http_length/10)%10;16:http_send_byte=48+http_length%10;17:http_send_byte=13;default:http_send_byte=10;
+ endcase end endfunction
+ function[7:0] close_byte;input[4:0] pos;begin case(pos)
+ 0:close_byte="A";1:close_byte="T";2:close_byte="+";3:close_byte="C";4:close_byte="I";5:close_byte="P";6:close_byte="C";7:close_byte="L";8:close_byte="O";9:close_byte="S";10:close_byte="E";11:close_byte="=";12:close_byte=48+send_client;13:close_byte=13;default:close_byte=10;
+ endcase end endfunction
+
+ assign telemetry_index=http_sending ? index-HTTP_STATUS_LENGTH : index;
  function [7:0] send_command_byte;input [6:0] pos;begin case(pos)
   0:send_command_byte="A";1:send_command_byte="T";2:send_command_byte="+";
   3:send_command_byte="C";4:send_command_byte="I";5:send_command_byte="P";
@@ -150,9 +169,10 @@ module esp_at_control #(parameter integer BOOT_TICKS=54000000,WAIT_TICKS=2700000
    9'd340:command_byte=8'd10;
    default:command_byte=0;endcase end endfunction
  always @(posedge clk)begin
-  if(!reset_n)begin rx_seen<=0;timed_out<=0;state<=0;command_index<=0;index<=0;timer<=0;reply<=0;boot_match<=0;ready<=0;tx_start<=0;tx_data<=0;volume<=255;lease<=0;remote_timbre<=0;remote_page<=0;remote_echo<=0;remote_keys<=0;overrides<=0;send_timer<=0;target_client<=0;send_client<=0;telemetry_capture<=0;end
+  if(!reset_n)begin http_pending<=0;http_sending<=0;pending_client<=0;pending_route<=0;send_route<=0;http_length<=0;http_offset<=0;rx_seen<=0;timed_out<=0;state<=0;command_index<=0;index<=0;timer<=0;reply<=0;boot_match<=0;ready<=0;tx_start<=0;tx_data<=0;volume<=255;lease<=0;remote_timbre<=0;remote_page<=0;remote_echo<=0;remote_keys<=0;overrides<=0;send_timer<=0;target_client<=0;send_client<=0;telemetry_capture<=0;end
   else begin
    tx_start<=0;telemetry_capture<=0;
+   if(http_request)begin lease<=0;http_pending<=1;pending_client<=http_client;pending_route<=http_route;end
    if(ready && send_timer!=SEND_TICKS-1)send_timer<=send_timer+1'b1;
    if(lease!=0)begin lease<=lease-1'b1;if(lease==1)begin volume<=255;remote_keys<=0;overrides<=0;end end
    if(command_valid)begin
@@ -196,19 +216,34 @@ module esp_at_control #(parameter integer BOOT_TICKS=54000000,WAIT_TICKS=2700000
       end else if(timer==WAIT_TICKS-1)begin timed_out<=1;state<=0;timer<=0;command_index<=0;ready<=0;end
       else timer<=timer+1'b1;
     end
-    5:if(lease!=0 && send_timer==SEND_TICKS-1)begin
+    5:if(http_pending)begin
+     http_pending<=0;http_sending<=1;send_client<=pending_client;send_route<=pending_route;index<=0;state<=6;reply<=0;
+     case(pending_route)
+      0:begin http_length<=HTTP_PAGE_LENGTH;http_offset<=HTTP_PAGE_OFFSET;end
+      1:begin http_length<=HTTP_ACK_LENGTH;http_offset<=HTTP_ACK_OFFSET;end
+      2:begin http_length<=HTTP_STATUS_LENGTH+TELEMETRY_BYTES;http_offset<=HTTP_STATUS_OFFSET;telemetry_capture<=1;end
+      3:begin http_length<=HTTP_BAD_LENGTH;http_offset<=HTTP_BAD_OFFSET;end
+     endcase
+    end else if(lease!=0 && send_timer==SEND_TICKS-1)begin
+     http_sending<=0;
      send_timer<=0;send_client<=target_client;telemetry_capture<=1;index<=0;state<=6;reply<=0;
     end
-    6:if(!tx_busy && !tx_start)begin tx_data<=send_command_byte(index);tx_start<=1;state<=7;end
+    6:if(!tx_busy && !tx_start)begin tx_data<=http_sending?http_send_byte(index[4:0]):send_command_byte(index[6:0]);tx_start<=1;state<=7;end
     7:if(tx_busy)state<=8;
-    8:if(!tx_busy)begin if(index==16)begin timer<=0;state<=9;end else begin index<=index+1'b1;state<=6;end end
-    9:if(rx_valid && rx_data==62)begin index<=0;state<=10;timer<=0;end
+    8:if(!tx_busy)begin if(index==(http_sending?18:16))begin timer<=0;state<=9;end else begin index<=index+1'b1;state<=6;end end
+    9:if(rx_valid && rx_data==62)begin index<=0;state<=18;timer<=0;end
       else if(timer==WAIT_TICKS-1)begin state<=5;timer<=0;end else timer<=timer+1'b1;
-    10:if(!tx_busy && !tx_start)begin tx_data<=telemetry_data;tx_start<=1;state<=11;end
+    10:if(!tx_busy && !tx_start)begin tx_data<=http_sending && !(send_route==2 && index>=HTTP_STATUS_LENGTH)?http_rom_data:telemetry_data;tx_start<=1;state<=11;end
     11:if(tx_busy)state<=12;
-    12:if(!tx_busy)begin if(index==TELEMETRY_BYTES-1)begin timer<=0;reply<=0;state<=13;end else begin index<=index+1'b1;state<=10;end end
-    13:if(rx_valid && reply==3 && rx_data==10)begin state<=5;timer<=0;end
+    12:if(!tx_busy)begin if(index==(http_sending?http_length-1:TELEMETRY_BYTES-1))begin timer<=0;reply<=0;state<=13;end else begin index<=index+1'b1;state<=18;end end
+    13:if(rx_valid && reply==3 && rx_data==10)begin state<=http_sending?14:5;index<=0;timer<=0;end
        else if(timer==WAIT_TICKS-1)begin state<=5;timer<=0;end else timer<=timer+1'b1;
+    14:if(!tx_busy && !tx_start)begin tx_data<=close_byte(index[4:0]);tx_start<=1;state<=15;end
+    15:if(tx_busy)state<=16;
+    16:if(!tx_busy)begin if(index==14)begin timer<=0;state<=17;end else begin index<=index+1'b1;state<=14;end end
+    17:if(rx_valid && reply==3 && rx_data==10)begin state<=5;timer<=0;end
+       else if(timer==WAIT_TICKS-1)begin state<=5;timer<=0;end else timer<=timer+1'b1;
+    18:state<=10; // synchronous HTTP ROM read latency
     default:state<=0;
    endcase
    if(rx_valid && ready && boot_match==6 && rx_data==10)begin

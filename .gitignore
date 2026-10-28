@@ -6,3 +6,8 @@ tools/
 *.exe
 __pycache__/
 *.vvp
+
+# E031 real-network builds embed private Wi-Fi/control configuration.
+firmware/e028-extension/dist/firmware/instrument_e031.fs
+firmware/e028-extension/dist/firmware/instrument_e031.bin
+firmware/e028-extension/private/

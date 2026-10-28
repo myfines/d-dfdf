@@ -1,0 +1,2 @@
+PASS HTTP GET, split payload, mask, invalid hex
+E:\gaoyun\releases\e028-flash-record\firmware\e028-extension/sim/tb_http.sv:18: $finish called at 1420000 (1ps)
