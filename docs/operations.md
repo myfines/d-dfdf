@@ -1113,3 +1113,7 @@ User attributed missing SSID to RCFG(S4) reconfiguration without matched periphe
 核对ID0x0000081B、GW2A-18C和哈希F3443A81EBA8FE8B4CD6E920F81E358E96B77D327D41E17894837A58EB5B15D6后，官方Programmer --operation_index 37 --spiaddr 0x000000 --frequency 2.5MHz成功写入校验Flash，27.92秒；独立op73 E031、op74 6020。用户断电重启并启用，未重新下载SRAM；重新上线并回报网页T02设置，冷启动控制通过。原始日志与验收JSON见firmware/e028-extension/docs/e031-regression，部署说明见e031-internet-control.md。
 
 无bulk erase、OTP或下载器/ESP固件更新。Wi-Fi密码、令牌、配置ROM、真实FS仅保存在E:/gaoyun/private/esp-web，不入Git。当前为临时隧道/本机中转，设备HTTP非端到端加密。
+
+
+## 2026-10-28 E031 strict acceptance round
+Read official topic2 again; WebMCP and the same authenticated relay backend drove actual DAC/Realtek recordings. Four independent notes/release, 32-frequency no-clip lower-level repeat, four timbres, bend, volume/brightness/vibrato, effects and envelope release were measured. Bend interval precision and delay-effect clipping failed; physical latency/display/offline/mobile items remain unverified. No FPGA/Flash write or computer Wi-Fi switch. User reported no overheating and no physical-input activity. Full evidence and limits: firmware/e028-extension/docs/e031-acceptance/README.md. Raw audio stays private with SHA256 index. Final idle -59.95dBFS; remote controls released.

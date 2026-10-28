@@ -1,0 +1,5 @@
+Icarus probe attempts (not a confirmed simulation result):
+1. vvp: Unable to open input file.
+2. forward-slash compiler base path: 'E:' is not recognized as an internal or external command.
+3. Windows-path attempt: exit1, no diagnostic output.
+The signedness probe remains unexecuted; candidate cause is source review only.

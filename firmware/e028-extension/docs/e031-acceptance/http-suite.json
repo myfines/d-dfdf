@@ -1,0 +1,392 @@
+[
+  {
+    "label": "timbre-0",
+    "rms_dbfs": -38.53,
+    "peak": 0.04953,
+    "clip_fraction": 0.0,
+    "dominant_hz": 261.5,
+    "spectral_centroid_hz": 1641.8,
+    "state": {
+      "online": true,
+      "age": 0.16,
+      "telemetry": "G051200E534E33C180007F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F808080808080808080808007300000000\n",
+      "transport": "ESP outbound HTTP (legacy AT)",
+      "version": "E031"
+    },
+    "control": "authenticated relay HTTP API, same backend as WebMCP; not a browser tool call",
+    "harmonics_relative": [
+      1.0,
+      0.221,
+      0.046,
+      0.016,
+      0.008,
+      0.003,
+      0.009,
+      0.004
+    ]
+  },
+  {
+    "label": "timbre-1",
+    "rms_dbfs": -22.19,
+    "peak": 0.23251,
+    "clip_fraction": 0.0,
+    "dominant_hz": 261.5,
+    "spectral_centroid_hz": 1225.9,
+    "state": {
+      "online": true,
+      "age": 0.8,
+      "telemetry": "G051700E534E33C18100807F7F7F7F7F7F808080808080807F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F80800AE00000000\n",
+      "transport": "ESP outbound HTTP (legacy AT)",
+      "version": "E031"
+    },
+    "control": "authenticated relay HTTP API, same backend as WebMCP; not a browser tool call",
+    "harmonics_relative": [
+      1.0,
+      0.971,
+      0.002,
+      0.613,
+      0.002,
+      0.001,
+      0.001,
+      0.001
+    ]
+  },
+  {
+    "label": "timbre-2",
+    "rms_dbfs": -27.23,
+    "peak": 0.12335,
+    "clip_fraction": 0.0,
+    "dominant_hz": 261.5,
+    "spectral_centroid_hz": 1542.0,
+    "state": {
+      "online": true,
+      "age": 0.8,
+      "telemetry": "G051C00E534E33C18200808080808080807F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F80800ED00000000\n",
+      "transport": "ESP outbound HTTP (legacy AT)",
+      "version": "E031"
+    },
+    "control": "authenticated relay HTTP API, same backend as WebMCP; not a browser tool call",
+    "harmonics_relative": [
+      1.0,
+      0.0,
+      0.748,
+      0.001,
+      0.478,
+      0.001,
+      0.001,
+      0.001
+    ]
+  },
+  {
+    "label": "timbre-3",
+    "rms_dbfs": -41.71,
+    "peak": 0.03592,
+    "clip_fraction": 0.0,
+    "dominant_hz": 261.5,
+    "spectral_centroid_hz": 2021.9,
+    "state": {
+      "online": true,
+      "age": 0.89,
+      "telemetry": "G052100E534E33C183007F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F8080808080808080808080808002D00000000\n",
+      "transport": "ESP outbound HTTP (legacy AT)",
+      "version": "E031"
+    },
+    "control": "authenticated relay HTTP API, same backend as WebMCP; not a browser tool call",
+    "harmonics_relative": [
+      1.0,
+      0.305,
+      0.003,
+      0.027,
+      0.003,
+      0.005,
+      0.016,
+      0.005
+    ]
+  },
+  {
+    "label": "brightness-low",
+    "rms_dbfs": -24.03,
+    "peak": 0.17392,
+    "clip_fraction": 0.0,
+    "dominant_hz": 261.5,
+    "spectral_centroid_hz": 1294.1,
+    "state": {
+      "online": true,
+      "age": 0.19,
+      "telemetry": "G052A00E534E33C18100808080808080808080807F7F7F7F7F7F808080808080807F7F7F7F7F7F7F7F7F08D00000000\n",
+      "transport": "ESP outbound HTTP (legacy AT)",
+      "version": "E031"
+    },
+    "control": "authenticated relay HTTP API, same backend as WebMCP; not a browser tool call",
+    "harmonics_relative": [
+      1.0,
+      0.923,
+      0.003,
+      0.414,
+      0.002,
+      0.001,
+      0.001,
+      0.001
+    ]
+  },
+  {
+    "label": "brightness-high",
+    "rms_dbfs": -24.12,
+    "peak": 0.17896,
+    "clip_fraction": 0.0,
+    "dominant_hz": 523.0,
+    "spectral_centroid_hz": 1378.6,
+    "state": {
+      "online": true,
+      "age": 0.73,
+      "telemetry": "G052E00E534E33C1810080808080808080808080808080807F7F7F7F7F7F7F8080808080807F7F7F7F7F0D000000000\n",
+      "transport": "ESP outbound HTTP (legacy AT)",
+      "version": "E031"
+    },
+    "control": "authenticated relay HTTP API, same backend as WebMCP; not a browser tool call",
+    "harmonics_relative": [
+      1.0,
+      1.043,
+      0.003,
+      0.705,
+      0.003,
+      0.003,
+      0.002,
+      0.001
+    ]
+  },
+  {
+    "label": "vibrato-zero",
+    "rms_dbfs": -26.01,
+    "peak": 0.14334,
+    "clip_fraction": 0.0,
+    "dominant_hz": 261.5,
+    "spectral_centroid_hz": 1354.4,
+    "state": {
+      "online": true,
+      "age": 0.86,
+      "telemetry": "G053200E534E33C181008080807F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F8080808080808080808080808012D1A226F49\n",
+      "transport": "ESP outbound HTTP (legacy AT)",
+      "version": "E031"
+    },
+    "control": "authenticated relay HTTP API, same backend as WebMCP; not a browser tool call",
+    "harmonics_relative": [
+      1.0,
+      0.93,
+      0.003,
+      0.581,
+      0.002,
+      0.001,
+      0.001,
+      0.001
+    ]
+  },
+  {
+    "label": "vibrato-high",
+    "rms_dbfs": -26.5,
+    "peak": 0.14713,
+    "clip_fraction": 0.0,
+    "dominant_hz": 261.5,
+    "spectral_centroid_hz": 1235.1,
+    "state": {
+      "online": true,
+      "age": 0.53,
+      "telemetry": "G053600E534E33C181008080808080808080808080808080807F7F7F7F7F7F808080808080807F7F7F7F06400000000\n",
+      "transport": "ESP outbound HTTP (legacy AT)",
+      "version": "E031"
+    },
+    "control": "authenticated relay HTTP API, same backend as WebMCP; not a browser tool call",
+    "harmonics_relative": [
+      1.0,
+      0.739,
+      0.004,
+      0.134,
+      0.003,
+      0.001,
+      0.003,
+      0.001
+    ]
+  },
+  {
+    "label": "volume-low",
+    "rms_dbfs": -47.12,
+    "peak": 0.02466,
+    "clip_fraction": 0.0,
+    "dominant_hz": 261.5,
+    "spectral_centroid_hz": 2253.2,
+    "state": {
+      "online": true,
+      "age": 0.31,
+      "telemetry": "G053900E534E33C081007F7F8080808080807F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F8080808080808009700000000\n",
+      "transport": "ESP outbound HTTP (legacy AT)",
+      "version": "E031"
+    },
+    "control": "authenticated relay HTTP API, same backend as WebMCP; not a browser tool call",
+    "harmonics_relative": [
+      1.0,
+      0.781,
+      0.068,
+      0.129,
+      0.055,
+      0.033,
+      0.03,
+      0.032
+    ]
+  },
+  {
+    "label": "volume-high",
+    "rms_dbfs": -22.88,
+    "peak": 0.207,
+    "clip_fraction": 0.0,
+    "dominant_hz": 261.5,
+    "spectral_centroid_hz": 1160.4,
+    "state": {
+      "online": true,
+      "age": 0.03,
+      "telemetry": "G053D00E534E33C1810080808080807F7F7F7F7F7F808080808080807F7F7F7F7F7F7F7F7F7F7F7F7F7F0E600000000\n",
+      "transport": "ESP outbound HTTP (legacy AT)",
+      "version": "E031"
+    },
+    "control": "authenticated relay HTTP API, same backend as WebMCP; not a browser tool call",
+    "harmonics_relative": [
+      1.0,
+      0.771,
+      0.004,
+      0.138,
+      0.003,
+      0.002,
+      0.001,
+      0.001
+    ]
+  },
+  {
+    "label": "fx-dry",
+    "rms_dbfs": -34.98,
+    "peak": 0.05984,
+    "clip_fraction": 0.0,
+    "dominant_hz": 261.5,
+    "spectral_centroid_hz": 1712.2,
+    "state": {
+      "online": true,
+      "age": 0.78,
+      "telemetry": "G054000E534E33C101007F7F7F7F8080808080807F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F80808080808002900000000\n",
+      "transport": "ESP outbound HTTP (legacy AT)",
+      "version": "E031"
+    },
+    "control": "authenticated relay HTTP API, same backend as WebMCP; not a browser tool call",
+    "harmonics_relative": [
+      1.0,
+      0.934,
+      0.014,
+      0.591,
+      0.01,
+      0.003,
+      0.008,
+      0.003
+    ]
+  },
+  {
+    "label": "fx-chorus",
+    "rms_dbfs": -41.34,
+    "peak": 0.04059,
+    "clip_fraction": 0.0,
+    "dominant_hz": 261.5,
+    "spectral_centroid_hz": 1907.2,
+    "state": {
+      "online": true,
+      "age": 0.74,
+      "telemetry": "G054400E534E33C101107F7F7F7F7F7F7F7F7F7F80808080808080808080808080808080807F7F7F7F7F08F00000000\n",
+      "transport": "ESP outbound HTTP (legacy AT)",
+      "version": "E031"
+    },
+    "control": "authenticated relay HTTP API, same backend as WebMCP; not a browser tool call",
+    "harmonics_relative": [
+      1.0,
+      0.773,
+      0.034,
+      0.247,
+      0.021,
+      0.018,
+      0.012,
+      0.006
+    ]
+  },
+  {
+    "label": "fx-delay",
+    "rms_dbfs": -10.14,
+    "peak": 0.99438,
+    "clip_fraction": 0.0010625,
+    "dominant_hz": 523.0,
+    "spectral_centroid_hz": 2801.8,
+    "state": {
+      "online": true,
+      "age": 0.73,
+      "telemetry": "G054800E534E33C1011080807F80808080808080828282828282808F8F8F8F8F7F7F7F7F7F7F7F8080800F000000000\n",
+      "transport": "ESP outbound HTTP (legacy AT)",
+      "version": "E031"
+    },
+    "control": "authenticated relay HTTP API, same backend as WebMCP; not a browser tool call",
+    "harmonics_relative": [
+      1.0,
+      1.775,
+      1.128,
+      0.852,
+      1.083,
+      0.286,
+      0.393,
+      0.007
+    ]
+  },
+  {
+    "label": "fx-reverb",
+    "rms_dbfs": -50.52,
+    "peak": 0.01562,
+    "clip_fraction": 0.0,
+    "dominant_hz": 261.5,
+    "spectral_centroid_hz": 2137.1,
+    "state": {
+      "online": true,
+      "age": 0.41,
+      "telemetry": "G054C00E534E33C101107F7F7F7F7F7F7F7F7F808080808080808080808080808080807F7F7F7F7F7F8005500000000\n",
+      "transport": "ESP outbound HTTP (legacy AT)",
+      "version": "E031"
+    },
+    "control": "authenticated relay HTTP API, same backend as WebMCP; not a browser tool call",
+    "harmonics_relative": [
+      1.0,
+      0.868,
+      0.009,
+      0.561,
+      0.016,
+      0.006,
+      0.013,
+      0.009
+    ]
+  },
+  {
+    "label": "final-release",
+    "rms_dbfs": -47.31,
+    "peak": 0.03159,
+    "clip_fraction": 0.0,
+    "dominant_hz": 1546.0,
+    "spectral_centroid_hz": 2215.7,
+    "state": {
+      "online": true,
+      "age": 0.97,
+      "telemetry": "G054F00E434E33C101107F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F0AB00000000\n",
+      "transport": "ESP outbound HTTP (legacy AT)",
+      "version": "E031"
+    },
+    "control": "authenticated relay HTTP API, same backend as WebMCP; not a browser tool call",
+    "harmonics_relative": [
+      1.0,
+      0.673,
+      2.91,
+      0.462,
+      5.457,
+      1.537,
+      2.931,
+      1.134
+    ]
+  }
+]

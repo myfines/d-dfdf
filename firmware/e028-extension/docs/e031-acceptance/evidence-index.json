@@ -1,0 +1,165 @@
+{
+  "firmware": "E031",
+  "flash_unchanged": true,
+  "source_manifest_matches": {
+    "src/synth32.v": true,
+    "src/fx_engine.v": true,
+    "src/instrument_core.v": true,
+    "src/i2s_tx16.v": true
+  },
+  "recording": "Realtek input1 48k mono; possible AGC; ADC sample rate is not DAC output sample rate",
+  "audio_local_only": [
+    {
+      "name": "00-idle.wav",
+      "sha256": "2641716e1c13d8623e25da5e0256e23dd1aa9601198da1eb3124e1fad9c3f789",
+      "bytes": 192044
+    },
+    {
+      "name": "01-four-voices-organ.wav",
+      "sha256": "7f5806efda4d960e9cac073ef35af4e1892e3d15e605392c1c032bbf6257cea0",
+      "bytes": 192044
+    },
+    {
+      "name": "02-release-C-keep-three.wav",
+      "sha256": "f6fb96e005c35c213a559e2fd77122c5e226548a3720bd12e546c3c2851939de",
+      "bytes": 192044
+    },
+    {
+      "name": "03-bend-up.wav",
+      "sha256": "5e92aa3541ca6e52bc5abe8554416afb772669d14c63d9664308ba63967ae143",
+      "bytes": 192044
+    },
+    {
+      "name": "04-bend-down.wav",
+      "sha256": "dbb47f2781e09a0decf98dddb8893916f446f2f24ac8407b8a712986cf506ae1",
+      "bytes": 192044
+    },
+    {
+      "name": "05-all-32.wav",
+      "sha256": "db1f2e9a8d26a6b97b49ad1a0a1f9230bfe118ef435999911e84293e0cb9e3e8",
+      "bytes": 384044
+    },
+    {
+      "name": "06-all-32-low-volume.wav",
+      "sha256": "c44a4cf36dd8094f10c159eb5c3bc2cb3c13ab54d9be426d5fae5fca41863edf",
+      "bytes": 384044
+    },
+    {
+      "name": "07-after-timbre-attempt.wav",
+      "sha256": "db3cdd016976647779f9a36335568938089b4cc606eba8b23bda362e6cac651f",
+      "bytes": 192044
+    },
+    {
+      "name": "99-final-idle.wav",
+      "sha256": "8f9374a1a8c6dd1c2588056c200307d0e500b534af317ef79c6c5141d878bae5",
+      "bytes": 192044
+    },
+    {
+      "name": "brightness-high.wav",
+      "sha256": "1c8609c40be23a54a991f6143e24f3a96f5bd235c85960cf66838abb3d9ce7d5",
+      "bytes": 192044
+    },
+    {
+      "name": "brightness-low.wav",
+      "sha256": "91650d2283b28c0a4f0a473cf85b756207d2e95ac327adac194aacc463d33072",
+      "bytes": 192044
+    },
+    {
+      "name": "delay-low-level.wav",
+      "sha256": "d9f5e4374cebac01113f56b433738b9e4924537a2bea2c033a0fd7d614d1c336",
+      "bytes": 864044
+    },
+    {
+      "name": "envelope-epiano.wav",
+      "sha256": "662895a88a28396a5e1906274c3f032c154558a1517db080db9b08be80ca9284",
+      "bytes": 864044
+    },
+    {
+      "name": "envelope-strings.wav",
+      "sha256": "92d8c861999215645d35f71806d6cf1a1328301b1c6191fba027955eb7cfa1f4",
+      "bytes": 864044
+    },
+    {
+      "name": "final-release.wav",
+      "sha256": "3c1fb62a822440e1153329ee4e1e7f0bcfe5108f72f965b3854ac9eac5009823",
+      "bytes": 192044
+    },
+    {
+      "name": "fx-chorus.wav",
+      "sha256": "a43f8083bebe95408297f9927a8a6743e66b9f36c95f7472272a1f8312314ec1",
+      "bytes": 192044
+    },
+    {
+      "name": "fx-delay.wav",
+      "sha256": "d1fd72d9518f0cdc0eff4320b37710bf88a4f5dca599e224dd480a099f624f19",
+      "bytes": 192044
+    },
+    {
+      "name": "fx-dry.wav",
+      "sha256": "4f71797d6c6d6ceca6b59f002ed412f5f2bd2fe524ec52a83efcd5b424b7bbdd",
+      "bytes": 192044
+    },
+    {
+      "name": "fx-reverb.wav",
+      "sha256": "63587b4bd7e4e3c2b357b6a6114cd95ddc21a21a71d04cf420be2d92fb70165b",
+      "bytes": 192044
+    },
+    {
+      "name": "timbre-0.wav",
+      "sha256": "7fd42cb6f2484f583638321c3306ffb3e460dad576a0361f1b2d1ea6810d047c",
+      "bytes": 192044
+    },
+    {
+      "name": "timbre-1.wav",
+      "sha256": "480e5a8f6b6dee16e2df54d02249d1033113cac0360b5cf45e74f47c19915a65",
+      "bytes": 192044
+    },
+    {
+      "name": "timbre-2.wav",
+      "sha256": "5d4f93ca24ae76c00872959feed6628a628d4aa55e5ab2bdf4f08abbbe7f14f5",
+      "bytes": 192044
+    },
+    {
+      "name": "timbre-3.wav",
+      "sha256": "c5c1fdb6332bd343a4e96838ad54bc4d9212f9fb18c44304ceb5f871f4732bd2",
+      "bytes": 192044
+    },
+    {
+      "name": "vibrato-high.wav",
+      "sha256": "8a8854313e23cc9dd3eb56c7955e53b252997c75c65cbb3867029ceae7f2caca",
+      "bytes": 192044
+    },
+    {
+      "name": "vibrato-zero.wav",
+      "sha256": "df4ec025128c71a16909cc0e3a43442a589e0ed3b2a9fd031ba59bc60ef93590",
+      "bytes": 192044
+    },
+    {
+      "name": "volume-high.wav",
+      "sha256": "0df74d8ad5f8a5e1470f89926e7f147a3575eb954d12c3a893d35bb82d0b1392",
+      "bytes": 192044
+    },
+    {
+      "name": "volume-low.wav",
+      "sha256": "fe598d030a5fbedb27f999ab77f60680173ae860d214caab3c303359c1c7f25a",
+      "bytes": 192044
+    }
+  ],
+  "spectral_summary": [
+    {
+      "name": "01-four-voices-organ",
+      "bins_above_20db": 7,
+      "clip_fraction": 0.0
+    },
+    {
+      "name": "02-release-C-keep-three",
+      "bins_above_20db": 5,
+      "clip_fraction": 0.0
+    },
+    {
+      "name": "06-all-32-low-volume",
+      "bins_above_20db": 32,
+      "clip_fraction": 0.0
+    }
+  ]
+}

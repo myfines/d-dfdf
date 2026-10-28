@@ -1,0 +1,250 @@
+{
+  "label": "01-four-voices-organ",
+  "time": 1793185060.9807026,
+  "duration": 2,
+  "rms_dbfs": -16.11,
+  "peak": 0.70587,
+  "clip_fraction": 0.0,
+  "peaks": [
+    [
+      784.0,
+      1899.293
+    ],
+    [
+      392.0,
+      1827.078
+    ],
+    [
+      261.5,
+      1797.932
+    ],
+    [
+      329.5,
+      1777.523
+    ],
+    [
+      494.0,
+      1769.425
+    ],
+    [
+      523.0,
+      1675.657
+    ],
+    [
+      659.0,
+      1659.254
+    ],
+    [
+      988.0,
+      1652.333
+    ]
+  ],
+  "note_bins": [
+    {
+      "n": 0,
+      "hz": 131.5,
+      "amplitude": 19.405,
+      "local_snr_db": 16.6
+    },
+    {
+      "n": 1,
+      "hz": 140.0,
+      "amplitude": 9.412,
+      "local_snr_db": 3.5
+    },
+    {
+      "n": 2,
+      "hz": 146.5,
+      "amplitude": 7.257,
+      "local_snr_db": 7.2
+    },
+    {
+      "n": 3,
+      "hz": 157.5,
+      "amplitude": 14.164,
+      "local_snr_db": 12.5
+    },
+    {
+      "n": 4,
+      "hz": 163.0,
+      "amplitude": 6.322,
+      "local_snr_db": 3.0
+    },
+    {
+      "n": 5,
+      "hz": 174.5,
+      "amplitude": 23.067,
+      "local_snr_db": 17.1
+    },
+    {
+      "n": 6,
+      "hz": 184.5,
+      "amplitude": 13.997,
+      "local_snr_db": 12.4
+    },
+    {
+      "n": 7,
+      "hz": 197.5,
+      "amplitude": 6.935,
+      "local_snr_db": 8.1
+    },
+    {
+      "n": 8,
+      "hz": 209.0,
+      "amplitude": 8.391,
+      "local_snr_db": 5.2
+    },
+    {
+      "n": 9,
+      "hz": 218.0,
+      "amplitude": 8.664,
+      "local_snr_db": 7.0
+    },
+    {
+      "n": 10,
+      "hz": 234.5,
+      "amplitude": 11.968,
+      "local_snr_db": 11.1
+    },
+    {
+      "n": 11,
+      "hz": 246.0,
+      "amplitude": 14.487,
+      "local_snr_db": 6.7
+    },
+    {
+      "n": 12,
+      "hz": 261.5,
+      "amplitude": 1797.932,
+      "local_snr_db": 49.2
+    },
+    {
+      "n": 13,
+      "hz": 277.0,
+      "amplitude": 6.849,
+      "local_snr_db": 0.9
+    },
+    {
+      "n": 14,
+      "hz": 292.5,
+      "amplitude": 8.93,
+      "local_snr_db": 7.3
+    },
+    {
+      "n": 15,
+      "hz": 311.0,
+      "amplitude": 10.053,
+      "local_snr_db": 6.7
+    },
+    {
+      "n": 16,
+      "hz": 329.5,
+      "amplitude": 1777.523,
+      "local_snr_db": 48.0
+    },
+    {
+      "n": 17,
+      "hz": 347.5,
+      "amplitude": 11.295,
+      "local_snr_db": 7.1
+    },
+    {
+      "n": 18,
+      "hz": 368.5,
+      "amplitude": 14.824,
+      "local_snr_db": 11.6
+    },
+    {
+      "n": 19,
+      "hz": 392.0,
+      "amplitude": 1827.078,
+      "local_snr_db": 48.2
+    },
+    {
+      "n": 20,
+      "hz": 415.5,
+      "amplitude": 12.117,
+      "local_snr_db": 5.6
+    },
+    {
+      "n": 21,
+      "hz": 438.0,
+      "amplitude": 6.365,
+      "local_snr_db": -0.6
+    },
+    {
+      "n": 22,
+      "hz": 465.5,
+      "amplitude": 8.978,
+      "local_snr_db": 3.0
+    },
+    {
+      "n": 23,
+      "hz": 494.0,
+      "amplitude": 1769.425,
+      "local_snr_db": 46.9
+    },
+    {
+      "n": 24,
+      "hz": 523.0,
+      "amplitude": 1675.657,
+      "local_snr_db": 49.1
+    },
+    {
+      "n": 25,
+      "hz": 552.5,
+      "amplitude": 12.582,
+      "local_snr_db": 7.9
+    },
+    {
+      "n": 26,
+      "hz": 587.0,
+      "amplitude": 8.333,
+      "local_snr_db": 3.8
+    },
+    {
+      "n": 27,
+      "hz": 621.5,
+      "amplitude": 14.044,
+      "local_snr_db": 5.3
+    },
+    {
+      "n": 28,
+      "hz": 659.0,
+      "amplitude": 1659.254,
+      "local_snr_db": 47.4
+    },
+    {
+      "n": 29,
+      "hz": 696.5,
+      "amplitude": 12.379,
+      "local_snr_db": 5.9
+    },
+    {
+      "n": 30,
+      "hz": 738.5,
+      "amplitude": 10.547,
+      "local_snr_db": 7.2
+    },
+    {
+      "n": 31,
+      "hz": 784.0,
+      "amplitude": 1899.293,
+      "local_snr_db": 49.3
+    }
+  ],
+  "before": {
+    "online": true,
+    "age": 2.81,
+    "telemetry": "G03D000E534E33C181007F7F7E7F7F808081818181808080808080807F7F7E7E7D7D7D7D7E7F8181828107900000000\n",
+    "transport": "ESP outbound HTTP (legacy AT)",
+    "version": "E031"
+  },
+  "after": {
+    "online": true,
+    "age": 0.73,
+    "telemetry": "G03D200E534F33D18100818181818181818080808080807F7E7E7E7F7F80808080808080807F7F7F7F7F0BE00000000\n",
+    "transport": "ESP outbound HTTP (legacy AT)",
+    "version": "E031"
+  }
+}
