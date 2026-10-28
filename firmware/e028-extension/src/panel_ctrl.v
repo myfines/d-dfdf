@@ -20,6 +20,7 @@ module panel_ctrl(
     input  wire       frame_tick,
     input  wire       sw_n,
     input  wire [3:0] keys_n,
+    input  wire       inhibit,   // high during safe-start / arm settling
     output reg  [1:0] timbre,
     output reg  [1:0] page,
     output reg  [2:0] screen,
@@ -62,7 +63,7 @@ module panel_ctrl(
             screen <= 0;
             song_enable <= 0;
             latch_enable <= 0;
-            fx_enable <= 3'b001;
+            fx_enable <= 3'b000;
             test_mode <= 0;
             for(i = 0; i < 4; i = i + 1) begin
                 key_filter[i] <= 0;
@@ -81,15 +82,18 @@ module panel_ctrl(
                     key_filter[i] <= 0;
                 end else key_filter[i] <= key_filter[i] + 1'b1;
 
-                if(!key_stable[i]) begin
+                if(inhibit) begin
+                    hold_count[i] <= 0;
+                    long_done[i] <= 0;
+                end else if(!key_stable[i]) begin
                     hold_count[i] <= 0;
                     long_done[i] <= 0;
                 end else if(!long_done[i]) begin
                     if(hold_count[i] == LONG_FRAMES-1) begin
                         long_done[i] <= 1;
                         case(i)
-                            2: latch_enable <= ~latch_enable;
-                            3: test_mode <= ~test_mode;
+                            3: latch_enable <= ~latch_enable; // S3 long
+                            0: test_mode <= ~test_mode;       // S4 long
                             default: begin end
                         endcase
                     end else hold_count[i] <= hold_count[i] + 1'b1;
@@ -97,16 +101,20 @@ module panel_ctrl(
             end
 
             // Short actions on release, so a long press does not also fire.
-            if(released[0] && !long_done[0]) page <= page + 1'b1;
-            if(released[1] && !long_done[1]) screen <= screen == 3'd4 ? 3'd0 : screen + 1'b1;
-            if(released[2] && !long_done[2]) song_enable <= ~song_enable;
-            if(released[3] && !long_done[3]) begin
-                case(fx_enable)
-                    3'b000: fx_enable <= 3'b001;
-                    3'b001: fx_enable <= 3'b011;
-                    3'b011: fx_enable <= 3'b111;
-                    default: fx_enable <= 3'b000;
-                endcase
+            // The arm combination (S1+S2+stick) must not start the song or
+            // change the page/screen when its keys are released.
+            if(!inhibit) begin
+                if(released[1] && !long_done[1]) page <= page + 1'b1;       // S1
+                if(released[2] && !long_done[2]) screen <= screen == 3'd4 ? 3'd0 : screen + 1'b1; // S2
+                if(released[3] && !long_done[3]) song_enable <= ~song_enable; // S3
+                if(released[0] && !long_done[0]) begin                       // S4
+                    case(fx_enable)
+                        3'b000: fx_enable <= 3'b000;
+                        3'b001: fx_enable <= 3'b011;
+                        3'b011: fx_enable <= 3'b111;
+                        default: fx_enable <= 3'b000;
+                    endcase
+                end
             end
 
             if(sw_sync == sw_stable) sw_filter <= 0;
@@ -115,7 +123,10 @@ module panel_ctrl(
                 sw_filter <= 0;
             end else sw_filter <= sw_filter + 1'b1;
 
-            if(!sw_stable) begin
+            if(inhibit) begin
+                sw_hold <= 0;
+                sw_long_done <= 0;
+            end else if(!sw_stable) begin
                 sw_hold <= 0;
                 sw_long_done <= 0;
             end else if(!sw_long_done) begin
@@ -124,7 +135,8 @@ module panel_ctrl(
                     test_mode <= ~test_mode;
                 end else sw_hold <= sw_hold + 1'b1;
             end
-            if(sw_prev && !sw_stable && !sw_long_done) timbre <= timbre + 1'b1;
+            if(!inhibit && sw_prev && !sw_stable && !sw_long_done)
+                timbre <= timbre + 1'b1;
         end
     end
 endmodule

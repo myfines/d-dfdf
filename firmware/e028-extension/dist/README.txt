@@ -9,8 +9,8 @@ Firmware (not programmed):
   firmware/SHA256SUMS.txt
 
 Main build:
-  Fmax 32.265 MHz, setup/hold 0/0
-  Logic 12845/20736 (62%), CLS 8005/10368 (78%), BSRAM 15/46, DSP 7.5/24
+  Fmax 32.938 MHz, setup/hold 0/0
+  Logic 13023/20736 (62%), CLS 8045/10368 (78%), BSRAM 15/46, DSP 8.5/24
 
 BLE build:
   Fmax 33.487 MHz, setup/hold 0/0

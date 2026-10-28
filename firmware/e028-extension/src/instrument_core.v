@@ -50,6 +50,24 @@ module instrument_core #(
     wire armed, arm_command;
     wire io_reset_n = reset_n && armed;
 
+    // Ignore panel key releases for 1 s after arming.  The safe-start
+    // combination itself holds S1+S2 and clicks the stick; without this
+    // window, releasing S2 would look like a short press and start the song.
+    reg [25:0] arm_inhibit;
+    reg armed_prev;
+    always @(posedge clk) begin
+        if(!reset_n) begin
+            arm_inhibit <= 0;
+            armed_prev <= 0;
+        end else begin
+            armed_prev <= armed;
+            // 27,000,000 clocks = 1 s at 27 MHz.
+            if(armed && !armed_prev) arm_inhibit <= 26'd27000000;
+            else if(arm_inhibit != 0) arm_inhibit <= arm_inhibit - 1'b1;
+        end
+    end
+    wire panel_inhibit = !armed || arm_command || (arm_inhibit != 0);
+
     reg [3:0] keys_meta, keys_sync;
     reg sw_meta, sw_sync, sw_stable;
     reg [31:0] sw_count;
@@ -111,7 +129,8 @@ module instrument_core #(
     wire [7:0] expression;
     wire [7:0] tremolo;
 
-    wire [31:0] synth_gate = (test_mode || demo_on) ? 32'hFFFFFFFF : gate_from_router;
+    wire [31:0] performance_gate = panel_inhibit ? 32'd0 : gate_from_router;
+    wire [31:0] synth_gate = (test_mode || demo_on) ? 32'hFFFFFFFF : performance_gate;
 
     wire gesture_active, gesture_update;
     wire [7:0] gesture_seq, gesture_confidence;
@@ -220,7 +239,7 @@ module instrument_core #(
     // Panel and expression mapping
     // ------------------------------------------------------------------
     panel_ctrl panel(
-        clk, io_reset_n, frame_tick, panel_sw, keys_sync,
+        clk, io_reset_n, frame_tick, panel_sw, keys_sync, panel_inhibit,
         panel_timbre, panel_page, panel_screen,
         panel_song, panel_latch, panel_fx, test_mode);
 

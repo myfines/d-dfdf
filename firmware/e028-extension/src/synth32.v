@@ -65,7 +65,6 @@ module synth32(
     reg        gate_previous;
     reg signed [25:0] harmonic_sum;
     reg signed [23:0] mix_sum;
-    reg [5:0] sounding_count;
     reg signed [15:0] lfo_value;
     reg [15:0] latency_count;
     reg        latency_pending;
@@ -158,14 +157,14 @@ module synth32(
         end
     endfunction
 
-    function [15:0] release_ticks;
+    function [15:0] release_step;
         input [1:0] t;
         begin
             case(t)
-                2'd0: release_ticks = 16'd2;
-                2'd1: release_ticks = 16'd1;
-                2'd2: release_ticks = 16'd3;
-                default: release_ticks = 16'd1;
+                2'd0: release_step = 16'd8;  // ~175 ms
+                2'd1: release_step = 16'd6;  // ~233 ms
+                2'd2: release_step = 16'd4;  // ~350 ms
+                default: release_step = 16'd8;
             endcase
         end
     endfunction
@@ -222,6 +221,13 @@ module synth32(
         end
     endfunction
 
+    function [31:0] phase_seed;
+        input [4:0] n;
+        begin
+            phase_seed = n * 32'h9E3779B9;
+        end
+    endfunction
+
     wire signed [15:0] sine_wave;
     wave_source sine_rom(.phase(lookup_phase), .timbre(2'd1), .sample(sine_wave));
 
@@ -255,15 +261,9 @@ module synth32(
     wire signed [31:0] voice_product = wave_value * $signed({1'b0, gain_value});
     wire signed [15:0] voice_sample = voice_product >>> 15;
 
-    // Keep the perceived level roughly constant as voices are added, instead
-    // of dividing a single voice by 32.  The shift is 0..5 and the final
-    // saturator catches the rare coherent-phase peak.
-    wire [2:0] mix_shift = sounding_count <= 6'd1 ? 3'd0 :
-                           sounding_count <= 6'd3 ? 3'd1 :
-                           sounding_count <= 6'd7 ? 3'd2 :
-                           sounding_count <= 6'd15 ? 3'd3 :
-                           sounding_count <= 6'd31 ? 3'd4 : 3'd5;
-    wire signed [23:0] mix_now = mix_sum >>> mix_shift;
+    // Fixed 4x headroom.  A per-voice-count variable shift caused audible
+    // gain steps/pops whenever a note or release tail crossed a boundary.
+    wire signed [23:0] mix_now = mix_sum >>> 2;
     wire signed [15:0] mix_sat =
         mix_now > 24'sd32767 ? 16'sd32767 :
         mix_now < -24'sd32768 ? -16'sd32768 : mix_now[15:0];
@@ -304,7 +304,6 @@ module synth32(
             gate_previous <= 0;
             harmonic_sum <= 0;
             mix_sum <= 0;
-            sounding_count <= 0;
             lfo_value <= 0;
             lfo_phase <= 0;
             sample <= 0;
@@ -360,8 +359,7 @@ module synth32(
                 end
                 voice_index <= 0;
                 mix_sum <= 0;
-                sounding_count <= 0;
-                state <= S_LOAD;
+                    state <= S_LOAD;
             end
 
             case(state)
@@ -417,10 +415,14 @@ module synth32(
                             3'd4: if(level_now == 0) begin
                                       estate_now <= 3'd0;
                                       counter_now <= 0;
-                                  end else if(counter_now >= (release_ticks(timbre_now) - 1'b1)) begin
+                                  end else if(level_now <= release_step(timbre_now)) begin
+                                      level_now <= 0;
+                                      estate_now <= 3'd0;
                                       counter_now <= 0;
-                                      level_now <= level_now - 1'b1;
-                                  end else counter_now <= counter_now + 1'b1;
+                                  end else begin
+                                      level_now <= level_now - release_step(timbre_now);
+                                      counter_now <= 0;
+                                  end
                             default: begin
                                       level_now <= 0;
                                       estate_now <= 3'd0;
@@ -449,15 +451,16 @@ module synth32(
                 end
 
                 S_COMB: begin
-                    phase[voice_index] <= phase_next;
+                    if(gate_now && !gate_previous)
+                        phase[voice_index] <= phase_seed(voice_index);
+                    else
+                        phase[voice_index] <= phase_next;
                     env_level[voice_index] <= level_now;
                     env_counter[voice_index] <= counter_now;
                     env_state[voice_index] <= estate_now;
                     env_velocity[voice_index] <= velocity_now;
                     env_timbre[voice_index] <= timbre_now;
                     mix_sum <= mix_sum + voice_sample;
-                    if(level_now != 0)
-                        sounding_count <= sounding_count + 1'b1;
                     if(voice_index == 5'd31) state <= S_FIN;
                     else begin
                         voice_index <= voice_index + 1'b1;
