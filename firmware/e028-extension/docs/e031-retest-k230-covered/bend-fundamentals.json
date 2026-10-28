@@ -1,0 +1,22 @@
+[
+  {
+    "case": "bend-center",
+    "fundamental_hz": 261.5,
+    "sha256": "0f9674d31d3295334e8af8382d1becc77a536da543425006d36143b8899170e5"
+  },
+  {
+    "case": "bend-up",
+    "fundamental_hz": 296.0,
+    "sha256": "e3bd1b34b2abf4ac955f03b46eaec45faf7499ae977140bdd969a0628069da88"
+  },
+  {
+    "case": "bend-down",
+    "fundamental_hz": 227.5,
+    "sha256": "b9c572f626c2a9ee528b7df81462b78af8f1b5de520d89349be74f35a3891ed1"
+  },
+  {
+    "case": "bend-center-repeat",
+    "fundamental_hz": 261.5,
+    "sha256": "05b26e6c0823066f9580d49744782de504e01001e04d2288b816696ae0438fa1"
+  }
+]

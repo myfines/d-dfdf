@@ -1117,3 +1117,6 @@ User attributed missing SSID to RCFG(S4) reconfiguration without matched periphe
 
 ## 2026-10-28 E031 strict acceptance round
 Read official topic2 again; WebMCP and the same authenticated relay backend drove actual DAC/Realtek recordings. Four independent notes/release, 32-frequency no-clip lower-level repeat, four timbres, bend, volume/brightness/vibrato, effects and envelope release were measured. Bend interval precision and delay-effect clipping failed; physical latency/display/offline/mobile items remain unverified. No FPGA/Flash write or computer Wi-Fi switch. User reported no overheating and no physical-input activity. Full evidence and limits: firmware/e028-extension/docs/e031-acceptance/README.md. Raw audio stays private with SHA256 index. Final idle -59.95dBFS; remote controls released.
+
+## 2026-10-28 K230-covered retest
+User covered K230 and confirmed no physical activity/no overheating. Recorded gesture_active=0 and remote_active=1 throughout. Bend261.5/296/227.5/261.5Hz repeated; delay clipping/strong zero-input residual repeated. Old failed cases also had inactive gesture. No RTL/Flash change; controls stopped and effects disabled. Evidence: firmware/e028-extension/docs/e031-retest-k230-covered/README.md.
