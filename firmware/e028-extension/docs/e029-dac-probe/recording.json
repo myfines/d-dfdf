@@ -1,0 +1,297 @@
+{
+  "start_unix": 1793180710.465087,
+  "seconds": 32.0,
+  "device": 1,
+  "status": "complete",
+  "source": "Realtek physical input; temporary SRAM E02A sequencer",
+  "windows": [
+    {
+      "second": 0,
+      "rms_dbfs": -45.28482079798292,
+      "peak": 0.0421142578125,
+      "dc": -3.1477610270182294e-06,
+      "clipped_fraction": 0.0,
+      "dominant_hz": 1501.0,
+      "samples": 48000
+    },
+    {
+      "second": 1,
+      "rms_dbfs": -42.592434551592504,
+      "peak": 0.05377197265625,
+      "dc": -3.1903584798177085e-06,
+      "clipped_fraction": 0.0,
+      "dominant_hz": 1503.0,
+      "samples": 48000
+    },
+    {
+      "second": 2,
+      "rms_dbfs": -51.41195589123937,
+      "peak": 0.02911376953125,
+      "dc": 6.160100301106771e-06,
+      "clipped_fraction": 0.0,
+      "dominant_hz": 141.0,
+      "samples": 48000
+    },
+    {
+      "second": 3,
+      "rms_dbfs": -57.7931841863309,
+      "peak": 0.009429931640625,
+      "dc": 1.4400482177734375e-06,
+      "clipped_fraction": 0.0,
+      "dominant_hz": 1501.0,
+      "samples": 48000
+    },
+    {
+      "second": 4,
+      "rms_dbfs": -57.79364233751387,
+      "peak": 0.00921630859375,
+      "dc": -1.7801920572916668e-08,
+      "clipped_fraction": 0.0,
+      "dominant_hz": 1501.0,
+      "samples": 48000
+    },
+    {
+      "second": 5,
+      "rms_dbfs": -56.837850300590176,
+      "peak": 0.009857177734375,
+      "dc": 4.8828125e-07,
+      "clipped_fraction": 0.0,
+      "dominant_hz": 1502.0,
+      "samples": 48000
+    },
+    {
+      "second": 6,
+      "rms_dbfs": -17.95635628828087,
+      "peak": 0.99407958984375,
+      "dc": 2.1473566691080728e-05,
+      "clipped_fraction": 0.0003125,
+      "dominant_hz": 264.0,
+      "samples": 48000
+    },
+    {
+      "second": 7,
+      "rms_dbfs": -22.350707483086136,
+      "peak": 0.7017822265625,
+      "dc": -0.00023890495300292968,
+      "clipped_fraction": 0.0,
+      "dominant_hz": 523.0,
+      "samples": 48000
+    },
+    {
+      "second": 8,
+      "rms_dbfs": -18.27343621167561,
+      "peak": 0.994140625,
+      "dc": -6.917699178059896e-05,
+      "clipped_fraction": 0.000375,
+      "dominant_hz": 522.0,
+      "samples": 48000
+    },
+    {
+      "second": 9,
+      "rms_dbfs": -7.142798103257632,
+      "peak": 0.994232177734375,
+      "dc": -0.00042279752095540364,
+      "clipped_fraction": 0.002125,
+      "dominant_hz": 523.0,
+      "samples": 48000
+    },
+    {
+      "second": 10,
+      "rms_dbfs": -17.411340880777505,
+      "peak": 0.994293212890625,
+      "dc": 0.0003331152598063151,
+      "clipped_fraction": 0.0007916666666666666,
+      "dominant_hz": 259.0,
+      "samples": 48000
+    },
+    {
+      "second": 11,
+      "rms_dbfs": -6.9253463028701,
+      "peak": 0.994232177734375,
+      "dc": -0.00040917205810546875,
+      "clipped_fraction": 6.25e-05,
+      "dominant_hz": 262.0,
+      "samples": 48000
+    },
+    {
+      "second": 12,
+      "rms_dbfs": -14.421389797773376,
+      "peak": 0.993865966796875,
+      "dc": 0.00031833775838216146,
+      "clipped_fraction": 0.0005,
+      "dominant_hz": 260.0,
+      "samples": 48000
+    },
+    {
+      "second": 13,
+      "rms_dbfs": -11.596736189488759,
+      "peak": 0.892608642578125,
+      "dc": -0.00031333096822102864,
+      "clipped_fraction": 0.0,
+      "dominant_hz": 262.0,
+      "samples": 48000
+    },
+    {
+      "second": 14,
+      "rms_dbfs": -18.1450213899134,
+      "peak": 0.994049072265625,
+      "dc": -0.000202301025390625,
+      "clipped_fraction": 0.000125,
+      "dominant_hz": 494.0,
+      "samples": 48000
+    },
+    {
+      "second": 15,
+      "rms_dbfs": -17.62731389443912,
+      "peak": 0.984375,
+      "dc": -6.107076009114584e-05,
+      "clipped_fraction": 0.0,
+      "dominant_hz": 262.0,
+      "samples": 48000
+    },
+    {
+      "second": 16,
+      "rms_dbfs": -17.487052370082715,
+      "peak": 0.993988037109375,
+      "dc": -0.0001496760050455729,
+      "clipped_fraction": 0.0004375,
+      "dominant_hz": 130.0,
+      "samples": 48000
+    },
+    {
+      "second": 17,
+      "rms_dbfs": -19.223434379576847,
+      "peak": 0.68597412109375,
+      "dc": -4.742876688639323e-05,
+      "clipped_fraction": 0.0,
+      "dominant_hz": 131.0,
+      "samples": 48000
+    },
+    {
+      "second": 18,
+      "rms_dbfs": -17.15304633109215,
+      "peak": 0.994354248046875,
+      "dc": -3.6360422770182294e-06,
+      "clipped_fraction": 0.0005625,
+      "dominant_hz": 784.0,
+      "samples": 48000
+    },
+    {
+      "second": 19,
+      "rms_dbfs": -22.480718838763003,
+      "peak": 0.7113037109375,
+      "dc": -7.945569356282552e-05,
+      "clipped_fraction": 0.0,
+      "dominant_hz": 784.0,
+      "samples": 48000
+    },
+    {
+      "second": 20,
+      "rms_dbfs": -58.75409237470913,
+      "peak": 0.0086669921875,
+      "dc": 3.814697265625e-08,
+      "clipped_fraction": 0.0,
+      "dominant_hz": 2263.0,
+      "samples": 48000
+    },
+    {
+      "second": 21,
+      "rms_dbfs": -57.128036552719635,
+      "peak": 0.01220703125,
+      "dc": 3.8051605224609377e-06,
+      "clipped_fraction": 0.0,
+      "dominant_hz": 1509.0,
+      "samples": 48000
+    },
+    {
+      "second": 22,
+      "rms_dbfs": -58.485088898425126,
+      "peak": 0.007049560546875,
+      "dc": -1.10626220703125e-06,
+      "clipped_fraction": 0.0,
+      "dominant_hz": 1508.0,
+      "samples": 48000
+    },
+    {
+      "second": 23,
+      "rms_dbfs": -56.671367240470765,
+      "peak": 0.01055908203125,
+      "dc": -2.5043487548828124e-06,
+      "clipped_fraction": 0.0,
+      "dominant_hz": 1505.0,
+      "samples": 48000
+    },
+    {
+      "second": 24,
+      "rms_dbfs": -56.577247055069186,
+      "peak": 0.00872802734375,
+      "dc": 7.534027099609375e-07,
+      "clipped_fraction": 0.0,
+      "dominant_hz": 1046.0,
+      "samples": 48000
+    },
+    {
+      "second": 25,
+      "rms_dbfs": -57.2424240065363,
+      "peak": 0.010040283203125,
+      "dc": -1.906712849934896e-06,
+      "clipped_fraction": 0.0,
+      "dominant_hz": 1505.0,
+      "samples": 48000
+    },
+    {
+      "second": 26,
+      "rms_dbfs": -54.837752419786135,
+      "peak": 0.01641845703125,
+      "dc": -1.52587890625e-06,
+      "clipped_fraction": 0.0,
+      "dominant_hz": 131.0,
+      "samples": 48000
+    },
+    {
+      "second": 27,
+      "rms_dbfs": -57.90728500506962,
+      "peak": 0.007843017578125,
+      "dc": -4.4314066569010417e-07,
+      "clipped_fraction": 0.0,
+      "dominant_hz": 1505.0,
+      "samples": 48000
+    },
+    {
+      "second": 28,
+      "rms_dbfs": -55.32407163203837,
+      "peak": 0.018768310546875,
+      "dc": -2.3015340169270834e-07,
+      "clipped_fraction": 0.0,
+      "dominant_hz": 1507.0,
+      "samples": 48000
+    },
+    {
+      "second": 29,
+      "rms_dbfs": -57.50674896409903,
+      "peak": 0.00775146484375,
+      "dc": 4.61578369140625e-07,
+      "clipped_fraction": 0.0,
+      "dominant_hz": 1511.0,
+      "samples": 48000
+    },
+    {
+      "second": 30,
+      "rms_dbfs": -57.496892303655116,
+      "peak": 0.00970458984375,
+      "dc": 3.217061360677083e-07,
+      "clipped_fraction": 0.0,
+      "dominant_hz": 1510.0,
+      "samples": 48000
+    },
+    {
+      "second": 31,
+      "rms_dbfs": -57.602500750357905,
+      "peak": 0.010162353515625,
+      "dc": -6.75201416015625e-07,
+      "clipped_fraction": 0.0,
+      "dominant_hz": 1510.0,
+      "samples": 48000
+    }
+  ]
+}

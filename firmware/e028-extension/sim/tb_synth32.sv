@@ -51,7 +51,7 @@ module tb_synth32;
             if(sample != 0) nonzero_frames = nonzero_frames + 1;
             if(sample > max_abs) max_abs = sample;
             if(-sample > max_abs) max_abs = -sample;
-            $display("frame %0d mask=%08x voices=%0d active=%0d sample=%0d lat=%0d note_on=%0d idx=%0d",
+            if(frame<6) $display("frame %0d mask=%08x voices=%0d active=%0d sample=%0d lat=%0d note_on=%0d idx=%0d",
                      frame, gate_mask, voice_count, active, sample, latency_frames, note_on, note_on_index);
         end
     end
@@ -62,8 +62,12 @@ module tb_synth32;
         repeat(576*2) @(posedge clk);
         gate_mask = 32'hffffffff;
         velocity = 100;
-        repeat(576*12) @(posedge clk);
+        repeat(576*160) @(posedge clk);
         if(voice_count !== 6'd32) $fatal(1, "voice_count != 32: %0d", voice_count);
+        for(i=0;i<32;i=i+1) begin
+            if(dut.env_level[i]==0 || dut.env_state[i]==0) $fatal(1,"inactive envelope %0d",i);
+            if(i>0 && dut.phase[i]===dut.phase[i-1]) $fatal(1,"shared phase state %0d",i);
+        end
         if(nonzero_frames < 8) $fatal(1, "no sustained output");
         if(max_abs < 1000) $fatal(1, "output too small: %0d", max_abs);
         if(latency_frames > 3) $fatal(1, "latency too high: %0d", latency_frames);
@@ -73,7 +77,7 @@ module tb_synth32;
     end
 
     initial begin
-        #2000000;
+        #10000000;
         $fatal(1, "timeout");
     end
 endmodule

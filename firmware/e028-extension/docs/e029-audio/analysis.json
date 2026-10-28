@@ -1,0 +1,86 @@
+{
+  "source": "RTL simulation, not DAC recording",
+  "sample_rate": 46875,
+  "rows": [
+    {
+      "timbre": 0,
+      "samples": 4096,
+      "peak": 5868.0,
+      "rms": 2471.7735456917653,
+      "dc": -16.413330078125,
+      "clipped_fraction": 0.0,
+      "centroid_hz": 849.2952065265048
+    },
+    {
+      "timbre": 1,
+      "samples": 4096,
+      "peak": 7682.0,
+      "rms": 4346.398019722723,
+      "dc": -2.033935546875,
+      "clipped_fraction": 0.0,
+      "centroid_hz": 999.4761305858985
+    },
+    {
+      "timbre": 2,
+      "samples": 4096,
+      "peak": 5865.0,
+      "rms": 3795.0978650970337,
+      "dc": -5.6337890625,
+      "clipped_fraction": 0.0,
+      "centroid_hz": 1062.6736785535913
+    },
+    {
+      "timbre": 3,
+      "samples": 4096,
+      "peak": 7042.0,
+      "rms": 4254.690585462983,
+      "dc": -13.9189453125,
+      "clipped_fraction": 0.0,
+      "centroid_hz": 825.7761167139174
+    }
+  ],
+  "normalized_spectral_distances": [
+    {
+      "pair": [
+        0,
+        1
+      ],
+      "cosine_distance": 0.11891121101790736
+    },
+    {
+      "pair": [
+        0,
+        2
+      ],
+      "cosine_distance": 0.22093128468061685
+    },
+    {
+      "pair": [
+        0,
+        3
+      ],
+      "cosine_distance": 0.0819300953101858
+    },
+    {
+      "pair": [
+        1,
+        2
+      ],
+      "cosine_distance": 0.44780517434878986
+    },
+    {
+      "pair": [
+        1,
+        3
+      ],
+      "cosine_distance": 0.2999228362798835
+    },
+    {
+      "pair": [
+        2,
+        3
+      ],
+      "cosine_distance": 0.14388881348377247
+    }
+  ]
+}

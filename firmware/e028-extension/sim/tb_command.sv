@@ -31,8 +31,8 @@ module tb_command;
     task send_byte;
         input [7:0] b;
         begin
-            @(posedge clk); valid = 1; data = b;
-            @(posedge clk); valid = 0;
+            @(negedge clk); valid = 1; data = b;
+            @(negedge clk); valid = 0;
         end
     endtask
 

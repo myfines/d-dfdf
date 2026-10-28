@@ -1,0 +1,2 @@
+PASS probe sequence, automatic stop, peripheral high impedance
+E:\gaoyun\releases\e028-flash-record\firmware\e028-extension/sim/tb_probe.sv:15: $finish called at 9597125000 (1ps)

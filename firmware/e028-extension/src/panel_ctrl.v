@@ -6,8 +6,8 @@
 //   S2 short  : OLED screen 0..4
 //   S3 short  : start/stop the offline song guide
 //   S3 long   : latch on/off (build a 32-note chord from the eight keys)
-//   S4 short  : effects preset  off -> chorus -> chorus+delay -> all
-//   S4 long   : 32-voice stress test (all 32 gates on)
+//   S0 short  : effects preset  off -> chorus -> chorus+delay -> all
+//   S0 long   : 32-voice stress test (all 32 gates on)
 //   stick click: next instrument (EPiano / Organ / Strings / Bass)
 //
 // Buttons still play their own notes; the panel actions are edge triggered and
@@ -93,7 +93,7 @@ module panel_ctrl(
                         long_done[i] <= 1;
                         case(i)
                             3: latch_enable <= ~latch_enable; // S3 long
-                            0: test_mode <= ~test_mode;       // S4 long
+                            0: test_mode <= ~test_mode;       // S0 long
                             default: begin end
                         endcase
                     end else hold_count[i] <= hold_count[i] + 1'b1;
@@ -107,9 +107,9 @@ module panel_ctrl(
                 if(released[1] && !long_done[1]) page <= page + 1'b1;       // S1
                 if(released[2] && !long_done[2]) screen <= screen == 3'd4 ? 3'd0 : screen + 1'b1; // S2
                 if(released[3] && !long_done[3]) song_enable <= ~song_enable; // S3
-                if(released[0] && !long_done[0]) begin                       // S4
+                if(released[0] && !long_done[0]) begin                       // S0
                     case(fx_enable)
-                        3'b000: fx_enable <= 3'b000;
+                        3'b000: fx_enable <= 3'b001;
                         3'b001: fx_enable <= 3'b011;
                         3'b011: fx_enable <= 3'b111;
                         default: fx_enable <= 3'b000;

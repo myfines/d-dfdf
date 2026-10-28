@@ -37,9 +37,10 @@ module tb_oled_ui;
 
     always #5 clk = ~clk;
 
+    // Accelerated audio ticks exercise repeated snapshots without a 30-ms DC trigger wait.
     always @(posedge clk) begin
         cycle <= cycle + 1;
-        if(cycle == 575) begin cycle <= 0; frame_tick <= 1; end
+        if(cycle == 15) begin cycle <= 0; frame_tick <= 1; end
         else frame_tick <= 0;
     end
 
@@ -86,16 +87,20 @@ module tb_oled_ui;
         // Second frame: spectrum, band 0 full scale -> column 0 byte 0xff.
         wait(data_count >= 2048);
         #1;
-        if(frame[1024] !== 8'hff) begin
-            $display("spectrum pixel %02x", frame[1024]);
+        if(frame[1024+6*128] !== 8'hff) begin
+            $display("spectrum pixel %02x", frame[1024+6*128]);
             errors = errors + 1;
         end
+        if(dut.text_char(2,7)!="3" || dut.text_char(2,8)!="2" || dut.text_char(2,17)!="1")
+            $fatal(1,"status decimal voices/FX text wrong");
+        if(dut.text_char(3,16)!="0" || dut.text_char(3,17)!="0")
+            $fatal(1,"idle key status text wrong");
         // Third frame: guide, key 5 highlighted at column 80 (page 0).
-        screen = 3;
+        screen = 3; song_playing = 1;
         wait(data_count >= 3072);
         #1;
-        if(frame[2048 + 80] !== 8'h7e) begin
-            $display("guide pixel %02x", frame[2048 + 80]);
+        if(frame[2048 + 3*128 + 81] !== 8'hff) begin
+            $display("guide pixel %02x", frame[2048 + 3*128 + 81]);
             errors = errors + 1;
         end
         if(errors != 0) $fatal(1, "%0d OLED errors", errors);
@@ -108,6 +113,16 @@ module tb_oled_ui;
             for(j = 2048; j < 3072; j = j + 1) $fdisplay(fd, "%02x", frame[j]);
             $fclose(fd);
         end
+        screen=0; song_playing=0;
+        // A negative DC input must be captured after a previous positive one.
+        sample_l=16'sd16000;
+        repeat(300000) @(posedge clk);
+        wait(dut.snapshot); @(posedge clk); #1;
+        if(dut.wave_snap[40] <= 32) $fatal(1,"positive capture missing");
+        sample_l=-16'sd16000;
+        repeat(300000) @(posedge clk);
+        wait(dut.snapshot); @(posedge clk); #1;
+        if(dut.wave_snap[40] >= 32) $fatal(1,"waveform frozen after first capture");
         $display("PASS OLED UI bytes=%0d", data_count);
         $finish;
     end

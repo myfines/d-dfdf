@@ -1,0 +1,6 @@
+render timbre 0
+render timbre 1
+render timbre 2
+render timbre 3
+PASS audio render
+E:\gaoyun\releases\e028-flash-record\firmware\e028-extension/sim/tb_audio_render.sv:20: $finish called at 140451850000 (1ps)

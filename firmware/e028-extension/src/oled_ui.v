@@ -5,12 +5,12 @@
 // Five screens, selected by the panel/app:
 //   0 waveform      : real post-effects audio, zero-crossing triggered
 //   1 spectrum      : 16 real-time biquad bands, 8 columns per band
-//   2 Lissajous     : X/Y plot of the stereo post-effects signal, phosphor decay
+//   2 Lissajous     : X/Y plot of the stereo post-effects signal, frame snapshot
 //   3 guide         : eight key boxes with the next song note highlighted
 //   4 status        : instrument, effects, voice count, latency, song, screen
 //
-// The I2C master is the same bounded open-drain engine used by E027.  A full
-// 1024-byte frame takes about 100 ms at 100 kHz; audio never waits for it.
+// The I2C master is the same bounded open-drain engine used by E027.  At HALF_TICKS=36 the nominal bus rate is 375 kHz before synchronizer
+// overhead; actual refresh includes I2C ACKs/retries. Audio never waits for it.
 // -----------------------------------------------------------------------------
 module oled_ui #(
     parameter integer HALF_TICKS = 36,
@@ -51,12 +51,11 @@ module oled_ui #(
     reg [6:0] write_index;
     reg [5:0] wave [0:127];
     reg [5:0] wave_snap [0:127];
-    reg [5:0] wave_point;
     reg capture_ready, capturing;
     reg signed [15:0] previous;
     reg [9:0] trigger_wait;
     reg [1:0] decimate;
-    reg [7:0] keys_hold, status_hold, mode_hold;
+    reg [7:0] keys_hold, status_hold;
     reg [1:0] timbre_hold;
     reg [2:0] fx_hold, screen_hold;
     reg [5:0] voices_hold;
@@ -74,15 +73,10 @@ module oled_ui #(
     reg [7:0] pixels;
     integer b, k;
 
-    // Lissajous persistence: 64 columns x 32 rows, one bit per pixel.
-    reg [7:0] liss [0:255];
-    reg [5:0] liss_x;
-    reg [4:0] liss_y;
-    reg [3:0] plot_div;
-    reg [9:0] clear_timer;
-    reg [1:0] clear_page;
-    reg [5:0] clear_col;
-
+    reg [5:0] wave_r [0:127];
+    reg [5:0] wave_r_snap [0:127];
+    reg [127:0] bands_hold;
+    wire snapshot = state == 4 && timer == REFRESH_TICKS-1;
     reg [7:0] character;
     wire [34:0] glyph_bits;
     wire [4:0] char_index = pixel[6:0] / 6;
@@ -103,6 +97,7 @@ module oled_ui #(
                 "G": glyph = {7'h3e,7'h41,7'h49,7'h49,7'h7a};
                 "H": glyph = {7'h7f,7'h08,7'h08,7'h08,7'h7f};
                 "I": glyph = {7'h00,7'h41,7'h7f,7'h41,7'h00};
+                "K": glyph = {7'h7f,7'h08,7'h14,7'h22,7'h41};
                 "L": glyph = {7'h7f,7'h40,7'h40,7'h40,7'h40};
                 "M": glyph = {7'h7f,7'h02,7'h0c,7'h02,7'h7f};
                 "N": glyph = {7'h7f,7'h04,7'h08,7'h10,7'h7f};
@@ -140,48 +135,31 @@ module oled_ui #(
     function [7:0] text_char;
         input [2:0] line;
         input [4:0] idx;
-        reg [7:0] v;
+        reg [167:0] row;
         begin
-            v = " ";
+            row = "                     ";
             case(line)
-                3'd0: case(idx)
-                    0:v="E";1:v="0";2:v="2";3:v="7";4:v=" ";5:v="E";6:v="X";7:v="T";
-                    default:v=" ";
+                0: case(screen_hold)
+                    0: row="SCOPE       LIVE     ";
+                    1: row="SPECTRUM    16 BANDS ";
+                    2: row="STEREO      XY       ";
+                    3: row="PRACTICE    TARGET   ";
+                    default: row="ENGINE      STATUS   ";
                 endcase
-                3'd1: case(idx)
-                    0:v="3";1:v="2";2:v="V";3:v="O";4:v="I";5:v="C";6:v="E";
-                    7:v=" ";8:v="E";9:v="N";10:v="G";11:v="I";12:v="N";13:v="E";
-                    default:v=" ";
+                1: case(timbre_hold)
+                    0: row="E PIANO              ";
+                    1: row="ORGAN                ";
+                    2: row="STRINGS              ";
+                    3: row="BASS                 ";
                 endcase
-                3'd2: case(idx)
-                    0:v="T";1:v=":";2:v=48+{6'd0,timbre_hold};
-                    default:v=" ";
-                endcase
-                3'd3: case(idx)
-                    0:v="F";1:v="X";2:v=":";3:v=hex_char({1'b0,fx_hold});
-                    default:v=" ";
-                endcase
-                3'd4: case(idx)
-                    0:v="V";1:v=":";2:v=hex_char({2'b0,voices_hold[5:4]});3:v=hex_char(voices_hold[3:0]);
-                    default:v=" ";
-                endcase
-                3'd5: case(idx)
-                    0:v="L";1:v="A";2:v="T";3:v=":";
-                    4:v=hex_char(latency_hold[15:12]);5:v=hex_char(latency_hold[11:8]);
-                    6:v=hex_char(latency_hold[7:4]);7:v=hex_char(latency_hold[3:0]);
-                    default:v=" ";
-                endcase
-                3'd6: case(idx)
-                    0:v="S";1:v="O";2:v="N";3:v="G";4:v=":";
-                    5:v=song_hold ? "O" : "O";6:v=song_hold ? "N" : "F";7:v=song_hold ? " " : "F";
-                    default:v=" ";
-                endcase
-                default: case(idx)
-                    0:v="S";1:v="C";2:v="R";3:v=":";4:v=48+{5'd0,screen_hold};
-                    default:v=" ";
-                endcase
+                2: begin row="VOICES 00     FX 0   ";row[111:104]="0"+voices_hold/10;row[103:96]="0"+voices_hold%10;row[31:24]=hex_char({1'b0,fx_hold});end
+                3: begin row="LINK 00    KEYS 00   ";row[127:120]=hex_char(status_hold[7:4]);row[119:112]=hex_char(status_hold[3:0]);row[39:32]=hex_char(~keys_hold[7:4]);row[31:24]=hex_char(~keys_hold[3:0]);end
+                4: begin row="DSP FRAMES 0000      ";row[79:72]=hex_char(latency_hold[15:12]);row[71:64]=hex_char(latency_hold[11:8]);row[63:56]=hex_char(latency_hold[7:4]);row[55:48]=hex_char(latency_hold[3:0]);end
+                5: row=song_hold?"SONG PLAYING         ":"SONG STOPPED         ";
+                6: row="S1 RANGE  S2 DISPLAY ";
+                7: row="S3 SONG   STICK TONE ";
             endcase
-            text_char = v;
+            text_char=idx<21 ? (row >> ((20-idx)*8)) : 8'h20;
         end
     endfunction
 
@@ -226,15 +204,16 @@ module oled_ui #(
                         wave_scaled > 63 ? 6'd63 : wave_scaled[5:0];
     always @(posedge clk) begin
         if(!reset_n) begin
-            wave_point <= 32;
             capturing <= 0;
             capture_ready <= 0;
             previous <= 0;
             trigger_wait <= 0;
             decimate <= 0;
             write_index <= 0;
-            for(k = 0; k < 128; k = k + 1) wave[k] <= 32;
-        end else if(frame_tick) begin
+            for(k = 0; k < 128; k = k + 1) begin wave[k] <= 32; wave_r[k] <= 32; end
+        end else begin
+            if(snapshot) capture_ready <= 0;
+            if(frame_tick) begin
             previous <= sample_l;
             if(!capture_ready) begin
                 if(!capturing) begin
@@ -248,6 +227,7 @@ module oled_ui #(
                     decimate <= decimate + 1'b1;
                     if(decimate == 0) begin
                         wave[write_index] <= wave_y;
+                        wave_r[write_index] <= 6'd32 + (sample_r >>> 10);
                         write_index <= write_index + 1'b1;
                         if(write_index == 127) begin
                             capturing <= 0;
@@ -256,118 +236,58 @@ module oled_ui #(
                     end
                 end
             end
-        end
-    end
-
-    // ------------------------------------------------------------------
-    // Lissajous plot / decay
-    // ------------------------------------------------------------------
-    wire signed [15:0] liss_x_raw = (sample_l >>> 11) + 16'sd32;
-    wire signed [15:0] liss_y_raw = (sample_r >>> 11) + 16'sd16;
-    wire [5:0] liss_px = liss_x_raw < 0 ? 6'd0 : liss_x_raw > 63 ? 6'd63 : liss_x_raw[5:0];
-    wire [4:0] liss_py = liss_y_raw < 0 ? 5'd0 : liss_y_raw > 31 ? 5'd31 : liss_y_raw[4:0];
-
-    always @(posedge clk) begin
-        if(!reset_n) begin
-            plot_div <= 0;
-            clear_timer <= 0;
-            clear_page <= 0;
-            clear_col <= 0;
-            for(k = 0; k < 256; k = k + 1) liss[k] <= 0;
-        end else if(frame_tick) begin
-            if(clear_timer == 1023) begin
-                clear_timer <= 0;
-                liss[{clear_page, clear_col}] <= 0;
-                if(clear_col == 63) begin
-                    clear_col <= 0;
-                    clear_page <= clear_page + 1'b1;
-                end else clear_col <= clear_col + 1'b1;
-            end else clear_timer <= clear_timer + 1'b1;
-
-            plot_div <= plot_div + 1'b1;
-            if(plot_div == 4'd15) begin
-                plot_div <= 0;
-                // Screen 2 is the only consumer; plotting while hidden is harmless.
-                liss[{liss_py[4:3], liss_px}] <= liss[{liss_py[4:3], liss_px}] |
-                    (8'd1 << liss_py[2:0]);
             end
         end
     end
 
     // ------------------------------------------------------------------
-    // Pixel renderer
-    // ------------------------------------------------------------------
+    // capture_ready is consumed by snapshot; only the capture process drives it.
     wire [2:0] page = pixel[9:7];
     wire [6:0] column = pixel[6:0];
-    wire [3:0] band_index = column[6:3];
-    wire [5:0] bar_height = bands[band_index*8 +: 8] >> 2;
-    wire [5:0] guide_key = column[6:4];
-
-    function liss_bit;
-        input [6:0] c;
-        input [2:0] p;
-        input [2:0] bi;
-        reg [4:0] ly;
-        reg [7:0] lb;
-        begin
-            ly = ({p,3'b000} + bi) >> 1;
-            lb = liss[{ly[4:3], c[6:1]}];
-            liss_bit = lb[ly[2:0]];
-        end
-    endfunction
-
+    integer y, lo, hi, point_x, point_y, q;
+    reg hit;
+    // Fixed header/footer; graphics occupy rows 16..55. All source data is
+    // frozen between complete SSD1306 transfers, preventing tearing.
     always @* begin
-        pixels = 0;
-        character = " ";
-        case(screen_hold)
-            3'd0: begin // waveform
-                pixels = 8'h00;
-                if(page == 7 && column[3:0] == 0) pixels[0] = 1;
-                // draw a one-pixel line segment from the previous sample
-                if(column == 0) pixels[wave_snap[0][5:0] >> 3] = 1;
-                else begin
-                    for(b = 0; b < 8; b = b + 1) begin
-                        if(({page,3'b000} + b) >= wave_snap[column] &&
-                           ({page,3'b000} + b) <= wave_snap[column-1])
-                            pixels[b] = 1;
-                        if(({page,3'b000} + b) >= wave_snap[column-1] &&
-                           ({page,3'b000} + b) <= wave_snap[column])
-                            pixels[b] = 1;
+        pixels=0; character=" "; y=0;lo=0;hi=0;point_x=0;point_y=0;hit=0;
+        if(screen_hold>=4 || page<2 || page==7) begin
+            character=text_char(page,char_index);
+            pixels=glyph_column<5 ? ((glyph_bits >> ((4-glyph_column)*7)) & 7'h7f):0;
+        end else begin
+            for(b=0;b<8;b=b+1) begin
+                y=page*8+b;
+                case(screen_hold)
+                    0: begin
+                        lo=20+(wave_snap[column]>>1);
+                        hi=20+(wave_snap[column==0?0:column-1]>>1);
+                        if(lo>hi) begin point_y=lo;lo=hi;hi=point_y;end
+                        pixels[b]=(y>=lo && y<=hi) || (y==36 && column[2:0]==0);
                     end
-                end
-                if(page == 7 && column < {2'b0, voices_hold, 1'b0}) pixels = 8'h0f;
+                    1: begin
+                        hi=bands_hold[(column>>3)*8 +:8]>>3;
+                        pixels[b]=column[2:0]!=7 && y>=55-hi && y<=55;
+                    end
+                    2: begin
+                        // Bounded 32-point snapshot scatter, no persistent ghost buffer.
+                        hit=0;
+                        for(q=0;q<32;q=q+1) begin
+                            point_x=wave_snap[q*4]*2;
+                            point_y=20+(wave_r_snap[q*4]>>1);
+                            if(column==point_x && y==point_y) hit=1;
+                        end
+                        pixels[b]=hit || (y==36 && column[3:0]==0);
+                    end
+                    3: begin
+                        hit=(!keys_hold[column>>4]) || (song_hold && (column>>4)==guide_hold[2:0]);
+                        pixels[b]=(column[3:0]>=1 && column[3:0]<=14) &&
+                           ((y>=19 && y<=46 && (hit || column[3:0]==1 || column[3:0]==14 || y==19 || y==46)) ||
+                            (y>=51 && y<=53 && song_hold && column<({step_hold,1'b0})));
+                    end
+                endcase
             end
-            3'd1: begin // spectrum
-                for(b = 0; b < 8; b = b + 1) begin
-                    if({page,3'b000} + b < bar_height) pixels[b] = 1;
-                    if({page,3'b000} + b == 63) pixels[b] = 1;
-                end
-            end
-            3'd2: begin // Lissajous
-                for(b = 0; b < 8; b = b + 1)
-                    pixels[b] = liss_bit(column, page, b[2:0]);
-            end
-            3'd3: begin // performance guide
-                if(page < 6) begin
-                    if(guide_key == guide_hold[2:0]) pixels = 8'h7e;
-                    else if((page == 0 || page == 5) &&
-                            column[3:0] >= 1 && column[3:0] <= 14) pixels = 8'h42;
-                    if(page == 5 && column < {step_hold[5:0],1'b0}) pixels = 8'h7e;
-                end else begin
-                    character = text_char(page, char_index);
-                    pixels = glyph_column < 5 ?
-                        ((glyph_bits >> ((4-glyph_column)*7)) & 7'h7f) : 8'h00;
-                end
-            end
-            default: begin // status
-                character = text_char(page, char_index);
-                pixels = glyph_column < 5 ?
-                    ((glyph_bits >> ((4-glyph_column)*7)) & 7'h7f) : 8'h00;
-            end
-        endcase
+        end
     end
 
-    // ------------------------------------------------------------------
     // Control / refresh state machine
     // ------------------------------------------------------------------
     always @(posedge clk) begin
@@ -391,7 +311,8 @@ module oled_ui #(
             guide_hold <= 16;
             step_hold <= 0;
             song_hold <= 0;
-            for(k = 0; k < 128; k = k + 1) wave_snap[k] <= 32;
+            bands_hold <= 0;
+            for(k = 0; k < 128; k = k + 1) begin wave_snap[k] <= 32; wave_r_snap[k] <= 32; end
         end else begin
             start <= 0;
             stream_start <= 0;
@@ -434,7 +355,8 @@ module oled_ui #(
                    end
                 4: if(timer == REFRESH_TICKS-1) begin
                        if(capture_ready)
-                           for(k = 0; k < 128; k = k + 1) wave_snap[k] <= wave[k];
+                           for(k = 0; k < 128; k = k + 1) begin wave_snap[k] <= wave[k]; wave_r_snap[k] <= wave_r[k]; end
+                       bands_hold <= bands;
                        keys_hold <= keys_n;
                        status_hold <= status;
                        timbre_hold <= timbre;

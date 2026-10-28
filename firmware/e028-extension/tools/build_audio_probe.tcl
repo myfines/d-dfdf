@@ -1,0 +1,12 @@
+set root [file normalize [file join [file dirname [info script]] ..]]
+create_project -name audio_probe -dir "$root/proj" -pn GW2A-LV18PG256C8/I7 -device_version C -force
+foreach f {wave_source.v synth32.v i2s_tx16.v audio_probe_top.v} { add_file "$root/src/$f" }
+add_file "$root/constraints/instrument_e027_ext.cst"
+add_file "$root/constraints/instrument.sdc"
+set_option -top_module audio_probe_top
+set_option -use_sspi_as_gpio 1
+set_option -use_jtag_as_gpio 0
+set_option -use_mspi_as_gpio 0
+set_option -use_reconfign_as_gpio 0
+set_option -user_code 0xE02A
+run all

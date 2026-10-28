@@ -64,6 +64,9 @@ module tb_core;
     end
 
     initial begin
+        // Latency fixture bypasses only the one-second arm settling timer.
+        // Production SAFE_STARTUP and its guard remain enabled in the top.
+        force dut.arm_inhibit=0;
         repeat(100) @(posedge clk);
         // allow ADC/optical boot timers and the audio pipeline to settle
         repeat(200000) @(posedge clk);

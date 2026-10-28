@@ -4,7 +4,7 @@
 //
 //   optical key j on page p -> voice bit p*8+j
 //   phone key j on page p   -> voice bit p*8+j
-//   board buttons S1..S4    -> voice bits 28..31 (high E/F/F#/G)
+//   board buttons S0..S3    -> voice bits 28..31 (high E/F/F#/G)
 //   app 32-bit mask "M"     -> optional direct access to all 32 voices
 //   offline song player     -> additional gate bits (play-along)
 //

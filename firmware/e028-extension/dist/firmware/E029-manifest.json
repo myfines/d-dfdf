@@ -1,0 +1,154 @@
+{
+  "version": "E029",
+  "hardware_deployed": true,
+  "base_commit": "f54442c",
+  "files": [
+    {
+      "path": "dist\\firmware\\instrument_e029.fs",
+      "sha256": "d47cbd1ccc21f9ce80a1710a5907dffabbfcd18300b69e528e1ac1a1b1d49a88",
+      "bytes": 7264152
+    },
+    {
+      "path": "dist\\firmware\\instrument_e029.bin",
+      "sha256": "edb6071899901be0a49ac68121cfe7feb566afea3dd5f7c15c6e3c08036d34ec",
+      "bytes": 907418
+    },
+    {
+      "path": "src\\ads1015_reader.v",
+      "sha256": "1cdce9b293fb037186e58254c11b414df1a33cab81d25280c856f6ad74728b2b",
+      "bytes": 2579
+    },
+    {
+      "path": "src\\esp_at_control.v",
+      "sha256": "a716427aeb330cb4a46f85d035eae53cfa14e0db4377e09e4cb3977a6d0cd476",
+      "bytes": 9363
+    },
+    {
+      "path": "src\\esp_command_parser.v",
+      "sha256": "982fc7ad6f9c83df53d312699ba5e960330fe37eeace4f1f641e5770ff76131b",
+      "bytes": 6216
+    },
+    {
+      "path": "src\\esp_volume_parser.v",
+      "sha256": "6e07ff03bd71d8e129f93b018c35a03d32fb23e08688c88b02769fba3e9712ac",
+      "bytes": 3007
+    },
+    {
+      "path": "src\\fx_engine.v",
+      "sha256": "ea79e601aeefaa2320e651c8565f666fba2c26790ba81c7fc8f25901def76601",
+      "bytes": 7490
+    },
+    {
+      "path": "src\\gesture_expression.v",
+      "sha256": "a5f0b548257cb23cbdd085746abd6cdcab0f1e16c1f2d4481e88bb589a69bd42",
+      "bytes": 819
+    },
+    {
+      "path": "src\\gesture_packet_rx.v",
+      "sha256": "5de728bfad979e49bfdf12cd9373bbd94e34c02b22df3f61edbbcc022c586389",
+      "bytes": 2366
+    },
+    {
+      "path": "src\\gesture_uart_rx.v",
+      "sha256": "0959b04902316fabe21e2754b37b676dcb93bffca279548b69028a6eb5360828",
+      "bytes": 710
+    },
+    {
+      "path": "src\\i2c_register_bus.v",
+      "sha256": "c69612826eff18c76541b9137161a62dcba5b40bfdfef015a24217db153401f7",
+      "bytes": 7124
+    },
+    {
+      "path": "src\\i2s_tx16.v",
+      "sha256": "02953e1b1501d07494520dd59f559f38566ccf81b0f914c1024643d6ed03fb19",
+      "bytes": 1226
+    },
+    {
+      "path": "src\\instrument_core.v",
+      "sha256": "e237add52c88a7a5e3a989604f6c3301eee17e4b0c9f59e25dbc6d9ab67972bc",
+      "bytes": 18037
+    },
+    {
+      "path": "src\\instrument_e027_top.v",
+      "sha256": "fd5587006f6bd4412ae7774b5730febed79f248adb3334bdf903cd57f4e320bc",
+      "bytes": 1500
+    },
+    {
+      "path": "src\\instrument_e028_ble_top.v",
+      "sha256": "d084cf4cee08f1b0291ca776849bc3d94d2e40d46bb80867e0e060218b14017a",
+      "bytes": 1196
+    },
+    {
+      "path": "src\\io_arm_control.v",
+      "sha256": "e6deb34d578d747e9626e1988994d791daf6a446d8dbf6ced15c307f6386c404",
+      "bytes": 498
+    },
+    {
+      "path": "src\\led_guide.v",
+      "sha256": "1c5da8703a0aaafc1a11d009225ee12bd754b1ed6deb12c37d5bf34bc9ef1bbf",
+      "bytes": 2269
+    },
+    {
+      "path": "src\\note_router.v",
+      "sha256": "5d4bf829612c2002ba4c4dd644c2b66355dfe761a8e58f6701ac016b8ad0ac7a",
+      "bytes": 4031
+    },
+    {
+      "path": "src\\oled_i2c_stream.v",
+      "sha256": "8ec31f24ebafe003cdfab368275b6d742b21db19813e97b3fcdc3b63fa37a493",
+      "bytes": 2912
+    },
+    {
+      "path": "src\\oled_ui.v",
+      "sha256": "dfcc413e38d3648d3b362f249a3c6613051d0baa304ec7d954eaf88d8e2d52cf",
+      "bytes": 16986
+    },
+    {
+      "path": "src\\optical_keys_reader.v",
+      "sha256": "dd377ef99f10ac507d1cbcc55fe29aafee5faa50c3e52ab1e91a6b0cc5b61b27",
+      "bytes": 2518
+    },
+    {
+      "path": "src\\panel_ctrl.v",
+      "sha256": "b371c94ed1ecd13266f18b2782284e18b9ecbc895cecf1e4be69547038c2e1df",
+      "bytes": 5523
+    },
+    {
+      "path": "src\\song_player.v",
+      "sha256": "35719bd7ca285bc73e1d06c06e86a86c888b95823ece87f03d3905b4f18c9f07",
+      "bytes": 3580
+    },
+    {
+      "path": "src\\spectrum16.v",
+      "sha256": "ef257f90fabadbc29e3218d69945435f33f2a8b53680e0f36963b2e0f81cc76b",
+      "bytes": 8939
+    },
+    {
+      "path": "src\\synth32.v",
+      "sha256": "5bb34c0e89a73104fde672140c8e55c86fe0289a157cf613806fb8ac8df00eef",
+      "bytes": 24417
+    },
+    {
+      "path": "src\\uart8n1.v",
+      "sha256": "2a8f383cede93736b19c8e88df62e942b538b661b7079dfda02bb990f10d74cf",
+      "bytes": 1532
+    },
+    {
+      "path": "src\\uart_status.v",
+      "sha256": "44487e1477f6a2c710260a39cfb6ddc6ee81d408999f4d4ccca1fb1f7f982880",
+      "bytes": 3175
+    },
+    {
+      "path": "src\\wave_source.v",
+      "sha256": "5f871240cc7bd8623ebd062331b90338723335f016a6f8784214dcd7bd84c9c8",
+      "bytes": 7055
+    },
+    {
+      "path": "src\\wifi_telemetry.v",
+      "sha256": "ecfe414f38aea921fa83fe479cbac9d1bffdd2be478e9870d67adf8190b1700b",
+      "bytes": 3124
+    }
+  ],
+  "timing_excerpt": "Actual Fmax Logic Level Entity 1 clk27 27.000(MHz) 31.630(MHz) 32 TOP Total Negative Slack Summary: Clock Name Analysis Type Endpoints TNS Number of Endpoints clk27 Setup 0.000 0 clk27 Hold 0.000 0 Timing Details Path Slacks Table: Setup Paths Table ",
+  "deployment": "SRAM only; independent read E029/6020; E028 Flash unchanged"
+}

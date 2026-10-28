@@ -125,9 +125,9 @@ module synth32(
         input [1:0] t;
         begin
             case(t)
-                2'd0: attack_step = 16'd512;
+                2'd0: attack_step = 16'd1024;
                 2'd1: attack_step = 16'd4096;
-                2'd2: attack_step = 16'd32;
+                2'd2: attack_step = 16'd48;
                 default: attack_step = 16'd4096;
             endcase
         end
@@ -149,10 +149,10 @@ module synth32(
         input [1:0] t;
         begin
             case(t)
-                2'd0: sustain_level = 16'd22000;
+                2'd0: sustain_level = 16'd9000;
                 2'd1: sustain_level = 16'd60000;
                 2'd2: sustain_level = 16'd50000;
-                default: sustain_level = 16'd28000;
+                default: sustain_level = 16'd18000;
             endcase
         end
     endfunction
@@ -176,39 +176,84 @@ module synth32(
         begin
             case(t)
                 2'd0: harmonic_weight = h == 2'd0 ? 8'd128 :
-                                        h == 2'd1 ? (8'd48 + (v >> 2)) : 8'd24;
+                                        h == 2'd1 ? (8'd24 + (v >> 2)) : 8'd8;
                 2'd1: harmonic_weight = h == 2'd0 ? 8'd96 :
-                                        h == 2'd1 ? 8'd80 : 8'd48;
+                                        h == 2'd1 ? 8'd100 : 8'd56;
                 2'd2: harmonic_weight = h == 2'd0 ? 8'd112 :
-                                        h == 2'd1 ? 8'd32 : 8'd24;
-                default: harmonic_weight = h == 2'd0 ? 8'd128 : 8'd0;
+                                        h == 2'd1 ? 8'd56 : 8'd36;
+                default: harmonic_weight = h == 2'd0 ? 8'd176 : h == 2'd1 ? 8'd16 : 8'd0;
             endcase
         end
     endfunction
 
     function signed [7:0] lfo_sine;
         input [5:0] n;
-        begin
-            case(n)
-                6'd0: lfo_sine = 8'sd0;    6'd1: lfo_sine = 8'sd12;
-                6'd2: lfo_sine = 8'sd25;   6'd3: lfo_sine = 8'sd37;
-                6'd4: lfo_sine = 8'sd49;   6'd5: lfo_sine = 8'sd60;
-                6'd6: lfo_sine = 8'sd71;   6'd7: lfo_sine = 8'sd81;
-                6'd8: lfo_sine = 8'sd90;   6'd9: lfo_sine = 8'sd98;
-                6'd10: lfo_sine = 8'sd106; 6'd11: lfo_sine = 8'sd112;
-                6'd12: lfo_sine = 8'sd118; 6'd13: lfo_sine = 8'sd123;
-                6'd14: lfo_sine = 8'sd126; 6'd15: lfo_sine = 8'sd127;
-                6'd16: lfo_sine = 8'sd127; 6'd17: lfo_sine = 8'sd126;
-                6'd18: lfo_sine = 8'sd123; 6'd19: lfo_sine = 8'sd118;
-                6'd20: lfo_sine = 8'sd112; 6'd21: lfo_sine = 8'sd106;
-                6'd22: lfo_sine = 8'sd98;  6'd23: lfo_sine = 8'sd90;
-                6'd24: lfo_sine = 8'sd81;  6'd25: lfo_sine = 8'sd71;
-                6'd26: lfo_sine = 8'sd60;  6'd27: lfo_sine = 8'sd49;
-                6'd28: lfo_sine = 8'sd37;  6'd29: lfo_sine = 8'sd25;
-                6'd30: lfo_sine = 8'sd12;
-                default: lfo_sine = -8'sd127;
-            endcase
-        end
+        begin case(n)
+                6'd0: lfo_sine = 8'sd0;
+                6'd1: lfo_sine = 8'sd12;
+                6'd2: lfo_sine = 8'sd25;
+                6'd3: lfo_sine = 8'sd37;
+                6'd4: lfo_sine = 8'sd49;
+                6'd5: lfo_sine = 8'sd60;
+                6'd6: lfo_sine = 8'sd71;
+                6'd7: lfo_sine = 8'sd81;
+                6'd8: lfo_sine = 8'sd90;
+                6'd9: lfo_sine = 8'sd98;
+                6'd10: lfo_sine = 8'sd106;
+                6'd11: lfo_sine = 8'sd112;
+                6'd12: lfo_sine = 8'sd117;
+                6'd13: lfo_sine = 8'sd122;
+                6'd14: lfo_sine = 8'sd125;
+                6'd15: lfo_sine = 8'sd126;
+                6'd16: lfo_sine = 8'sd127;
+                6'd17: lfo_sine = 8'sd126;
+                6'd18: lfo_sine = 8'sd125;
+                6'd19: lfo_sine = 8'sd122;
+                6'd20: lfo_sine = 8'sd117;
+                6'd21: lfo_sine = 8'sd112;
+                6'd22: lfo_sine = 8'sd106;
+                6'd23: lfo_sine = 8'sd98;
+                6'd24: lfo_sine = 8'sd90;
+                6'd25: lfo_sine = 8'sd81;
+                6'd26: lfo_sine = 8'sd71;
+                6'd27: lfo_sine = 8'sd60;
+                6'd28: lfo_sine = 8'sd49;
+                6'd29: lfo_sine = 8'sd37;
+                6'd30: lfo_sine = 8'sd25;
+                6'd31: lfo_sine = 8'sd12;
+                6'd32: lfo_sine = 8'sd0;
+                6'd33: lfo_sine = -8'sd12;
+                6'd34: lfo_sine = -8'sd25;
+                6'd35: lfo_sine = -8'sd37;
+                6'd36: lfo_sine = -8'sd49;
+                6'd37: lfo_sine = -8'sd60;
+                6'd38: lfo_sine = -8'sd71;
+                6'd39: lfo_sine = -8'sd81;
+                6'd40: lfo_sine = -8'sd90;
+                6'd41: lfo_sine = -8'sd98;
+                6'd42: lfo_sine = -8'sd106;
+                6'd43: lfo_sine = -8'sd112;
+                6'd44: lfo_sine = -8'sd117;
+                6'd45: lfo_sine = -8'sd122;
+                6'd46: lfo_sine = -8'sd125;
+                6'd47: lfo_sine = -8'sd126;
+                6'd48: lfo_sine = -8'sd127;
+                6'd49: lfo_sine = -8'sd126;
+                6'd50: lfo_sine = -8'sd125;
+                6'd51: lfo_sine = -8'sd122;
+                6'd52: lfo_sine = -8'sd117;
+                6'd53: lfo_sine = -8'sd112;
+                6'd54: lfo_sine = -8'sd106;
+                6'd55: lfo_sine = -8'sd98;
+                6'd56: lfo_sine = -8'sd90;
+                6'd57: lfo_sine = -8'sd81;
+                6'd58: lfo_sine = -8'sd71;
+                6'd59: lfo_sine = -8'sd60;
+                6'd60: lfo_sine = -8'sd49;
+                6'd61: lfo_sine = -8'sd37;
+                6'd62: lfo_sine = -8'sd25;
+                6'd63: lfo_sine = -8'sd12;
+        endcase end
     endfunction
 
     function [5:0] count_ones;
@@ -243,13 +288,8 @@ module synth32(
     wire [48:0] increment_product = note_increment(voice_index) * ratio;
     wire [31:0] increment_final = increment_product[47:16];
 
-    wire [31:0] phase_detuned = phase_next + 32'h00200000;
-    wire signed [15:0] saw_a = $signed(phase_next[31:16]);
-    wire signed [15:0] saw_b = $signed(phase_detuned[31:16]);
-    wire signed [16:0] saw_pair = (saw_a + saw_b) >>> 1;
-    wire signed [17:0] wave_extra =
-        timbre_now == 2'd2 ? (saw_pair >>> 1) :
-        timbre_now == 2'd3 ? (phase_next[31] ? -18'sd8192 : 18'sd8192) : 18'sd0;
+    // Band-limited additive partials only: no discontinuous saw/square extras.
+    wire signed [17:0] wave_extra = 18'sd0;
     wire signed [17:0] harmonic_scaled = $signed(harmonic_sum[25:8]);
     wire signed [17:0] wave_wide = harmonic_scaled + wave_extra;
     wire signed [15:0] wave_value =
@@ -269,7 +309,7 @@ module synth32(
         mix_now < -24'sd32768 ? -16'sd32768 : mix_now[15:0];
     wire signed [17:0] lowpass_delta = $signed({{2{mix_sat[15]}}, mix_sat}) -
                                         $signed({{2{lowpass[15]}}, lowpass});
-    wire [7:0] filter_alpha = brightness + 8'd8;
+    wire [7:0] filter_alpha = brightness > 8'd247 ? 8'd255 : brightness + 8'd8;
     wire signed [25:0] lowpass_product = lowpass_delta * $signed({1'b0, filter_alpha});
     wire signed [25:0] lowpass_sum = $signed({{10{lowpass[15]}}, lowpass}) + (lowpass_product >>> 8);
     wire signed [15:0] lowpass_next =
@@ -406,7 +446,7 @@ module synth32(
                                       counter_now <= 0;
                                   end else if(counter_now >= (decay_ticks(timbre_now) - 1'b1)) begin
                                       counter_now <= 0;
-                                      level_now <= level_now - 1'b1;
+                                      level_now <= level_now > sustain_level(timbre_now) + 16'd15 ? level_now - 16'd16 : sustain_level(timbre_now);
                                   end else counter_now <= counter_now + 1'b1;
                             3'd3: begin
                                       level_now <= sustain_level(timbre_now);
@@ -434,9 +474,14 @@ module synth32(
                 end
 
                 S_LOOK: begin
-                    lookup_phase <= harmonic == 2'd0 ? phase_next :
-                                    harmonic == 2'd1 ? (phase_next << 1) :
-                                    (phase_next + (phase_next << 1));
+                    // Distinct bounded harmonic families: piano 1/2/3,
+                    // organ 1/2/4, bowed strings 1/3/5, bass 1/2.
+                    if(harmonic == 0) lookup_phase <= phase_next;
+                    else if(timbre_now == 2'd2)
+                        lookup_phase <= harmonic == 1 ? phase_next + (phase_next<<1) : phase_next + (phase_next<<2);
+                    else if(timbre_now == 2'd1 && harmonic == 2)
+                        lookup_phase <= phase_next << 2;
+                    else lookup_phase <= harmonic == 1 ? phase_next<<1 : phase_next + (phase_next<<1);
                     state <= S_HARM;
                 end
 

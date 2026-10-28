@@ -1,0 +1,14 @@
+{
+  "source": "Realtek physical input; temporary SRAM E02A sequencer",
+  "max_peak": 0.3778076171875,
+  "max_clipped_fraction": 0.0,
+  "input_gain_test_db": -12,
+  "input_gain_restored_db": 4.53125,
+  "normal_sram_restored": "E029/6020",
+  "flash_unchanged": "E028",
+  "limitations": [
+    "Microphone gain/AGC can affect measurements",
+    "Not end-to-end latency proof",
+    "Raw microphone WAV retained locally only"
+  ]
+}
