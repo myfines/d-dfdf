@@ -1,0 +1,14 @@
+{
+  "web_action": "C Note ON clicked via browser",
+  "peak": 0.375,
+  "rms": 0.15195824205875397,
+  "dominant_hz": 261.5,
+  "state": {
+    "online": true,
+    "age": 0.23,
+    "telemetry": "G022400E534E33C40200808081818180808080808080808080808081818180807F7F7E7E7E7F7F7F7F7F03100000000\n",
+    "transport": "ESP outbound HTTP (legacy AT)",
+    "version": "E031"
+  },
+  "cleanup": "API fallback after browser timeout; remote notes/demo/song stopped and lease released"
+}

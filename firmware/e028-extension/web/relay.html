@@ -10,4 +10,31 @@ $('b').onpointerup=()=>{$('b').value=8192;cmd('B2000')};$('song').onclick=()=>{s
 window.onblur=stop;document.onvisibilitychange=()=>{if(document.hidden)stop()};
 setInterval(()=>{if(document.hidden||polling)return;polling=true;queue=queue.catch(()=>{}).then(async()=>{const r=await fetch('/api/state',{headers:{Authorization:'Bearer '+token},cache:'no-store',signal:AbortSignal.timeout(4500)});const s=await r.json();$('status').textContent=(s.online?'FPGA ONLINE':'FPGA OFFLINE')+' / '+s.age+'s\n'+s.telemetry}).catch(()=>{});cmd('Q00').finally(()=>polling=false)},2500);
 if(!token)$('link').textContent='Open your private control link';
+</script><style>#agent-panel{border:2px solid #7ef3bd;padding:16px;margin-bottom:20px}#agent-panel input{width:110px}#agent-log{max-height:180px;overflow:auto}button[aria-pressed=true]{background:#438e6c}</style>
+<section id="agent-panel" aria-label="AI test console"><h2>AI test console</h2><p>Click Note ON, then Note OFF. No mouse hold needed. Notes stop when this page loses focus; heartbeat lease expires after disconnect.</p><div id="agent-notes"></div><button id="agent-chord">Chord ON C E G</button><button id="agent-off">All remote notes OFF</button><label>Parameter code <select id="agent-param" aria-label="Parameter code"><option>V</option><option>T</option><option>F</option><option>S</option><option>Y</option><option>X</option><option>B</option></select></label><label>Parameter decimal value <input id="agent-value" aria-label="Parameter decimal value" type="number" value="64"></label><button id="agent-apply">Apply parameter</button><p id="agent-result" role="status">Ready. Device telemetry appears below.</p><pre id="agent-log"></pre></section>
+<script id="agent-encoding">
+function noteMask(notes){let value=0;for(const n of notes){if(!Number.isInteger(n)||n<0||n>31)throw Error('Note must be 0..31');value=(value|(1<<n))>>>0}return 'M'+value.toString(16).toUpperCase().padStart(8,'0')}
+function parameterCommand(k,v){const limits={V:128,T:3,F:7,S:4,Y:255,X:100,B:16383};if(!(k in limits)||!Number.isInteger(v)||v<0||v>limits[k])throw Error('Parameter out of range');return k+v.toString(16).toUpperCase().padStart(k==='B'?4:2,'0')}
+</script>
+<script>
+const agentPanel=$('agent-panel');document.body.insertBefore(agentPanel,document.querySelector('h1').nextSibling);
+function agentSend(c){$('agent-result').textContent='Queued '+c;return cmd(c).then(()=>{const message=(dead?'FAILED ':'Relay accepted ')+c+' (check FPGA telemetry for applied state)';$('agent-result').textContent=message;$('agent-log').textContent=(new Date().toISOString()+' '+message+'\n'+$('agent-log').textContent).slice(0,4000)})}
+for(const [name,n] of [['C',12],['D',14],['E',16],['F',17],['G',19],['A',21],['B',23],['C+',24]]){for(const on of [true,false]){const b=document.createElement('button');b.textContent=name+(on?' Note ON':' Note OFF');b.onclick=()=>{mask=on?(mask|(1<<n))>>>0:(mask&~(1<<n))>>>0;agentSend('M'+hex(mask,8))};$('agent-notes').append(b)}}
+$('agent-chord').onclick=()=>{mask=0x91000;agentSend(noteMask([12,16,19]))};$('agent-off').onclick=()=>{stop();$('agent-result').textContent='Remote notes/demo/song OFF queued; physical keys are independent'};
+$('agent-apply').onclick=()=>{try{agentSend(parameterCommand($('agent-param').value,Number($('agent-value').value)))}catch(e){$('agent-result').textContent=e.message}};
+</script>
+<script id="instrument-webmcp">
+const instrumentContext=document.modelContext||navigator.modelContext;
+async function instrumentState(){const r=await fetch('/api/state',{headers:{Authorization:'Bearer '+token},cache:'no-store',signal:AbortSignal.timeout(4500)});if(!r.ok)throw Error('Status HTTP '+r.status);return r.json()}
+function instrumentResult(value){return {content:[{type:'text',text:JSON.stringify(value)}]}}
+async function instrumentSend(command){await cmd(command);if(dead)throw Error('Command rejected or transport failed');return {relayAccepted:true,command,device:await instrumentState(),appliedConfirmed:false}}
+if(instrumentContext){
+const empty={type:'object',properties:{},additionalProperties:false};
+for(const tool of [
+{name:'instrument_status',description:'Read actual FPGA online state and raw telemetry. Does not trigger notes.',inputSchema:empty,annotations:{readOnlyHint:true},execute:async()=>instrumentResult(await instrumentState())},
+{name:'instrument_notes',description:'Replace remote held notes with zero-based semitone indexes 0..31; C4=12. Empty list releases notes. No clicking or mouse hold. Page must remain active; disconnect lease releases remote control.',inputSchema:{type:'object',properties:{notes:{type:'array',items:{type:'integer',minimum:0,maximum:31},maxItems:32}},required:['notes'],additionalProperties:false},execute:async({notes})=>{if(!Array.isArray(notes)||notes.length>32)throw Error('Invalid notes');let m=0;for(const n of notes){if(!Number.isInteger(n)||n<0||n>31)throw Error('Note outside 0..31');m=(m|(1<<n))>>>0}mask=m;return instrumentResult(await instrumentSend('M'+m.toString(16).toUpperCase().padStart(8,'0')))}},
+{name:'instrument_parameter',description:'Set parameter using decimal integer: V volume 0..128,T timbre 0..3,F effects bitmask 0..7,S OLED 0..4,Y brightness 0..255,X vibrato 0..100,B bend 0..16383 (center8192). Reports relay receipt, not confirmed FPGA application.',inputSchema:{type:'object',properties:{parameter:{type:'string',enum:['V','T','F','S','Y','X','B']},value:{type:'integer',minimum:0,maximum:16383}},required:['parameter','value'],additionalProperties:false},execute:async({parameter,value})=>instrumentResult(await instrumentSend(parameterCommand(parameter,value)))},
+{name:'instrument_stop',description:'Stop remote notes, song and demo, release remote lease. Physical keys remain independent.',inputSchema:empty,execute:async()=>{stop();await queue;return instrumentResult(await instrumentSend('L00'))}}
+])Promise.resolve(instrumentContext.registerTool(tool)).catch(e=>console.error('WebMCP registration failed',tool.name,e.message));
+}
 </script>

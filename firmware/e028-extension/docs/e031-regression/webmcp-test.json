@@ -1,0 +1,10 @@
+{
+  "control": "WebMCP instrument_notes [12,16,19]",
+  "rms": 0.29347941279411316,
+  "peak": 0.99322509765625,
+  "expected_note_peaks_hz": [
+    261.5,
+    329.5,
+    392.0
+  ]
+}

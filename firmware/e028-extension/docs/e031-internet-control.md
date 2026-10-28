@@ -41,3 +41,10 @@ Wi-Fi配置、设备令牌、网页会话令牌及配置ROM均在本机E:/gaoyun
 ## 自审与使用限制
 
 合成器、电平、引脚约束、安全启用沿用E029；core默认关闭新联网路径，仅cloud top启用。USB串口输出改为ESP接收流的只读诊断镜像，不通过该串口发送控制。公开页面不含控制令牌；设备令牌和浏览器令牌分离。配置ROM和真实FS含私有联网配置，只保留本机。浏览器HTTPS、设备HTTP，不声称端到端加密。中转依赖本机进程与临时隧道，关闭本机或更换隧道地址会影响远程功能，尚未部署到永久服务器。
+
+## WebMCP automation (2026-10-28)
+The HTTPS page registers four tools through document.modelContext (legacy navigator fallback): instrument_status, instrument_notes, instrument_parameter, instrument_stop. Agents discover current names through the browser WebMCP capability; generated name suffixes change on reload. No screenshot, selector, pointer hold or Wi-Fi switching is necessary. Authentication remains in the page session, never in tool arguments/results.
+
+Notes use semitone indexes 0..31; C4=12, E4=16, G4=19. Replace the complete held set, use [] to release, and always call instrument_stop after testing. Parameters use decimal values and validate individual limits. Results distinguish relay acceptance from FPGA application; telemetry returned immediately can predate the command. The page must remain active for its existing heartbeat; loss of focus stops notes and relay lease expiration releases control.
+
+Verified on hardware: tools discovered; T01 accepted and later telemetry indicated timbre1; WebMCP chord [12,16,19] recorded on Realtek input at 261.5/329.5/392Hz. Peak0.9932 is near the recording input full scale; lower test volume/gain before stronger mixed signals. First combined invocation produced an invocation error; isolated retry succeeded. Stop/L00 succeeded. See docs/e031-regression/webmcp-test.json. FPGA Flash unchanged.
