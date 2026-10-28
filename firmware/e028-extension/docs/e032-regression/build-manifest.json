@@ -1,0 +1,21 @@
+{
+  "version": "E032-candidate",
+  "deployed": false,
+  "flash_unchanged": "E031",
+  "artifact_local_only": true,
+  "artifact_sha256": "2fb707febef140148391921423660632815a9fc7ed0f2eb1376b4bbaaf9413aa",
+  "clock_mhz": 27,
+  "reported_fmax_mhz": 27,
+  "setup_tns": 0,
+  "hold_tns": 0,
+  "bsram_used": 15,
+  "bsram_total": 46,
+  "dsp_used": 8.5,
+  "dsp_total": 24,
+  "bend_max_error_cents_simulation": 0.044854,
+  "tests_passed": 12,
+  "sources": {
+    "synth32.v": "56c42562b20914a63bbbdd17a5bc1f0c22d25a93ed221d634f7c34127a597e24",
+    "fx_engine.v": "9b66f377a7142cde57fb93dc5f9c943ffc26b95e91c97356056054fd1ec622e7"
+  }
+}

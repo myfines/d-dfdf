@@ -1,0 +1,3 @@
+bend max error cents=0.044854
+PASS audio signed feedback and bend sweep
+E:\gaoyun\releases\e028-flash-record\firmware\e028-extension/sim/tb_audio_fix.sv:19: $finish called at 16445000 (1ps)

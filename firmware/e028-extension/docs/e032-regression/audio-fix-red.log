@@ -1,0 +1,5 @@
+FAIL negative feedback: 29768 expected -3000
+bend max error cents=43.535775
+FAIL bend precision
+FATAL: E:\gaoyun\releases\e028-flash-record\firmware\e028-extension/sim/tb_audio_fix.sv:18: audio regressions=2
+       Time: 16445000  Scope: tb_audio_fix

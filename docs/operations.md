@@ -1120,3 +1120,7 @@ Read official topic2 again; WebMCP and the same authenticated relay backend drov
 
 ## 2026-10-28 K230-covered retest
 User covered K230 and confirmed no physical activity/no overheating. Recorded gesture_active=0 and remote_active=1 throughout. Bend261.5/296/227.5/261.5Hz repeated; delay clipping/strong zero-input residual repeated. Old failed cases also had inactive gesture. No RTL/Flash change; controls stopped and effects disabled. Evidence: firmware/e028-extension/docs/e031-retest-k230-covered/README.md.
+
+
+## 2026-10-28 E032 candidate audio corrections
+Read tiny-synth and Freeverb designs; no external source copied. Negative-feedback signedness reproduced (negative8000 incorrectly became positive29768); added failing regression, fixed signed arithmetic and hardware RAM scrub. Exponential pitch lookup reduces sweep error43.5358 to0.044854cents in simulation. Twelve tests pass; Gowin candidate builds at27MHz with setup/hold TNS0,15/46BSRAM,8.5/24DSP. No SRAM/Flash download; physical board remains E031. Evidence firmware/e028-extension/docs/e032-regression/. Private FS never uploaded.

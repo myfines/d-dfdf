@@ -1,0 +1,5 @@
+frame 3 mask=ffffffff voices=32 active=0 sample=0 lat=0 note_on=1 idx=31
+frame 4 mask=ffffffff voices=32 active=1 sample=224 lat=1 note_on=0 idx=31
+frame 5 mask=ffffffff voices=32 active=1 sample=139 lat=1 note_on=0 idx=31
+PASS synth32 voices=32 nonzero=159 max=5555 latency=1
+E:\gaoyun\releases\e028-flash-record\firmware\e028-extension/sim/tb_synth32.sv:76: $finish called at 3456219489 (1ps)

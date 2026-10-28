@@ -27,6 +27,8 @@ module fx_engine(
     localparam S_WRITE = 2'd3;
 
     reg [1:0] state;
+    reg [11:0] clear_index;
+    reg [2:0] previous_enable;
     reg signed [15:0] dry_hold;
 
     reg signed [15:0] chorus_ram [0:1023];
@@ -76,7 +78,7 @@ module fx_engine(
     wire signed [17:0] rev2_next = inject - (rev1_18 >>> 1);
     wire signed [17:0] reverb_out = (rev1_18 + rev2_18) >>> 2;
 
-    wire signed [17:0] delay_next = dry18 + (({{2{delay_q[15]}}, delay_q} * 18'sd3) >>> 3);
+    wire signed [17:0] delay_next = dry18 + (($signed({{2{delay_q[15]}}, delay_q}) * 18'sd3) >>> 3);
 
     wire signed [17:0] chorus_wet = enable[0] ? ($signed({{2{chorus_q[15]}}, chorus_q}) >>> 3) : 18'sd0;
     wire signed [17:0] delay_wet  = enable[1] ? ($signed({{2{delay_q[15]}}, delay_q}) >>> 3) : 18'sd0;
@@ -88,6 +90,8 @@ module fx_engine(
     always @(posedge clk) begin
         if(!reset_n) begin
             state <= S_IDLE;
+            clear_index <= 0;
+            previous_enable <= 0;
             dry_hold <= 0;
             chorus_wr <= 0;
             delay_wr <= 0;
@@ -116,6 +120,25 @@ module fx_engine(
             sample_l <= 0;
             sample_r <= 0;
         end else begin
+            previous_enable <= enable;
+            if(enable != previous_enable) begin
+                clear_index <= 0;
+                state <= S_IDLE;
+                chorus_wr <= 0; delay_wr <= 0; rev1_wr <= 0; rev2_wr <= 0;
+                ap1_wr <= 0; ap2_wr <= 0;
+                sample_l <= dry; sample_r <= dry;
+            end else if(clear_index < 12'd2048) begin
+                delay_ram[clear_index[10:0]] <= 0;
+                rev1_ram[clear_index[10:0]] <= 0;
+                rev2_ram[clear_index[10:0]] <= 0;
+                if(clear_index < 1024) chorus_ram[clear_index[9:0]] <= 0;
+                if(clear_index < 256) ap1_ram[clear_index[7:0]] <= 0;
+                if(clear_index < 512) ap2_ram[clear_index[8:0]] <= 0;
+                clear_index <= clear_index + 1'b1;
+                chorus_q <= 0; delay_q <= 0; rev1_q <= 0; rev2_q <= 0;
+                ap1_q <= 0; ap2_q <= 0;
+                sample_l <= dry; sample_r <= dry;
+            end else begin
             case(state)
                 S_IDLE: begin
                     if(frame_tick) begin
@@ -177,6 +200,7 @@ module fx_engine(
 
                 default: state <= S_IDLE;
             endcase
+            end
         end
     end
 endmodule
