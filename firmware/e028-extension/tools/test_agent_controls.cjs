@@ -1,0 +1,14 @@
+const {strict:assert}=require('node:assert');
+const fs=require('node:fs'),vm=require('node:vm'),path=require('node:path');
+const html=fs.readFileSync(path.join(__dirname,'../web/relay.html'),'utf8');
+const source=html.match(/<script id="agent-encoding">([\s\S]*?)<\/script>/);
+assert.ok(source,'Agent encoding script exists');
+const context={};vm.createContext(context);vm.runInContext(source[1],context);
+const {noteMask,parameterCommand}=context;
+assert.equal(noteMask([12,16,19]),'M00091000');
+assert.equal(noteMask([]),'M00000000');
+assert.throws(()=>noteMask([32]));
+assert.equal(parameterCommand('V',64),'V40');
+assert.equal(parameterCommand('B',8192),'B2000');
+assert.throws(()=>parameterCommand('V',129));
+console.log('Agent controls: chord, stop, bounds and parameter encoding passed');

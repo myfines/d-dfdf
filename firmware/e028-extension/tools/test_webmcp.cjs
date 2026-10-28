@@ -1,0 +1,6 @@
+const fs=require('fs'),vm=require('vm'),assert=require('node:assert/strict');
+const html=fs.readFileSync(require('path').join(__dirname,'../web/relay.html'),'utf8');
+const source=html.match(/<script id="instrument-webmcp">([\s\S]*?)<\/script>/);assert.ok(source,'WebMCP tools registered');
+const tools=[],commands=[];const ctx={document:{modelContext:{registerTool:t=>tools.push(t)}},navigator:{},token:'test',mask:0,dead:false,queue:Promise.resolve(),cmd:async c=>commands.push(c),stop:()=>commands.push('STOP'),fetch:async()=>({ok:true,json:async()=>({online:true})}),AbortSignal,setTimeout,clearTimeout};
+vm.createContext(ctx);vm.runInContext(source[1],ctx);
+(async()=>{assert.equal(tools.length,4);await tools.find(t=>t.name==='instrument_notes').execute({notes:[12,16,19]});assert.equal(commands.at(-1),'M00091000');await assert.rejects(()=>tools.find(t=>t.name==='instrument_notes').execute({notes:[32]}));await tools.find(t=>t.name==='instrument_stop').execute({});assert.equal(commands.at(-1),'L00');console.log('WebMCP discovery, chord, bounds and stop passed')})().catch(e=>{console.error(e);process.exitCode=1});
