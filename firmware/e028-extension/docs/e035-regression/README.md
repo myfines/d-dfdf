@@ -19,3 +19,10 @@ Full Gowin build27MHz constraint, Fmax27.209MHz, min setup slack0.285ns, setup/h
 
 ## SRAM deployment
 Fixed manifest hash verified; official operation2 at2.5MHz completed100% in6.43s,exit0. User code mismatch warning retained. Independent op73 E035,op74 0x6020. Flash remains E031. No custom ADSR acoustic or live Wi-Fi command application is claimed from deployment/readback. Full instrument starts unarmed after reconfiguration.
+
+## 2026-10-29 autonomous DAC envelope experiment
+SRAM-only E03B probe uses the production synth/fx/I2S with one C4 voice and paired 2-second held/released slots. All external control buses are high impedance. The capture completed and full E035 was restored; independent reads return E035/6020. Flash remains E031. Private raw WAV SHA256: b0be262fe400882c4fcfd0de882474a73ef35949eb31dca4d6dd76f0d9bb3c5a.
+
+Observed 20ms-bin RMS transitions: slow attack 0.52s versus expected 0.559s; slow decay 0.38s versus expected 0.419s. Long release measured 0.02s versus expected 0.281s, and high/low sustain ratio 4.103 versus expected 3. These last two are UNRESOLVED, not acceptance passes. Microphone AGC/noise suppression is a hypothesis, not an established cause. This acoustic measurement is neither physical input latency nor actual device-applied network configuration verification.
+
+New full-engine RTL regression tb_adsr_long_release checks every one of 8224 release frames from S64 with R14: decrement exactly 2, completion after 175.445ms at design sample rate, other held voice unaffected, sustain levels16448/49344 exactly3:1. It passes. This validates simulation state evolution; synthesized-board envelope telemetry is still needed to localize the acoustic discrepancy. Analyzer unit tests cover transition extraction and absent transitions. The probe/test/analysis sources and summarized capture evidence are versioned; private audio and cloud credentials are excluded.

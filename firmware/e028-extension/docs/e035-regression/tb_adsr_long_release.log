@@ -1,0 +1,2 @@
+PASS actual engine R14: 8224 frames, 175.445ms at 46875Hz from S64; sustain ratio exactly 3; held voice unaffected
+E:\gaoyun\releases\e028-flash-record\firmware\e028-extension/sim/tb_adsr_long_release.sv:26: $finish called at 47491230000 (1ps)

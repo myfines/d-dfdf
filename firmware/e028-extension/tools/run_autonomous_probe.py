@@ -41,10 +41,12 @@ def deploy(project, manifest_name, label):
 def main():
     global OUT
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--version', choices=['E033','E034'], default='E033')
-    version = parser.parse_args().version
+    parser.add_argument('--version', choices=['E033','E034','E035'], default='E033')
+    parser.add_argument('--profile', choices=['audio','adsr'], default='audio')
+    args = parser.parse_args()
+    version, profile = args.version, args.profile
     OUT = ROOT / ('docs/'+version.lower()+'-regression')
-    raw_dir = PRIVATE / ('autonomous-'+version.lower()+'-20261029-lowgain')
+    raw_dir = PRIVATE / ('autonomous-'+version.lower()+'-20261029-'+profile)
     raw_dir.mkdir(exist_ok=True)
     # A known PC input, explicitly selected in prior physical tests.
     sd.check_input_settings(device=1, channels=1, samplerate=48000)
@@ -54,7 +56,9 @@ def main():
                      device=1, dtype='float32')
     rows = []
     try:
-        finished = deploy('audio_regression', 'probe-lowgain-manifest.json', '20261029-autonomous-lowgain-SRAM')
+        project = 'audio_adsr' if profile == 'adsr' else 'audio_regression'
+        manifest = 'probe-adsr-manifest.json' if profile == 'adsr' else 'probe-lowgain-manifest.json'
+        finished = deploy(project, manifest, '20261029-autonomous-'+profile+'-SRAM')
         print('Probe loaded; recording bounded sequence', flush=True)
         sd.wait()
         x = samples[:, 0]
@@ -81,6 +85,12 @@ def main():
                   'release', 'dry-attack', 'dry-settled', 'delay-settled', 'delay-release',
                   'reverb', 'reverb-release', 'chorus', 'chorus-release',
                   'four-note-chord', 'chord-release', '32-notes', '32-release', 'idle-final']
+        if profile == 'adsr':
+            labels = ['idle','attack-fast','release-after-fast-A','attack-slow','release-after-slow-A',
+                      'decay-fast','release-after-fast-D','decay-slow','release-after-slow-D',
+                      'sustain-low','release-low-S','sustain-high','release-high-S',
+                      'release-short-held','release-short-tail','release-long-held','release-long-tail',
+                      'idle','idle-final']
         for slot, label in enumerate(labels):
             a = int((offset + 2 * slot + .6) * 48000)
             b = int((offset + 2 * slot + 1.4) * 48000)
@@ -95,8 +105,9 @@ def main():
                        peak=float(max(abs(segment))),
                        clipped_fraction=float(np.mean(abs(segment) >= .99)),
                        dominant_hz=float(freqs[int(np.argmax(spectrum))]))
-            if slot in [1, 2, 3, 4, 6, 7, 8, 10, 12]:
-                expected = 293.664768 if slot == 2 else 233.081881 if slot == 3 else 261.625565
+            pitch_slots = [1,3,5,7,9,11,13,15] if profile == 'adsr' else [1,2,3,4,6,7,8,10,12]
+            if slot in pitch_slots:
+                expected = 261.625565 if profile == 'adsr' else 293.664768 if slot == 2 else 233.081881 if slot == 3 else 261.625565
                 indices = np.where(abs(freqs-expected) < 15)[0]
                 k = indices[int(np.argmax(spectrum[indices]))]
                 # Parabolic FFT interpolation; uncertainty still depends on
@@ -112,14 +123,27 @@ def main():
                            candidate_error_cents=float(1200*np.log2(hz/expected)))
             rows.append(row)
             print(json.dumps(row), flush=True)
-        report = dict(probe='E03A autonomous isolated synth/fx/I2S, not full instrument',
+        if profile == 'adsr':
+            #20ms bins retain the relative envelope shape. No input-latency
+            # claim; AGC/noise and onset alignment remain measurement limits.
+            curves = []
+            for slot, label in enumerate(labels):
+                bins=[]
+                for index in range(100):
+                    a=int((offset+slot*2+index*.02)*48000)
+                    segment=x[a:a+960].astype(float)
+                    bins.append(float(np.sqrt(np.mean(segment*segment))))
+                curves.append(dict(slot=slot,label=label,rms_20ms=bins))
+            (OUT / 'adsr-envelope-curves.json').write_text(json.dumps(curves,indent=2))
+        report = dict(probe=('E03B ADSR' if profile == 'adsr' else 'E03A audio')+' isolated synth/fx/I2S, not full instrument',
                       pc_sample_rate=48000, dac_sample_rate_design=46875,
                       timing_reference='first sustained acoustic onset minus scheduled 2s; no latency claim',
                       acoustic_onset_seconds=onset,
                       raw_sha256=hashlib.sha256(wav.read_bytes()).hexdigest(),
                       caution='Realtek mic AGC/noise possible; candidates require signal provenance verification',
                       records=rows)
-        (OUT / 'autonomous-recording-lowgain.json').write_text(json.dumps(report, indent=2))
+        target='autonomous-recording-adsr.json' if profile == 'adsr' else 'autonomous-recording-lowgain.json'
+        (OUT / target).write_text(json.dumps(report, indent=2))
     finally:
         sd.stop()
         deploy('instrument_'+version.lower(), 'build-manifest.json', '20261029-restore-'+version)

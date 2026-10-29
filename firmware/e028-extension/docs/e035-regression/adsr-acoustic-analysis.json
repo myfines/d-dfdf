@@ -1,0 +1,19 @@
+{
+  "bin_seconds": 0.02,
+  "transition_definition": "10->90% rise or90->10% fall of RMS envelope; zero means unresolved within20ms bin",
+  "interval_seconds": {
+    "attack-fast": 0.02,
+    "attack-slow": 0.52,
+    "decay-fast": 0.0,
+    "decay-slow": 0.38,
+    "release-short-tail": 0.0,
+    "release-long-tail": 0.02
+  },
+  "sustain_high_to_low_ratio": 4.1029913962940325,
+  "sustain_ratio_db": 12.262012125611987,
+  "expected_sustain_ratio": 3,
+  "expected_slow_attack_10_90_seconds": 0.559232,
+  "expected_slow_decay_90_10_seconds": 0.41887573333333333,
+  "expected_slow_release_90_10_seconds": 0.28071253333333335,
+  "limitation": "Relative acoustic observation.20ms bins, noise, mic AGC and phase may bias estimates; not total physical ADSR stage times or control-to-output latency."
+}
