@@ -12,3 +12,6 @@ This fixes a6dB dry-level drop, not all timbre or loudness concerns. Coherent dr
 
 ## Physical test blocker
 Local relay refused connection. A prior command to start relay/tunnel was automatically rejected with `blocked by policy`; no alternate launch workaround attempted. Therefore no remote acoustic pass claimed. Realtek input captures samples but provenance of audio signal is not established by that alone. User reports OLED content and no abnormal heat, with no visible heartbeat; cause remains unresolved.
+
+## Build result
+Gowin completed successfully:27MHz constraint,27.010MHz Fmax, setup/hold TNS0,15/46BSRAM,8.5/24DSP. Minimum reported setup slack0.014ns is very small; critical path runs from ADC axis to synth increment product. This candidate is not a robust final timing closure claim; pipeline review remains. FS stays private and no hardware deployment was performed.

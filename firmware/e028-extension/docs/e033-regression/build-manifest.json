@@ -1,0 +1,19 @@
+{
+  "version": "E033-candidate",
+  "deployed": false,
+  "board_last_read": "E032",
+  "flash_unchanged": "E031",
+  "artifact_local_only": true,
+  "artifact_sha256": "e77021c8bbbb4d5581700c4678ac34713dedc5a32f6ea4ea975ed2f80403b859",
+  "rtl_tests_passed": 13,
+  "clock_mhz": 27,
+  "fmax_mhz": 27.01,
+  "setup_tns": 0,
+  "hold_tns": 0,
+  "minimum_reported_setup_slack_ns": 0.014,
+  "bsram_used": 15,
+  "bsram_total": 46,
+  "dsp_used": 8.5,
+  "dsp_total": 24,
+  "limitation": "Very small timing margin on bend mapping to increment multiplier; pipeline review required before final release."
+}
