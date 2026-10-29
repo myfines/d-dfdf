@@ -1,3 +1,5 @@
+> 2026-10-30重新逐项审计：[当前E047严格赛题对照](competition-final-crosscheck-20261029.md)。重点缺口为实体延迟/抖动、LRCK、最终手机闭环、冷启动，以及APK颤音/自定义ADSR操作入口；音色音量已获用户确认。
+
 > 最新部署：用户确认电钢琴/Bass音量够响，E047已固化Flash并校验成功，最终独立读回E047/6020。完整冷启动及其他实体功能仍待验收。[修复说明](e047-timbre-balance.md) · [烧录证据](../firmware/e028-extension/docs/e047-flash/README.md)。以下旧版本说明为历史。
 
 > 最新音色候选：完整E047已恢复SRAM并读回E047/6020；修复电钢琴/Bass偏弱，Flash仍E045，用户试听待确认。[改动与实测](e047-timbre-balance.md)。以下旧部署信息为历史。

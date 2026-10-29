@@ -1237,3 +1237,8 @@ JTAG识别0x81B、COM13确认；首轮RAW采集幅度健全性失败，用户确
 ## 2026-10-29 E047交付包更新
 
 从71270df源码/证据快照生成E:/gaoyun/releases/instrument-E047-delivery-20261029.zip，加入同一已固化E047 .fs/.bin、APK0.11和有线RAW四干声示例；712个内容文件SHA256核对及ZIP CRC通过。当前包明确用户音色音量反馈通过、Flash已校验、冷启动与其他功能待验。详细收据见[e047-package-receipt.json](e047-package-receipt.json)。E045旧包不删除，保留历史回退。
+
+
+## 2026-10-30 E047严格赛题差距复核
+
+按用户要求重读官网选题二摘录，核对E047 manifest/Flash及用户音量反馈；重写当前对照表，移除旧表E045/E039混用造成的歧义。进一步核实APK WifiSession仅VT EPK及W/U/C/R，固件X颤音/G自定义ADSR已有而APK无操作入口；区分入口欠缺、未建互联网曲库与官方必选门槛，不自行增加要求。明确≤10ms、≤5ms/确定性、实际LRCK及最终手机/冷启动/视频未验。仅改文档，没有执行硬件操作。
