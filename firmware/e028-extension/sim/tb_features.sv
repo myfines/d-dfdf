@@ -29,7 +29,7 @@ module tb_features;
     integer sum_abs [0:3];
     integer peak [0:3];
     integer phase_edges = 0;
-    integer i;
+    integer i, full_expression_peak, expected_expression_peak;
     reg phase_msb = 0;
     reg [31:0] inc12 = 0;
     always @(posedge clk) if(dut.state == 3'd1 && dut.voice_index == 5'd12) inc12 <= dut.increment_final;
@@ -78,9 +78,12 @@ module tb_features;
             $fatal(1, "timbres are not distinct");
 
         // Expression dimension: output must scale with expression.
+        full_expression_peak = peak[0];
         sum_abs[0] = 0; peak[0] = 0;
         run_note(0, 0, 64);
-        if(peak[0] > 12000 || peak[0] < 500)
+        expected_expression_peak = (full_expression_peak * 64 + 127) / 255;
+        if(peak[0] > expected_expression_peak + 3 ||
+           peak[0] < expected_expression_peak - 3 || peak[0] == 0)
             $fatal(1, "expression scaling wrong: %0d", peak[0]);
         $display("expression peak=%0d", peak[0]);
 

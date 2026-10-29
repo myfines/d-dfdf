@@ -1,0 +1,2 @@
+PASS fx stability uninitialized RAM, negative impulse, decay, re-enable echoes=24 tail=1
+E:\gaoyun\releases\e028-flash-record\firmware\e028-extension/sim/tb_fx_stability.sv:25: $finish called at 5066430000 (1ps)

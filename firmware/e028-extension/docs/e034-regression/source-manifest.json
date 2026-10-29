@@ -1,0 +1,11 @@
+{
+  "version": "E034-candidate",
+  "deployed": false,
+  "flash_unchanged": "E031",
+  "board_last_read": "E033",
+  "rtl_tests_passed": 17,
+  "sources": {
+    "synth32.v": "7b6be6c1381a273eee8468833125286026e259cefda32741a9a09f771e00517a",
+    "fx_engine.v": "4e634b14576aa82bfa06c92215f9bb0309a71596e9314b3d00ac71225af698dd"
+  }
+}

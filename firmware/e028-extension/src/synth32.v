@@ -48,7 +48,8 @@ module synth32(
     reg [31:0] gate_last;
     reg [31:0] gate_frame;
     reg [31:0] lfo_phase;
-    reg signed [15:0] lowpass;
+    reg signed [23:0] lowpass;
+    reg [16:0] ratio_frame;
     reg [4:0]  voice_index;
     reg [1:0]  harmonic;
     reg [2:0]  state;
@@ -560,7 +561,9 @@ module synth32(
     wire [16:0] ratio = ratio_signed < 32'sd40000 ? 17'd40000 :
                        ratio_signed > 32'sd90000 ? 17'd90000 : ratio_signed[16:0];
 
-    wire [48:0] increment_product = note_increment(voice_index) * ratio;
+    // One committed ratio for every voice in the accepted audio frame.
+    // This register also breaks the ADC->lookup->phase-multiply path.
+    wire [48:0] increment_product = note_increment(voice_index) * ratio_frame;
     wire [31:0] increment_final = increment_product[47:16];
 
     // Band-limited additive partials only: no discontinuous saw/square extras.
@@ -574,31 +577,35 @@ module synth32(
     wire [23:0] gain_product = level_now * {8'd0, velocity_now};
     wire [15:0] gain_value = gain_product[23:8];
     wire signed [31:0] voice_product = wave_value * $signed({1'b0, gain_value});
-    wire signed [15:0] voice_sample = voice_product >>> 15;
+    // Envelope is unsigned Q16 (peak65535), not Q15. Dividing by
+    // 2^15 doubled full-level voices and could wrap their signed16 result.
+    wire signed [15:0] voice_sample = voice_product >>> 16;
 
     // Fixed 4x headroom.  A per-voice-count variable shift caused audible
     // gain steps/pops whenever a note or release tail crossed a boundary.
     wire signed [23:0] mix_now = mix_sum >>> 2;
-    wire signed [15:0] mix_sat =
-        mix_now > 24'sd32767 ? 16'sd32767 :
-        mix_now < -24'sd32768 ? -16'sd32768 : mix_now[15:0];
-    wire signed [17:0] lowpass_delta = $signed({{2{mix_sat[15]}}, mix_sat}) -
-                                        $signed({{2{lowpass[15]}}, lowpass});
+    // Keep summed voices wide until expression has been applied. Clipping
+    // here irreversibly distorted even low-volume 32voice output.
+    wire signed [24:0] lowpass_delta = $signed({mix_now[23], mix_now}) -
+                                        $signed({lowpass[23], lowpass});
     wire [7:0] filter_alpha = brightness > 8'd247 ? 8'd255 : brightness + 8'd8;
-    wire signed [25:0] lowpass_product = lowpass_delta * $signed({1'b0, filter_alpha});
-    wire signed [25:0] lowpass_sum = $signed({{10{lowpass[15]}}, lowpass}) + (lowpass_product >>> 8);
-    wire signed [15:0] lowpass_next =
-        lowpass_sum > 26'sd32767 ? 16'sd32767 :
-        lowpass_sum < -26'sd32768 ? -16'sd32768 : lowpass_sum[15:0];
+    wire signed [33:0] lowpass_product = lowpass_delta * $signed({1'b0, filter_alpha});
+    wire signed [33:0] lowpass_sum = $signed({{10{lowpass[23]}}, lowpass}) + (lowpass_product >>> 8);
+    // alpha/256 lies in (0,1); this convex update stays within the
+    // signed24-bit input/state range without intermediate saturation.
+    wire signed [23:0] lowpass_next = lowpass_sum[23:0];
     wire signed [16:0] tremolo_depth = 17'sd128 - $signed({{9{lfo_value[15]}}, lfo_value});
     wire [17:0] tremolo_product_raw = {1'b0, tremolo} * tremolo_depth[8:0];
     wire [8:0] tremolo_gain = 9'd256 - tremolo_product_raw[15:8];
-    wire signed [24:0] tremolo_product = $signed({{9{lowpass_next[15]}}, lowpass_next}) *
+    wire signed [33:0] tremolo_product = lowpass_next *
                                           $signed({1'b0, tremolo_gain});
-    wire signed [15:0] tremolo_sample = tremolo_product >>> 8;
-    wire signed [23:0] expression_product = $signed({{8{tremolo_sample[15]}}, tremolo_sample}) *
+    wire signed [23:0] tremolo_sample = tremolo_product >>> 8;
+    wire signed [32:0] expression_product = tremolo_sample *
                                             $signed({1'b0, expression});
-    wire signed [15:0] expression_sample = expression_product >>> 8;
+    wire signed [32:0] expression_scaled = expression_product >>> 8;
+    wire signed [15:0] expression_sample =
+        expression_scaled > 33'sd32767 ? 16'sd32767 :
+        expression_scaled < -33'sd32768 ? -16'sd32768 : expression_scaled[15:0];
 
     integer k;
     always @(posedge clk) begin
@@ -633,6 +640,7 @@ module synth32(
             gate_last <= 0;
             gate_frame <= 0;
             lowpass <= 0;
+            ratio_frame <= 17'd65536;
             for(k = 0; k < 32; k = k + 1) begin
                 phase[k] <= 0;
                 env_level[k] <= 0;
@@ -643,6 +651,7 @@ module synth32(
             end
         end else begin
             if(frame_tick && state == S_IDLE) begin
+                ratio_frame <= ratio;
                 gate_frame <= gate_mask;
                 gate_last <= gate_prev_mask;
                 gate_prev_mask <= gate_mask;

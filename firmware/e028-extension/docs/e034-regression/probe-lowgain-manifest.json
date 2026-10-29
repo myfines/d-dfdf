@@ -1,0 +1,8 @@
+{
+  "probe": "E03A-E034-audio-core",
+  "artifact_sha256": "508550f16e8aea1748877c0f32333e5a1a02cf16d3af2cd8f4edc0eed5c61090",
+  "artifact_local_only": true,
+  "expression_normal": 8,
+  "expression_32voice": 1,
+  "timing_summary": "Clock Summary: NO. Clock Name Type Period Frequency(MHz) Rise Fall Source Master Objects 1 clk27 Base 37.037 27.000 0.000 18.518 clk Max Frequency Summary: NO. Clock Name Constraint Actual Fmax Logic Level Entity 1 clk27 27.000(MHz) 43.057(MHz) 15 TOP Total Negative Slack Summary: Clock Name Analysis Type Endpoints TNS Number of Endpoints clk27 Setup 0.000 0 clk27 Hold 0.000 0 Timing Details Path Slacks Table: Setup Paths Table Report Command:report_timing -setup -max_paths 25 -max_common_paths 1 Path Number Path Slack From Node To No"
+}

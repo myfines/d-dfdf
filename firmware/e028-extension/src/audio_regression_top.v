@@ -31,7 +31,8 @@ module audio_regression_top #(parameter integer SLOT_FRAMES=93750)(
  wire signed [15:0] dry,left,right;
  synth32 synth(.clk(clk),.reset_n(reset_n),.frame_tick(ft),.gate_mask(mask),.timbre(2'd1),
   .velocity(8'd120),.bend(bend),.vibrato(8'd0),.brightness(8'd128),
-  .expression(8'd8),.tremolo(8'd0),.sample(dry));
+  // Extra capture headroom for32-note stress. PC mic input is not line level.
+  .expression(slot==16 ? 8'd1 : 8'd8),.tremolo(8'd0),.sample(dry));
  fx_engine effects(clk,reset_n,ft,dry,fx,left,right);
  i2s_tx16 audio(clk,reset_n,left,right,PCM_BCK,PCM_LRCK,PCM_DATA,ft);
  assign ADC_SCL=1'bz;assign ADC_SDA=1'bz;

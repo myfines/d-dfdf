@@ -1,0 +1,2 @@
+PASS dry gain identical across 8 modes, both polarities, overload saturation
+E:\gaoyun\releases\e028-flash-record\firmware\e028-extension/sim/tb_fx_gain.sv:37: $finish called at 354112000 (1ps)

@@ -1,0 +1,2 @@
+FATAL: E:\gaoyun\releases\e028-flash-record\firmware\e028-extension/sim/tb_voice_gain.sv:21: voice gain Q16 overflow/scaling wave=32767 env=65535 velocity=255 expected=32638 actual=-259
+       Time: 2000  Scope: tb_voice_gain

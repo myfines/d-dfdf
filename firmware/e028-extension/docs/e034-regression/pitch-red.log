@@ -1,0 +1,2 @@
+FATAL: E:\gaoyun\releases\e028-flash-record\firmware\e028-extension/sim/tb_pitch_frame.sv:15: pitch changed within accepted frame
+       Time: 52000  Scope: tb_pitch_frame

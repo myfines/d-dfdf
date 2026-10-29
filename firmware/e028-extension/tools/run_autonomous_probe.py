@@ -1,8 +1,9 @@
-"""Explicit temporary SRAM probe deployment, PC capture, then restore E033.
+"""Explicit temporary SRAM probe deployment, PC capture, then restore selected instrument.
 
 No Flash operation. Raw recording stays outside the repository. Deployment
 hashes are checked against manifests prepared after successful timing builds.
 """
+import argparse
 import hashlib
 import json
 import subprocess
@@ -38,7 +39,12 @@ def deploy(project, manifest_name, label):
 
 
 def main():
-    raw_dir = PRIVATE / 'autonomous-e033-20261029-lowgain'
+    global OUT
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--version', choices=['E033','E034'], default='E033')
+    version = parser.parse_args().version
+    OUT = ROOT / ('docs/'+version.lower()+'-regression')
+    raw_dir = PRIVATE / ('autonomous-'+version.lower()+'-20261029-lowgain')
     raw_dir.mkdir(exist_ok=True)
     # A known PC input, explicitly selected in prior physical tests.
     sd.check_input_settings(device=1, channels=1, samplerate=48000)
@@ -116,12 +122,15 @@ def main():
         (OUT / 'autonomous-recording-lowgain.json').write_text(json.dumps(report, indent=2))
     finally:
         sd.stop()
-        deploy('instrument_e033', 'build-manifest.json', '20261029-restore-E033')
+        deploy('instrument_'+version.lower(), 'build-manifest.json', '20261029-restore-'+version)
         for op in [73, 74]:
             result = subprocess.run(COMMON+['--operation_index', str(op)],
                                     capture_output=True, timeout=12)
             (OUT / ('20261029-restore-read'+str(op)+'.log')).write_bytes(result.stdout+result.stderr)
             print((result.stdout+result.stderr).decode(errors='replace')[-450:], flush=True)
+            expected = ('0x0000'+version).encode() if op == 73 else b'0x00006020'
+            if result.returncode or expected not in result.stdout+result.stderr:
+                raise RuntimeError('Independent restore read failed: '+str(op))
 
 
 if __name__ == '__main__':

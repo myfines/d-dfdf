@@ -1,0 +1,25 @@
+{
+  "version": "E034-candidate",
+  "deployed": true,
+  "flash_unchanged": "E031",
+  "board_last_read": "E034",
+  "rtl_tests_passed": 17,
+  "sources": {
+    "synth32.v": "7b6be6c1381a273eee8468833125286026e259cefda32741a9a09f771e00517a",
+    "fx_engine.v": "4e634b14576aa82bfa06c92215f9bb0309a71596e9314b3d00ac71225af698dd"
+  },
+  "artifact_sha256": "d6439f6d26719c4bfac64ec172c7c4fbab94b3e62987a9ce1f0372ad0ee69bd6",
+  "artifact_local_only": true,
+  "clock_mhz": 27,
+  "fmax_mhz": 27.315,
+  "minimum_setup_slack_ns": 0.428,
+  "setup_tns": 0,
+  "hold_tns": 0,
+  "bsram_used": 15,
+  "bsram_total": 46,
+  "dsp_used": 10,
+  "dsp_total": 24,
+  "deployment": "SRAM only",
+  "status_register": "0x6020",
+  "acoustic_validation": "isolated E03A probe with E034 sources, followed by full instrument restore"
+}
