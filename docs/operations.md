@@ -1197,3 +1197,10 @@ User reported crash, weak Bass and questioned Lissajous/requirements. Reproduced
 执行官方gw_sh.exe tools/build_ap_public.tcl，以FPGA_BUILD_ROOT指定全新输出目录，去除禁用分支的云模块/私有配置依赖；综合/PNR成功、Fmax27.219MHz、setup/hold TNS0。.bin SHA256与原部署E045构建完全一致；未下载新构建，未操作Flash/ESP/OTP/下载器固件。日志与结构化结果在firmware/e028-extension/docs/e045-final-audit。
 
 新增逐项赛题对照、当前热点原版UI使用教程、延迟测量方案和最后拍摄清单；E028旧交付文档加历史标记。最终Flash固化尚未执行，当前仍E045 SRAM/Flash E039，用户冷启动须在最终固化后进行。
+
+
+## 2026-10-29 22:19 APK0.11与交付收尾
+
+用户要求暂缓FAQ103与延迟口径查找，先做其他项目。检查直连App，测试复现解析器接受键位音符32；按生产pcm_record定义修复为前32块映射音符0..31、后96块FF占位。新增非法映射、合法/非法占位回归测试。完整build.ps1构建及协议/TCP/直连/实际View绘制测试通过，原版InstrumentView未改。
+
+416个真实E046板上A帧回放进生产Android解析器，128块完整，导出WAV SHA256与原板上工具完全一致。apksigner核对0.10/0.11证书SHA256相同，versionCode11。未安装实体手机，不将回放冒充Wi-Fi/UI验收。本轮未操作板卡下载、Flash或ESP。证据在e045-app011；教程更新为APK0.11。

@@ -1,0 +1,4 @@
+Signer #1 certificate DN: CN=Instrument Local Debug
+Signer #1 certificate SHA-256 digest: d551d7a28c275fd932f73f8f649d0073c1ab3b24d40f42f2b5bc44449c0e2893
+Signer #1 certificate SHA-1 digest: 5ad2501cfeb512a60f873b3f1f67e2b2a8d0050b
+Signer #1 certificate MD5 digest: 914d85b669466c5151de4a3c9e2d259f

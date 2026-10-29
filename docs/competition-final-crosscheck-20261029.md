@@ -1,6 +1,6 @@
 # 按赛题逐项核对：E045（2026-10-29）
 
-依据[当晚官网原文摘录](competition-topic2-source-20261029.md)及群FAQ A1/A2、66、68、73–77。当前SRAM E045，Flash E039；APK0.10原版自绘UI。这里逐项判断，不把“有代码”改写为“官方验收通过”。
+依据[当晚官网原文摘录](competition-topic2-source-20261029.md)及群FAQ A1/A2、66、68、73–77。当前SRAM E045，Flash E039；APK0.11原版自绘UI。这里逐项判断，不把“有代码”改写为“官方验收通过”。
 
 | 原文要求 | 对应实现与证据 | 结论与剩余 |
 |---|---|---|
@@ -27,3 +27,5 @@
 新增[无私有配置热点构建脚本](../firmware/e028-extension/tools/build_ap_public.tcl)，只依赖公开工程源码与官方工具。全新输出目录完成综合/布局布线/时序，27MHz约束、Fmax27.219MHz、setup/hold TNS0。生成.bin与已部署E045原构建逐字节SHA256一致（4c4787ce3a6b02301ee6adb1ab40a4370a8429420871934d5e7f2d7c97515bff），新.fs仅作独立构建产物记录，没有下载或替换板上码流。详见[构建报告](../firmware/e028-extension/docs/e045-final-audit/report.json)。
 
 [当前使用教程](e045-user-guide.md)已替代旧E037公网操作说明；[视频拍摄清单](e045-video-guide.md)最后按实际结果拍摄。用户负责冷启动操作；代理最终固化后明确给出版本再执行。延迟电测/真实手机闭环尚未完成，因此当前结论为“覆盖赛题主要实现路线，有明确未验收指标”，不能写“全部赛题完成”。
+
+当前App解析与真实板包回放证据见[APK0.11报告](../firmware/e028-extension/docs/e045-app011/README.md)，实际手机闭环仍待验收。

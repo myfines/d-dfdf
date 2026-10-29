@@ -7,6 +7,10 @@ public final class DirectExtensionTest {
   DirectExtension.Frame f=DirectExtension.parse(s.toString());
   if(f.id!=1||f.chunk!=3||f.flags!=2||f.length!=4096||f.decimate!=8||f.scoreLength!=4||!f.scoreReady||f.mapNote!=12)throw new AssertionError("metadata");
   try{DirectExtension.parse(s.substring(0,84)+"0000"+s.substring(88));throw new AssertionError("checksum accepted");}catch(IllegalArgumentException expected){}
+  try{DirectExtension.parse(s.substring(0,18)+"20"+s.substring(20));throw new AssertionError("out-of-range mapped note32 accepted");}catch(IllegalArgumentException expected){}
+  String later=s.substring(0,5)+"20"+s.substring(7,18)+"FF"+s.substring(20);
+  if(DirectExtension.parse(later).mapNote!=255)throw new AssertionError("PCM-only chunk sentinel rejected");
+  try{DirectExtension.parse(later.substring(0,18)+"00"+later.substring(20));throw new AssertionError("PCM-only chunk missing FF accepted");}catch(IllegalArgumentException expected){}
   byte[] pcm=new byte[4096];pcm[0]=(byte)0x80;pcm[1]=0;pcm[2]=127;
   byte[] wav=DirectExtension.wav(pcm,8);
   if(wav.length!=4140||wav[0]!='R'||wav[8]!='W'||(wav[44]&255)!=0||(wav[45]&255)!=128||(wav[46]&255)!=255)throw new AssertionError("WAV signed conversion");

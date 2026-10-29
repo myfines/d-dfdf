@@ -1,0 +1,14 @@
+{
+  "apk_version_code": 11,
+  "apk_version_name": "0.11-e045-direct",
+  "apk_sha256": "8b0d0a2af8347624076a1b045b3aeb8f68015a00cdf8d5e9a54236a239f64a42",
+  "certificate_sha256": "d551d7a28c275fd932f73f8f649d0073c1ab3b24d40f42f2b5bc44449c0e2893",
+  "same_certificate_as_010": true,
+  "reference_ui_changed": false,
+  "fix": "Validate keymap note0..31 for chunks0..31; require FF sentinel for PCM chunks32..127",
+  "real_board_A_packets_replayed": 416,
+  "complete_chunks": 128,
+  "android_wav_sha256": "e93c01681525dbab92063c17aac329a084e7eaa5061a2ad054c44d78b46ad6df",
+  "matches_board_tool_wav": true,
+  "physical_android_wifi_ui_accepted": false
+}

@@ -1,0 +1,2 @@
+Exception in thread "main" java.lang.AssertionError: out-of-range mapped note32 accepted
+	at cn.myfines.instrument.DirectExtensionTest.main(DirectExtensionTest.java:10)

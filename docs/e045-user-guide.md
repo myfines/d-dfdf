@@ -2,7 +2,7 @@
 
 ## 版本与接线
 
-当前板卡运行E045 SRAM，Flash仍E039。**现在断电会回到E039，不能用它验收E045冷启动。** 最终Flash写入与校验完成后，才执行下方冷启动检查。使用[APK0.10](../mobile-companion/apk/instrument-companion-0.10-e041-direct.apk)；文件名含E041是构建时版本，W/U/C直连能力可配合E045。
+当前板卡运行E045 SRAM，Flash仍E039。**现在断电会回到E039，不能用它验收E045冷启动。** 最终Flash写入与校验完成后，才执行下方冷启动检查。使用[APK0.11](../mobile-companion/apk/instrument-companion-0.11-e045-direct.apk)；签名与0.10一致，可覆盖升级；原版自绘UI保持不变。
 
 沿用已验证接线，不带电改线。PCM模块用现有独立USB供电，不把它的3.3V排针再次接入供电；模块共地，K230避免双路供电。音箱先调小音量；先PCM供电，再Dock/K230。电脑保持原网络，只有手机连接ESP热点。
 
@@ -56,3 +56,5 @@
 ## 公开热点版构建
 
 安装Gowin Education 1.9.11.03及器件许可，在`firmware/e028-extension`目录用官方`gw_sh.exe tools/build_ap_public.tcl`构建。默认输出`build-public/instrument_e045_public`；可设置`FPGA_BUILD_ROOT`改变输出目录。不需要`FPGA_WEB_PRIVATE`、云服务账号或`cloud_config.v`。器件GW2A-LV18PG256C8/I7、27MHz，使用仓库既有CST/SDC。构建成功不等于已下载；最终下载要核对码流hash与设备。
+
+当前App解析与真实板包回放证据见[APK0.11报告](../firmware/e028-extension/docs/e045-app011/README.md)，实际手机闭环仍待验收。

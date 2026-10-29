@@ -1,4 +1,4 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="cn.myfines.instrument" android:versionCode="10" android:versionName="0.10-e041-direct">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="cn.myfines.instrument" android:versionCode="11" android:versionName="0.11-e045-direct">
  <uses-sdk android:minSdkVersion="26" android:targetSdkVersion="32"/>
  <uses-permission android:name="android.permission.RECORD_AUDIO"/>
  <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS"/>
