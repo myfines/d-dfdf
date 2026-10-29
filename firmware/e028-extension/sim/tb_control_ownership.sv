@@ -17,11 +17,14 @@ initial begin
   $fatal(1,"connection/lease masks local brightness or joystick");
  command("Y",210);command("B",8692);#1;
  if(dut.brightness!=210 || $signed(dut.bend)!=500)$fatal(1,"explicit controls not applied");
+ command("X",80);#1;if(dut.vibrato!=80)$fatal(1,"explicit vibrato missing");
  command("L",0);command("Q",0);#1;
  if(dut.brightness!=dut.local_brightness || $signed(dut.bend)!=1000)$fatal(1,"release retains stale ownership");
- command("Y",200);command("B",8192);repeat(15) @(negedge clk);
+ if(dut.vibrato!=0)$fatal(1,"reconnecting phone revives stale vibrato after release");
+ command("Y",200);command("B",8192);command("X",80);repeat(15) @(negedge clk);
  command("Q",0);#1;
  if(dut.brightness!=dut.local_brightness || $signed(dut.bend)!=1000)$fatal(1,"expiry retains stale ownership");
+ if(dut.vibrato!=0)$fatal(1,"reconnecting phone revives stale vibrato after lease expiry");
  $display("PASS lease-only connection preserves local controls; explicit commands own dimension until release/expiry");$finish;
 end
 endmodule

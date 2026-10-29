@@ -1,0 +1,13 @@
+{
+  "version": "E045",
+  "artifact_sha256": "9f2bf115e457df50576ead0ccd5aacfe37c2cd4acaf0ec653a5f5f2199d07d2a",
+  "sram_deployed": true,
+  "flash_version": "E039",
+  "fmax_mhz": 27.219,
+  "constraint_mhz": 27,
+  "setup_tns": 0,
+  "hold_tns": 0,
+  "rtl_tests": 33,
+  "core_sha256": "c722115147d06d01c7dc84ce7f1c70378d374a5ee7f1279db9d0bfa2e2e3d7bc",
+  "phone_and_physical_latency_accepted": false
+}

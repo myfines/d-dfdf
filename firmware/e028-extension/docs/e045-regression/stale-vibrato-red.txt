@@ -1,0 +1,2 @@
+FATAL: E:\gaoyun\releases\e028-flash-record\firmware\e028-extension/sim/tb_control_ownership.sv:23: reconnecting phone revives stale vibrato after release
+       Time: 151000  Scope: tb_control_ownership

@@ -389,6 +389,7 @@ module instrument_core #(
             if(lease != 0) begin
                 lease <= lease - 1'b1;
                 if(lease == 1) begin
+                    remote_vibrato <= 0;
                     remote_brightness_owned <= 0;
                     remote_bend_owned <= 0;
                     remote_keys_byte <= 0;
@@ -420,6 +421,7 @@ module instrument_core #(
                     "D": remote_demo <= cmd_value[0];
                     "Q": begin end
                     "L": begin
+                        remote_vibrato <= 0;
                         remote_brightness_owned <= 0;
                         remote_bend_owned <= 0;
                         lease <= 0;

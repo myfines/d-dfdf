@@ -1,0 +1,10 @@
+{
+  "all32_local_peaks_over10db": 32,
+  "minimum_local_snr_db": 20.040236397747307,
+  "volume80_minus160_db": -25.75851832258435,
+  "volume40_minus160_db": -31.529347072776446,
+  "restored160_minus_initial_db": 0.01569570877401283,
+  "chorus_minus_dry_db": -19.956725003123466,
+  "bass_minus_strings_db": -0.5217183438961186,
+  "note": "Local spectral peaks plus UART voice counts support this diagnostic capture; shared harmonics and PC processing mean this is not standalone proof of32 independently audible voices or electrical DAC rate"
+}

@@ -1,0 +1,19 @@
+{
+  "valid_packets": 416,
+  "invalid_record_packets": 0,
+  "chunks": 128,
+  "mapped_slot0": {
+    "score_length": 3,
+    "score_ready": true,
+    "mapped_note": 31,
+    "adsr_enabled": true,
+    "adsr_config": "9CDA0",
+    "metadata_version": "1"
+  },
+  "all_applied_metadata_verified": true,
+  "pcm_peak": 6.0,
+  "pcm_rms": 1.774314898594666,
+  "wav_sha256": "e93c01681525dbab92063c17aac329a084e7eaa5061a2ad054c44d78b46ad6df",
+  "source_core_sha256": "c722115147d06d01c7dc84ce7f1c70378d374a5ee7f1279db9d0bfa2e2e3d7bc",
+  "limitation": "Injected commands, diagnostic USB UART; not actual ESP/Android/UI or physical latency acceptance"
+}

@@ -1181,3 +1181,8 @@ User reported crash, weak Bass and questioned Lissajous/requirements. Reproduced
 - Actual-envelope digital calibration at C3/C4/C5 with velocity159/expression160/brightness128: all12 single-note/timbre scenarios zero full-scale samples. C4 settled RMS piano175.93/organ1221.19/strings867.17/Bass858.10; Bass near strings and~3.06dB below organ. Bass unity-expression regression also PASS. These are RTL PCM measurements, not acoustic matching or electrical DAC sample-rate measurement.
 - Raw deployment/app/RTL logs and calibration CSV archived in firmware/e028-extension/docs/e041-regression; E042 build/RTL/manifest in e042-regression. Long logs selected with headroom first3/last2/all errors and reversible SHA256 .headroom-cache copies. No unrelated WAV/log/proj files staged.
 - Pending: user's phone pinch/height/joystick/Bass result, E042 SRAM identity and actual W/U/C export, physical total latency/jitter,32 audible peaks plus electrical sample-rate evidence, physical OLED refresh, final Flash/cold boot. No completed-code-to-acceptance substitution; Wi-Fi/Bluetooth equivalence remains unconfirmed.
+
+
+## 2026-10-29 E043–E046板上诊断
+
+完成RAW音量/音色、32频点和128块录音/曲谱/映射/ADSR诊断；修复释放与到期残留颤音，33项RTL通过。最后恢复E045 SRAM并独立读回E045/6020，Flash仍E039。详见[证据及限制](e045-delivery-evidence.md)。录音runner恢复目标更新E045，E044构建自动从公开源码派生衰减探针。未重新运行硬件测试；这两项仅涉及测试工具的恢复目标和构建可复现性。

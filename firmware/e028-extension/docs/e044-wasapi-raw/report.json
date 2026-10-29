@@ -1,0 +1,471 @@
+{
+  "source": "E044 isolated production synth/FX/I2S to physical Realtek mic input",
+  "device": 1,
+  "probe_sha256": "1f576b0e548b8704adb296d25720c6d2ceca58afd5dee4312a932d558c36490b",
+  "raw_sha256": "0d91b8c34b6c940993a71c8c0d34c331341e718238afcfb5ef2596ae6678b9ce",
+  "markers": 612,
+  "bad_markers": 0,
+  "pc_audio_status": [
+    "RAW discontinuity"
+  ],
+  "dac_capture_attenuation": 4,
+  "pc_sample_rate": 48000,
+  "nominal_dac_sample_rate": 46875,
+  "sequence_offset_seconds": 5.726442666665328,
+  "alignment": "UART host sequence markers; not input-to-analog latency measurement",
+  "limitations": [
+    "PC mic AGC/noise/frequency response may affect amplitude and harmonic ratios",
+    "volume stimuli are injected control values, not physical K230 input",
+    "32-note peaks require separate provenance/FFT assessment",
+    "not proof of physical LRCK rate or phone UI acceptance"
+  ],
+  "records": [
+    {
+      "slot": 0,
+      "label": "idle",
+      "rms_dbfs": -35.08796175137603,
+      "peak": 0.09074804186820984,
+      "clipped_fraction": 0.0,
+      "digital_peak": 0,
+      "voices": 0
+    },
+    {
+      "slot": 1,
+      "label": "piano-dry",
+      "rms_dbfs": -28.70669607348216,
+      "peak": 0.1294291615486145,
+      "clipped_fraction": 0.0,
+      "digital_peak": 2064,
+      "voices": 1,
+      "fundamental_candidate_hz": 261.6323172933604,
+      "harmonics_db_relative": [
+        0.0,
+        -4.782655732283992,
+        -22.84123811333938,
+        -31.972508257181307,
+        -35.28377887738653,
+        -38.60253798271411
+      ],
+      "pitch_20ms_p05_p95_hz": [
+        260.52570457500525,
+        262.6017500237819
+      ]
+    },
+    {
+      "slot": 2,
+      "label": "piano-release",
+      "rms_dbfs": -35.42395681043489,
+      "peak": 0.08556697517633438,
+      "clipped_fraction": 0.0,
+      "digital_peak": 277,
+      "voices": 0
+    },
+    {
+      "slot": 3,
+      "label": "organ-dry",
+      "rms_dbfs": -12.91192800211303,
+      "peak": 0.44259920716285706,
+      "clipped_fraction": 0.0,
+      "digital_peak": 2268,
+      "voices": 1,
+      "fundamental_candidate_hz": 261.6277111605379,
+      "harmonics_db_relative": [
+        0.0,
+        1.4721359352165142,
+        -54.88462922291336,
+        -3.797284505193403,
+        -47.48004058044035,
+        -47.00236420064265
+      ],
+      "pitch_20ms_p05_p95_hz": [
+        261.4812930039705,
+        261.7867195827136
+      ]
+    },
+    {
+      "slot": 4,
+      "label": "organ-release",
+      "rms_dbfs": -35.23316170982292,
+      "peak": 0.08047705143690109,
+      "clipped_fraction": 0.0,
+      "digital_peak": 2105,
+      "voices": 0
+    },
+    {
+      "slot": 5,
+      "label": "strings-dry",
+      "rms_dbfs": -15.674111772797746,
+      "peak": 0.30608120560646057,
+      "clipped_fraction": 0.0,
+      "digital_peak": 1631,
+      "voices": 1,
+      "fundamental_candidate_hz": 261.62944534353335,
+      "harmonics_db_relative": [
+        0.0,
+        -48.849770963341435,
+        -5.643759527966303,
+        -49.169069467660414,
+        -9.37393248007339,
+        -52.36167049002319
+      ],
+      "pitch_20ms_p05_p95_hz": [
+        261.4882484984719,
+        261.78438428745744
+      ]
+    },
+    {
+      "slot": 6,
+      "label": "strings-release",
+      "rms_dbfs": -35.3555746194047,
+      "peak": 0.07884180545806885,
+      "clipped_fraction": 0.0,
+      "digital_peak": 1238,
+      "voices": 0
+    },
+    {
+      "slot": 7,
+      "label": "bass-dry",
+      "rms_dbfs": -15.84489151923178,
+      "peak": 0.2823866605758667,
+      "clipped_fraction": 0.0,
+      "digital_peak": 2217,
+      "voices": 1,
+      "fundamental_candidate_hz": 261.62947041055884,
+      "harmonics_db_relative": [
+        0.0,
+        -19.71343216322525,
+        -59.00107118103338,
+        -47.506047830109246,
+        -49.81829109105692,
+        -50.5177479682505
+      ],
+      "pitch_20ms_p05_p95_hz": [
+        261.45462115315877,
+        261.77805577550816
+      ]
+    },
+    {
+      "slot": 8,
+      "label": "bass-release",
+      "rms_dbfs": -35.185018130884174,
+      "peak": 0.08390035480260849,
+      "clipped_fraction": 0.0,
+      "digital_peak": 1217,
+      "voices": 0
+    },
+    {
+      "slot": 9,
+      "label": "volume160",
+      "rms_dbfs": -12.926745146684425,
+      "peak": 0.4757276177406311,
+      "clipped_fraction": 0.0,
+      "digital_peak": 2268,
+      "voices": 1,
+      "fundamental_candidate_hz": 261.6298906360418,
+      "harmonics_db_relative": [
+        0.0,
+        1.536726540022411,
+        -54.356658559012814,
+        -3.675433083420306,
+        -50.346732495396196,
+        -50.10891313232464
+      ],
+      "pitch_20ms_p05_p95_hz": [
+        261.5020858816115,
+        261.75245568341967
+      ]
+    },
+    {
+      "slot": 10,
+      "label": "volume80",
+      "rms_dbfs": -18.87198559071477,
+      "peak": 0.250245600938797,
+      "clipped_fraction": 0.0,
+      "digital_peak": 1058,
+      "voices": 1,
+      "fundamental_candidate_hz": 261.6302680400144,
+      "harmonics_db_relative": [
+        0.0,
+        1.5168922897863482,
+        -49.19214684066514,
+        -3.7335161474085905,
+        -45.02022502615326,
+        -46.51875799873005
+      ],
+      "pitch_20ms_p05_p95_hz": [
+        261.3694425364761,
+        261.9767661867701
+      ]
+    },
+    {
+      "slot": 11,
+      "label": "volume40",
+      "rms_dbfs": -24.63499186569926,
+      "peak": 0.161102294921875,
+      "clipped_fraction": 0.0,
+      "digital_peak": 1053,
+      "voices": 1,
+      "fundamental_candidate_hz": 261.63777966565596,
+      "harmonics_db_relative": [
+        0.0,
+        1.4500627737827687,
+        -45.17644356822422,
+        -3.889707636095955,
+        -37.221316541086715,
+        -44.836920456710054
+      ],
+      "pitch_20ms_p05_p95_hz": [
+        260.79005566357216,
+        262.300149839601
+      ]
+    },
+    {
+      "slot": 12,
+      "label": "volume0",
+      "rms_dbfs": -34.964083530166825,
+      "peak": 0.08269830793142319,
+      "clipped_fraction": 0.0,
+      "digital_peak": 385,
+      "voices": 1
+    },
+    {
+      "slot": 13,
+      "label": "volume160-restored",
+      "rms_dbfs": -12.913394863282088,
+      "peak": 0.4592626094818115,
+      "clipped_fraction": 0.0,
+      "digital_peak": 2115,
+      "voices": 1,
+      "fundamental_candidate_hz": 261.6281902246402,
+      "harmonics_db_relative": [
+        0.0,
+        1.5101275067331377,
+        -51.30973204100488,
+        -3.7264084745715556,
+        -47.498027172784354,
+        -50.02216133330704
+      ],
+      "pitch_20ms_p05_p95_hz": [
+        261.39616419236125,
+        261.8235058698667
+      ]
+    },
+    {
+      "slot": 14,
+      "label": "release",
+      "rms_dbfs": -35.13916891424151,
+      "peak": 0.10650613158941269,
+      "clipped_fraction": 0.0,
+      "digital_peak": 2097,
+      "voices": 0
+    },
+    {
+      "slot": 15,
+      "label": "organ-dry-reference",
+      "rms_dbfs": -12.906437493138869,
+      "peak": 0.439595103263855,
+      "clipped_fraction": 0.0,
+      "digital_peak": 2268,
+      "voices": 1,
+      "fundamental_candidate_hz": 261.62983567946173,
+      "harmonics_db_relative": [
+        0.0,
+        1.4838610987304102,
+        -52.810245885100606,
+        -3.7314981421270073,
+        -49.261420320032734,
+        -50.11894991522746
+      ],
+      "pitch_20ms_p05_p95_hz": [
+        261.43796839408196,
+        261.7673850355333
+      ]
+    },
+    {
+      "slot": 16,
+      "label": "chorus",
+      "rms_dbfs": -13.044108381891736,
+      "peak": 0.4584847092628479,
+      "clipped_fraction": 0.0,
+      "digital_peak": 2377,
+      "voices": 1,
+      "fundamental_candidate_hz": 261.6051706407567,
+      "harmonics_db_relative": [
+        0.0,
+        2.157070968195678,
+        -54.771458751183275,
+        -3.2323710814741964,
+        -48.84648063349351,
+        -52.05253347857753
+      ],
+      "pitch_20ms_p05_p95_hz": [
+        261.346053008396,
+        261.84497157984816
+      ]
+    },
+    {
+      "slot": 17,
+      "label": "chorus-tail",
+      "rms_dbfs": -35.14035524311123,
+      "peak": 0.09599868953227997,
+      "clipped_fraction": 0.0,
+      "digital_peak": 2186,
+      "voices": 0
+    },
+    {
+      "slot": 18,
+      "label": "delay",
+      "rms_dbfs": -13.069135835016109,
+      "peak": 0.44961535930633545,
+      "clipped_fraction": 0.0,
+      "digital_peak": 2268,
+      "voices": 1,
+      "fundamental_candidate_hz": 261.63017076422943,
+      "harmonics_db_relative": [
+        0.0,
+        2.6684101299596814,
+        -54.57718414695108,
+        -3.486982069273999,
+        -46.86007666081971,
+        -51.87437946411496
+      ],
+      "pitch_20ms_p05_p95_hz": [
+        261.3950322342486,
+        261.80839526689317
+      ]
+    },
+    {
+      "slot": 19,
+      "label": "delay-tail",
+      "rms_dbfs": -35.09589442212474,
+      "peak": 0.08991026133298874,
+      "clipped_fraction": 0.0,
+      "digital_peak": 2076,
+      "voices": 0
+    },
+    {
+      "slot": 20,
+      "label": "reverb",
+      "rms_dbfs": -12.913231523032564,
+      "peak": 0.45101743936538696,
+      "clipped_fraction": 0.0,
+      "digital_peak": 2268,
+      "voices": 1,
+      "fundamental_candidate_hz": 261.6297002552125,
+      "harmonics_db_relative": [
+        0.0,
+        1.1737393664487257,
+        -53.876769409674594,
+        -3.970111749052769,
+        -47.56553396426688,
+        -54.222789151615565
+      ],
+      "pitch_20ms_p05_p95_hz": [
+        261.4955400743459,
+        261.8243332977267
+      ]
+    },
+    {
+      "slot": 21,
+      "label": "reverb-tail",
+      "rms_dbfs": -35.461768115035674,
+      "peak": 0.08747798949480057,
+      "clipped_fraction": 0.0,
+      "digital_peak": 2100,
+      "voices": 0
+    },
+    {
+      "slot": 22,
+      "label": "four-notes",
+      "rms_dbfs": -20.78179968801118,
+      "peak": 0.3008987605571747,
+      "clipped_fraction": 0.0,
+      "digital_peak": 1576,
+      "voices": 4
+    },
+    {
+      "slot": 23,
+      "label": "four-release",
+      "rms_dbfs": -35.52473598252988,
+      "peak": 0.08688963949680328,
+      "clipped_fraction": 0.0,
+      "digital_peak": 5666,
+      "voices": 0
+    },
+    {
+      "slot": 24,
+      "label": "32-notes",
+      "rms_dbfs": -17.996370160623872,
+      "peak": 0.42572084069252014,
+      "clipped_fraction": 0.0,
+      "digital_peak": 2621,
+      "voices": 32
+    },
+    {
+      "slot": 25,
+      "label": "upper16",
+      "rms_dbfs": -21.061856305176914,
+      "peak": 0.3527939021587372,
+      "clipped_fraction": 0.0,
+      "digital_peak": 1773,
+      "voices": 16
+    },
+    {
+      "slot": 26,
+      "label": "lower16",
+      "rms_dbfs": -20.9693189022276,
+      "peak": 0.330427885055542,
+      "clipped_fraction": 0.0,
+      "digital_peak": 2571,
+      "voices": 16
+    },
+    {
+      "slot": 27,
+      "label": "release",
+      "rms_dbfs": -35.48474633855015,
+      "peak": 0.08047918230295181,
+      "clipped_fraction": 0.0,
+      "digital_peak": 9037,
+      "voices": 0
+    },
+    {
+      "slot": 28,
+      "label": "explicit-vibrato80",
+      "rms_dbfs": -12.917195975695115,
+      "peak": 0.4437780976295471,
+      "clipped_fraction": 0.0,
+      "digital_peak": 2268,
+      "voices": 1,
+      "fundamental_candidate_hz": 261.6285360600665,
+      "harmonics_db_relative": [
+        0.0,
+        -0.33222950214768154,
+        -52.04704215295415,
+        -17.005261583379593,
+        -52.16702565168953,
+        -49.91593704890946
+      ],
+      "pitch_20ms_p05_p95_hz": [
+        259.12674710060463,
+        264.07647239101146
+      ]
+    },
+    {
+      "slot": 29,
+      "label": "vibrato-release",
+      "rms_dbfs": -35.42322206501661,
+      "peak": 0.08361954987049103,
+      "clipped_fraction": 0.0,
+      "digital_peak": 2105,
+      "voices": 0
+    }
+  ],
+  "raw_wasapi": true,
+  "mix_format": {
+    "rate": 48000,
+    "channels": 2,
+    "bits": 32,
+    "subtype": 3,
+    "raw_requested": true
+  }
+}
