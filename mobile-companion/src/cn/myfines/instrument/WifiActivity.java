@@ -33,24 +33,25 @@ public final class WifiActivity extends Activity {
  private TextView text(String value,int size){TextView v=new TextView(this);v.setText(value);v.setTextSize(size);v.setTextColor(Color.rgb(205,225,240));v.setPadding(8,8,8,8);root.addView(v);return v;}
  private Button button(String title,Runnable action){Button b=new Button(this);b.setText(title);b.setOnClickListener(v->action.run());root.addView(b);return b;}
  @Override public void onCreate(Bundle state){
-  super.onCreate(state);getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+  super.onCreate(state);
+  android.content.SharedPreferences pref=getPreferences(0);desiredVolume=pref.getInt("volume",160);desiredTone=pref.getInt("tone",0);desiredPage=pref.getInt("page",0);desiredEcho=pref.getBoolean("echo",false);getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
   ScrollView scroll=new ScrollView(this);root=new LinearLayout(this);root.setOrientation(1);root.setPadding(20,16,20,16);root.setBackgroundColor(Color.rgb(10,20,32));scroll.addView(root);setContentView(scroll);
   text("FPGA · Wi-Fi 演奏台",26);
   button("E037 公网：曲谱 / 32键映射 / 数字录音",()->{disconnect();startActivity(new Intent(this,CloudActivity.class));});
-  text("下方是旧版热点直连界面；当前公网固件请用上方E037入口。",14);
+  text("直连演奏：手机连接 ESP 热点后操作，无需公网服务器。设置会自动保存在本机。",14);
   text("连接 FPGA-Instrument 热点，然后点“连接乐器”。声音从外接音箱输出。",14);
-  connection=text("未连接",16);host=new EditText(this);host.setSingleLine(true);host.setText("192.168.4.1");host.setTextColor(Color.WHITE);root.addView(host);
+  connection=text("未连接",16);host=new EditText(this);host.setSingleLine(true);host.setText(pref.getString("host","192.168.4.1"));host.setTextColor(Color.WHITE);root.addView(host);
   connectButton=button("连接乐器",()->{if(session!=null&&session.isRunning())disconnect();else connect();});
   button("第一次使用 / 操作说明",()->showGuide());
   actual=text("尚无FPGA实际状态",16);keysText=text("光键：—",18);
   wave=new WaveView(this);root.addView(wave,new LinearLayout.LayoutParams(-1,240));
   text("下方为目标参数；上方回传值才是实际状态。",13);
-  text("音量（默认160/255）",16);SeekBar volume=new SeekBar(this);volume.setMax(255);volume.setProgress(160);root.addView(volume);
+  text("音量（默认160/255）",16);SeekBar volume=new SeekBar(this);volume.setMax(255);volume.setProgress(desiredVolume);root.addView(volume);
   volume.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener(){public void onStartTrackingTouch(SeekBar s){}public void onStopTrackingTouch(SeekBar s){}public void onProgressChanged(SeekBar s,int v,boolean user){if(user){desiredVolume=v;if(session!=null)session.volume(v);}}});
-  Spinner tones=new Spinner(this);ArrayAdapter<String> adapter=new ArrayAdapter<>(this,android.R.layout.simple_spinner_dropdown_item,new String[]{"柔和三角","正弦","锯齿拨弦"});tones.setAdapter(adapter);root.addView(tones);
+  Spinner tones=new Spinner(this);ArrayAdapter<String> adapter=new ArrayAdapter<>(this,android.R.layout.simple_spinner_dropdown_item,new String[]{"电钢琴","风琴","弦乐","Bass"});tones.setAdapter(adapter);tones.setSelection(desiredTone);root.addView(tones);
   tones.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){public void onNothingSelected(AdapterView<?> p){}public void onItemSelected(AdapterView<?> p,View v,int n,long id){desiredTone=n;if(session!=null)session.tone(n);}});
-  Switch echo=new Switch(this);echo.setText("FPGA硬件延时");echo.setTextColor(Color.WHITE);root.addView(echo);echo.setOnCheckedChangeListener((b,on)->{desiredEcho=on;if(session!=null)session.echo(on);});
-  Spinner pages=new Spinner(this);pages.setAdapter(new ArrayAdapter<>(this,android.R.layout.simple_spinner_dropdown_item,new String[]{"板载键音区1","板载键音区2","板载键音区3"}));root.addView(pages);
+  Switch echo=new Switch(this);echo.setText("FPGA硬件延时");echo.setChecked(desiredEcho);echo.setTextColor(Color.WHITE);root.addView(echo);echo.setOnCheckedChangeListener((b,on)->{desiredEcho=on;if(session!=null)session.echo(on);});
+  Spinner pages=new Spinner(this);pages.setAdapter(new ArrayAdapter<>(this,android.R.layout.simple_spinner_dropdown_item,new String[]{"光键音区1","光键音区2","光键音区3","光键音区4"}));pages.setSelection(desiredPage);root.addView(pages);
   pages.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){public void onNothingSelected(AdapterView<?> p){}public void onItemSelected(AdapterView<?> p,View v,int n,long id){desiredPage=n;if(session!=null)session.page(n);}});
   text("触屏四键：按住发声，支持多指；有按键时优先手机，松开恢复光键。键位配置可重排四个声部，不是任意音高映射。",14);
   LinearLayout keyboard=new LinearLayout(this);keyboard.setMotionEventSplittingEnabled(true);root.addView(keyboard);
@@ -115,7 +116,7 @@ public final class WifiActivity extends Activity {
  private void sendKeys(){int mask=0;for(int i=0;i<4;i++)if(held[i])mask|=1<<mapping[i];if(session!=null)session.keys(mask);}
  private void release(){Arrays.fill(held,false);sendKeys();for(Button pad:pads)if(pad!=null)pad.setAlpha(1);}
  private void disconnect(){generation++;release();clearGesture();if(session!=null)session.close();connectButton.setText("连接乐器");connection.setText("已断开，恢复本地演奏");}
- @Override protected void onPause(){recording=false;disconnect();super.onPause();}
+ @Override protected void onPause(){getPreferences(0).edit().putString("host",host.getText().toString().trim()).putInt("volume",desiredVolume).putInt("tone",desiredTone).putInt("page",desiredPage).putBoolean("echo",desiredEcho).apply();recording=false;disconnect();super.onPause();}
  @Override protected void onActivityResult(int request,int result,Intent data){super.onActivityResult(request,result,data);if(request==73&&result==RESULT_OK&&data!=null){try(OutputStream out=getContentResolver().openOutputStream(data.getData())){if(out==null)throw new IOException("无法打开文件");out.write("receive_ms,sequence,keys,timbre,echo,page,volume,x,y,flags,gesture_available,gesture_active,gesture_sequence,pinch,gesture_y,confidence\n".getBytes(StandardCharsets.UTF_8));for(String line:events)out.write((line+"\n").getBytes(StandardCharsets.UTF_8));recordText.setText("CSV已导出："+events.size()+"条");}catch(IOException e){recordText.setText("导出失败："+e.getMessage());}}}
  private static final class WaveView extends View {
   final Paint pen=new Paint(3);int[] values=new int[32];

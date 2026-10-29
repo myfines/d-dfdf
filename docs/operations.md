@@ -1155,3 +1155,8 @@ operation37 GAO-Bridge、2.5MHz、SPI地址0，SHA256 5cde3a506c6b6a58550dd6338c
 ## 2026-10-29 APK UI reference refresh
 
 Inspected user-supplied base(2).apk.1 ZIP and Android dexdump locally (com.fpga.instrument, custom InstrumentView, dark cards, colored keyboard). Source APK unchanged. Added companion dashboard and shared dark styling inspired by reference; not a pixel-identical reconstruction or modification of its original package. Kept existing companion control implementations. Explicitly separated public relay mode from legacy hotspot control. Verified cloud config generator emits AT+CWMODE_CUR=1 (station only); absence of old AP is expected, not proof of current ESP health. No board/Flash/network changes. Companion build plus core, protocol, socket and extension encoding tests passed. APK signature verification passed. Physical UI appearance and live phone/network operation remain untested.
+
+
+## 2026-10-29 Restore supplied APK performance UI
+
+User rejected generic restyling. Recovered the supplied APK actual InstrumentView via JADX and adapted original landscape keyboard/cards/waveform/gesture/footer drawing to companion transport. Added persistent connection/performance settings, four current timbres/pages and eight-key protocol acceptance. APK 0.8 built and signature verified; core, protocol, fragmented TCP and extension tests passed. No phone attached: visual/device verification remains pending. Prepared E039 AP build completed; no SRAM download or Flash change. Current hardware therefore still requires a later AP-firmware switch for hotspot discovery. See mobile-companion/REFERENCE-UI.md for provenance and limitations.

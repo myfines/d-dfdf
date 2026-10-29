@@ -24,7 +24,7 @@ public final class WifiProtocol {
   boolean extended=line.length()==95 && line.charAt(0)=='G';
   if(!extended && (line.length()!=84 || line.charAt(0)!='S'))throw new IllegalArgumentException("Expected E023/E025 snapshot");
   int tone=hex(line,17,18),echo=hex(line,18,19),page=hex(line,19,20);
-  if(tone>2 || echo>1 || page>2)throw new IllegalArgumentException("Status range");
+  if(tone>3 || echo>1 || page>3)throw new IllegalArgumentException("Status range");
   int[] wave=new int[32];for(int i=0;i<32;i++)wave[i]=hex(line,20+2*i,22+2*i);
   Snapshot result=new Snapshot(hex(line,1,5),hex(line,5,7),hex(line,7,9),hex(line,9,12),hex(line,12,15),hex(line,15,17),tone,echo==1,page,wave);
   if(extended){
@@ -36,9 +36,9 @@ public final class WifiProtocol {
   return result;
  }
  public static String command(char kind,int value) {
-  boolean valid=(kind=='V'&&value>=0&&value<=255)||(kind=='T'&&value>=0&&value<=2)
-   ||(kind=='E'&&value>=0&&value<=1)||(kind=='K'&&value>=0&&value<=15)
-   ||(kind=='P'&&value>=0&&value<=2)||((kind=='Q'||kind=='L')&&value==0);
+  boolean valid=(kind=='V'&&value>=0&&value<=255)||(kind=='T'&&value>=0&&value<=3)
+   ||(kind=='E'&&value>=0&&value<=1)||(kind=='K'&&value>=0&&value<=255)
+   ||(kind=='P'&&value>=0&&value<=3)||((kind=='Q'||kind=='L')&&value==0);
   if(!valid)throw new IllegalArgumentException("Command range");
   return String.format(Locale.ROOT,"%c%02X\n",kind,value);
  }

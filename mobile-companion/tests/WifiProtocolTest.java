@@ -15,6 +15,8 @@ public final class WifiProtocolTest {
   String extended="G"+line.substring(1)+"1FE2EE0FA5F";
   WifiProtocol.Snapshot g=WifiProtocol.parse(extended);
   if(!g.gestureAvailable||!g.gestureActive||g.gestureSequence!=254||g.pinch!=750||g.gestureY!=250||g.confidence!=95)throw new AssertionError("gesture decode");
+  WifiProtocol.Snapshot bass=WifiProtocol.parse(line.substring(0,17)+"313"+line.substring(20));
+  if(bass.timbre!=3||bass.page!=3||!WifiProtocol.command('K',255).equals("KFF\n"))throw new AssertionError("current four timbres/pages and eight keys");
   if(s.gestureAvailable)throw new AssertionError("legacy invented gesture");
   for(String tail:new String[]{"2FE2EE0FA5F","1FEFFF0FA5F","1FE2EE0FAFF"}) {
    try{WifiProtocol.parse("G"+line.substring(1)+tail);throw new AssertionError("invalid gesture accepted");}catch(IllegalArgumentException expected){}
