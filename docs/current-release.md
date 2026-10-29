@@ -1,3 +1,9 @@
+# 当前试听版本（E038 SRAM）
+
+E038已下载SRAM、独立读回E038/6020；Flash仍是已冷启动验证的E037，断电会恢复E037。E038修正力度范围、手势亮度截断回绕，并取消捏合隐式叠加颤音/振幅调制；试听结果尚待确认。[证据](../firmware/e028-extension/docs/e038-regression/README.md)。这不是重新设计全部音色或限幅器。
+
+---
+
 # 当前部署状态（2026-10-29 E037）
 
 E037 Flash已经官方GAO-Bridge写入并校验成功（28.46秒），并在用户完全断电重连后、未下载SRAM的情况下独立读回E037/6020，Flash自启动已确认。写后立即0000的记录仍保留，不能据此认定启动失败或芯片损坏。详见[部署证据](../firmware/e028-extension/docs/e037-regression/README.md)与flash-result.json。此前E035/E031说明为历史记录，不再代表当前Flash内容。

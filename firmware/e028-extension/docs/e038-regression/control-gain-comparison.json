@@ -1,0 +1,20 @@
+[
+  {
+    "axis_y": 0,
+    "old_velocity": 40,
+    "new_velocity": 64,
+    "nominal_gain_change_db": 4.082399653118496
+  },
+  {
+    "axis_y": 825,
+    "old_velocity": 52,
+    "new_velocity": 159,
+    "nominal_gain_change_db": 9.707875613713046
+  },
+  {
+    "axis_y": 1650,
+    "old_velocity": 65,
+    "new_velocity": 255,
+    "nominal_gain_change_db": 11.872536475821992
+  }
+]

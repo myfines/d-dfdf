@@ -1,0 +1,2 @@
+PASS production wiring normalized velocity, no pinch modulation coupling, explicit remote controls retained
+E:\gaoyun\releases\e028-flash-record\firmware\e028-extension/sim/tb_control_wiring.sv:15: $finish called at 4000 (1ps)

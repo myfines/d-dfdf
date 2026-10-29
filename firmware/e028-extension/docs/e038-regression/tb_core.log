@@ -1,0 +1,6 @@
+btn stable at 1355258 ns (frames=64)
+gate bit28 at 1376592 ns (frames=65)
+key->audio: 1408629 ns (38033 cycles, 1.409 ms)
+32-voice stress: voices=32 sample=7575
+PASS core latency=1408629 ns ads=13
+E:\gaoyun\releases\e028-flash-record\firmware\e028-extension/sim/tb_core.sv:104: $finish called at 24448765281 (1ps)

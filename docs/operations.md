@@ -1146,3 +1146,7 @@ Rechecked official topic2 basic3 and extensions. Added optional A/D/R16rate-inde
 operation37 GAO-Bridge、2.5MHz、SPI地址0，SHA256 5cde3a506c6b6a58550dd6338c6ea4f53a3e50695b5ceddfd4b5c75047310c77，返回Program and Verify flash successfully，100%，28.46秒。写后即时用户码0000记录保留；不重写、不下载SRAM，用户再次全部断电重连后只读op73 E037、op74 6020，exit0，确认Flash自启动。未操作OTP或下载器固件。原始日志与清单见firmware/e028-extension/docs/e037-regression。
 
 公网服务未运行及手机实体安装/真实Wi-Fi端到端、实体延迟/抖动、OLED帧率、32音校准声学证据仍需收口，不因Flash写入称全部赛题验收通过；历史温升和声学尾音偏差未宣称根因解决。新APK与用户偏好旧APK分开保存。
+
+## 2026-10-29 E038 声音控制修正（仅SRAM）
+用户反馈E037实体功能可用，但音量过小、变化弱、部分音色奇怪，不能算声音质量合格。核查发现力度被限制127而合成器按255算增益、物理中点仅52；手势亮度使用12位颜色的低位片段，在1024回绕；捏合同时触发未明确告知的颤音/振幅调制。E038修正为力度64..255（中点159）、亮度完整范围单调缩放/钳位、捏合只作音量并保留显式远程颤音。未提高总混音增益、未更换效果或包络来掩盖录音链路问题。
+参考阅读DaisySP limiter/oscillator/ADSR源码，具体链接在e038-regression；未直接移植软件合成替代HDL。新增全行程扫值/生产接线测试以及核心/ADSR测试通过；27MHz约束Fmax27.106MHz，setup/hold TNS0。固定哈希下载SRAM成功，独立E038/6020；Flash仍E037。已请求同音符、无效果切换、K230先无手后分别捏合/高度的试听，尚不宣称所有音质问题已解决。

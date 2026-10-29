@@ -246,8 +246,10 @@ module instrument_core #(
         panel_timbre, panel_page, panel_screen,
         panel_song, panel_latch, panel_fx, test_mode);
 
-    assign velocity_local = controls_valid ? (axis_y[11:6] + 8'd40) : 8'd100;
-    assign velocity = velocity_local > 8'd127 ? 8'd127 : velocity_local;
+    wire [7:0] local_brightness;
+    performance_controls performance_map(axis_y,gesture_color,controls_valid,gesture_active,
+        velocity_local,local_brightness);
+    assign velocity=velocity_local;
 
     wire signed [12:0] delta = $signed({1'b0, axis_x > 1650 ? 12'd1650 : axis_x}) - 13'sd825;
     wire signed [20:0] bend_product = delta * 13'sd10;
@@ -255,13 +257,12 @@ module instrument_core #(
         bend_product > 21'sd8191 ? 14'sd8191 :
         bend_product < -21'sd8192 ? -14'sd8192 : bend_product[13:0];
 
-    assign vibrato = remote_active ? remote_vibrato :
-                     gesture_active ? {2'd0, gesture_pinch[9:2]} : 8'd0;
-    assign brightness = remote_active ? remote_brightness :
-                        gesture_active ? gesture_color[9:2] : 8'd128;
+    // Pinch is volume, not an implicit vibrato/tremolo macro.
+    assign vibrato = remote_active ? remote_vibrato : 8'd0;
+    assign brightness = remote_active ? remote_brightness : local_brightness;
     assign expression = remote_active ? remote_volume :
                         gesture_active ? gesture_gain : 8'd255;
-    assign tremolo = {2'd0, vibrato[7:2]};
+    assign tremolo = 8'd0;
     wire signed [13:0] bend = remote_active ? remote_bend : bend_joy;
 
     // ------------------------------------------------------------------
