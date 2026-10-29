@@ -1,0 +1,1 @@
+package android.graphics; public class LinearGradient extends Shader {public LinearGradient(float a,float b,float c,float d,int e,int f,TileMode t){}public LinearGradient(float a,float b,float c,float d,int[] e,float[] f,TileMode t){}}

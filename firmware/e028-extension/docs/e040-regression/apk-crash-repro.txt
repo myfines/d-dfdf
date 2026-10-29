@@ -1,0 +1,3 @@
+0.8 pre-fix: actual InstrumentView.drawScope -> ArrayIndexOutOfBoundsException index32 length32.
+Cause: erroneous broad text substitution changed wave loop32 to42.
+0.9: restores32; JVM test exercises actual View constructor, layout, disconnected draw, connected32-point snapshot, four timbres. Rendering primitives mocked; this is not Android-device validation.

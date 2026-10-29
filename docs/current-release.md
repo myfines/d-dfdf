@@ -1,3 +1,9 @@
+# 新增候选与APK修复（未改板卡）
+
+APK0.9修复原版界面收到32点帧后的越界，新增实际View绘制路径测试。E040候选提高Bass保持电平，RTL测试与时序通过，未下载。当前Flash仍为E039，冷启动结果待实体确认。[严格赛题对照](requirements-e040-audit.md) · [修复证据](../firmware/e028-extension/docs/e040-regression/README.md)。
+
+---
+
 # 当前状态：E039 热点直连版 Flash 已写入校验，待冷启动确认
 
 2026-10-29：用户要求恢复 ESP 本地热点、以后使用探针调试。E039 保留 E038 音频修正，关闭公网中继，恢复 `FPGA-Instrument` 热点和 TCP 9000。ESP-01S 自身固件未重刷。官方写入和校验通过；写后立即版本读回0000，冷启动与实际热点尚未确认，不重复擦写。[证据](../firmware/e028-extension/docs/e039-regression/README.md)。

@@ -1,0 +1,1 @@
+package android.view; public class MotionEvent {public int getActionMasked(){return 0;}public int getActionIndex(){return 0;}public int getPointerCount(){return 1;}public int getPointerId(int i){return i;}public float getX(int i){return 0;}public float getY(int i){return 0;}public float getX(){return 0;}public float getY(){return 0;}}

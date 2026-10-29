@@ -1,0 +1,10 @@
+{
+  "version": "E040-candidate",
+  "artifact_sha256": "af406db03b6c810154b9d8eaacade2fd642f6064356c15aa0795330e285b24e3",
+  "fmax_mhz": 27.732,
+  "constraint_mhz": 27,
+  "setup_tns": 0,
+  "hold_tns": 0,
+  "deployed": false,
+  "flash": "E039 unchanged"
+}

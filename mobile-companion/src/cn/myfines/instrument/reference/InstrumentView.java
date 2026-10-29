@@ -519,7 +519,7 @@ public final class InstrumentView extends View {
         Protocol.Snapshot snapshot = this.snapshot;
         int[] iArr = snapshot == null ? null : snapshot.wave;
         this.path.reset();
-        for (int i = 0; i < 42; i++) {
+        for (int i = 0; i < 32; i++) {
             float f = (((fDp2 - fDp) * i) / 31.0f) + fDp;
             float f2 = fDp3 - ((fDp3 - fDp4) * ((iArr == null ? 128 : iArr[i]) / 255.0f));
             if (i == 0) {

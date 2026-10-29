@@ -1165,3 +1165,8 @@ User rejected generic restyling. Recovered the supplied APK actual InstrumentVie
 ## 2026-10-29 E039 restore ESP AP to Flash
 
 Authorized by user to restore local Wi-Fi and use probes henceforth. No ESP firmware rewrite, no driver or computer network change. Verified single JTAG0x0000081B, no competing programmer, fixed artifact SHA256 2ea90d95cdad439f536092f6ae47d23f3d2157fd78f47f10431fd0812acfd93f. Timing28.117MHz/TNS0; tb_esp_at/core/control_wiring/performance_controls PASS. Official operation37 2.5MHz address0 program+verify100% succeeded (~29s). Immediate op73 returned0000/nonzero; deployment script stopped and retained logs. Flash byte verification success is confirmed, E039 coldboot/runtime/AP discovery remain unverified. No blind retry or repeated erase. Await full physical coldboot and once-only enable.
+
+
+## 2026-10-29 APK crash repair and E040 candidate audit
+
+User reported crash, weak Bass and questioned Lissajous/requirements. Reproduced actual View connected draw crash: array32 indexed32 because loop mistakenly became42; fixed32 and added build-time JVM View path regression with test-only Android drawing stubs. APK0.9 built/signature verified, all app tests PASS; no attached Android phone. Bass held preset doubled, actual RTL C4 RMS1367.59/peak1949, no clipping in that scenario; not acoustic acceptance. Lissajous actual frozen stereo raster tests PASS for four phase/silence cases; kept true signal-derived rendering. Focused OLED/mix/synth tests PASS. E040 candidate compiled27.732MHz/TNS0; no SRAM or Flash modification. Re-read official topic2 basics1–3/extensions1–4/scoring; published explicit one-to-one evidence/pending matrix, including direct-app W/U/C UI still pending. Evidence in e040-regression.

@@ -167,7 +167,7 @@ module synth32(
                 2'd0: sustain_level = 16'd9000;
                 2'd1: sustain_level = 16'd60000;
                 2'd2: sustain_level = 16'd50000;
-                default: sustain_level = 16'd18000;
+                default: sustain_level = 16'd36000; // Bass hold +6.02 dB; attack/headroom unchanged
             endcase
         end
     endfunction

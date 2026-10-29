@@ -1,0 +1,2 @@
+PASS Bass actual note-on to settled PCM: rms=1367.591763 peak=1949 level=36000; default velocity159, dry C4; not acoustic measurement
+E:\gaoyun\releases\e028-flash-record\firmware\e028-extension/sim/tb_bass_preset.sv:16: $finish called at 69119996000 (1ps)

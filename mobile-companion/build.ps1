@@ -23,6 +23,11 @@ Check 'WiFi socket tests'
 Check 'Extension test compile'
 & "$Jdk\bin\java.exe" -cp "$build\tests" cn.myfines.instrument.ExtensionProtocolTest
 Check 'Extension tests'
+$headless=@(Get-ChildItem "$PSScriptRoot/tests/headless" -Recurse -Filter *.java | ForEach-Object FullName)
+& "$Jdk/bin/javac.exe" -encoding UTF-8 -d "$build/headless" @headless "$PSScriptRoot/src/cn/myfines/instrument/reference/InstrumentView.java" "$PSScriptRoot/src/cn/myfines/instrument/reference/Protocol.java"
+Check 'Reference View test compile'
+& "$Jdk/bin/java.exe" -cp "$build/headless" cn.myfines.instrument.reference.ReferenceViewTest
+Check 'Reference View render-path test'
 $sources=@(Get-ChildItem "$PSScriptRoot\src" -Recurse -Filter *.java | ForEach-Object {$_.FullName})
 & "$Jdk\bin\javac.exe" -encoding UTF-8 -source 8 -target 8 -classpath $api -d "$build\classes" @sources
 Check 'App compile'

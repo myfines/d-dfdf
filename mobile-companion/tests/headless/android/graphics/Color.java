@@ -1,0 +1,1 @@
+package android.graphics;public class Color {public static int red(int n){return (n>>16)&255;}public static int green(int n){return(n>>8)&255;}public static int blue(int n){return n&255;}public static int rgb(int r,int g,int b){return 0xff000000|(r<<16)|(g<<8)|b;}}
