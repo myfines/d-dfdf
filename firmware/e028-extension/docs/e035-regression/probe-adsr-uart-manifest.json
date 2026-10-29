@@ -1,0 +1,6 @@
+{
+  "probe": "E03C read-only envelope UART derivative",
+  "artifact_sha256": "90c649b65d6fc55e4315d05bbec10b6e17578fe8027c41f64c1833aa3fa88d11",
+  "source_sha256": "a124b964a2058c7af930e5f161e974401c980b269255d8cd98447c29d33cc680",
+  "timing_summary": "Max Frequency Summary: NO. Clock Name Constraint Actual Fmax Logic Level Entity 1 clk27 27.000(MHz) 55.335(MHz) 13 TOP Total Negative Slack Summary: Clock Name Analysis Type Endpoints TNS Number of Endpoints clk27 Setup 0.000 0 clk27 Hold 0.000 0 Timing Details Path Slacks Table: Setup Paths Table Report Command:report_timing -setup -max_paths 25 -max_common_paths 1 Path Number Path Slack From Node To Node From Clock To Clock Relation Clock Skew "
+}

@@ -1,0 +1,2 @@
+PASS telemetry UART bytes, snapshot, XOR
+E:\gaoyun\releases\e028-flash-record\firmware\e028-extension/sim/tb_envelope_telemetry.sv:9: $finish called at 339425000 (1ps)

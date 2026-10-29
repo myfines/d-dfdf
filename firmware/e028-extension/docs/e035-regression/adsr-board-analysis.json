@@ -1,0 +1,19 @@
+{
+  "valid_packets": 3909,
+  "sustain_low": 16448.0,
+  "sustain_high": 49344.0,
+  "sustain_ratio": 3.0,
+  "release_initial_level": 32896,
+  "release_decrement_per_10ms": [
+    936,
+    938
+  ],
+  "release_first_zero_packet_index": 36,
+  "release_duration_bound_ms": [
+    350,
+    360
+  ],
+  "release_expected_ms": 350.8906666666667,
+  "conclusion": "Board diagnostic derivative retains correct envelope. Previous acoustic discrepancy is downstream of envelope state; specific DAC/mic processing cause remains unproven.",
+  "limitations": "10ms sampled telemetry; timestamps are buffered PC reception. Not physical input latency; not full E035 network application proof."
+}
