@@ -1,0 +1,2 @@
+PASS production AP recorder enabled, A/G frames frozen until capture, start busy telemetry
+E:\gaoyun\releases\e028-flash-record\firmware\e028-extension/sim/tb_direct_record_wiring.sv:22: $finish called at 4122000 (1ps)

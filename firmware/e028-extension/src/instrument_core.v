@@ -106,6 +106,7 @@ module instrument_core #(
     reg [7:0]  remote_volume;
     reg [7:0]  remote_vibrato, remote_brightness;
     reg [13:0] remote_bend;
+    reg remote_brightness_owned, remote_bend_owned;
     reg [1:0]  remote_timbre, remote_page;
     reg [2:0]  remote_fx, remote_screen;
     reg        remote_song, remote_latch, remote_demo;
@@ -151,7 +152,13 @@ module instrument_core #(
     wire esp_ready, telemetry_capture;
     wire [7:0] telemetry_byte;
     wire [7:0] telemetry_normal,telemetry_record;wire record_mode;
-    assign telemetry_byte=ENABLE_WEB_RELAY && record_mode?telemetry_record:telemetry_normal;
+    // Hold the packet kind for its entire transmission, even if C changes mid-frame.
+    reg telemetry_record_selected;
+    always @(posedge clk)begin
+        if(!io_reset_n)telemetry_record_selected<=0;
+        else if(telemetry_capture)telemetry_record_selected<=record_mode;
+    end
+    assign telemetry_byte=telemetry_record_selected?telemetry_record:telemetry_normal;
     wire [6:0] telemetry_index;
 
     wire signed [15:0] final_l, final_r;
@@ -259,11 +266,16 @@ module instrument_core #(
 
     // Pinch is volume, not an implicit vibrato/tremolo macro.
     assign vibrato = remote_active ? remote_vibrato : 8'd0;
-    assign brightness = remote_active ? remote_brightness : local_brightness;
-    assign expression = remote_active ? remote_volume :
-                        gesture_active ? gesture_gain : 8'd255;
+    assign brightness = remote_active && remote_brightness_owned ? remote_brightness : local_brightness;
+    wire [7:0] volume_ceiling = remote_active ? remote_volume : 8'd255;
+    wire [7:0] pinch_gain = gesture_active ? gesture_gain : 8'd255;
+    wire [15:0] expression_product = volume_ceiling * pinch_gain;
+    // Rounded division by255, retaining exact unity endpoints.
+    wire [16:0] expression_rounded = {1'b0,expression_product} + 17'd128;
+    wire [17:0] expression_scaled = {1'b0,expression_rounded} + (expression_rounded >> 8);
+    assign expression = expression_scaled[15:8];
     assign tremolo = 8'd0;
-    wire signed [13:0] bend = remote_active ? remote_bend : bend_joy;
+    wire signed [13:0] bend = remote_active && remote_bend_owned ? remote_bend : bend_joy;
 
     // ------------------------------------------------------------------
     // Note routing and song
@@ -340,7 +352,7 @@ module instrument_core #(
             esp_cloud_control wifi(clk,io_reset_n,rx_valid,rx_data,tx_busy,tx_start,tx_data,
                 esp_ready,telemetry_byte,telemetry_index,telemetry_capture,esp_diagnostic);
         end else begin: local_ap
-        esp_at_control #(.TELEMETRY_BYTES(ENABLE_GESTURE ? 96 : 85)) wifi(
+        esp_at_control #(.TELEMETRY_BYTES(96)) wifi(
             clk, io_reset_n, rx_valid, rx_data, tx_busy, tx_start, tx_data,
             esp_ready, dummy_volume, dummy_active, esp_diagnostic,
             telemetry_byte, telemetry_index, telemetry_capture,
@@ -360,6 +372,8 @@ module instrument_core #(
             remote_vibrato <= 0;
             remote_brightness <= 128;
             remote_bend <= 0;
+            remote_brightness_owned <= 0;
+            remote_bend_owned <= 0;
             remote_timbre <= 0;
             remote_page <= 0;
             remote_fx <= 0;
@@ -375,6 +389,8 @@ module instrument_core #(
             if(lease != 0) begin
                 lease <= lease - 1'b1;
                 if(lease == 1) begin
+                    remote_brightness_owned <= 0;
+                    remote_bend_owned <= 0;
                     remote_keys_byte <= 0;
                     app_override <= 0;
                     remote_song <= 0;
@@ -394,9 +410,9 @@ module instrument_core #(
                     "K": remote_keys_byte <= cmd_value[7:0];
                     "P": remote_page <= cmd_value[1:0];
                     "M": begin app_mask <= cmd_value; app_override <= 1; end
-                    "B": remote_bend <= $signed(cmd_value[13:0]) - 14'sd8192;
+                    "B": begin remote_bend <= $signed(cmd_value[13:0]) - 14'sd8192; remote_bend_owned <= 1; end
                     "X": remote_vibrato <= cmd_value[7:0];
-                    "Y": remote_brightness <= cmd_value[7:0];
+                    "Y": begin remote_brightness <= cmd_value[7:0]; remote_brightness_owned <= 1; end
                     "F": remote_fx <= cmd_value[2:0];
                     "S": remote_screen <= cmd_value[2:0];
                     "R": remote_song <= cmd_value[0];
@@ -404,6 +420,8 @@ module instrument_core #(
                     "D": remote_demo <= cmd_value[0];
                     "Q": begin end
                     "L": begin
+                        remote_brightness_owned <= 0;
+                        remote_bend_owned <= 0;
                         lease <= 0;
                         remote_keys_byte <= 0;
                         app_override <= 0;
@@ -442,14 +460,12 @@ module instrument_core #(
             oled_status, OLED_SCL, OLED_SDA, oled_online);
 
         wire [7:0] visible_keys = remote_keys_byte | {4'd0, ~keys_sync};
-        if(ENABLE_WEB_RELAY)begin: recording
+        begin: recording
             pcm_record recorder(clk,io_reset_n,frame_tick,final_l,cmd_valid,cmd_kind,cmd_value,
                 telemetry_capture,telemetry_index,record_mode,telemetry_record,
                 downloaded_length,downloaded_ready,custom_adsr,custom_adsr_config,key_mapping);
-        end else begin: no_recording
-            assign record_mode=0;assign telemetry_record=0;
         end
-        wifi_telemetry #(.EXTENDED(ENABLE_GESTURE)) status_packet(
+        wifi_telemetry #(.EXTENDED(1)) status_packet(
             clk, io_reset_n, frame_tick, final_l, telemetry_capture,
             visible_keys,
             oled_status, axis_x, axis_y, remote_volume, timbre, |fx_on, page,

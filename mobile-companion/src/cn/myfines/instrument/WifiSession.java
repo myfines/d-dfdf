@@ -6,7 +6,7 @@ import java.nio.charset.StandardCharsets;
 
 /** One bounded socket worker; no Android dependency so a mock server can test it. */
 public final class WifiSession implements AutoCloseable {
- public interface Listener {void status(String message);void snapshot(WifiProtocol.Snapshot snapshot);}
+ public interface Listener {void status(String message);void snapshot(WifiProtocol.Snapshot snapshot);default void extension(DirectExtension.Frame frame){} }
  public interface SocketSource {Socket create() throws IOException;}
  private final Listener listener;
  private volatile boolean running;
@@ -15,6 +15,8 @@ public final class WifiSession implements AutoCloseable {
  private final Object stateLock=new Object();
  private int volume=160,tone=0,echo=0,page=0,keys=0;
  private boolean dirty=true;
+ private final java.util.concurrent.ArrayBlockingQueue<String> extensions=new java.util.concurrent.ArrayBlockingQueue<>(96);
+ public void extension(String packet){if(!packet.matches("(?:[WUC][0-9A-F]{8}|R0[01])"))throw new IllegalArgumentException("扩展命令错误");if(!running||!extensions.offer(packet+"\n"))throw new IllegalStateException("直连未运行或发送队列已满");}
  public WifiSession(Listener listener){this.listener=listener;}
  public void volume(int value){set('V',value);}
  public void tone(int value){set('T',value);}
@@ -39,6 +41,7 @@ public final class WifiSession implements AutoCloseable {
    listener.status("TCP已连接，等待FPGA真实状态");
    StringBuilder line=new StringBuilder(96);long sent=0,received=System.nanoTime();boolean first=true;
    while(running){
+    for(int count=0;count<8;count++){String packet=extensions.poll();if(packet==null)break;output.write(packet.getBytes(StandardCharsets.US_ASCII));output.flush();}
     long now=System.nanoTime();
     synchronized(stateLock){
      if(dirty || first || now-sent>=500000000L){
@@ -50,7 +53,8 @@ public final class WifiSession implements AutoCloseable {
     try{
      int b=input.read();if(b<0)throw new EOFException("设备断开");
      if(b==10){
-      WifiProtocol.Snapshot state=WifiProtocol.parse(line.toString());line.setLength(0);received=System.nanoTime();listener.snapshot(state);
+      String frame=line.toString();line.setLength(0);received=System.nanoTime();
+      if(frame.startsWith("A"))listener.extension(DirectExtension.parse(frame));else listener.snapshot(WifiProtocol.parse(frame));
      }else{
       if(b<32 || b>126 || line.length()>=95)throw new IOException("状态帧格式错误");
       line.append((char)b);

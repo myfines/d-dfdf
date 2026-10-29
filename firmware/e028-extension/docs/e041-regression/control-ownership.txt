@@ -1,0 +1,2 @@
+PASS lease-only connection preserves local controls; explicit commands own dimension until release/expiry
+E:\gaoyun\releases\e028-flash-record\firmware\e028-extension/sim/tb_control_ownership.sv:25: $finish called at 341000 (1ps)

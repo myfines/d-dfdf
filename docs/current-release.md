@@ -1,4 +1,12 @@
-# 新增候选与APK修复（未改板卡）
+# 当前：E041 SRAM，Flash仍E039；APK0.10直连扩展待实机
+
+2026-10-29：E041已下载SRAM，独立读回E041/6020。修复手机连接屏蔽捏合；亮度和弯音仅收到显式命令才接管，断开/到期恢复本地。27MHz时序通过，捏合65536组合及完整RTL回归通过。手机实际捏合/Bass反馈尚待，未写Flash。
+
+[APK0.10](../mobile-companion/apk/instrument-companion-0.10-e041-direct.apk)保留原版自绘主界面，新增设置内直连W/U/C、配置回读和WAV导出。热点录音RTL原先被公网开关禁用，E042已补齐并通过33项RTL、27MHz时序，尚未下载，板卡保留E041供用户测试；**E041不能据此宣称扩展已联通**。手机实体操作与文件导出待验收。[E041与APK证据](../firmware/e028-extension/docs/e041-regression/README.md) · [E042候选](../firmware/e028-extension/docs/e042-regression/README.md)。
+
+---
+
+# 历史：新增候选与APK修复（当时未改板卡）
 
 APK0.9修复原版界面收到32点帧后的越界，新增实际View绘制路径测试。E040候选提高Bass保持电平，RTL测试与时序通过，未下载。当前Flash仍为E039，冷启动结果待实体确认。[严格赛题对照](requirements-e040-audit.md) · [修复证据](../firmware/e028-extension/docs/e040-regression/README.md)。
 

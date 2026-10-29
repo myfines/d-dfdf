@@ -13,7 +13,7 @@ function Check([string]$step){if($LASTEXITCODE -ne 0){throw "$step failed ($LAST
 Check 'Core test compile'
 & "$Jdk\bin\java.exe" -cp "$build\tests" cn.myfines.instrument.CoreTest
 Check 'Core tests'
-& "$Jdk\bin\javac.exe" -encoding UTF-8 -d "$build\tests" "$PSScriptRoot\src\cn\myfines\instrument\WifiProtocol.java" "$PSScriptRoot\src\cn\myfines\instrument\WifiSession.java" "$PSScriptRoot\tests\WifiProtocolTest.java" "$PSScriptRoot\tests\WifiSessionTest.java"
+& "$Jdk\bin\javac.exe" -encoding UTF-8 -d "$build\tests" "$PSScriptRoot\src\cn\myfines\instrument\WifiProtocol.java" "$PSScriptRoot\src\cn\myfines\instrument\WifiSession.java" "$PSScriptRoot\src\cn\myfines\instrument\DirectExtension.java" "$PSScriptRoot\src\cn\myfines\instrument\ExtensionProtocol.java" "$PSScriptRoot\tests\WifiProtocolTest.java" "$PSScriptRoot\tests\WifiSessionTest.java"
 Check 'WiFi tests compile'
 & "$Jdk\bin\java.exe" -cp "$build\tests" cn.myfines.instrument.WifiProtocolTest
 Check 'WiFi protocol tests'
@@ -23,6 +23,10 @@ Check 'WiFi socket tests'
 Check 'Extension test compile'
 & "$Jdk\bin\java.exe" -cp "$build\tests" cn.myfines.instrument.ExtensionProtocolTest
 Check 'Extension tests'
+& "$Jdk\bin\javac.exe" -encoding UTF-8 -cp "$build\tests" -d "$build\tests" "$PSScriptRoot\tests\DirectExtensionTest.java"
+Check 'Direct extension compile'
+& "$Jdk\bin\java.exe" -cp "$build\tests" cn.myfines.instrument.DirectExtensionTest
+Check 'Direct extension tests'
 $headless=@(Get-ChildItem "$PSScriptRoot/tests/headless" -Recurse -Filter *.java | ForEach-Object FullName)
 & "$Jdk/bin/javac.exe" -encoding UTF-8 -d "$build/headless" @headless "$PSScriptRoot/src/cn/myfines/instrument/reference/InstrumentView.java" "$PSScriptRoot/src/cn/myfines/instrument/reference/Protocol.java"
 Check 'Reference View test compile'

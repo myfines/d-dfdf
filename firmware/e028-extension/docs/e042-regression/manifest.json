@@ -1,0 +1,15 @@
+{
+  "version": "E042",
+  "state": "candidate-not-downloaded",
+  "board_sram": "E041",
+  "board_flash": "E039",
+  "artifact_sha256": "9467a8c838ceed70f36ca167fae44491664598a3faaff9d57bf2d69327af30f1",
+  "constraint_mhz": 27,
+  "fmax_mhz": 27.052,
+  "setup_tns": 0,
+  "hold_tns": 0,
+  "rtl_tests": 33,
+  "core_sha256": "58aca1f0c0c0dd4ef185ad2b7977b1239b93a86c7d1dadfebf9e3b71601d54d1",
+  "apk_sha256": "cfe1a666307c74c4f6886cfdd1c9c3ac6747822852ad4f1a50fc95a6753b597f",
+  "physical_acceptance": false
+}
