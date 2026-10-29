@@ -1209,3 +1209,10 @@ User reported crash, weak Bass and questioned Lissajous/requirements. Reproduced
 ## 2026-10-29 E045候选交付包归档
 
 从源码提交86e25a4的git archive选取公开源码/测试/约束/文档，加入核对哈希的原E045 .fs/.bin、APK0.11及四干声示例，生成E:/gaoyun/releases/instrument-E045-delivery-20261029.zip。664个内容文件逐项SHA256核对，ZIP CRC检查通过；包含README-FIRST与release-manifest及SHA256SUMS，不含keystore/私钥/私有云配置。包版本是交付候选，真实手机/实体延迟/最终Flash冷启动及视频仍待完成。详细收据见[e045-package-receipt.json](e045-package-receipt.json)。没有执行硬件写入。
+
+
+## 2026-10-29 E045 Flash固化（用户明确授权）
+
+用户要求“flash先烧录吧”。检查无programmer/openFPGALoader竞争进程，既有引脚/电平约束保持，原码流SHA256=9f2bf115e457df50576ead0ccd5aacfe37c2cd4acaf0ec653a5f5f2199d07d2a。官方CLI device GW2A-18C/cable-index1/2.5MHz --scan识别单设备0x81B；operation73预读E045。
+
+执行--operation_index37 --spiaddr0x000000 --fsFile原E045.fs，GAO-Bridge局部擦写校验，不bulk erase。exit0、Program and Verify flash successfully，28.765秒。随后operation73/74独立读E045/6020。未再次下载SRAM，不掩盖用户即将进行的全断电启动测试；未改ESP/OTP/下载器固件。证据在firmware/e028-extension/docs/e045-flash；Flash当前E045，冷启动和实体功能验收尚待用户反馈。已给用户1–6测试清单，优先冷启动/本地/手机捏合/四音色。

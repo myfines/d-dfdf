@@ -1,3 +1,5 @@
+> 最新部署：E045已写入Flash并校验成功，独立读回E045/0x6020；完整断电冷启动与实体功能待用户测试。见[烧录证据](../firmware/e028-extension/docs/e045-flash/README.md)和[测试清单](e045-user-checklist.md)。以下旧E039部署描述为历史状态。
+
 # 按赛题逐项核对：E045（2026-10-29）
 
 依据[当晚官网原文摘录](competition-topic2-source-20261029.md)及群FAQ A1/A2、66、68、73–77。当前SRAM E045，Flash E039；APK0.11原版自绘UI。这里逐项判断，不把“有代码”改写为“官方验收通过”。

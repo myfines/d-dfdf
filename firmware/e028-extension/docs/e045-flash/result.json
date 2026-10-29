@@ -1,0 +1,15 @@
+{
+  "version": "E045",
+  "operation": 37,
+  "spi_address": 0,
+  "frequency": "2.5MHz",
+  "sha256": "9f2bf115e457df50576ead0ccd5aacfe37c2cd4acaf0ec653a5f5f2199d07d2a",
+  "exit_code": 0,
+  "program_verify_success": true,
+  "duration_seconds": 28.765,
+  "coldboot_tested": false,
+  "post_user_code": "E045",
+  "post_status": "6020",
+  "independent_post_read_success": true,
+  "phone_function_accepted": false
+}
