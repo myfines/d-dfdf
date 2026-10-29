@@ -1,0 +1,94 @@
+*** GOWIN Tcl Command Line Console  *** 
+current working directory: E:/gaoyun/private/esp-web/build/audio_delivery_probe_e048
+add new file: "E:/gaoyun/releases/e028-flash-record/firmware/e028-extension/src/wave_source.v"
+add new file: "E:/gaoyun/releases/e028-flash-record/firmware/e028-extension/src/synth32.v"
+add new file: "E:/gaoyun/releases/e028-flash-record/firmware/e028-extension/src/fx_engine.v"
+add new file: "E:/gaoyun/releases/e028-flash-record/firmware/e028-extension/src/i2s_tx16.v"
+add new file: "E:/gaoyun/releases/e028-flash-record/firmware/e028-extension/src/uart8n1.v"
+add new file: "E:/gaoyun/private/esp-web/audio_delivery_probe_e048.v"
+add new file: "E:/gaoyun/releases/e028-flash-record/firmware/e028-extension/constraints/instrument_e027_ext.cst"
+add new file: "E:/gaoyun/releases/e028-flash-record/firmware/e028-extension/constraints/instrument.sdc"
+GowinSynthesis start
+Running parser ...
+Analyzing Verilog file 'E:\gaoyun\releases\e028-flash-record\firmware\e028-extension\src\wave_source.v'
+Analyzing Verilog file 'E:\gaoyun\releases\e028-flash-record\firmware\e028-extension\src\synth32.v'
+Analyzing Verilog file 'E:\gaoyun\releases\e028-flash-record\firmware\e028-extension\src\fx_engine.v'
+Analyzing Verilog file 'E:\gaoyun\releases\e028-flash-record\firmware\e028-extension\src\i2s_tx16.v'
+Analyzing Verilog file 'E:\gaoyun\releases\e028-flash-record\firmware\e028-extension\src\uart8n1.v'
+Analyzing Verilog file 'E:\gaoyun\private\esp-web\audio_delivery_probe_e048.v'
+WARN  (EX3073) : Port 'active' remains unconnected for this instance("E:\gaoyun\private\esp-web\audio_delivery_probe_e048.v":44)
+Compiling module 'audio_delivery_probe'("E:\gaoyun\private\esp-web\audio_delivery_probe_e048.v":4)
+Compiling module 'synth32'("E:\gaoyun\releases\e028-flash-record\firmware\e028-extension\src\synth32.v":17)
+Extracting RAM for identifier 'phase'("E:\gaoyun\releases\e028-flash-record\firmware\e028-extension\src\synth32.v":42)
+Extracting RAM for identifier 'env_level'("E:\gaoyun\releases\e028-flash-record\firmware\e028-extension\src\synth32.v":43)
+Extracting RAM for identifier 'env_counter'("E:\gaoyun\releases\e028-flash-record\firmware\e028-extension\src\synth32.v":44)
+Extracting RAM for identifier 'env_state'("E:\gaoyun\releases\e028-flash-record\firmware\e028-extension\src\synth32.v":45)
+Extracting RAM for identifier 'env_velocity'("E:\gaoyun\releases\e028-flash-record\firmware\e028-extension\src\synth32.v":46)
+Extracting RAM for identifier 'env_timbre'("E:\gaoyun\releases\e028-flash-record\firmware\e028-extension\src\synth32.v":47)
+Extracting RAM for identifier 'env_adsr'("E:\gaoyun\releases\e028-flash-record\firmware\e028-extension\src\synth32.v":48)
+Compiling module 'wave_source'("E:\gaoyun\releases\e028-flash-record\firmware\e028-extension\src\wave_source.v":3)
+WARN  (EX3791) : Expression size 19 truncated to fit in target size 17("E:\gaoyun\releases\e028-flash-record\firmware\e028-extension\src\synth32.v":569)
+WARN  (EX3791) : Expression size 25 truncated to fit in target size 17("E:\gaoyun\releases\e028-flash-record\firmware\e028-extension\src\synth32.v":612)
+WARN  (EX3791) : Expression size 26 truncated to fit in target size 24("E:\gaoyun\releases\e028-flash-record\firmware\e028-extension\src\synth32.v":617)
+Compiling module 'fx_engine'("E:\gaoyun\releases\e028-flash-record\firmware\e028-extension\src\fx_engine.v":14)
+Extracting RAM for identifier 'chorus_ram'("E:\gaoyun\releases\e028-flash-record\firmware\e028-extension\src\fx_engine.v":34)
+Extracting RAM for identifier 'delay_ram'("E:\gaoyun\releases\e028-flash-record\firmware\e028-extension\src\fx_engine.v":35)
+Extracting RAM for identifier 'rev1_ram'("E:\gaoyun\releases\e028-flash-record\firmware\e028-extension\src\fx_engine.v":36)
+Extracting RAM for identifier 'rev2_ram'("E:\gaoyun\releases\e028-flash-record\firmware\e028-extension\src\fx_engine.v":37)
+Extracting RAM for identifier 'ap1_ram'("E:\gaoyun\releases\e028-flash-record\firmware\e028-extension\src\fx_engine.v":38)
+Extracting RAM for identifier 'ap2_ram'("E:\gaoyun\releases\e028-flash-record\firmware\e028-extension\src\fx_engine.v":39)
+Compiling module 'i2s_tx16'("E:\gaoyun\releases\e028-flash-record\firmware\e028-extension\src\i2s_tx16.v":4)
+Compiling module 'uart8n1'("E:\gaoyun\releases\e028-flash-record\firmware\e028-extension\src\uart8n1.v":3)
+NOTE  (EX0101) : Current top module is "audio_delivery_probe"
+[5%] Running netlist conversion ...
+WARN  (CV0016) : Input btn_n is unused("E:\gaoyun\private\esp-web\audio_delivery_probe_e048.v":5)
+WARN  (CV0016) : Input JOY_SW_N is unused("E:\gaoyun\private\esp-web\audio_delivery_probe_e048.v":5)
+WARN  (CV0016) : Input ESP_RX is unused("E:\gaoyun\private\esp-web\audio_delivery_probe_e048.v":7)
+WARN  (CV0016) : Input K230_RX is unused("E:\gaoyun\private\esp-web\audio_delivery_probe_e048.v":7)
+Running device independent optimization ...
+[10%] Optimizing Phase 0 completed
+[15%] Optimizing Phase 1 completed
+[25%] Optimizing Phase 2 completed
+Running inference ...
+[30%] Inferring Phase 0 completed
+[40%] Inferring Phase 1 completed
+[50%] Inferring Phase 2 completed
+[55%] Inferring Phase 3 completed
+Running technical mapping ...
+[60%] Tech-Mapping Phase 0 completed
+[65%] Tech-Mapping Phase 1 completed
+[75%] Tech-Mapping Phase 2 completed
+[80%] Tech-Mapping Phase 3 completed
+[90%] Tech-Mapping Phase 4 completed
+[95%] Generate netlist file "E:\gaoyun\private\esp-web\build\audio_delivery_probe_e048\impl\gwsynthesis\audio_delivery_probe_e048.vg" completed
+[100%] Generate report file "E:\gaoyun\private\esp-web\build\audio_delivery_probe_e048\impl\gwsynthesis\audio_delivery_probe_e048_syn.rpt.html" completed
+GowinSynthesis finish
+Reading netlist file: "E:\gaoyun\private\esp-web\build\audio_delivery_probe_e048\impl\gwsynthesis\audio_delivery_probe_e048.vg"
+Parsing netlist file "E:\gaoyun\private\esp-web\build\audio_delivery_probe_e048\impl\gwsynthesis\audio_delivery_probe_e048.vg" completed
+Processing netlist completed
+Reading constraint file: "E:\gaoyun\releases\e028-flash-record\firmware\e028-extension\constraints\instrument_e027_ext.cst"
+Physical Constraint parsed completed
+Running placement......
+[10%] Placement Phase 0 completed
+[20%] Placement Phase 1 completed
+[30%] Placement Phase 2 completed
+[50%] Placement Phase 3 completed
+Running routing......
+[60%] Routing Phase 0 completed
+[70%] Routing Phase 1 completed
+[80%] Routing Phase 2 completed
+[90%] Routing Phase 3 completed
+Running timing analysis......
+[95%] Timing analysis completed
+Placement and routing completed
+Bitstream generation in progress......
+Bitstream generation completed
+Running power analysis......
+[100%] Power analysis completed
+Generate file "E:\gaoyun\private\esp-web\build\audio_delivery_probe_e048\impl\pnr\audio_delivery_probe_e048.power.html" completed
+Generate file "E:\gaoyun\private\esp-web\build\audio_delivery_probe_e048\impl\pnr\audio_delivery_probe_e048.pin.html" completed
+Generate file "E:\gaoyun\private\esp-web\build\audio_delivery_probe_e048\impl\pnr\audio_delivery_probe_e048.rpt.html" completed
+Generate file "E:\gaoyun\private\esp-web\build\audio_delivery_probe_e048\impl\pnr\audio_delivery_probe_e048.rpt.txt" completed
+Generate file "E:\gaoyun\private\esp-web\build\audio_delivery_probe_e048\impl\pnr\audio_delivery_probe_e048.tr.html" completed
+Thu Oct 29 23:41:04 2026
+

@@ -1,0 +1,9 @@
+{
+  "valid_for_this_injected_control_amplitude_comparison": true,
+  "user_confirmed_audio_cable_connected": true,
+  "engineering_sanity_tolerance_db": {
+    "half_and_quarter": 2,
+    "restoration": 1
+  },
+  "not_physical_latency_or_phone_ui_acceptance": true
+}

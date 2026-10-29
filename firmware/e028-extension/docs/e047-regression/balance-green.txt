@@ -1,0 +1,6 @@
+C3 tone=0 sustain RMS=859.837351
+C3 tone=1 sustain RMS=1211.309471
+C3 tone=2 sustain RMS=877.027010
+C3 tone=3 sustain RMS=1144.921207
+PASS steady preset balance C3, no single-note clipping; seeded sustain diagnostic only
+E:\gaoyun\releases\e028-flash-record\firmware\e028-extension/sim/tb_timbre_balance.sv:33: $finish called at 6635520000 (1ps)

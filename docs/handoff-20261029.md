@@ -1,3 +1,5 @@
+> 最新音色候选：完整E047已恢复SRAM并读回E047/6020；修复电钢琴/Bass偏弱，Flash仍E045，用户试听待确认。[改动与实测](e047-timbre-balance.md)。以下旧部署信息为历史。
+
 > 最新部署：E045已写入Flash并校验成功，独立读回E045/0x6020；完整断电冷启动与实体功能待用户测试。见[烧录证据](../firmware/e028-extension/docs/e045-flash/README.md)和[测试清单](e045-user-checklist.md)。以下旧E039部署描述为历史状态。
 
 > 配套APK更新为[0.11 E045直连版](../mobile-companion/apk/instrument-companion-0.11-e045-direct.apk)，修复元数据边界，真实板包128块WAV回放通过；原版自绘UI未改。FAQ103按用户要求暂缓，优先其他交付收尾。

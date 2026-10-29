@@ -164,10 +164,10 @@ module synth32(
         input [1:0] t;
         begin
             case(t)
-                2'd0: sustain_level = 16'd9000;
+                2'd0: sustain_level = 16'd45000; // Hold balance: avoid ~17dB drop versus organ
                 2'd1: sustain_level = 16'd60000;
                 2'd2: sustain_level = 16'd50000;
-                default: sustain_level = 16'd36000; // Bass hold +6.02 dB; attack/headroom unchanged
+                default: sustain_level = 16'd50000; // Bass hold balance; peak envelope/headroom unchanged
             endcase
         end
     endfunction
@@ -196,7 +196,8 @@ module synth32(
                                         h == 2'd1 ? 8'd100 : 8'd56;
                 2'd2: harmonic_weight = h == 2'd0 ? 8'd112 :
                                         h == 2'd1 ? 8'd56 : 8'd36;
-                default: harmonic_weight = h == 2'd0 ? 8'd176 : h == 2'd1 ? 8'd16 : 8'd0;
+                // Retain dominant fundamental, add upper partials for small-speaker audibility.
+                default: harmonic_weight = h == 2'd0 ? 8'd160 : h == 2'd1 ? 8'd56 : 8'd24;
             endcase
         end
     endfunction

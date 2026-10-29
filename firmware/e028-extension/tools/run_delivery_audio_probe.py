@@ -26,13 +26,14 @@ def deploy(project,expected,label,code):
 
 def main():
     global OUT,RAW
-    parser=argparse.ArgumentParser();parser.add_argument('--project',default='audio_delivery_probe');parser.add_argument('--code',default='E043');parser.add_argument('--attenuation',type=int,default=16);parser.add_argument('--device',type=int,default=1);parser.add_argument('--tag',default='e043-audio-acceptance');parser.add_argument('--raw-wasapi',action='store_true');args=parser.parse_args()
-    if args.project not in ['audio_delivery_probe','audio_delivery_probe_gain4'] or args.code not in ['E043','E044'] or args.attenuation not in [4,16] or '/' in args.tag or '\\' in args.tag:raise ValueError('probe arguments')
+    parser=argparse.ArgumentParser();parser.add_argument('--project',default='audio_delivery_probe');parser.add_argument('--code',default='E043');parser.add_argument('--attenuation',type=int,default=16);parser.add_argument('--device',type=int,default=1);parser.add_argument('--tag',default='e043-audio-acceptance');parser.add_argument('--raw-wasapi',action='store_true');parser.add_argument('--restore-code',choices=['E045','E047'],default='E045');args=parser.parse_args()
+    if args.project not in ['audio_delivery_probe','audio_delivery_probe_gain4','audio_delivery_probe_e048'] or args.code not in ['E043','E044','E048'] or args.attenuation not in [4,16] or '/' in args.tag or '\\' in args.tag:raise ValueError('probe arguments')
     OUT=ROOT/'docs'/args.tag;RAW=PRIVATE/args.tag
     OUT.mkdir(exist_ok=True);RAW.mkdir(exist_ok=True)
     fs=PRIVATE/'build'/args.project/'impl/pnr'/(args.project+'.fs')
     probe_sha=hashlib.sha256(fs.read_bytes()).hexdigest()
-    restore=json.loads((ROOT/'docs/e045-regression/manifest.json').read_text())['artifact_sha256']
+    restore_project='instrument_'+args.restore_code.lower()+'_ap'
+    restore=json.loads((ROOT/'docs'/(args.restore_code.lower()+'-regression')/'manifest.json').read_text())['artifact_sha256']
     sd.check_input_settings(device=args.device,channels=1,samplerate=48000)
     chunks=[];markers=[];audio_status=[];stop=threading.Event();bad=[0]
     def callback(data,frames,stamp,status):
@@ -114,10 +115,10 @@ def main():
         finally:
             stop.set();thread.join(2)
             sd.stop()
-            deploy('instrument_e045_ap',restore,'restore-e045','E045')
-            for op,expected in [(73,b'0x0000E045'),(74,b'0x00006020')]:
+            deploy(restore_project,restore,'restore-'+args.restore_code.lower(),args.restore_code)
+            for op,expected in [(73,('0x0000'+args.restore_code).encode()),(74,b'0x00006020')]:
                 r=subprocess.run(COMMON+['--operation_index',str(op)],capture_output=True,timeout=12);data=r.stdout+r.stderr;(OUT/('restore-read'+str(op)+'.txt')).write_bytes(data)
                 if r.returncode or expected not in data:raise RuntimeError('restore read failed '+str(op))
-            print('Restored full E045, independent E045/6020 read; Flash unchanged',flush=True)
+            print('Restored full '+args.restore_code+', independent '+args.restore_code+'/6020 read; Flash unchanged',flush=True)
 
 if __name__=='__main__':main()

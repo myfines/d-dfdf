@@ -1216,3 +1216,12 @@ User reported crash, weak Bass and questioned Lissajous/requirements. Reproduced
 用户要求“flash先烧录吧”。检查无programmer/openFPGALoader竞争进程，既有引脚/电平约束保持，原码流SHA256=9f2bf115e457df50576ead0ccd5aacfe37c2cd4acaf0ec653a5f5f2199d07d2a。官方CLI device GW2A-18C/cable-index1/2.5MHz --scan识别单设备0x81B；operation73预读E045。
 
 执行--operation_index37 --spiaddr0x000000 --fsFile原E045.fs，GAO-Bridge局部擦写校验，不bulk erase。exit0、Program and Verify flash successfully，28.765秒。随后operation73/74独立读E045/6020。未再次下载SRAM，不掩盖用户即将进行的全断电启动测试；未改ESP/OTP/下载器固件。证据在firmware/e028-extension/docs/e045-flash；Flash当前E045，冷启动和实体功能验收尚待用户反馈。已给用户1–6测试清单，优先冷启动/本地/手机捏合/四音色。
+
+
+## 2026-10-29 E047音色平衡修复与E048隔离实测
+
+用户反馈电钢琴/Bass在手机键和光键都近乎听不见。复现电钢琴保持量相对风琴过低，新增稳态相对RMS回归先失败；电钢琴保持9000→45000、Bass36000→50000及谐波176/16/0→160/56/24，平衡测试通过；33项旧回归通过。完整E047 Fmax27.430MHz/TNS0，E048探针43.351MHz/TNS0。公开热点构建入口版本更新E047，音频runner支持显式恢复E045/E047并核对manifest哈希。
+
+JTAG识别0x81B、COM13确认；首轮RAW采集幅度健全性失败，用户确认当时未接电脑音频线，标无效、保留记录，恢复E047成功。用户接好线后第二轮E048 RAW采集幅度比例通过，电钢琴约-15.75/风琴-12.93/弦乐-15.66/Bass-13.31dBFS（同C4干声），测量片段无削波。临时探针均operation2 SRAM，所有外设总线/ESP_TX高阻；最后恢复完整E047并独立operation73/74读E047/6020。Flash仍E045，未重刷Flash/ESP/OTP/下载器固件，电脑未加入热点。
+
+已通知用户重新启用外设试听，其他功能没有收到明确通过反馈；当前E047是待用户音箱确认的候选，原E045交付包保留回退。详细报告docs/e047-timbre-balance.md及firmware/e028-extension/docs/e047-regression、e048-wasapi-wired；首轮无效e048-wasapi-raw带validity.json。

@@ -1,0 +1,6 @@
+{
+  "valid_for_timbre_or_volume_calibration": false,
+  "reason": "User confirmed DAC audio input cable was disconnected during this capture. Volume-control sanity also failed.",
+  "hardware_restore": "E047/6020 independently read; Flash remains E045",
+  "preserve_raw_and_logs": true
+}

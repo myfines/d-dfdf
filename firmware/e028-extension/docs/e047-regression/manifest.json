@@ -1,0 +1,17 @@
+{
+  "version": "E047",
+  "artifact_sha256": "fd2123078ac23a0c2941a477c8c407e015ce7f2eace8f7a1eb3c5b053567a05d",
+  "synth_sha256": "b5a4056eede554520856da8c92a336ee96de383ca2d3ed3d7060f9ee613d0e61",
+  "fmax_mhz": 27.43,
+  "constraint_mhz": 27,
+  "setup_tns": 0,
+  "hold_tns": 0,
+  "rtl_tests": 33,
+  "additional_balance_test": true,
+  "sram_deployed": true,
+  "flash_version": "E045",
+  "physical_phone_and_speaker_accepted": false,
+  "post_restore_user_code": "E047",
+  "post_restore_status": "6020",
+  "analog_amplitude_control_sanity": true
+}

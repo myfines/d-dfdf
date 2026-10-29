@@ -1,0 +1,44 @@
+{
+  "preset_changes": {
+    "piano_sustain": [
+      9000,
+      45000
+    ],
+    "bass_sustain": [
+      36000,
+      50000
+    ],
+    "bass_harmonics": [
+      [
+        176,
+        16,
+        0
+      ],
+      [
+        160,
+        56,
+        24
+      ]
+    ]
+  },
+  "c4_wired_raw_dry_rms_dbfs": {
+    "piano-dry": -15.7507742996206,
+    "organ-dry": -12.92742716010064,
+    "strings-dry": -15.658397754930832,
+    "bass-dry": -13.307544499326536
+  },
+  "piano_minus_organ_db": -2.82334713951996,
+  "bass_minus_organ_db": -0.38011733922589563,
+  "piano_vs_prior_capture_db": 12.95592177386156,
+  "bass_vs_prior_capture_db": 2.537347019905244,
+  "clip_fraction_in_four_measured_dry_segments": {
+    "piano-dry": 0.0,
+    "organ-dry": 0.0,
+    "strings-dry": 0.0,
+    "bass-dry": 0.0
+  },
+  "pc_audio_status": [
+    "RAW discontinuity"
+  ],
+  "physical_user_speaker_acceptance": false
+}
