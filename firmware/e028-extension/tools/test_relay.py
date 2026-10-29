@@ -5,6 +5,8 @@ class RelayTests(unittest.TestCase):
   c=Controller();self.assertFalse(c.set_command('M00000001'))
  def test_live_and_release(self):
   c=Controller();c.poll('Gtest');self.assertTrue(c.set_command('M80000001'));self.assertIn('M80000001',c.poll('Gnext'));c.active_at=0;self.assertEqual(c.poll('Gidle'),'L00\nZ00\n')
+ def test_adsr(self):
+  c=Controller();c.poll('G');self.assertTrue(c.set_command('G19CDA074'));self.assertIn('G19CDA074',c.poll('G'));self.assertFalse(c.set_command('G19CDA075'))
  def test_invalid_and_stop(self):
   c=Controller();c.poll('G');self.assertFalse(c.set_command('MZZZZZZZZ'));self.assertTrue(c.set_command('M00000003'));self.assertTrue(c.set_command('L00'));self.assertEqual(c.poll('G'),'L00\nZ00\n')
 class HttpTests(unittest.TestCase):

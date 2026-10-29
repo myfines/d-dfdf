@@ -1,0 +1,27 @@
+{
+  "version": "E035-candidate",
+  "deployed": true,
+  "flash_unchanged": "E031",
+  "board_last_read": "E035",
+  "artifact_local_only": true,
+  "artifact_sha256": "b8f852d0bed2993d2b311f3b3080e009da444ee46be7f6be34a1325f3dda257e",
+  "rtl_tests_passed": 21,
+  "clock_mhz": 27,
+  "fmax_mhz": 27.209,
+  "minimum_setup_slack_ns": 0.285,
+  "setup_tns": 0,
+  "hold_tns": 0,
+  "bsram_used": 15,
+  "bsram_total": 46,
+  "dsp_used": 10,
+  "dsp_total": 24,
+  "sources": {
+    "synth32.v": "a124b964a2058c7af930e5f161e974401c980b269255d8cd98447c29d33cc680",
+    "envelope_control.v": "a93e721e306a40bbb3822e2a6d676f90c6bde39019bf303c23b262861e56c7b9",
+    "instrument_core.v": "465896410aafe7fc9410d04feca1361f56426b57121ebe1acbc2eaf7d1dff293",
+    "esp_command_parser.v": "81f2c6d345c63e1251b5798c74d21a45e8945a2deffc0b0882af39a3041e440b",
+    "esp_http_request.v": "1b5e0a3d781f9571016e0c008921cea98628193e2d432b9381dd03ba633d2849"
+  },
+  "deployment": "SRAM only",
+  "status_register": "0x6020"
+}

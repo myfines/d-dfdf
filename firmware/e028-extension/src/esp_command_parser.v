@@ -100,7 +100,7 @@ module esp_command_parser #(
                         if(count == 0) begin
                             case(data)
                                 "V","T","E","K","P","Q","L": expected <= 4'd2;
-                                "M": expected <= 4'd8;
+                                "M","G": expected <= 4'd8;
                                 "B": expected <= 4'd4;
                                 "X","Y","F","S","R","H","D": expected <= 4'd2;
                                 default: expected <= 4'd0;

@@ -1,0 +1,2 @@
+PASS Q16 envelope gain endpoints, velocity, polarity and mute
+E:\gaoyun\releases\e028-flash-record\firmware\e028-extension/sim/tb_voice_gain.sv:25: $finish called at 48000 (1ps)

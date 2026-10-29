@@ -1,0 +1,2 @@
+PASS autonomous probe sequence, bends, chord, 32notes, bounded stop, buses high impedance
+E:\gaoyun\releases\e028-flash-record\firmware\e028-extension/sim/tb_audio_regression_top.sv:19: $finish called at 869120000 (1ps)

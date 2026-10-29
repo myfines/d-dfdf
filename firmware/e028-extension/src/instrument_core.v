@@ -279,10 +279,13 @@ module instrument_core #(
     // ------------------------------------------------------------------
     // 32-voice engine and effects
     // ------------------------------------------------------------------
+    wire custom_adsr;wire [19:0] custom_adsr_config;wire adsr_rejected;
+    envelope_control envelope_settings(clk,io_reset_n,cmd_valid,cmd_kind,cmd_value,
+        custom_adsr,custom_adsr_config,adsr_rejected);
     synth32 synth(
         clk, io_reset_n, frame_tick, synth_gate, timbre, velocity,
         bend, vibrato, brightness, expression, tremolo,
-        synth_sample, synth_active, voice_count, note_on, note_on_index, latency_frames);
+        synth_sample, synth_active, voice_count, note_on, note_on_index, latency_frames, custom_adsr,custom_adsr_config);
 
     fx_engine effects(
         clk, io_reset_n, frame_tick, synth_sample, fx_on, fx_l, fx_r);

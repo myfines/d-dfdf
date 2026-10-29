@@ -31,7 +31,9 @@ module synth32(
     output reg  [5:0]         voice_count,
     output reg                note_on,
     output reg  [4:0]         note_on_index,
-    output reg  [15:0]        latency_frames
+    output reg  [15:0]        latency_frames,
+    input wire               custom_adsr,
+    input wire [19:0]        adsr_config
 );
 
     // ------------------------------------------------------------------
@@ -43,6 +45,9 @@ module synth32(
     reg [2:0]  env_state    [0:31];
     reg [7:0]  env_velocity [0:31];
     reg [1:0]  env_timbre   [0:31];
+    reg [20:0] env_adsr [0:31];
+    reg [20:0] adsr_now;
+    reg [20:0] adsr_frame;
 
     reg [31:0] gate_prev_mask;
     reg [31:0] gate_last;
@@ -77,6 +82,15 @@ module synth32(
     localparam S_HARM = 3'd4;
     localparam S_COMB = 3'd5;
     localparam S_FIN  = 3'd6;
+
+    function [15:0] envelope_step;
+        input [3:0] index;
+        begin envelope_step = 16'd32768 >> index; end
+    endfunction
+    wire [15:0] current_attack = adsr_now[20] ? envelope_step(adsr_now[19:16]) : attack_step(timbre_now);
+    wire [15:0] current_release = adsr_now[20] ? envelope_step(adsr_now[11:8]) : release_step(timbre_now);
+    wire [15:0] current_sustain = adsr_now[20] ? {adsr_now[7:0],adsr_now[7:0]} : sustain_level(timbre_now);
+    wire [15:0] current_decay = envelope_step(adsr_now[15:12]);
 
     // ------------------------------------------------------------------
     // Frequency table: equal temperament, C3 (MIDI 48) .. G5 (MIDI 79)
@@ -640,6 +654,8 @@ module synth32(
             gate_last <= 0;
             gate_frame <= 0;
             lowpass <= 0;
+            adsr_now <= 0;
+            adsr_frame <= 0;
             ratio_frame <= 17'd65536;
             for(k = 0; k < 32; k = k + 1) begin
                 phase[k] <= 0;
@@ -648,9 +664,12 @@ module synth32(
                 env_state[k] <= 0;
                 env_velocity[k] <= 0;
                 env_timbre[k] <= 0;
+                env_adsr[k] <= 0;
             end
         end else begin
             if(frame_tick && state == S_IDLE) begin
+                if(custom_adsr) adsr_frame <= {1'b1,adsr_config};
+                else adsr_frame <= 0;
                 ratio_frame <= ratio;
                 gate_frame <= gate_mask;
                 gate_last <= gate_prev_mask;
@@ -698,6 +717,7 @@ module synth32(
                     estate_now <= env_state[voice_index];
                     velocity_now <= env_velocity[voice_index];
                     timbre_now <= env_timbre[voice_index];
+                    adsr_now <= env_adsr[voice_index];
                     gate_now <= gate_frame[voice_index];
                     gate_previous <= gate_last[voice_index];
                     increment_now <= increment_final;
@@ -709,7 +729,10 @@ module synth32(
                 S_ENV: begin
                     phase_next <= phase_now + increment_now;
                     if(gate_now && !gate_previous) begin
-                        level_now <= attack_step(timbre);
+                        if(adsr_frame[20]) begin
+                            level_now <= envelope_step(adsr_frame[19:16]);
+                            adsr_now <= adsr_frame;
+                        end else begin level_now <= attack_step(timbre);adsr_now <= 0;end
                         estate_now <= 3'd1;
                         counter_now <= 0;
                         velocity_now <= velocity;
@@ -719,32 +742,36 @@ module synth32(
                         counter_now <= 0;
                     end else begin
                         case(estate_now)
-                            3'd1: if(level_now >= (16'hffff - attack_step(timbre_now))) begin
+                            3'd1: if(level_now >= (16'hffff - current_attack)) begin
                                       level_now <= 16'hffff;
                                       estate_now <= 3'd2;
                                       counter_now <= 0;
-                                  end else level_now <= level_now + attack_step(timbre_now);
-                            3'd2: if(level_now <= sustain_level(timbre_now)) begin
-                                      level_now <= sustain_level(timbre_now);
+                                  end else level_now <= level_now + current_attack;
+                            3'd2: if(level_now <= current_sustain) begin
+                                      level_now <= current_sustain;
                                       estate_now <= 3'd3;
                                       counter_now <= 0;
+                                  end else if(adsr_now[20]) begin
+                                      counter_now <= 0;
+                                      if({1'b0,level_now} <= {1'b0,current_sustain}+{1'b0,current_decay}) level_now <= current_sustain;
+                                      else level_now <= level_now-current_decay;
                                   end else if(counter_now >= (decay_ticks(timbre_now) - 1'b1)) begin
                                       counter_now <= 0;
-                                      level_now <= level_now > sustain_level(timbre_now) + 16'd15 ? level_now - 16'd16 : sustain_level(timbre_now);
+                                      level_now <= level_now > current_sustain + 16'd15 ? level_now - 16'd16 : current_sustain;
                                   end else counter_now <= counter_now + 1'b1;
                             3'd3: begin
-                                      level_now <= sustain_level(timbre_now);
+                                      level_now <= current_sustain;
                                       counter_now <= 0;
                                   end
                             3'd4: if(level_now == 0) begin
                                       estate_now <= 3'd0;
                                       counter_now <= 0;
-                                  end else if(level_now <= release_step(timbre_now)) begin
+                                  end else if(level_now <= current_release) begin
                                       level_now <= 0;
                                       estate_now <= 3'd0;
                                       counter_now <= 0;
                                   end else begin
-                                      level_now <= level_now - release_step(timbre_now);
+                                      level_now <= level_now - current_release;
                                       counter_now <= 0;
                                   end
                             default: begin
@@ -789,6 +816,7 @@ module synth32(
                     env_state[voice_index] <= estate_now;
                     env_velocity[voice_index] <= velocity_now;
                     env_timbre[voice_index] <= timbre_now;
+                    env_adsr[voice_index] <= adsr_now;
                     mix_sum <= mix_sum + voice_sample;
                     if(voice_index == 5'd31) state <= S_FIN;
                     else begin

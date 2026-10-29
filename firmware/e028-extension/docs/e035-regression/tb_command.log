@@ -1,0 +1,8 @@
+ok V 00000080
+ok M ffffffff
+ok B 00001fff
+ok X 0000007f
+ok F 00000007
+ok S 00000004
+PASS command parser
+E:\gaoyun\releases\e028-flash-record\firmware\e028-extension/sim/tb_command.sv:90: $finish called at 6945625 (1ps)

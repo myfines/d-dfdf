@@ -1,0 +1,2 @@
+PASS core command bank->frame->voice ADSR binding and preset restore; command-level simulation only
+E:\gaoyun\releases\e028-flash-record\firmware\e028-extension/sim/tb_adsr_core.sv:27: $finish called at 373950000 (1ps)

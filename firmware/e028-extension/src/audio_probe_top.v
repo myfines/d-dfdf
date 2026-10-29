@@ -31,7 +31,7 @@ module audio_probe_top #(parameter integer SLOT_FRAMES=46875)(
                              slot==9 ? 32'h00891000 : slot==11 ? 32'h00000001 : slot==13 ? 32'h80000000 : 0;
     wire [1:0] tone = slot<8 ? slot[2:1] : 0;
     synth32 synth(.clk(clk),.reset_n(reset_n),.frame_tick(ft),.gate_mask(mask),.timbre(tone),
-       .velocity(8'd160),.bend(14'sd0),.vibrato(8'd0),.brightness(8'd200),.expression(8'd96),.tremolo(8'd0),.sample(sample));
+       .velocity(8'd160),.bend(14'sd0),.vibrato(8'd0),.brightness(8'd200),.expression(8'd96),.tremolo(8'd0),.sample(sample),.custom_adsr(1'b0),.adsr_config(20'd0));
     i2s_tx16 audio(clk,reset_n,sample,sample,PCM_BCK,PCM_LRCK,PCM_DATA,ft);
     assign ADC_SCL=1'bz;assign ADC_SDA=1'bz;assign OPTICAL_SCL=1'bz;assign OPTICAL_SDA=1'bz;
     assign OLED_SCL=1'bz;assign OLED_SDA=1'bz;

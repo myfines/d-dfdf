@@ -1,0 +1,2 @@
+PASS ADSR eighthex command over IPD and HTTP, legacy parser framing retained
+E:\gaoyun\releases\e028-flash-record\firmware\e028-extension/sim/tb_adsr_transport.sv:21: $finish called at 1260000 (1ps)

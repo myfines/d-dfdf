@@ -1,0 +1,2 @@
+PASS pitch commits at frame boundary, voices share ratio, 576clock budget
+E:\gaoyun\releases\e028-flash-record\firmware\e028-extension/sim/tb_pitch_frame.sv:21: $finish called at 5761000 (1ps)

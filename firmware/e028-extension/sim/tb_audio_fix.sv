@@ -3,7 +3,7 @@ module tb_audio_fix;
 reg clk=0,reset_n=0;always #5 clk=~clk;
 reg signed [13:0] bend=0;
 wire signed[15:0] sample;wire active,on;wire[5:0] voices;wire[4:0] idx;wire[15:0] latency;
-synth32 synth(clk,reset_n,1'b0,32'd0,2'd0,8'd100,bend,8'd0,8'd128,8'd255,8'd0,sample,active,voices,on,idx,latency);
+synth32 synth(clk,reset_n,1'b0,32'd0,2'd0,8'd100,bend,8'd0,8'd128,8'd255,8'd0,sample,active,voices,on,idx,latency,1'b0,20'd0);
 wire signed[15:0] l,r;
 fx_engine fx(clk,reset_n,1'b0,16'sd0,3'd2,l,r);
 integer i; real expected,error,maxerror;integer failures=0;

@@ -1,0 +1,2 @@
+PASS custom ADSR attack/decay/sustain/release timing, pervoice config, selective release, presets
+E:\gaoyun\releases\e028-flash-record\firmware\e028-extension/sim/tb_custom_adsr.sv:28: $finish called at 455070000 (1ps)

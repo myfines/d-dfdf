@@ -1,0 +1,2 @@
+PASS envelope config checksum, version, atomic reject, preset restore
+E:\gaoyun\releases\e028-flash-record\firmware\e028-extension/sim/tb_envelope_control.sv:15: $finish called at 101000 (1ps)

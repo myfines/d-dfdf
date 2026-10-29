@@ -4,9 +4,12 @@ from pathlib import Path
 from http.server import BaseHTTPRequestHandler,ThreadingHTTPServer
 class Controller:
  def __init__(self):
-  self.lock=threading.Lock();self.device_at=0;self.active_at=0;self.telemetry='';self.values={'V':'40','T':'00','F':'00','S':'00','B':'2000','X':'00','Y':'80','M':'00000000','R':'00','H':'00','D':'00'}
+  self.lock=threading.Lock();self.device_at=0;self.active_at=0;self.telemetry='';self.values={'G':'00000000','V':'40','T':'00','F':'00','S':'00','B':'2000','X':'00','Y':'80','M':'00000000','R':'00','H':'00','D':'00'}
  def set_command(self,line):
-  if not re.fullmatch(r'(?:M[0-9A-Fa-f]{8}|B[0-9A-Fa-f]{4}|[VTEKPQLXYFSRHD][0-9A-Fa-f]{2})',line):return False
+  if not re.fullmatch(r'(?:[MG][0-9A-Fa-f]{8}|B[0-9A-Fa-f]{4}|[VTEKPQLXYFSRHD][0-9A-Fa-f]{2})',line):return False
+  if line[0]=='G' and int(line[1:],16)!=0:
+   v=int(line[1:],16)
+   if v>>28!=1 or (v&255)!=((v>>24)^(v>>16)^(v>>8))&255:return False
   with self.lock:
    if time.monotonic()-self.device_at>10:return False
    k=line[0]
