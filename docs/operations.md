@@ -1204,3 +1204,8 @@ User reported crash, weak Bass and questioned Lissajous/requirements. Reproduced
 用户要求暂缓FAQ103与延迟口径查找，先做其他项目。检查直连App，测试复现解析器接受键位音符32；按生产pcm_record定义修复为前32块映射音符0..31、后96块FF占位。新增非法映射、合法/非法占位回归测试。完整build.ps1构建及协议/TCP/直连/实际View绘制测试通过，原版InstrumentView未改。
 
 416个真实E046板上A帧回放进生产Android解析器，128块完整，导出WAV SHA256与原板上工具完全一致。apksigner核对0.10/0.11证书SHA256相同，versionCode11。未安装实体手机，不将回放冒充Wi-Fi/UI验收。本轮未操作板卡下载、Flash或ESP。证据在e045-app011；教程更新为APK0.11。
+
+
+## 2026-10-29 E045候选交付包归档
+
+从源码提交86e25a4的git archive选取公开源码/测试/约束/文档，加入核对哈希的原E045 .fs/.bin、APK0.11及四干声示例，生成E:/gaoyun/releases/instrument-E045-delivery-20261029.zip。664个内容文件逐项SHA256核对，ZIP CRC检查通过；包含README-FIRST与release-manifest及SHA256SUMS，不含keystore/私钥/私有云配置。包版本是交付候选，真实手机/实体延迟/最终Flash冷启动及视频仍待完成。详细收据见[e045-package-receipt.json](e045-package-receipt.json)。没有执行硬件写入。

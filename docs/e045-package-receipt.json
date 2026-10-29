@@ -1,0 +1,10 @@
+{
+  "package": "E:\\gaoyun\\releases\\instrument-E045-delivery-20261029.zip",
+  "sha256": "0ad960210da2372ac7c20a5e54d0c078b094b0406ea971fdf9f7555482ec7e9c",
+  "bytes": 2767715,
+  "source_commit": "86e25a473f908d95986d7fbbdb623797a8ee750d",
+  "verified_files": 664,
+  "fpga_sram": "E045",
+  "fpga_flash": "E039",
+  "app_version": "0.11-e045-direct"
+}
