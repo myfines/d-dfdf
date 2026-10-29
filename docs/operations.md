@@ -1139,3 +1139,10 @@ TDD reproduced pre-expression mix clipping (expected8159,actual1019), mid-frame 
 
 ## 2026-10-29 E035 adjustable pervoice ADSR
 Rechecked official topic2 basic3 and extensions. Added optional A/D/R16rate-index,S8level custom envelopes, frame snapshot and pervoice config latch; existing presets unchanged when disabled. New version1/XOR-protected G8hex command over IPD/raw and HTTP; FPGA validates atomically. WebMCP instrument_adsr and relay validation added, old APK commands retained.21 RTL tests pass,5relay tests/WebMCP/agent/webpage tests pass; core-binding test explicitly bypasses1s physical arming guard and is not latency proof. Full build27.209MHz,TNS0,minsetup0.285ns,15BSRAM,10DSP. Fixed-hash SRAM operation2 completed6.43s exit0,100%; mismatch warning retained; independent E035/6020. Flash E031 untouched. New custom ADSR DAC curves/live network application remain pending. No relay/tunnel restart or PC network change.
+
+## 2026-10-29 E037 功能与Flash
+用户授权“所有功能都做完 测试好烧录flash”，并两次确认断电重连。新增64事件曲谱下载/提交/离线循环、32位置映射、4096点实际后效果PCM短录音分块回传、设备配置回读和Android0.5公网入口。29项RTL（28完整套件+心跳单项）、8项relay、2项recording、WebMCP与Android构建/编码/socket测试通过。板上诊断导出128块，读取曲谱/映射/ADSR状态，真实PCM非零；Flash写入前恢复生产E037。
+
+operation37 GAO-Bridge、2.5MHz、SPI地址0，SHA256 5cde3a506c6b6a58550dd6338c6ea4f53a3e50695b5ceddfd4b5c75047310c77，返回Program and Verify flash successfully，100%，28.46秒。写后即时用户码0000记录保留；不重写、不下载SRAM，用户再次全部断电重连后只读op73 E037、op74 6020，exit0，确认Flash自启动。未操作OTP或下载器固件。原始日志与清单见firmware/e028-extension/docs/e037-regression。
+
+公网服务未运行及手机实体安装/真实Wi-Fi端到端、实体延迟/抖动、OLED帧率、32音校准声学证据仍需收口，不因Flash写入称全部赛题验收通过；历史温升和声学尾音偏差未宣称根因解决。新APK与用户偏好旧APK分开保存。

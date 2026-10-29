@@ -150,6 +150,8 @@ module instrument_core #(
 
     wire esp_ready, telemetry_capture;
     wire [7:0] telemetry_byte;
+    wire [7:0] telemetry_normal,telemetry_record;wire record_mode;
+    assign telemetry_byte=ENABLE_WEB_RELAY && record_mode?telemetry_record:telemetry_normal;
     wire [6:0] telemetry_index;
 
     wire signed [15:0] final_l, final_r;
@@ -274,9 +276,10 @@ module instrument_core #(
         page, latch_on, app_mask, app_override, song_gate,
         gate_from_router, key_activity, active_count,key_mapping);
 
+    wire [6:0] downloaded_length;wire downloaded_ready;
     song_player song(
         clk, io_reset_n, frame_tick, song_on,
-        song_gate, guide_note, guide_step, song_beat, song_playing);
+        song_gate, guide_note, guide_step, song_beat, song_playing,cmd_valid,cmd_kind,cmd_value,downloaded_length,downloaded_ready);
 
     // ------------------------------------------------------------------
     // 32-voice engine and effects
@@ -417,9 +420,13 @@ module instrument_core #(
     // ------------------------------------------------------------------
     // LEDs and display
     // ------------------------------------------------------------------
+    wire [3:0] guide_led;
+    // Dock LED anodes are tied to3V3; physical pins are active-low.
+    // Keep a boot heartbeat independent of io_reset_n/frame_tick.
+    assign led=armed?~guide_led:{heartbeat[22],3'b111};
     led_guide lamps(
         clk, io_reset_n, frame_tick, song_playing, guide_note, song_beat,
-        voice_count, heartbeat, led);
+        voice_count, heartbeat, guide_led);
 
     generate if(ENABLE_UI) begin: ui
         wire [7:0] oled_status = {
@@ -434,11 +441,18 @@ module instrument_core #(
             oled_status, OLED_SCL, OLED_SDA, oled_online);
 
         wire [7:0] visible_keys = remote_keys_byte | {4'd0, ~keys_sync};
+        if(ENABLE_WEB_RELAY)begin: recording
+            pcm_record recorder(clk,io_reset_n,frame_tick,final_l,cmd_valid,cmd_kind,cmd_value,
+                telemetry_capture,telemetry_index,record_mode,telemetry_record,
+                downloaded_length,downloaded_ready,custom_adsr,custom_adsr_config,key_mapping);
+        end else begin: no_recording
+            assign record_mode=0;assign telemetry_record=0;
+        end
         wifi_telemetry #(.EXTENDED(ENABLE_GESTURE)) status_packet(
             clk, io_reset_n, frame_tick, final_l, telemetry_capture,
             visible_keys,
             oled_status, axis_x, axis_y, remote_volume, timbre, |fx_on, page,
-            telemetry_index, telemetry_byte,
+            telemetry_index, telemetry_normal,
             gesture_active, gesture_seq, gesture_pinch, gesture_y, gesture_confidence);
     end else begin: no_ui
         assign OLED_SCL = 1'bz;

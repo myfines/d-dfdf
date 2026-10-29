@@ -22,6 +22,16 @@ class RelayTests(unittest.TestCase):
   self.assertFalse(c.set_command('U10201F2F'))
   self.assertTrue(c.set_command('U00000000'));self.assertEqual(c.keymaps,{})
   self.assertTrue(c.set_command('U10001F0F'));p=c.poll('G');self.assertIn('U00000000',p);self.assertIn('U10001F0F',p)
+ def test_download_and_record_commands(self):
+  c=Controller();c.poll('G');self.assertTrue(c.set_command('W000C020E'));self.assertTrue(c.set_command('WFF0101FF'))
+  p=c.poll('G');self.assertIn('W000C020E',p);self.assertNotIn('W000C020E',c.poll('G'))
+  self.assertFalse(c.set_command('W000C020F'));self.assertFalse(c.set_command('C10028092'))
+  self.assertTrue(c.set_command('C10010011'));self.assertIn('C10010011',c.poll('G'));self.assertNotIn('C10010011',c.poll('G'))
+  self.assertTrue(c.set_command('C10027F6D'));self.assertIn('C10027F6D',c.poll('G'));self.assertIn('C10027F6D',c.poll('G'))
+ def test_panic_discards_pending_and_held_notes(self):
+  c=Controller();c.poll('G');c.set_command('MFFFFFFFF');c.set_command('W000C020E');c.set_command('C10010011')
+  c.set_command('L00');c.set_command('Q01');p=c.poll('G')
+  self.assertIn('M00000000',p);self.assertNotIn('W000C020E',p);self.assertNotIn('C10010011',p)
 class HttpTests(unittest.TestCase):
  def test_chunked_request_does_not_corrupt_keepalive(self):
   import socket,tempfile,subprocess,sys,http.client,json

@@ -36,6 +36,8 @@ public final class WifiActivity extends Activity {
   super.onCreate(state);getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
   ScrollView scroll=new ScrollView(this);root=new LinearLayout(this);root.setOrientation(1);root.setPadding(20,16,20,16);root.setBackgroundColor(Color.rgb(10,20,32));scroll.addView(root);setContentView(scroll);
   text("FPGA · Wi-Fi 演奏台",26);
+  button("E037 公网：曲谱 / 32键映射 / 数字录音",()->{disconnect();startActivity(new Intent(this,CloudActivity.class));});
+  text("下方是旧版热点直连界面；当前公网固件请用上方E037入口。",14);
   text("连接 FPGA-Instrument 热点，然后点“连接乐器”。声音从外接音箱输出。",14);
   connection=text("未连接",16);host=new EditText(this);host.setSingleLine(true);host.setText("192.168.4.1");host.setTextColor(Color.WHITE);root.addView(host);
   connectButton=button("连接乐器",()->{if(session!=null&&session.isRunning())disconnect();else connect();});

@@ -1,0 +1,36 @@
+{
+  "valid_packets": 414,
+  "malformed_record_lines": 0,
+  "normal_or_blank_lines": 577,
+  "recording": {
+    "id": 1,
+    "flags": 2,
+    "last_chunk": 127,
+    "chunks": 128,
+    "complete": true,
+    "sample_rate_numerator": 46875,
+    "sample_rate_denominator": 8,
+    "format": "signed8 mono",
+    "applied": {
+      "score_length": 3,
+      "score_ready": true,
+      "mapped_note": 255,
+      "adsr_enabled": true,
+      "adsr_config": "9CDA0",
+      "metadata_version": "1"
+    },
+    "duration_seconds": 0.6990506666666667
+  },
+  "mapped_slot0": {
+    "score_length": 3,
+    "score_ready": true,
+    "mapped_note": 31,
+    "adsr_enabled": true,
+    "adsr_config": "9CDA0",
+    "metadata_version": "1"
+  },
+  "pcm_peak": 4,
+  "pcm_rms": 1.036916251439816,
+  "wav_sha256": "7a1e9ca38488076aab97cda211a0d47e1ae39892db4c6fdf131e550457984bf7",
+  "limitation": "Internal command injection and USB-B transport diagnostic derivative; not actual Wi-Fi routing, physical input latency or full-production analog acceptance."
+}

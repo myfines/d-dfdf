@@ -1,0 +1,2 @@
+PASS score download checksum/commit/rest/offline loop/builtin restore/incomplete rejection
+E:\gaoyun\releases\e028-flash-record\firmware\e028-extension/sim/tb_score_download.sv:19: $finish called at 390000 (1ps)

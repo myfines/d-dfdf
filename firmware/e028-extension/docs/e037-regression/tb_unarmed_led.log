@@ -1,0 +1,2 @@
+PASS unarmed active-low LED heartbeat independent of audio frame/reset
+E:\gaoyun\releases\e028-flash-record\firmware\e028-extension/sim/tb_unarmed_led.sv:13: $finish called at 330002000 (1ps)

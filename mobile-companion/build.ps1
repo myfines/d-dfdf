@@ -19,6 +19,10 @@ Check 'WiFi tests compile'
 Check 'WiFi protocol tests'
 & "$Jdk\bin\java.exe" -cp "$build\tests" cn.myfines.instrument.WifiSessionTest
 Check 'WiFi socket tests'
+& "$Jdk\bin\javac.exe" -encoding UTF-8 -d "$build\tests" "$PSScriptRoot\src\cn\myfines\instrument\ExtensionProtocol.java" "$PSScriptRoot\tests\ExtensionProtocolTest.java"
+Check 'Extension test compile'
+& "$Jdk\bin\java.exe" -cp "$build\tests" cn.myfines.instrument.ExtensionProtocolTest
+Check 'Extension tests'
 $sources=@(Get-ChildItem "$PSScriptRoot\src" -Recurse -Filter *.java | ForEach-Object {$_.FullName})
 & "$Jdk\bin\javac.exe" -encoding UTF-8 -source 8 -target 8 -classpath $api -d "$build\classes" @sources
 Check 'App compile'

@@ -10,7 +10,8 @@
 //   * the OLED performance-guide screen.
 // -----------------------------------------------------------------------------
 module song_player #(
-    parameter integer STEP_FRAMES = 11718
+    parameter integer STEP_FRAMES = 11718,
+    parameter integer DOWNLOAD_UNIT_FRAMES = 469
 )(
     input  wire        clk,
     input  wire        reset_n,
@@ -20,10 +21,39 @@ module song_player #(
     output reg  [4:0]  guide_note,
     output reg  [5:0]  step,
     output reg         beat,
-    output reg         playing
+    output reg         playing,
+    input wire cmd_valid,input wire [7:0] cmd_kind,input wire [31:0] cmd_value,
+    output wire [6:0] loaded_length,output wire loaded_ready
 );
 
-    reg [15:0] timer;
+
+    reg [23:0] timer;
+    reg [15:0] downloaded[0:63];
+    reg [63:0] written;
+    reg download_selected,download_ready;
+    reg [6:0] download_length;
+    assign loaded_length=download_length;assign loaded_ready=download_ready;
+    wire [7:0] upload_index=cmd_value[31:24];
+    wire [7:0] upload_note=cmd_value[23:16];
+    wire [7:0] upload_duration=cmd_value[15:8];
+    wire upload_checksum=cmd_value[7:0]==(upload_index^upload_note^upload_duration);
+    wire [63:0] required_entries=upload_duration==64?64'hffffffffffffffff:((64'h1<<upload_duration)-1);
+    always @(posedge clk)begin
+      if(!reset_n)begin written<=0;download_selected<=0;download_ready<=0;download_length<=0;end
+      else if(cmd_valid && cmd_kind=="W" && upload_checksum)begin
+       if(upload_index==255 && upload_note==0 && upload_duration==0)begin
+        written<=0;download_selected<=0;download_ready<=0;
+       end else if(upload_index==255 && upload_note==1 && upload_duration>0 && upload_duration<=64 && !enable)begin
+        if((written&required_entries)==required_entries)begin download_length<=upload_duration;download_ready<=1;end
+       end else if(upload_index<64 && (upload_note<32 || upload_note==255) && upload_duration!=0 && !enable)begin
+        downloaded[upload_index[5:0]]<={upload_note,upload_duration};written[upload_index[5:0]]<=1;
+        download_selected<=1;download_ready<=0;
+       end
+      end
+    end
+    wire [15:0] downloaded_event=downloaded[step];
+    wire [23:0] step_frames=download_selected?downloaded_event[7:0]*DOWNLOAD_UNIT_FRAMES:STEP_FRAMES;
+    wire effective_enable=enable && (!download_selected || download_ready);
     reg        retrigger;
 
     function [4:0] melody;
@@ -50,9 +80,9 @@ module song_player #(
         end
     endfunction
 
-    wire [4:0] current_note = melody(step[3:0]);
+    wire [4:0] current_note = download_selected?downloaded_event[12:8]:melody(step[3:0]);
     wire [4:0] bass_note = step[3] ? 5'd7 : 5'd0; // G3 / C3
-    wire [31:0] current_mask = (32'd1 << current_note) | (32'd1 << bass_note);
+    wire [31:0] current_mask = download_selected?(downloaded_event[15:8]==255?32'd0:(32'd1<<current_note)):((32'd1 << current_note) | (32'd1 << bass_note));
 
     always @(posedge clk) begin
         if(!reset_n) begin
@@ -65,7 +95,7 @@ module song_player #(
             retrigger <= 0;
         end else begin
             beat <= 0;
-            if(!enable) begin
+            if(!effective_enable) begin
                 timer <= 0;
                 step <= 0;
                 gate_mask <= 0;
@@ -80,9 +110,9 @@ module song_player #(
                     gate_mask <= 0;
                     retrigger <= 1;
                 end else if(frame_tick) begin
-                    if(timer == STEP_FRAMES-1) begin
+                    if(timer == step_frames-1) begin
                         timer <= 0;
-                        step <= step + 1'b1;
+                        step <= download_selected && {1'b0,step}+1>=download_length ? 0 : step + 1'b1;
                         gate_mask <= 0;
                         retrigger <= 1;
                         beat <= (step[1:0] == 2'd3);

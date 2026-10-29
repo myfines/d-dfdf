@@ -29,7 +29,7 @@ module esp_http_request(input wire clk,reset_n,valid,input wire[7:0] data,
      request<=1;client<=incoming;route<=0;
      if(line[5]=="c"&&line[6]=="/")begin
       route<=1;expected=2;
-      case(line[7]) "M","G","U":expected=8;"B":expected=4;"V","T","E","K","P","Q","L","X","Y","F","S","R","H","D":expected=2;default:expected=0;endcase
+      case(line[7]) "M","G","U","W","C":expected=8;"B":expected=4;"V","T","E","K","P","Q","L","X","Y","F","S","R","H","D":expected=2;default:expected=0;endcase
       decoded=0;good=expected!=0;
       for(i=0;i<8;i=i+1)if(i<expected)begin if(!ishex(line[8+i]))good=0;decoded=(decoded<<4)|nibble(line[8+i]);end
       if(line[8+expected]!=" ")good=0;

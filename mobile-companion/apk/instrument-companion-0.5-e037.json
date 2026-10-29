@@ -1,0 +1,10 @@
+{
+  "package": "cn.myfines.instrument",
+  "version": "0.5-e037",
+  "sha256": "a15896c65b61ab28d0c1d97bb7bc1b0d1f929faa352974fc6cba0a13ffb202a1",
+  "bytes": 41303,
+  "signature_verified": true,
+  "built_from_source": true,
+  "device_install_tested": false,
+  "note": "Separate companion app; original user-preferred APK unchanged. Public relay must run updated server; credentials entered locally and not bundled."
+}

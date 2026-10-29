@@ -1,0 +1,25 @@
+{
+  "version": "E037",
+  "operation": 37,
+  "frequency": "2.5MHz",
+  "spi_address": 0,
+  "sha256": "5cde3a506c6b6a58550dd6338c6ea4f53a3e50695b5ceddfd4b5c75047310c77",
+  "program_verify_success": true,
+  "cli_duration_seconds": 28.46,
+  "immediate_usercode": "0000",
+  "independent_boot_confirmed": true,
+  "coldboot_tested": true,
+  "real_wifi_acceptance": false,
+  "coldboot_reads": {
+    "73": {
+      "exit_code": 0,
+      "expected_found": true
+    },
+    "74": {
+      "exit_code": 0,
+      "expected_found": true
+    }
+  },
+  "usercode": "E037",
+  "status": "6020"
+}
