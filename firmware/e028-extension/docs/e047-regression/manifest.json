@@ -9,9 +9,13 @@
   "rtl_tests": 33,
   "additional_balance_test": true,
   "sram_deployed": true,
-  "flash_version": "E045",
+  "flash_version": "E047",
   "physical_phone_and_speaker_accepted": false,
   "post_restore_user_code": "E047",
   "post_restore_status": "6020",
-  "analog_amplitude_control_sanity": true
+  "analog_amplitude_control_sanity": true,
+  "flash_program_verify_success": true,
+  "user_reported_piano_bass_loud_enough": true,
+  "coldboot_tested": false,
+  "acceptance_scope": "Piano/Bass loudness only; other physical phone/controls/features pending"
 }

@@ -1,3 +1,5 @@
+> 最新部署：用户确认电钢琴/Bass音量够响，E047已固化Flash并校验成功，最终独立读回E047/6020。完整冷启动及其他实体功能仍待验收。[修复说明](e047-timbre-balance.md) · [烧录证据](../firmware/e028-extension/docs/e047-flash/README.md)。以下旧版本说明为历史。
+
 > 最新部署：E045已写入Flash并校验成功，独立读回E045/0x6020；完整断电冷启动与实体功能待用户测试。见[烧录证据](../firmware/e028-extension/docs/e045-flash/README.md)和[测试清单](e045-user-checklist.md)。以下旧E039部署描述为历史状态。
 
 # 按赛题逐项核对：E045（2026-10-29）

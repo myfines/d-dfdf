@@ -1,4 +1,4 @@
-> 最新音色候选：完整E047已恢复SRAM并读回E047/6020；修复电钢琴/Bass偏弱，Flash仍E045，用户试听待确认。[改动与实测](e047-timbre-balance.md)。以下旧部署信息为历史。
+> 最新部署：用户确认电钢琴/Bass音量够响，E047已固化Flash并校验成功，最终独立读回E047/6020。完整冷启动及其他实体功能仍待验收。[修复说明](e047-timbre-balance.md) · [烧录证据](../firmware/e028-extension/docs/e047-flash/README.md)。以下旧版本说明为历史。
 
 # E045使用教程（原版自绘UI，热点直连）
 
@@ -57,6 +57,6 @@ E045已写入Flash并校验成功，独立读回E045/0x6020；完整断电自启
 
 ## 公开热点版构建
 
-安装Gowin Education 1.9.11.03及器件许可，在`firmware/e028-extension`目录用官方`gw_sh.exe tools/build_ap_public.tcl`构建。默认输出`build-public/instrument_e045_public`；可设置`FPGA_BUILD_ROOT`改变输出目录。不需要`FPGA_WEB_PRIVATE`、云服务账号或`cloud_config.v`。器件GW2A-LV18PG256C8/I7、27MHz，使用仓库既有CST/SDC。构建成功不等于已下载；最终下载要核对码流hash与设备。
+安装Gowin Education 1.9.11.03及器件许可，在`firmware/e028-extension`目录用官方`gw_sh.exe tools/build_ap_public.tcl`构建。默认输出`build-public/instrument_e047_public`；可设置`FPGA_BUILD_ROOT`改变输出目录。不需要`FPGA_WEB_PRIVATE`、云服务账号或`cloud_config.v`。器件GW2A-LV18PG256C8/I7、27MHz，使用仓库既有CST/SDC。构建成功不等于已下载；最终下载要核对码流hash与设备。
 
 当前App解析与真实板包回放证据见[APK0.11报告](../firmware/e028-extension/docs/e045-app011/README.md)，实际手机闭环仍待验收。

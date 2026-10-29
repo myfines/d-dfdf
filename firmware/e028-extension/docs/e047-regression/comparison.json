@@ -40,5 +40,6 @@
   "pc_audio_status": [
     "RAW discontinuity"
   ],
-  "physical_user_speaker_acceptance": false
+  "physical_user_speaker_acceptance": true,
+  "user_feedback": "Both timbres are now loud enough"
 }

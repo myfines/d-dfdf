@@ -1225,3 +1225,10 @@ User reported crash, weak Bass and questioned Lissajous/requirements. Reproduced
 JTAG识别0x81B、COM13确认；首轮RAW采集幅度健全性失败，用户确认当时未接电脑音频线，标无效、保留记录，恢复E047成功。用户接好线后第二轮E048 RAW采集幅度比例通过，电钢琴约-15.75/风琴-12.93/弦乐-15.66/Bass-13.31dBFS（同C4干声），测量片段无削波。临时探针均operation2 SRAM，所有外设总线/ESP_TX高阻；最后恢复完整E047并独立operation73/74读E047/6020。Flash仍E045，未重刷Flash/ESP/OTP/下载器固件，电脑未加入热点。
 
 已通知用户重新启用外设试听，其他功能没有收到明确通过反馈；当前E047是待用户音箱确认的候选，原E045交付包保留回退。详细报告docs/e047-timbre-balance.md及firmware/e028-extension/docs/e047-regression、e048-wasapi-wired；首轮无效e048-wasapi-raw带validity.json。
+
+
+## 2026-10-29 E047试听确认后Flash固化
+
+用户明确反馈“两种音色现在都够响”，记录音量问题这一范围的实机反馈通过，不扩大为其他项目通过。沿用此前“flash先烧录”授权，核对E047哈希fd2123078ac23a0c2941a477c8c407e015ce7f2eace8f7a1eb3c5b053567a05d、扫描0x81B并预读E047后，以官方operation37/cable1/GW2A-18C/2.5MHz/spiaddr0x000000写Flash。exit0、Program and Verify flash successfully、28.781秒。
+
+首次写后operation73返回0000，引发版本断言失败；保留原始读回，不归为Flash校验失败，不盲目重刷。随后只读operation74=6020、operation73=E047，独立版本最终通过。没有追加SRAM下载；冷启动仍由用户完成。Flash当前E047，未改ESP/OTP/下载器固件。证据在firmware/e028-extension/docs/e047-flash。教程/对照入口更新；E045旧包保留回退，不作为修复后正式版本。
