@@ -1,0 +1,11 @@
+{
+  "package": "E:\\gaoyun\\releases\\instrument-E047-delivery-20261029.zip",
+  "sha256": "2a27485ead22d6dfb44dae73d015d962f410f8ecff75901c11c768f12f97a318",
+  "bytes": 2840414,
+  "source_commit": "71270df9a1cc5b791a666bfae61df2eae2712bda",
+  "verified_files": 712,
+  "fpga_flash": "E047",
+  "app_version": "0.11-e045-direct",
+  "user_confirmed_piano_bass_loud_enough": true,
+  "coldboot_tested": false
+}

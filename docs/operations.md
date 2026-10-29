@@ -1232,3 +1232,8 @@ JTAG识别0x81B、COM13确认；首轮RAW采集幅度健全性失败，用户确
 用户明确反馈“两种音色现在都够响”，记录音量问题这一范围的实机反馈通过，不扩大为其他项目通过。沿用此前“flash先烧录”授权，核对E047哈希fd2123078ac23a0c2941a477c8c407e015ce7f2eace8f7a1eb3c5b053567a05d、扫描0x81B并预读E047后，以官方operation37/cable1/GW2A-18C/2.5MHz/spiaddr0x000000写Flash。exit0、Program and Verify flash successfully、28.781秒。
 
 首次写后operation73返回0000，引发版本断言失败；保留原始读回，不归为Flash校验失败，不盲目重刷。随后只读operation74=6020、operation73=E047，独立版本最终通过。没有追加SRAM下载；冷启动仍由用户完成。Flash当前E047，未改ESP/OTP/下载器固件。证据在firmware/e028-extension/docs/e047-flash。教程/对照入口更新；E045旧包保留回退，不作为修复后正式版本。
+
+
+## 2026-10-29 E047交付包更新
+
+从71270df源码/证据快照生成E:/gaoyun/releases/instrument-E047-delivery-20261029.zip，加入同一已固化E047 .fs/.bin、APK0.11和有线RAW四干声示例；712个内容文件SHA256核对及ZIP CRC通过。当前包明确用户音色音量反馈通过、Flash已校验、冷启动与其他功能待验。详细收据见[e047-package-receipt.json](e047-package-receipt.json)。E045旧包不删除，保留历史回退。
