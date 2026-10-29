@@ -1,0 +1,2 @@
+PASS keymap identity, optical/phone remap, validation, reset, pages
+E:\gaoyun\releases\e028-flash-record\firmware\e028-extension/sim/tb_keymap.sv:19: $finish called at 230000 (1ps)

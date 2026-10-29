@@ -1,0 +1,6 @@
+{
+  "version": "E036",
+  "artifact_sha256": "b0d480132bdf25ea9a2c86d6881af975d391dbfde12072ad41c624328722f0d0",
+  "timing_summary": "Max Frequency Summary: NO. Clock Name Constraint Actual Fmax Logic Level Entity 1 clk27 27.000(MHz) 27.074(MHz) 35 TOP Total Negative Slack Summary: Clock Name Analysis Type Endpoints TNS Number of Endpoints clk27 Setup 0.000 0 clk27 Hold 0.000 0 Timing Details Path Slacks Table: Setup Paths Table Report Command:report_timing -setup -max_paths 25 -max_common_paths 1 Path Number Path Slack From Node To Node From Clock",
+  "artifact_local_only": true
+}

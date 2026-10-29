@@ -4,25 +4,34 @@ from pathlib import Path
 from http.server import BaseHTTPRequestHandler,ThreadingHTTPServer
 class Controller:
  def __init__(self):
-  self.lock=threading.Lock();self.device_at=0;self.active_at=0;self.telemetry='';self.values={'G':'00000000','V':'40','T':'00','F':'00','S':'00','B':'2000','X':'00','Y':'80','M':'00000000','R':'00','H':'00','D':'00'}
+  self.keymaps={};self.map_cursor=0;self.map_reset_pending=False;self.lock=threading.Lock();self.device_at=0;self.active_at=0;self.telemetry='';self.values={'G':'00000000','V':'40','T':'00','F':'00','S':'00','B':'2000','X':'00','Y':'80','M':'00000000','R':'00','H':'00','D':'00'}
  def set_command(self,line):
-  if not re.fullmatch(r'(?:[MG][0-9A-Fa-f]{8}|B[0-9A-Fa-f]{4}|[VTEKPQLXYFSRHD][0-9A-Fa-f]{2})',line):return False
+  if not re.fullmatch(r'(?:[MGU][0-9A-Fa-f]{8}|B[0-9A-Fa-f]{4}|[VTEKPQLXYFSRHD][0-9A-Fa-f]{2})',line):return False
   if line[0]=='G' and int(line[1:],16)!=0:
    v=int(line[1:],16)
    if v>>28!=1 or (v&255)!=((v>>24)^(v>>16)^(v>>8))&255:return False
+  if line[0]=='U' and int(line[1:],16)!=0:
+   v=int(line[1:],16)
+   if v>>24!=16 or (v>>16)&255>31 or (v>>8)&255>31 or (v&255)!=((v>>24)^(v>>16)^(v>>8))&255:return False
   with self.lock:
    if time.monotonic()-self.device_at>10:return False
    k=line[0]
    if k=='L':self.active_at=0
    else:
     self.active_at=time.monotonic()
-    if k not in 'Q':self.values[k]=line[1:].upper()
+    if k=='U':
+     if int(line[1:],16)==0:self.keymaps.clear();self.values['U']='00000000';self.map_reset_pending=True
+     else:self.values.pop('U',None);self.keymaps[(int(line[1:],16)>>16)&255]=line.upper()
+    elif k not in 'Q':self.values[k]=line[1:].upper()
    return True
  def poll(self,telemetry):
   with self.lock:
    self.device_at=time.monotonic();self.telemetry=telemetry[:256]
    if time.monotonic()-self.active_at>5:return 'L00\nZ00\n'
-   return ''.join(k+v+'\n' for k,v in self.values.items())+'Z00\n'
+   maps=list(self.keymaps.values());extra='U00000000\n' if self.map_reset_pending and 'U' not in self.values else '';self.map_reset_pending=False
+   for _ in range(min(4,len(maps))):
+    extra+=maps[self.map_cursor%len(maps)]+'\n';self.map_cursor+=1
+   return ''.join(k+v+'\n' for k,v in self.values.items())+extra+'Z00\n'
  def status(self):
   with self.lock:return {'online':time.monotonic()-self.device_at<5,'age':round(time.monotonic()-self.device_at,2),'telemetry':self.telemetry,'transport':'ESP outbound HTTP (legacy AT)' ,'version':'E031'}
 def main():

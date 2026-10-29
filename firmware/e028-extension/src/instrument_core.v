@@ -265,12 +265,14 @@ module instrument_core #(
     // ------------------------------------------------------------------
     // Note routing and song
     // ------------------------------------------------------------------
+    wire [159:0] key_mapping; wire keymap_rejected;
+    keymap_control keymap(clk,io_reset_n,cmd_valid,cmd_kind,cmd_value,key_mapping,keymap_rejected);
     note_router router(
         clk, io_reset_n, frame_tick, keys_sync,
         optical_keys_n, optical_valid,
         remote_keys_byte, remote_active,
         page, latch_on, app_mask, app_override, song_gate,
-        gate_from_router, key_activity, active_count);
+        gate_from_router, key_activity, active_count,key_mapping);
 
     song_player song(
         clk, io_reset_n, frame_tick, song_on,

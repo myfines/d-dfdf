@@ -28,7 +28,8 @@ module note_router(
     input  wire [31:0] song_mask,
     output reg  [31:0] gate_mask,
     output reg  [7:0]  key_activity,
-    output reg  [5:0]  active_count
+    output reg  [5:0]  active_count,
+    input wire [159:0] key_mapping
 );
 
     reg [1:0]  btn_meta [0:3];
@@ -75,10 +76,17 @@ module note_router(
         end
     end
 
-    wire [31:0] optical_wide = optical_valid ?
-        ({24'd0, ~optical_keys_n} << {page, 3'b000}) : 32'd0;
-    wire [31:0] remote_wide = remote_valid ?
-        ({24'd0, remote_keys} << {page, 3'b000}) : 32'd0;
+    reg [31:0] optical_wide, remote_wide;
+    integer key_index;
+    always @* begin
+        optical_wide=0; remote_wide=0;
+        for(key_index=0;key_index<8;key_index=key_index+1)begin
+            if(optical_valid && !optical_keys_n[key_index])
+                optical_wide[key_mapping[({page,3'b000}+key_index)*5+:5]]=1;
+            if(remote_valid && remote_keys[key_index])
+                remote_wide[key_mapping[({page,3'b000}+key_index)*5+:5]]=1;
+        end
+    end
     wire [31:0] button_wide = {~btn_stable, 28'd0};
     wire [31:0] live_mask = optical_wide | remote_wide | button_wide;
     wire [31:0] rising = live_mask & ~live_previous;

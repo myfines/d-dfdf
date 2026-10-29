@@ -9,6 +9,19 @@ class RelayTests(unittest.TestCase):
   c=Controller();c.poll('G');self.assertTrue(c.set_command('G19CDA074'));self.assertIn('G19CDA074',c.poll('G'));self.assertFalse(c.set_command('G19CDA075'))
  def test_invalid_and_stop(self):
   c=Controller();c.poll('G');self.assertFalse(c.set_command('MZZZZZZZZ'));self.assertTrue(c.set_command('M00000003'));self.assertTrue(c.set_command('L00'));self.assertEqual(c.poll('G'),'L00\nZ00\n')
+ def test_keymap_replay_bounded(self):
+  c=Controller();c.poll('G')
+  for i in range(32):
+   n=31-i;v=(16<<24)|(i<<16)|(n<<8)|(16^i^n)
+   self.assertTrue(c.set_command('U%08X'%v))
+  seen=set()
+  for _ in range(8):
+   p=c.poll('G');self.assertLess(len(p),256)
+   seen.update(x for x in p.splitlines() if x.startswith('U'))
+  self.assertEqual(len(seen),32)
+  self.assertFalse(c.set_command('U10201F2F'))
+  self.assertTrue(c.set_command('U00000000'));self.assertEqual(c.keymaps,{})
+  self.assertTrue(c.set_command('U10001F0F'));p=c.poll('G');self.assertIn('U00000000',p);self.assertIn('U10001F0F',p)
 class HttpTests(unittest.TestCase):
  def test_chunked_request_does_not_corrupt_keepalive(self):
   import socket,tempfile,subprocess,sys,http.client,json
