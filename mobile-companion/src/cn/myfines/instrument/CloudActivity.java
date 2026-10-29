@@ -85,4 +85,5 @@ public class CloudActivity extends Activity {
   command("C00000000");message("数字录音已保存：下载/FPGA/"+name+"（Android8/9在应用文件目录）。");
  }
  @Override public void onDestroy(){cancelled=true;worker.shutdownNow();super.onDestroy();}
+ @Override protected void onResume(){super.onResume();UiStyle.apply(this);}
 }

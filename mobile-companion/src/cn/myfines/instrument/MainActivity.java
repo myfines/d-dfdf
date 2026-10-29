@@ -100,5 +100,6 @@ public class MainActivity extends Activity {
  private void stopAudio(){running=false;synth.panic();if(recorder!=null){try{recorder.stop();}catch(Exception ignored){}}if(track!=null){try{track.pause();track.flush();}catch(Exception ignored){}}if(worker!=null){try{worker.join(800);}catch(InterruptedException e){Thread.currentThread().interrupt();}worker=null;}if(recorder!=null){recorder.release();recorder=null;}if(track!=null){track.release();track=null;}}
  @Override protected void onPause(){stopAudio();emit("all_off",-1,0);super.onPause();}
  @Override protected void onDestroy(){stopAudio();audio.unregisterAudioDeviceCallback(devices);commands.shutdownNow();super.onDestroy();}
+ @Override protected void onResume(){super.onResume();UiStyle.apply(this);}
 }
 

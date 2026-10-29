@@ -1150,3 +1150,8 @@ operation37 GAO-Bridge、2.5MHz、SPI地址0，SHA256 5cde3a506c6b6a58550dd6338c
 ## 2026-10-29 E038 声音控制修正（仅SRAM）
 用户反馈E037实体功能可用，但音量过小、变化弱、部分音色奇怪，不能算声音质量合格。核查发现力度被限制127而合成器按255算增益、物理中点仅52；手势亮度使用12位颜色的低位片段，在1024回绕；捏合同时触发未明确告知的颤音/振幅调制。E038修正为力度64..255（中点159）、亮度完整范围单调缩放/钳位、捏合只作音量并保留显式远程颤音。未提高总混音增益、未更换效果或包络来掩盖录音链路问题。
 参考阅读DaisySP limiter/oscillator/ADSR源码，具体链接在e038-regression；未直接移植软件合成替代HDL。新增全行程扫值/生产接线测试以及核心/ADSR测试通过；27MHz约束Fmax27.106MHz，setup/hold TNS0。固定哈希下载SRAM成功，独立E038/6020；Flash仍E037。已请求同音符、无效果切换、K230先无手后分别捏合/高度的试听，尚不宣称所有音质问题已解决。
+
+
+## 2026-10-29 APK UI reference refresh
+
+Inspected user-supplied base(2).apk.1 ZIP and Android dexdump locally (com.fpga.instrument, custom InstrumentView, dark cards, colored keyboard). Source APK unchanged. Added companion dashboard and shared dark styling inspired by reference; not a pixel-identical reconstruction or modification of its original package. Kept existing companion control implementations. Explicitly separated public relay mode from legacy hotspot control. Verified cloud config generator emits AT+CWMODE_CUR=1 (station only); absence of old AP is expected, not proof of current ESP health. No board/Flash/network changes. Companion build plus core, protocol, socket and extension encoding tests passed. APK signature verification passed. Physical UI appearance and live phone/network operation remain untested.

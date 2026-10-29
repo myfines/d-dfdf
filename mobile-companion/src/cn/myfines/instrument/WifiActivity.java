@@ -123,4 +123,5 @@ public final class WifiActivity extends Activity {
   void set(int[] wave){values=wave.clone();invalidate();}
   @Override protected void onDraw(Canvas c){super.onDraw(c);float w=getWidth(),h=getHeight();c.drawColor(Color.rgb(4,13,21));pen.setStrokeWidth(1);pen.setColor(Color.rgb(30,55,70));for(int i=1;i<4;i++)c.drawLine(0,h*i/4,w,h*i/4,pen);pen.setStrokeWidth(3);pen.setColor(Color.rgb(100,235,255));for(int i=1;i<values.length;i++)c.drawLine(w*(i-1)/31,h*(255-values[i-1])/255,w*i/31,h*(255-values[i])/255,pen);}
  }
+ @Override protected void onResume(){super.onResume();UiStyle.apply(this);int[] colors={0xff255c65,0xff404b82,0xff75475e,0xff70602e};for(int i=0;i<pads.length;i++)if(pads[i]!=null)pads[i].setBackground(UiStyle.panel(colors[i],24));}
 }
