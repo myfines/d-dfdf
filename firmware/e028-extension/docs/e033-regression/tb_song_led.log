@@ -1,0 +1,3 @@
+LED group 0 lit at cycle 0
+PASS song/led note=16 step=0 gate=00000000
+E:\gaoyun\releases\e028-flash-record\firmware\e028-extension/sim/tb_song_led.sv:67: $finish called at 1834881039 (1ps)

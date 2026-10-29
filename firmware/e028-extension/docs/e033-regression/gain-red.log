@@ -1,0 +1,2 @@
+FATAL: E:\gaoyun\releases\e028-flash-record\firmware\e028-extension/sim/tb_fx_gain.sv:23: dry gain changed mode=1 input=12000 L=6000 R=6000
+       Time: 66420000  Scope: tb_fx_gain

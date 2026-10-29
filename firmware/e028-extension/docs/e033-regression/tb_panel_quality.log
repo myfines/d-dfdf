@@ -1,0 +1,2 @@
+PASS panel FX cycle, inhibit, long/short isolation
+E:\gaoyun\releases\e028-flash-record\firmware\e028-extension/sim/tb_panel_quality.sv:16: $finish called at 482100000 (1ps)

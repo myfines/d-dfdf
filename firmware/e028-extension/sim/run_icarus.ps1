@@ -1,4 +1,4 @@
-param([string[]]$Tests=@('tb_quality','tb_panel_quality','tb_synth32','tb_features','tb_fx','tb_spectrum','tb_oled_ui','tb_song_led','tb_command','tb_core'))
+param([string[]]$Tests=@('tb_audio_fix','tb_fx_stability','tb_fx_gain','tb_quality','tb_panel_quality','tb_synth32','tb_features','tb_fx','tb_spectrum','tb_oled_ui','tb_song_led','tb_command','tb_core'))
 $ErrorActionPreference='Stop'
 $root=Split-Path $PSScriptRoot -Parent
 $env:PATH='E:\gaoyun\tools\openfpgaloader\ucrt64\bin;E:\gaoyun\tools\iverilog\ucrt64\bin;'+$env:PATH

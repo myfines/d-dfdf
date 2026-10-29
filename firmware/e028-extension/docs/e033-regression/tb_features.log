@@ -1,0 +1,8 @@
+timbre 0 sum=1035158 peak=3822
+timbre 1 sum=1135962 peak=4546
+timbre 2 sum=213929 peak=1126
+timbre 3 sum=1402261 peak=4443
+expression peak=959
+bend increment +/26907438 = 26907438/21356375
+PASS features timbres/expression/bend
+E:\gaoyun\releases\e028-flash-record\firmware\e028-extension/sim/tb_features.sv:100: $finish called at 77657407929 (1ps)

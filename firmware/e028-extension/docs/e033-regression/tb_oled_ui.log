@@ -1,0 +1,3 @@
+OLED online
+PASS OLED UI bytes=15360
+E:\gaoyun\releases\e028-flash-record\firmware\e028-extension/sim/tb_oled_ui.sv:127: $finish called at 8690046000 (1ps)

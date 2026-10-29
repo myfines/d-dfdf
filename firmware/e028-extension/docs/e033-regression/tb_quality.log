@@ -1,0 +1,2 @@
+PASS quality monotonic brightness and symmetric LFO
+E:\gaoyun\releases\e028-flash-record\firmware\e028-extension/sim/tb_quality.sv:19: $finish called at 256000 (1ps)

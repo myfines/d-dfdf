@@ -84,8 +84,10 @@ module fx_engine(
     wire signed [17:0] delay_wet  = enable[1] ? ($signed({{2{delay_q[15]}}, delay_q}) >>> 3) : 18'sd0;
     wire signed [17:0] delay_wet_r= enable[1] ? ($signed({{2{delay_q[15]}}, delay_q}) >>> 2) : 18'sd0;
     wire signed [17:0] reverb_wet = enable[2] ? (reverb_out >>> 3) : 18'sd0;
-    wire signed [17:0] mix_l = (dry18 >>> 1) + chorus_wet + delay_wet + reverb_wet;
-    wire signed [17:0] mix_r = (dry18 >>> 1) + chorus_wet + delay_wet_r + reverb_wet;
+    // Preserve the bypass dry gain. Wet paths add to it with explicit
+    // headroom in 18-bit arithmetic; sat16 prevents output wraparound.
+    wire signed [17:0] mix_l = dry18 + chorus_wet + delay_wet + reverb_wet;
+    wire signed [17:0] mix_r = dry18 + chorus_wet + delay_wet_r + reverb_wet;
 
     always @(posedge clk) begin
         if(!reset_n) begin
