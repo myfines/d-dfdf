@@ -1,3 +1,13 @@
+# 当前状态：E039 热点直连版 Flash 已写入校验，待冷启动确认
+
+2026-10-29：用户要求恢复 ESP 本地热点、以后使用探针调试。E039 保留 E038 音频修正，关闭公网中继，恢复 `FPGA-Instrument` 热点和 TCP 9000。ESP-01S 自身固件未重刷。官方写入和校验通过；写后立即版本读回0000，冷启动与实际热点尚未确认，不重复擦写。[证据](../firmware/e028-extension/docs/e039-regression/README.md)。
+
+搭配 [0.8 原版界面 APK](../mobile-companion/apk/instrument-companion-0.8-reference-ui.apk)，地址192.168.4.1:9000，热点密码fpga-demo-2026。电脑保持原网络，不加入设备热点。以后使用临时SRAM探针，结束恢复已验证正式版本。
+
+---
+
+## 历史状态
+
 # 当前试听版本（E038 SRAM）
 
 E038已下载SRAM、独立读回E038/6020；Flash仍是已冷启动验证的E037，断电会恢复E037。E038修正力度范围、手势亮度截断回绕，并取消捏合隐式叠加颤音/振幅调制；试听结果尚待确认。[证据](../firmware/e028-extension/docs/e038-regression/README.md)。这不是重新设计全部音色或限幅器。

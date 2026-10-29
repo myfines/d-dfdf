@@ -1,0 +1,12 @@
+{
+  "version": "E039",
+  "operation": 37,
+  "frequency": "2.5MHz",
+  "spi_address": 0,
+  "sha256": "2ea90d95cdad439f536092f6ae47d23f3d2157fd78f47f10431fd0812acfd93f",
+  "program_verify_success": true,
+  "duration_seconds": 28.96900000000096,
+  "independent_boot_confirmed": false,
+  "coldboot_tested": false,
+  "real_wifi_acceptance": false
+}

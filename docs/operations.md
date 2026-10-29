@@ -1160,3 +1160,8 @@ Inspected user-supplied base(2).apk.1 ZIP and Android dexdump locally (com.fpga.
 ## 2026-10-29 Restore supplied APK performance UI
 
 User rejected generic restyling. Recovered the supplied APK actual InstrumentView via JADX and adapted original landscape keyboard/cards/waveform/gesture/footer drawing to companion transport. Added persistent connection/performance settings, four current timbres/pages and eight-key protocol acceptance. APK 0.8 built and signature verified; core, protocol, fragmented TCP and extension tests passed. No phone attached: visual/device verification remains pending. Prepared E039 AP build completed; no SRAM download or Flash change. Current hardware therefore still requires a later AP-firmware switch for hotspot discovery. See mobile-companion/REFERENCE-UI.md for provenance and limitations.
+
+
+## 2026-10-29 E039 restore ESP AP to Flash
+
+Authorized by user to restore local Wi-Fi and use probes henceforth. No ESP firmware rewrite, no driver or computer network change. Verified single JTAG0x0000081B, no competing programmer, fixed artifact SHA256 2ea90d95cdad439f536092f6ae47d23f3d2157fd78f47f10431fd0812acfd93f. Timing28.117MHz/TNS0; tb_esp_at/core/control_wiring/performance_controls PASS. Official operation37 2.5MHz address0 program+verify100% succeeded (~29s). Immediate op73 returned0000/nonzero; deployment script stopped and retained logs. Flash byte verification success is confirmed, E039 coldboot/runtime/AP discovery remain unverified. No blind retry or repeated erase. Await full physical coldboot and once-only enable.

@@ -1,0 +1,11 @@
+{
+  "version": "E039",
+  "project": "instrument_e039_ap",
+  "artifact_sha256": "2ea90d95cdad439f536092f6ae47d23f3d2157fd78f47f10431fd0812acfd93f",
+  "fmax_mhz": 28.117,
+  "constraint_mhz": 27,
+  "setup_tns": 0,
+  "hold_tns": 0,
+  "mode": "AP direct TCP9000",
+  "audio": "E038 retained"
+}
