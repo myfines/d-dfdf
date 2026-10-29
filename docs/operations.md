@@ -1124,3 +1124,6 @@ User covered K230 and confirmed no physical activity/no overheating. Recorded ge
 
 ## 2026-10-28 E032 candidate audio corrections
 Read tiny-synth and Freeverb designs; no external source copied. Negative-feedback signedness reproduced (negative8000 incorrectly became positive29768); added failing regression, fixed signed arithmetic and hardware RAM scrub. Exponential pitch lookup reduces sweep error43.5358 to0.044854cents in simulation. Twelve tests pass; Gowin candidate builds at27MHz with setup/hold TNS0,15/46BSRAM,8.5/24DSP. No SRAM/Flash download; physical board remains E031. Evidence firmware/e028-extension/docs/e032-regression/. Private FS never uploaded.
+
+## 2026-10-29 E032 SRAM installation
+Fixed candidate SHA256 2fb707febef140148391921423660632815a9fc7ed0f2eb1376b4bbaaf9413aa verified. Official cable1 2.5MHz scan ID0x81B, operation2 completed100%, exit0 in6.42s. Retained User code mismatch warning. Independent op73 E032 / op74 0x6020. Flash remains E031. Physical enable/thermal confirmation pending. Local relay port8765 refused connection; services absent. Automatic approval rejected starting relay and Cloudflare tunnel (blocked by policy); no workaround attempted. Acoustic regression pending; no physical pass claimed. Logs firmware/e028-extension/docs/e032-regression/20261029-*.log.
