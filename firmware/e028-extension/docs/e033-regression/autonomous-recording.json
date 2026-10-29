@@ -1,0 +1,181 @@
+{
+  "probe": "E03A autonomous isolated synth/fx/I2S, not full instrument",
+  "pc_sample_rate": 48000,
+  "dac_sample_rate_design": 46875,
+  "timing_reference": "first sustained acoustic onset at slot1, not command completion; no latency claim",
+  "raw_sha256": "70eb6ba7725db9eb7d284348aa374408d7a232a6c409e7c7ff61aba5a454ab68",
+  "caution": "Realtek mic AGC/noise possible; candidates require signal provenance verification",
+  "records": [
+    {
+      "slot": 0,
+      "label": "idle",
+      "rms_dbfs": -57.57388270040485,
+      "peak": 0.00921630859375,
+      "clipped_fraction": 0.0,
+      "dominant_hz": 1572.5
+    },
+    {
+      "slot": 1,
+      "label": "C4-center",
+      "rms_dbfs": -14.176762877201172,
+      "peak": 0.44427490234375,
+      "clipped_fraction": 0.0,
+      "dominant_hz": 261.2431967917502,
+      "expected_hz": 261.625565,
+      "fundamental_candidate_hz": 261.64169315213644,
+      "candidate_error_cents": 0.10672024936000814
+    },
+    {
+      "slot": 2,
+      "label": "C4-up",
+      "rms_dbfs": -22.7846101263184,
+      "peak": 0.143157958984375,
+      "clipped_fraction": 0.0,
+      "dominant_hz": 1175.0,
+      "expected_hz": 293.664768,
+      "fundamental_candidate_hz": 293.65773987630104,
+      "candidate_error_cents": -0.04143320538905463
+    },
+    {
+      "slot": 3,
+      "label": "C4-down",
+      "rms_dbfs": -16.733858943897065,
+      "peak": 0.301513671875,
+      "clipped_fraction": 0.0,
+      "dominant_hz": 466.26214224328754,
+      "expected_hz": 233.081881,
+      "fundamental_candidate_hz": 233.08836058903094,
+      "candidate_error_cents": 0.0481269894741937
+    },
+    {
+      "slot": 4,
+      "label": "C4-center-repeat",
+      "rms_dbfs": -23.08389777918038,
+      "peak": 0.1309814453125,
+      "clipped_fraction": 0.0,
+      "dominant_hz": 1046.2772468033022,
+      "expected_hz": 261.625565,
+      "fundamental_candidate_hz": 261.64348953871456,
+      "candidate_error_cents": 0.11860656188027097
+    },
+    {
+      "slot": 5,
+      "label": "release",
+      "rms_dbfs": -57.974736001843695,
+      "peak": 0.007232666015625,
+      "clipped_fraction": 0.0,
+      "dominant_hz": 1571.25
+    },
+    {
+      "slot": 6,
+      "label": "dry",
+      "rms_dbfs": -14.145189239590739,
+      "peak": 0.44830322265625,
+      "clipped_fraction": 0.0,
+      "dominant_hz": 261.25,
+      "expected_hz": 261.625565,
+      "fundamental_candidate_hz": 261.64263788671667,
+      "candidate_error_cents": 0.11297136973817964
+    },
+    {
+      "slot": 7,
+      "label": "delay",
+      "rms_dbfs": -33.97111816686946,
+      "peak": 0.0469970703125,
+      "clipped_fraction": 0.0,
+      "dominant_hz": 523.75,
+      "expected_hz": 261.625565,
+      "fundamental_candidate_hz": 261.6405964397354,
+      "candidate_error_cents": 0.09946349372945437
+    },
+    {
+      "slot": 8,
+      "label": "delay-release",
+      "rms_dbfs": -57.73663469933026,
+      "peak": 0.00738525390625,
+      "clipped_fraction": 0.0,
+      "dominant_hz": 1573.709017994323
+    },
+    {
+      "slot": 9,
+      "label": "reverb",
+      "rms_dbfs": -14.164328816892496,
+      "peak": 0.444427490234375,
+      "clipped_fraction": 0.0,
+      "dominant_hz": 261.2431967917502,
+      "expected_hz": 261.625565,
+      "fundamental_candidate_hz": 261.6429349563628,
+      "candidate_error_cents": 0.11493701569887171
+    },
+    {
+      "slot": 10,
+      "label": "reverb-release",
+      "rms_dbfs": -57.599271964551086,
+      "peak": 0.007904052734375,
+      "clipped_fraction": 0.0,
+      "dominant_hz": 1571.2090830967943
+    },
+    {
+      "slot": 11,
+      "label": "chorus",
+      "rms_dbfs": -14.378223629773233,
+      "peak": 0.456207275390625,
+      "clipped_fraction": 0.0,
+      "dominant_hz": 523.7363610322648,
+      "expected_hz": 261.625565,
+      "fundamental_candidate_hz": 261.62545552743643,
+      "candidate_error_cents": -0.0007244042420669682
+    },
+    {
+      "slot": 12,
+      "label": "chorus-release",
+      "rms_dbfs": -57.64834446730316,
+      "peak": 0.00799560546875,
+      "clipped_fraction": 0.0,
+      "dominant_hz": 1572.4590505455587
+    },
+    {
+      "slot": 13,
+      "label": "four-note-chord",
+      "rms_dbfs": -9.867378977344742,
+      "peak": 0.991607666015625,
+      "clipped_fraction": 7.81229655477722e-05,
+      "dominant_hz": 987.4742845238405
+    },
+    {
+      "slot": 14,
+      "label": "chord-release",
+      "rms_dbfs": -57.81565826606733,
+      "peak": 0.008270263671875,
+      "clipped_fraction": 0.0,
+      "dominant_hz": 1572.4590505455587
+    },
+    {
+      "slot": 15,
+      "label": "32-notes",
+      "rms_dbfs": -8.41952217534079,
+      "peak": 0.99334716796875,
+      "clipped_fraction": 0.00039061482773886097,
+      "dominant_hz": 523.7363610322648
+    },
+    {
+      "slot": 16,
+      "label": "32-release",
+      "rms_dbfs": -57.92908375946069,
+      "peak": 0.007904052734375,
+      "clipped_fraction": 0.0,
+      "dominant_hz": 1572.4590505455587
+    },
+    {
+      "slot": 17,
+      "label": "idle-final",
+      "rms_dbfs": -57.17895110348971,
+      "peak": 0.007781982421875,
+      "clipped_fraction": 0.0,
+      "dominant_hz": 1572.4590505455587
+    }
+  ],
+  "acoustic_onset_seconds": 7.72,
+  "supersedes": "autonomous-recording-cli-alignment-invalid.json",
+  "acceptance": "Partial: matched sequence and signal; mic gain and envelope confound amplitude comparisons"
+}
