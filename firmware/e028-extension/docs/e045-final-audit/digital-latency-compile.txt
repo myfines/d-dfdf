@@ -1,0 +1,1 @@
+E:\gaoyun\releases\e028-flash-record\firmware\e028-extension\src\instrument_core.v:465: warning: Anachronistic use of named begin/end to surround generate schemes.

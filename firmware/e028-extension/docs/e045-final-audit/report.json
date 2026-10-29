@@ -1,0 +1,162 @@
+{
+  "version": "E045",
+  "test_kind": "digital RTL simulation, not physical latency acceptance",
+  "clock_hz": 27000000,
+  "cases": [
+    {
+      "timbre": 0,
+      "phase_cycles": 0,
+      "first_i2s_cycles": 39435,
+      "first_i2s_ms": 1.4605555555555556,
+      "threshold32_cycles": 40587,
+      "threshold32_ms": 1.5032222222222222
+    },
+    {
+      "timbre": 0,
+      "phase_cycles": 143,
+      "first_i2s_cycles": 39292,
+      "first_i2s_ms": 1.4552592592592593,
+      "threshold32_cycles": 40444,
+      "threshold32_ms": 1.4979259259259259
+    },
+    {
+      "timbre": 0,
+      "phase_cycles": 286,
+      "first_i2s_cycles": 39149,
+      "first_i2s_ms": 1.449962962962963,
+      "threshold32_cycles": 40301,
+      "threshold32_ms": 1.4926296296296295
+    },
+    {
+      "timbre": 0,
+      "phase_cycles": 429,
+      "first_i2s_cycles": 39006,
+      "first_i2s_ms": 1.4446666666666668,
+      "threshold32_cycles": 40158,
+      "threshold32_ms": 1.4873333333333334
+    },
+    {
+      "timbre": 1,
+      "phase_cycles": 0,
+      "first_i2s_cycles": 39435,
+      "first_i2s_ms": 1.4605555555555556,
+      "threshold32_cycles": 39435,
+      "threshold32_ms": 1.4605555555555556
+    },
+    {
+      "timbre": 1,
+      "phase_cycles": 143,
+      "first_i2s_cycles": 39292,
+      "first_i2s_ms": 1.4552592592592593,
+      "threshold32_cycles": 39292,
+      "threshold32_ms": 1.4552592592592593
+    },
+    {
+      "timbre": 1,
+      "phase_cycles": 286,
+      "first_i2s_cycles": 39149,
+      "first_i2s_ms": 1.449962962962963,
+      "threshold32_cycles": 39149,
+      "threshold32_ms": 1.449962962962963
+    },
+    {
+      "timbre": 1,
+      "phase_cycles": 429,
+      "first_i2s_cycles": 39006,
+      "first_i2s_ms": 1.4446666666666668,
+      "threshold32_cycles": 39006,
+      "threshold32_ms": 1.4446666666666668
+    },
+    {
+      "timbre": 2,
+      "phase_cycles": 0,
+      "first_i2s_cycles": 39435,
+      "first_i2s_ms": 1.4605555555555556,
+      "threshold32_cycles": 49803,
+      "threshold32_ms": 1.8445555555555555
+    },
+    {
+      "timbre": 2,
+      "phase_cycles": 143,
+      "first_i2s_cycles": 39292,
+      "first_i2s_ms": 1.4552592592592593,
+      "threshold32_cycles": 49660,
+      "threshold32_ms": 1.8392592592592591
+    },
+    {
+      "timbre": 2,
+      "phase_cycles": 286,
+      "first_i2s_cycles": 39149,
+      "first_i2s_ms": 1.449962962962963,
+      "threshold32_cycles": 49517,
+      "threshold32_ms": 1.833962962962963
+    },
+    {
+      "timbre": 2,
+      "phase_cycles": 429,
+      "first_i2s_cycles": 39006,
+      "first_i2s_ms": 1.4446666666666668,
+      "threshold32_cycles": 49374,
+      "threshold32_ms": 1.8286666666666667
+    },
+    {
+      "timbre": 3,
+      "phase_cycles": 0,
+      "first_i2s_cycles": 39435,
+      "first_i2s_ms": 1.4605555555555556,
+      "threshold32_cycles": 39435,
+      "threshold32_ms": 1.4605555555555556
+    },
+    {
+      "timbre": 3,
+      "phase_cycles": 143,
+      "first_i2s_cycles": 39292,
+      "first_i2s_ms": 1.4552592592592593,
+      "threshold32_cycles": 39292,
+      "threshold32_ms": 1.4552592592592593
+    },
+    {
+      "timbre": 3,
+      "phase_cycles": 286,
+      "first_i2s_cycles": 39149,
+      "first_i2s_ms": 1.449962962962963,
+      "threshold32_cycles": 39149,
+      "threshold32_ms": 1.449962962962963
+    },
+    {
+      "timbre": 3,
+      "phase_cycles": 429,
+      "first_i2s_cycles": 39006,
+      "first_i2s_ms": 1.4446666666666668,
+      "threshold32_cycles": 39006,
+      "threshold32_ms": 1.4446666666666668
+    }
+  ],
+  "first_nonzero_ms_range": [
+    1.4446666666666668,
+    1.4605555555555556
+  ],
+  "abs32_ms_max": 1.8445555555555555,
+  "sensor_and_dac_analog_included": false,
+  "production_reset_and_timbre_fixture": "SAFE_STARTUP=0; arm guard bypassed before measurement; preset selected by force; routing/debounce/synth/FX/I2S unmodified",
+  "public_build": {
+    "cloud_config_needed": false,
+    "fmax_mhz": 27.219,
+    "setup_tns": 0,
+    "hold_tns": 0,
+    "fs_sha256": "ceb2e81fde668bb6d3659517fc96b3a616a28b95fce07edf05b1fbe5723a59f1",
+    "bin_sha256": "4c4787ce3a6b02301ee6adb1ab40a4370a8429420871934d5e7f2d7c97515bff",
+    "bin_identical_to_deployed_e045": true,
+    "downloaded": false
+  },
+  "fixture_parameters": {
+    "SAFE_STARTUP": 0,
+    "ENABLE_UI": 0,
+    "ENABLE_OPTICAL": 0,
+    "ENABLE_GESTURE": 0,
+    "LINK_MODE": 1
+  },
+  "decoder_checked_against_latched_i2s_word": true,
+  "source_core_sha256": "c722115147d06d01c7dc84ce7f1c70378d374a5ee7f1279db9d0bfa2e2e3d7bc",
+  "testbench_sha256": "58ee758211f66eeaca79583649b73164c97d19d0d5bb12f06b8149bfd254e20c"
+}

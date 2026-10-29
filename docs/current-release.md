@@ -1,3 +1,5 @@
+> 最新逐项结论：[E045赛题对照](competition-final-crosscheck-20261029.md) · [使用教程](e045-user-guide.md) · [延迟口径/测量](latency-measurement-20261029.md) · [最后拍摄清单](e045-video-guide.md)。E045仍为SRAM、Flash E039，冷启动由用户在最终固化后执行。
+
 # 最新状态：E045 SRAM，Flash仍E039
 
 本轮已完成RAW音频与板上集成诊断，修复重连复活旧颤音。完整状态、结论与未验收项见[E045交付证据](e045-delivery-evidence.md)。以下为历史记录。

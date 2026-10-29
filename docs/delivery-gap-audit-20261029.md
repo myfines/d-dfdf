@@ -1,3 +1,5 @@
+> 最新逐项结论：[E045赛题对照](competition-final-crosscheck-20261029.md) · [使用教程](e045-user-guide.md) · [延迟口径/测量](latency-measurement-20261029.md) · [最后拍摄清单](e045-video-guide.md)。E045仍为SRAM、Flash E039，冷启动由用户在最终固化后执行。
+
 > 后续更新：E045已部署SRAM；RAW音量/音色及E046板上集成已补证据。以下E041/E042状态为审计当时记录，最新以[E045证据](e045-delivery-evidence.md)为准，手机/物理延迟/冷启动仍未验收。
 
 # 今晚交付差距审计（2026-10-29）

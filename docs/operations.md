@@ -1186,3 +1186,14 @@ User reported crash, weak Bass and questioned Lissajous/requirements. Reproduced
 ## 2026-10-29 E043–E046板上诊断
 
 完成RAW音量/音色、32频点和128块录音/曲谱/映射/ADSR诊断；修复释放与到期残留颤音，33项RTL通过。最后恢复E045 SRAM并独立读回E045/6020，Flash仍E039。详见[证据及限制](e045-delivery-evidence.md)。录音runner恢复目标更新E045，E044构建自动从公开源码派生衰减探针。未重新运行硬件测试；这两项仅涉及测试工具的恢复目标和构建可复现性。
+
+
+## 2026-10-29 约22:00 E045严格对照及可移交构建
+
+用户要求按赛题/FAQ逐项核对、继续补测、发使用教程；冷启动由用户做，视频最后指导。重新读取官网选题二并存摘录；重读两份群FAQ，73引用技术103但副本没有103正文，74无答复，已询问新版出处，未编造延迟豁免。
+
+新增tb_delivery_latency，使用run_icarus.ps1 -Tests tb_delivery_latency覆盖四预设/四输入相位，按键引脚至完整I2S左字，不含传感器前端/DAC。首版夹具错误丢弃WS变化边沿的上字LSB导致no I2S output，修正夹具后16场景通过；增加重组字与实际I2S锁存左字逐字断言。数字首非零1.445–1.461ms，固定32幅度阈值最慢1.845ms；不宣称整机延迟或零抖动。
+
+执行官方gw_sh.exe tools/build_ap_public.tcl，以FPGA_BUILD_ROOT指定全新输出目录，去除禁用分支的云模块/私有配置依赖；综合/PNR成功、Fmax27.219MHz、setup/hold TNS0。.bin SHA256与原部署E045构建完全一致；未下载新构建，未操作Flash/ESP/OTP/下载器固件。日志与结构化结果在firmware/e028-extension/docs/e045-final-audit。
+
+新增逐项赛题对照、当前热点原版UI使用教程、延迟测量方案和最后拍摄清单；E028旧交付文档加历史标记。最终Flash固化尚未执行，当前仍E045 SRAM/Flash E039，用户冷启动须在最终固化后进行。

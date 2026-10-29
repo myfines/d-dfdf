@@ -1,3 +1,5 @@
+> 最新逐项结论：[E045赛题对照](competition-final-crosscheck-20261029.md) · [使用教程](e045-user-guide.md) · [延迟口径/测量](latency-measurement-20261029.md) · [最后拍摄清单](e045-video-guide.md)。E045仍为SRAM、Flash E039，冷启动由用户在最终固化后执行。
+
 # 选题二逐条状态（2026-10-29，E035）
 
 官方来源：https://www.gowinsemi.com.cn/university/match2026 ，本日重新核对。下表为工程状态，不是官方评分结论。当前E037 Flash，写入校验及完整断电启动后E037/6020读回通过。Wi-Fi按既定方案承担手机联动；不能称已验证蓝牙链路。

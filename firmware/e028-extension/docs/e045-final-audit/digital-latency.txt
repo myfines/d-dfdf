@@ -1,0 +1,19 @@
+tone,phase_cycles,first_i2s_cycles,threshold32_cycles
+0,0,39435,40587
+0,143,39292,40444
+0,286,39149,40301
+0,429,39006,40158
+1,0,39435,39435
+1,143,39292,39292
+1,286,39149,39149
+1,429,39006,39006
+2,0,39435,49803
+2,143,39292,49660
+2,286,39149,49517
+2,429,39006,49374
+3,0,39435,39435
+3,143,39292,39292
+3,286,39149,39149
+3,429,39006,39006
+PASS 16 production core board-pin to complete I2S-word cases; digital simulation only; threshold32=abs(sample)>=32
+E:\gaoyun\releases\e028-flash-record\firmware\e028-extension/sim/tb_delivery_latency.sv:47: $finish called at 36400650096 (1ps)
