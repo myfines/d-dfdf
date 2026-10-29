@@ -1,0 +1,225 @@
+{
+  "caution": "Related harmonics can coincide. This supports, but does not alone establish independent voices.",
+  "results": {
+    "13": [
+      {
+        "note_index": 12,
+        "target_hz": 261.6255653,
+        "peak_bin_hz": 261.2431967917502,
+        "local_spectral_ratio_db": 47.31285026998728
+      },
+      {
+        "note_index": 16,
+        "target_hz": 329.6275569121157,
+        "peak_bin_hz": 329.9914064737897,
+        "local_spectral_ratio_db": 47.72683419824821
+      },
+      {
+        "note_index": 19,
+        "target_hz": 391.9954359808524,
+        "peak_bin_hz": 392.48977891200747,
+        "local_spectral_ratio_db": 47.49309274254338
+      },
+      {
+        "note_index": 23,
+        "target_hz": 493.8833012549941,
+        "peak_bin_hz": 493.73714226192027,
+        "local_spectral_ratio_db": 50.26267246172223
+      }
+    ],
+    "15": [
+      {
+        "note_index": 0,
+        "target_hz": 130.81278265,
+        "peak_bin_hz": 131.24658212025727,
+        "local_spectral_ratio_db": 25.214212158540445
+      },
+      {
+        "note_index": 1,
+        "target_hz": 138.59131548811894,
+        "peak_bin_hz": 138.7463868128434,
+        "local_spectral_ratio_db": 16.197562324712255
+      },
+      {
+        "note_index": 2,
+        "target_hz": 146.8323839583678,
+        "peak_bin_hz": 146.24619150542955,
+        "local_spectral_ratio_db": 17.405311082087223
+      },
+      {
+        "note_index": 3,
+        "target_hz": 155.5634918606845,
+        "peak_bin_hz": 154.99596364678004,
+        "local_spectral_ratio_db": 17.366863498262372
+      },
+      {
+        "note_index": 4,
+        "target_hz": 164.81377845605786,
+        "peak_bin_hz": 164.99570323689485,
+        "local_spectral_ratio_db": 15.155007619319898
+      },
+      {
+        "note_index": 5,
+        "target_hz": 174.61411571610242,
+        "peak_bin_hz": 174.9954428270097,
+        "local_spectral_ratio_db": 21.725823329631115
+      },
+      {
+        "note_index": 6,
+        "target_hz": 184.99721135539392,
+        "peak_bin_hz": 184.99518241712454,
+        "local_spectral_ratio_db": 24.502521661219504
+      },
+      {
+        "note_index": 7,
+        "target_hz": 195.9977179904262,
+        "peak_bin_hz": 196.24488945600373,
+        "local_spectral_ratio_db": 27.659294810754815
+      },
+      {
+        "note_index": 8,
+        "target_hz": 207.6523487894974,
+        "peak_bin_hz": 207.49459649488293,
+        "local_spectral_ratio_db": 25.62592700267013
+      },
+      {
+        "note_index": 9,
+        "target_hz": 219.9999999994966,
+        "peak_bin_hz": 219.9942709825265,
+        "local_spectral_ratio_db": 26.265850042648466
+      },
+      {
+        "note_index": 10,
+        "target_hz": 233.08188075851163,
+        "peak_bin_hz": 232.49394547017005,
+        "local_spectral_ratio_db": 25.42274424023867
+      },
+      {
+        "note_index": 11,
+        "target_hz": 246.941650627497,
+        "peak_bin_hz": 247.4935548553423,
+        "local_spectral_ratio_db": 25.883117357707043
+      },
+      {
+        "note_index": 12,
+        "target_hz": 261.6255653,
+        "peak_bin_hz": 261.2431967917502,
+        "local_spectral_ratio_db": 20.659924953571213
+      },
+      {
+        "note_index": 13,
+        "target_hz": 277.1826309762379,
+        "peak_bin_hz": 277.4927736256868,
+        "local_spectral_ratio_db": 31.755036942456325
+      },
+      {
+        "note_index": 14,
+        "target_hz": 293.6647679167356,
+        "peak_bin_hz": 293.7423504596234,
+        "local_spectral_ratio_db": 33.25091857765053
+      },
+      {
+        "note_index": 15,
+        "target_hz": 311.126983721369,
+        "peak_bin_hz": 311.2418947423244,
+        "local_spectral_ratio_db": 18.408946918303695
+      },
+      {
+        "note_index": 16,
+        "target_hz": 329.6275569121157,
+        "peak_bin_hz": 329.9914064737897,
+        "local_spectral_ratio_db": 31.268150513015343
+      },
+      {
+        "note_index": 17,
+        "target_hz": 349.22823143220484,
+        "peak_bin_hz": 348.74091820525507,
+        "local_spectral_ratio_db": 28.142751908092908
+      },
+      {
+        "note_index": 18,
+        "target_hz": 369.99442271078783,
+        "peak_bin_hz": 369.9903648342491,
+        "local_spectral_ratio_db": 28.336635478113177
+      },
+      {
+        "note_index": 19,
+        "target_hz": 391.9954359808524,
+        "peak_bin_hz": 392.48977891200747,
+        "local_spectral_ratio_db": 31.549929026860745
+      },
+      {
+        "note_index": 20,
+        "target_hz": 415.3046975789949,
+        "peak_bin_hz": 414.98919298976585,
+        "local_spectral_ratio_db": 9.348628972885892
+      },
+      {
+        "note_index": 21,
+        "target_hz": 439.9999999989932,
+        "peak_bin_hz": 439.988541965053,
+        "local_spectral_ratio_db": 32.654003447361625
+      },
+      {
+        "note_index": 22,
+        "target_hz": 466.16376151702326,
+        "peak_bin_hz": 466.2378583891044,
+        "local_spectral_ratio_db": 37.6317842966844
+      },
+      {
+        "note_index": 23,
+        "target_hz": 493.8833012549941,
+        "peak_bin_hz": 493.73714226192027,
+        "local_spectral_ratio_db": 23.974525683049755
+      },
+      {
+        "note_index": 24,
+        "target_hz": 523.2511306,
+        "peak_bin_hz": 523.7363610322648,
+        "local_spectral_ratio_db": 35.54223305902117
+      },
+      {
+        "note_index": 25,
+        "target_hz": 554.3652619524757,
+        "peak_bin_hz": 554.9855472513736,
+        "local_spectral_ratio_db": 25.969996328903964
+      },
+      {
+        "note_index": 26,
+        "target_hz": 587.3295358334711,
+        "peak_bin_hz": 587.4847009192468,
+        "local_spectral_ratio_db": 31.666170234976203
+      },
+      {
+        "note_index": 27,
+        "target_hz": 622.253967442738,
+        "peak_bin_hz": 622.4837894846488,
+        "local_spectral_ratio_db": 35.90282497536737
+      },
+      {
+        "note_index": 28,
+        "target_hz": 659.2551138242314,
+        "peak_bin_hz": 658.7328454988151,
+        "local_spectral_ratio_db": 22.57277432828758
+      },
+      {
+        "note_index": 29,
+        "target_hz": 698.4564628644096,
+        "peak_bin_hz": 698.7318038592745,
+        "local_spectral_ratio_db": 28.270797604145066
+      },
+      {
+        "note_index": 30,
+        "target_hz": 739.9888454215757,
+        "peak_bin_hz": 739.9807296684982,
+        "local_spectral_ratio_db": 26.109087145306212
+      },
+      {
+        "note_index": 31,
+        "target_hz": 783.9908719617049,
+        "peak_bin_hz": 783.7295903752506,
+        "local_spectral_ratio_db": 33.022676390928865
+      }
+    ]
+  }
+}

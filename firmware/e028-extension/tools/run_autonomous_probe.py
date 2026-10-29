@@ -38,7 +38,7 @@ def deploy(project, manifest_name, label):
 
 
 def main():
-    raw_dir = PRIVATE / 'autonomous-e033-20261029'
+    raw_dir = PRIVATE / 'autonomous-e033-20261029-lowgain'
     raw_dir.mkdir(exist_ok=True)
     # A known PC input, explicitly selected in prior physical tests.
     sd.check_input_settings(device=1, channels=1, samplerate=48000)
@@ -48,7 +48,7 @@ def main():
                      device=1, dtype='float32')
     rows = []
     try:
-        finished = deploy('audio_regression', 'probe-manifest.json', '20261029-autonomous-SRAM')
+        finished = deploy('audio_regression', 'probe-lowgain-manifest.json', '20261029-autonomous-lowgain-SRAM')
         print('Probe loaded; recording bounded sequence', flush=True)
         sd.wait()
         x = samples[:, 0]
@@ -72,9 +72,9 @@ def main():
             raise RuntimeError('No sustained acoustic onset; reject measurement')
         offset = onset-2
         labels = ['idle', 'C4-center', 'C4-up', 'C4-down', 'C4-center-repeat',
-                  'release', 'dry', 'delay', 'delay-release', 'reverb',
-                  'reverb-release', 'chorus', 'chorus-release', 'four-note-chord',
-                  'chord-release', '32-notes', '32-release', 'idle-final']
+                  'release', 'dry-attack', 'dry-settled', 'delay-settled', 'delay-release',
+                  'reverb', 'reverb-release', 'chorus', 'chorus-release',
+                  'four-note-chord', 'chord-release', '32-notes', '32-release', 'idle-final']
         for slot, label in enumerate(labels):
             a = int((offset + 2 * slot + .6) * 48000)
             b = int((offset + 2 * slot + 1.4) * 48000)
@@ -89,7 +89,7 @@ def main():
                        peak=float(max(abs(segment))),
                        clipped_fraction=float(np.mean(abs(segment) >= .99)),
                        dominant_hz=float(freqs[int(np.argmax(spectrum))]))
-            if slot in [1, 2, 3, 4, 6, 7, 9, 11]:
+            if slot in [1, 2, 3, 4, 6, 7, 8, 10, 12]:
                 expected = 293.664768 if slot == 2 else 233.081881 if slot == 3 else 261.625565
                 indices = np.where(abs(freqs-expected) < 15)[0]
                 k = indices[int(np.argmax(spectrum[indices]))]
@@ -113,7 +113,7 @@ def main():
                       raw_sha256=hashlib.sha256(wav.read_bytes()).hexdigest(),
                       caution='Realtek mic AGC/noise possible; candidates require signal provenance verification',
                       records=rows)
-        (OUT / 'autonomous-recording.json').write_text(json.dumps(report, indent=2))
+        (OUT / 'autonomous-recording-lowgain.json').write_text(json.dumps(report, indent=2))
     finally:
         sd.stop()
         deploy('instrument_e033', 'build-manifest.json', '20261029-restore-E033')

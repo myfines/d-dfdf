@@ -21,17 +21,17 @@ module audio_regression_top #(parameter integer SLOT_FRAMES=93750)(
    else frame<=frame+1'b1;
   end
  end
- wire single_note=(slot>=1 && slot<=4)||slot==6||slot==7||slot==9||slot==11;
+ wire single_note=(slot>=1 && slot<=4)||(slot>=6 && slot<=8)||slot==10||slot==12;
  wire [31:0] mask=single_note ? 32'h00001000 :
-                  slot==13 ? 32'h00891000 : slot==15 ? 32'hFFFFFFFF : 0;
+                  slot==14 ? 32'h00891000 : slot==16 ? 32'hFFFFFFFF : 0;
  wire signed [13:0] bend=slot==2 ? 14'sd8191 : slot==3 ? -14'sd8192 : 14'sd0;
- wire [2:0] fx=(slot==7||slot==8) ? 3'd2 :
-               (slot==9||slot==10) ? 3'd4 :
-               (slot==11||slot==12) ? 3'd1 : 3'd0;
+ wire [2:0] fx=(slot==8||slot==9) ? 3'd2 :
+               (slot==10||slot==11) ? 3'd4 :
+               (slot==12||slot==13) ? 3'd1 : 3'd0;
  wire signed [15:0] dry,left,right;
  synth32 synth(.clk(clk),.reset_n(reset_n),.frame_tick(ft),.gate_mask(mask),.timbre(2'd1),
   .velocity(8'd120),.bend(bend),.vibrato(8'd0),.brightness(8'd128),
-  .expression(8'd24),.tremolo(8'd0),.sample(dry));
+  .expression(8'd8),.tremolo(8'd0),.sample(dry));
  fx_engine effects(clk,reset_n,ft,dry,fx,left,right);
  i2s_tx16 audio(clk,reset_n,left,right,PCM_BCK,PCM_LRCK,PCM_DATA,ft);
  assign ADC_SCL=1'bz;assign ADC_SDA=1'bz;
