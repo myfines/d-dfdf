@@ -1279,3 +1279,10 @@ finally已恢复固定hash的正式E049 SRAM，独立读取E049/6020；Flash为E
 ## 2026-10-30 完整功能点测试指南
 
 按用户要求编写docs/e049-function-test-guide.md，覆盖42项本地/手机/表情与效果/显示/曲谱映射/录音/恢复功能检查，给出ADSR参数对照、慢速谱、恢复步骤与反馈编号。以当前E049＋App0.12为准；重新核对panel_ctrl、performance_controls、synth32和App实际按钮。在线示例raw.githubusercontent.com/myfines/d-dfdf/e031-web-control/docs/demo-score.txt读取HTTP200且内容合法。仅文档和只读网址核对，没有下载、烧录或改变板卡。
+
+
+## 2026-10-30 开源FPGA调试方法研究
+
+阅读Sipeed Primer20K例程、noaidi合成器实验工具、wbscope、cocotb、SymbiYosys、sigrok I2S、Apicula/nextpnr与openFPGALoader资料，形成docs/opensource-debugging-study-20261030.md及15条来源快照索引。原文只保存在忽略的.headroom-cache。重点区分真实控制链记录与替代输入探针，提出触发缓存和可重复压力测试，尚未实现。
+
+只读执行openFPGALoader --list-boards/--help/--Version，确认v1.1.1和tangprimer20k；初次--version报Error parsing options: Option version does not exist，按帮助改为--Version后成功。检查Icarus和GAO文件存在；不代表GAO捕获功能已经验证。本轮无RTL修改、无编译/下载/烧录、无驱动或网络更改，板卡保持此前E049。

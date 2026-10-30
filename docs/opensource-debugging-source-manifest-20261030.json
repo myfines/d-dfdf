@@ -1,0 +1,122 @@
+[
+  {
+    "key": "apicula",
+    "cached_text_sha256": "bf17483ff65ae90a85c38137d9a8c94187cf44f013773b0848246b86b9d8f261",
+    "bytes": 5760,
+    "source_url": "https://github.com/YosysHQ/apicula/blob/master/readme.md",
+    "retrieved_date": "2026-10-30",
+    "hash_scope": "cached extracted connector text, not upstream git blob"
+  },
+  {
+    "key": "formal",
+    "cached_text_sha256": "dd9f939779ec953bd43f9b4e158dd8bbdb438c0e821d24d267bb29733d7ef98e",
+    "bytes": 1621,
+    "source_url": "https://github.com/YosysHQ/sby/blob/main/README.md",
+    "retrieved_date": "2026-10-30",
+    "hash_scope": "cached extracted connector text, not upstream git blob"
+  },
+  {
+    "key": "i2s_decoder",
+    "cached_text_sha256": "8e7be9cc4d466f4c8d5df4e74d9d3e19f003ab2d64df69b48649c5a95ffafde6",
+    "bytes": 5851,
+    "source_url": "https://github.com/sigrokproject/libsigrokdecode/blob/master/decoders/i2s/pd.py",
+    "retrieved_date": "2026-10-30",
+    "hash_scope": "cached extracted connector text, not upstream git blob"
+  },
+  {
+    "key": "loader",
+    "cached_text_sha256": "91afd70ab777bbb78f51ade1a707f7de4b7bca434e1eea616de2547403a688f4",
+    "bytes": 9372,
+    "source_url": "https://github.com/trabucayre/openFPGALoader/blob/master/README.md",
+    "retrieved_date": "2026-10-30",
+    "hash_scope": "cached extracted connector text, not upstream git blob"
+  },
+  {
+    "key": "pnr",
+    "cached_text_sha256": "1fc74b0b4739af0786947e50bb842763d8182baf2131d49e2c44b5f095d7c100",
+    "bytes": 14175,
+    "source_url": "https://github.com/YosysHQ/nextpnr/blob/main/README.md",
+    "retrieved_date": "2026-10-30",
+    "hash_scope": "cached extracted connector text, not upstream git blob"
+  },
+  {
+    "key": "scope",
+    "cached_text_sha256": "06f4bce198c5803d66dbffbf9b2ce216f639425ba701b74544332f8e8ffcbee7",
+    "bytes": 2980,
+    "source_url": "https://github.com/ZipCPU/wbscope/blob/master/README.md",
+    "retrieved_date": "2026-10-30",
+    "hash_scope": "cached extracted connector text, not upstream git blob"
+  },
+  {
+    "key": "sim",
+    "cached_text_sha256": "141bef004c7a0fbbd9b371368f65c4dd80c5903036d589c4bbec9aac1f6b997f",
+    "bytes": 1180,
+    "source_url": "https://github.com/cocotb/cocotb/blob/master/README.md",
+    "retrieved_date": "2026-10-30",
+    "hash_scope": "cached extracted connector text, not upstream git blob"
+  },
+  {
+    "key": "sipeed_ddr",
+    "cached_text_sha256": "75b6c0d5e7ae356b95626115e66639402e7a149d34b44ef0ad2edc35fff41253",
+    "bytes": 1457,
+    "source_url": "https://github.com/sipeed/TangPrimer-20K-example/blob/main/DDR-test/README.md",
+    "retrieved_date": "2026-10-30",
+    "hash_scope": "cached extracted connector text, not upstream git blob"
+  },
+  {
+    "key": "sipeed_pt",
+    "cached_text_sha256": "fb88af312e8c1b9113f2cbac6b881769cd8adda043cdbd27a9976ad833c42602",
+    "bytes": 1732,
+    "source_url": "https://github.com/sipeed/TangPrimer-20K-example/blob/main/PT8211/src/pt8211_drive.v",
+    "retrieved_date": "2026-10-30",
+    "hash_scope": "cached extracted connector text, not upstream git blob"
+  },
+  {
+    "key": "sipeed_readme",
+    "cached_text_sha256": "1037d188adb1e364291d6f4ce4ed7443a4d4a7a54e8837190bdcfb464e2313a8",
+    "bytes": 9360,
+    "source_url": "https://github.com/sipeed/TangPrimer-20K-example/blob/main/README.md",
+    "retrieved_date": "2026-10-30",
+    "hash_scope": "cached extracted connector text, not upstream git blob"
+  },
+  {
+    "key": "synth",
+    "cached_text_sha256": "5a26a559da3b2146bb7000462f3f3ccc048c5bff8b8234c5b40bc3f8f9419c34",
+    "bytes": 13547,
+    "source_url": "https://github.com/Thorwegian/noaidi-fpga-synth/blob/main/README.md",
+    "retrieved_date": "2026-10-30",
+    "hash_scope": "cached extracted connector text, not upstream git blob"
+  },
+  {
+    "key": "synth_baseline",
+    "cached_text_sha256": "d72b87b7fad2977d2ccd0badd7b2b3c4bf0d902342df5a8b9e949d85fe76c47c",
+    "bytes": 11676,
+    "source_url": "https://github.com/Thorwegian/noaidi-fpga-synth/blob/main/tools/lab/baseline_check.py",
+    "retrieved_date": "2026-10-30",
+    "hash_scope": "cached extracted connector text, not upstream git blob"
+  },
+  {
+    "key": "synth_lab",
+    "cached_text_sha256": "f9e94e3f34a485ab41ab3b076aaff49f3b60e26f85f5e7a0ab65980616ac59f1",
+    "bytes": 10582,
+    "source_url": "https://github.com/Thorwegian/noaidi-fpga-synth/blob/main/tools/lab/README.md",
+    "retrieved_date": "2026-10-30",
+    "hash_scope": "cached extracted connector text, not upstream git blob"
+  },
+  {
+    "key": "synth_oss",
+    "cached_text_sha256": "7b02f36e0e5c04d8257cb35c1e0ddb5bd9318ba5e22b8258312bf49be52f47de",
+    "bytes": 35231,
+    "source_url": "https://github.com/Thorwegian/noaidi-fpga-synth/blob/main/docs/gowin_oss_notes.md",
+    "retrieved_date": "2026-10-30",
+    "hash_scope": "cached extracted connector text, not upstream git blob"
+  },
+  {
+    "key": "synth_timingprobe",
+    "cached_text_sha256": "19bcac281cbc930d0ae83751303ea74f4ca6eb032f7becdfe8b3a64861213a0d",
+    "bytes": 5702,
+    "source_url": "https://github.com/Thorwegian/noaidi-fpga-synth/blob/main/tools/lab/chip_check.py",
+    "retrieved_date": "2026-10-30",
+    "hash_scope": "cached extracted connector text, not upstream git blob"
+  }
+]
