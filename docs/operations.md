@@ -1265,3 +1265,12 @@ JTAG识别0x81B、COM13确认；首轮RAW采集幅度健全性失败，用户确
 命令：`sim/run_icarus.ps1`默认37项全部通过，另跑`-Tests tb_lissajous`通过；初始新测试缺practice_guide模块编译失败（RED），实现中遇SystemVerilog保留字matches，已改matching_keys；新渲染测试首次把第5键列坐标写成第6键，纠正夹具坐标后通过。`gw_sh.exe tools/build_e049_ap.tcl`成功，Fmax27.190MHz满足27MHz约束，setup/hold TNS0。调度测试四音色/32音/弯音/颤音80帧最高290/576周期。原始日志在logs/20261030-e049-*，关键证据归档firmware/e028-extension/docs/e049-oled/。
 
 设备识别：官方Programmer 2.5MHz、cable-index1、GW2A-18C执行`--scan`，返回`Error: No Gowin devices found!`（CLI退出码仍0，未误判成功）。未尝试下载或写Flash，不重复探测；未改电脑网络、传感器固件、OTP或下载器。实际板卡仍为上次确认E047，E049候选供后续部署。未做用户负责的实体验收。
+
+
+## 2026-10-30 E049正式Flash写入与E050板上自测
+
+用户明确要求自行烧录测试。官方Programmer重新扫描单颗GW2A-18C/ID0x81B，写前E047/6020；核对E049固定SHA256及原CST/电平/引脚后，cable-index1、2.5MHz，operation37、SPI0x000000完成GAO-Bridge Program and Verify，28.37秒。写后独立读E049/6020。证据firmware/e028-extension/docs/e049-flash/，本轮未bulk erase/OTP/ESP/下载器固件更新。
+
+为验证新OLED指引，生成E050 SRAM-only同源派生探针，实际连接OLED，其他ADC/光键接口高阻、手势关闭、ESP_TX高阻；内部注入曲谱/映射/ADSR/录音及音区切换，USB输出A帧和OLED Z状态。最初生成命令工作目录导致FileNotFoundError，修正相对根目录后构建成功，未造成硬件操作。E050 Fmax27.065MHz、setup/hold TNS0；UART RTL回环通过。运行run_e050_probe.py，393有效A/0错误/128完整块、曲谱3事件/映射slot0→31/ADSR9CDA0、PCM非零；438个OLED快照存在实际ACK且目标/音区参考校验全过，包含58休止、32音区2、14非零目标。原始日志logs/20261030-e050-*及e050-integration证据目录，A/Z原帧/WAV私有保存。数字录音不冒充模拟DAC测量，ACK不冒充肉眼显示检查。
+
+finally已恢复固定hash的正式E049 SRAM，独立读取E049/6020；Flash为E049。未操作电脑加入ESP热点。ADB devices为空，未做手机实测。完整断电自启动与实体演奏/延迟/LRCK不在本轮通过项。

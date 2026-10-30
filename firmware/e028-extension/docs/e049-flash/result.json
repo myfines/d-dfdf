@@ -1,0 +1,14 @@
+{
+  "version": "E049",
+  "sha256": "e9148e835c0dc08b764a16039bb6696e025b285967bbf6f4129d96d5175a6790",
+  "operation": 37,
+  "spi_address": 0,
+  "program_verify_success": true,
+  "coldboot_tested": false,
+  "usercode_verified": true,
+  "status_verified": true,
+  "final_after_probe_usercode": "E049",
+  "final_after_probe_status": "6020",
+  "e050_integrated_test_passed": true,
+  "formal_sram_restored": true
+}

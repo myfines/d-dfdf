@@ -1,0 +1,2 @@
+PASS E050 diagnostic UART: real TX/RX A frame and frozen OLED Z status
+E:\gaoyun\releases\e028-flash-record\firmware\e028-extension/sim/tb_e050_uart.sv:14: $finish called at 8071066000 (1ps)

@@ -1,0 +1,208 @@
+*** GOWIN Tcl Command Line Console  *** 
+current working directory: E:/gaoyun/private/esp-web/build/oled_integration_e050
+add new file: "E:/gaoyun/releases/e028-flash-record/firmware/e028-extension/src/wave_source.v"
+add new file: "E:/gaoyun/releases/e028-flash-record/firmware/e028-extension/src/synth32.v"
+add new file: "E:/gaoyun/releases/e028-flash-record/firmware/e028-extension/src/envelope_control.v"
+add new file: "E:/gaoyun/releases/e028-flash-record/firmware/e028-extension/src/keymap_control.v"
+add new file: "E:/gaoyun/releases/e028-flash-record/firmware/e028-extension/src/performance_controls.v"
+add new file: "E:/gaoyun/releases/e028-flash-record/firmware/e028-extension/src/pcm_record.v"
+add new file: "E:/gaoyun/releases/e028-flash-record/firmware/e028-extension/src/fx_engine.v"
+add new file: "E:/gaoyun/releases/e028-flash-record/firmware/e028-extension/src/spectrum16.v"
+add new file: "E:/gaoyun/releases/e028-flash-record/firmware/e028-extension/src/note_router.v"
+add new file: "E:/gaoyun/releases/e028-flash-record/firmware/e028-extension/src/song_player.v"
+add new file: "E:/gaoyun/releases/e028-flash-record/firmware/e028-extension/src/led_guide.v"
+add new file: "E:/gaoyun/releases/e028-flash-record/firmware/e028-extension/src/panel_ctrl.v"
+add new file: "E:/gaoyun/releases/e028-flash-record/firmware/e028-extension/src/esp_command_parser.v"
+add new file: "E:/gaoyun/releases/e028-flash-record/firmware/e028-extension/src/oled_i2c_stream.v"
+add new file: "E:/gaoyun/releases/e028-flash-record/firmware/e028-extension/src/oled_ui.v"
+add new file: "E:/gaoyun/releases/e028-flash-record/firmware/e028-extension/src/i2s_tx16.v"
+add new file: "E:/gaoyun/releases/e028-flash-record/firmware/e028-extension/src/ads1015_reader.v"
+add new file: "E:/gaoyun/releases/e028-flash-record/firmware/e028-extension/src/i2c_register_bus.v"
+add new file: "E:/gaoyun/releases/e028-flash-record/firmware/e028-extension/src/optical_keys_reader.v"
+add new file: "E:/gaoyun/releases/e028-flash-record/firmware/e028-extension/src/io_arm_control.v"
+add new file: "E:/gaoyun/releases/e028-flash-record/firmware/e028-extension/src/gesture_uart_rx.v"
+add new file: "E:/gaoyun/releases/e028-flash-record/firmware/e028-extension/src/gesture_packet_rx.v"
+add new file: "E:/gaoyun/releases/e028-flash-record/firmware/e028-extension/src/gesture_expression.v"
+add new file: "E:/gaoyun/releases/e028-flash-record/firmware/e028-extension/src/uart8n1.v"
+add new file: "E:/gaoyun/releases/e028-flash-record/firmware/e028-extension/src/uart_status.v"
+add new file: "E:/gaoyun/releases/e028-flash-record/firmware/e028-extension/src/esp_volume_parser.v"
+add new file: "E:/gaoyun/releases/e028-flash-record/firmware/e028-extension/src/esp_at_control.v"
+add new file: "E:/gaoyun/releases/e028-flash-record/firmware/e028-extension/src/esp_http_request.v"
+add new file: "E:/gaoyun/releases/e028-flash-record/firmware/e028-extension/src/esp_http_rom.v"
+add new file: "E:/gaoyun/releases/e028-flash-record/firmware/e028-extension/src/wifi_telemetry.v"
+add new file: "E:/gaoyun/private/esp-web/instrument_core_integration_probe.v"
+add new file: "E:/gaoyun/private/esp-web/integration_probe_top.v"
+add new file: "E:/gaoyun/releases/e028-flash-record/firmware/e028-extension/constraints/instrument_e027_ext.cst"
+add new file: "E:/gaoyun/releases/e028-flash-record/firmware/e028-extension/constraints/instrument.sdc"
+add new file: "E:/gaoyun/private/esp-web/integration_sequence_e050.v"
+add new file: "E:/gaoyun/releases/e028-flash-record/firmware/e028-extension/src/diagnostic_oled_uart.v"
+GowinSynthesis start
+Running parser ...
+Analyzing Verilog file 'E:\gaoyun\releases\e028-flash-record\firmware\e028-extension\src\wave_source.v'
+Analyzing Verilog file 'E:\gaoyun\releases\e028-flash-record\firmware\e028-extension\src\synth32.v'
+Analyzing Verilog file 'E:\gaoyun\releases\e028-flash-record\firmware\e028-extension\src\envelope_control.v'
+Analyzing Verilog file 'E:\gaoyun\releases\e028-flash-record\firmware\e028-extension\src\keymap_control.v'
+Analyzing Verilog file 'E:\gaoyun\releases\e028-flash-record\firmware\e028-extension\src\performance_controls.v'
+Analyzing Verilog file 'E:\gaoyun\releases\e028-flash-record\firmware\e028-extension\src\pcm_record.v'
+Analyzing Verilog file 'E:\gaoyun\releases\e028-flash-record\firmware\e028-extension\src\fx_engine.v'
+Analyzing Verilog file 'E:\gaoyun\releases\e028-flash-record\firmware\e028-extension\src\spectrum16.v'
+Analyzing Verilog file 'E:\gaoyun\releases\e028-flash-record\firmware\e028-extension\src\note_router.v'
+Analyzing Verilog file 'E:\gaoyun\releases\e028-flash-record\firmware\e028-extension\src\song_player.v'
+Analyzing Verilog file 'E:\gaoyun\releases\e028-flash-record\firmware\e028-extension\src\led_guide.v'
+Analyzing Verilog file 'E:\gaoyun\releases\e028-flash-record\firmware\e028-extension\src\panel_ctrl.v'
+Analyzing Verilog file 'E:\gaoyun\releases\e028-flash-record\firmware\e028-extension\src\esp_command_parser.v'
+Analyzing Verilog file 'E:\gaoyun\releases\e028-flash-record\firmware\e028-extension\src\oled_i2c_stream.v'
+Analyzing Verilog file 'E:\gaoyun\releases\e028-flash-record\firmware\e028-extension\src\oled_ui.v'
+Analyzing Verilog file 'E:\gaoyun\releases\e028-flash-record\firmware\e028-extension\src\i2s_tx16.v'
+Analyzing Verilog file 'E:\gaoyun\releases\e028-flash-record\firmware\e028-extension\src\ads1015_reader.v'
+Analyzing Verilog file 'E:\gaoyun\releases\e028-flash-record\firmware\e028-extension\src\i2c_register_bus.v'
+Analyzing Verilog file 'E:\gaoyun\releases\e028-flash-record\firmware\e028-extension\src\optical_keys_reader.v'
+Analyzing Verilog file 'E:\gaoyun\releases\e028-flash-record\firmware\e028-extension\src\io_arm_control.v'
+Analyzing Verilog file 'E:\gaoyun\releases\e028-flash-record\firmware\e028-extension\src\gesture_uart_rx.v'
+Analyzing Verilog file 'E:\gaoyun\releases\e028-flash-record\firmware\e028-extension\src\gesture_packet_rx.v'
+Analyzing Verilog file 'E:\gaoyun\releases\e028-flash-record\firmware\e028-extension\src\gesture_expression.v'
+Analyzing Verilog file 'E:\gaoyun\releases\e028-flash-record\firmware\e028-extension\src\uart8n1.v'
+Analyzing Verilog file 'E:\gaoyun\releases\e028-flash-record\firmware\e028-extension\src\uart_status.v'
+Analyzing Verilog file 'E:\gaoyun\releases\e028-flash-record\firmware\e028-extension\src\esp_volume_parser.v'
+Analyzing Verilog file 'E:\gaoyun\releases\e028-flash-record\firmware\e028-extension\src\esp_at_control.v'
+Analyzing Verilog file 'E:\gaoyun\releases\e028-flash-record\firmware\e028-extension\src\esp_http_request.v'
+Analyzing Verilog file 'E:\gaoyun\releases\e028-flash-record\firmware\e028-extension\src\esp_http_rom.v'
+Analyzing Verilog file 'E:\gaoyun\releases\e028-flash-record\firmware\e028-extension\src\wifi_telemetry.v'
+Analyzing Verilog file 'E:\gaoyun\private\esp-web\instrument_core_integration_probe.v'
+Analyzing Verilog file 'E:\gaoyun\private\esp-web\integration_probe_top.v'
+Analyzing Verilog file 'E:\gaoyun\private\esp-web\integration_sequence_e050.v'
+Analyzing Verilog file 'E:\gaoyun\releases\e028-flash-record\firmware\e028-extension\src\diagnostic_oled_uart.v'
+Compiling module 'integration_probe_top'("E:\gaoyun\private\esp-web\integration_probe_top.v":4)
+Compiling module 'instrument_core_integration_probe(SAFE_STARTUP=0,ENABLE_OPTICAL=0,ENABLE_GESTURE=0,LINK_MODE=1)'("E:\gaoyun\private\esp-web\instrument_core_integration_probe.v":10)
+Compiling module 'ads1015_reader'("E:\gaoyun\releases\e028-flash-record\firmware\e028-extension\src\ads1015_reader.v":4)
+Compiling module 'i2c_register_bus'("E:\gaoyun\releases\e028-flash-record\firmware\e028-extension\src\i2c_register_bus.v":4)
+Compiling module 'gesture_expression'("E:\gaoyun\releases\e028-flash-record\firmware\e028-extension\src\gesture_expression.v":3)
+Compiling module 'panel_ctrl'("E:\gaoyun\releases\e028-flash-record\firmware\e028-extension\src\panel_ctrl.v":17)
+Extracting RAM for identifier 'key_filter'("E:\gaoyun\releases\e028-flash-record\firmware\e028-extension\src\panel_ctrl.v":37)
+Extracting RAM for identifier 'hold_count'("E:\gaoyun\releases\e028-flash-record\firmware\e028-extension\src\panel_ctrl.v":38)
+Compiling module 'performance_controls'("E:\gaoyun\releases\e028-flash-record\firmware\e028-extension\src\performance_controls.v":4)
+WARN  (EX3791) : Expression size 11 truncated to fit in target size 10("E:\gaoyun\releases\e028-flash-record\firmware\e028-extension\src\performance_controls.v":10)
+Compiling module 'keymap_control'("E:\gaoyun\releases\e028-flash-record\firmware\e028-extension\src\keymap_control.v":4)
+Compiling module 'note_router'("E:\gaoyun\releases\e028-flash-record\firmware\e028-extension\src\note_router.v":15)
+Extracting RAM for identifier 'btn_meta'("E:\gaoyun\releases\e028-flash-record\firmware\e028-extension\src\note_router.v":35)
+Extracting RAM for identifier 'btn_sync'("E:\gaoyun\releases\e028-flash-record\firmware\e028-extension\src\note_router.v":36)
+Extracting RAM for identifier 'btn_count'("E:\gaoyun\releases\e028-flash-record\firmware\e028-extension\src\note_router.v":37)
+Compiling module 'song_player'("E:\gaoyun\releases\e028-flash-record\firmware\e028-extension\src\song_player.v":12)
+Extracting RAM for identifier 'downloaded'("E:\gaoyun\releases\e028-flash-record\firmware\e028-extension\src\song_player.v":31)
+WARN  (EX3791) : Expression size 8 truncated to fit in target size 7("E:\gaoyun\releases\e028-flash-record\firmware\e028-extension\src\song_player.v":47)
+WARN  (EX3791) : Expression size 7 truncated to fit in target size 6("E:\gaoyun\releases\e028-flash-record\firmware\e028-extension\src\song_player.v":115)
+Compiling module 'envelope_control'("E:\gaoyun\releases\e028-flash-record\firmware\e028-extension\src\envelope_control.v":4)
+Compiling module 'synth32'("E:\gaoyun\releases\e028-flash-record\firmware\e028-extension\src\synth32.v":17)
+Extracting RAM for identifier 'phase'("E:\gaoyun\releases\e028-flash-record\firmware\e028-extension\src\synth32.v":42)
+Extracting RAM for identifier 'env_level'("E:\gaoyun\releases\e028-flash-record\firmware\e028-extension\src\synth32.v":43)
+Extracting RAM for identifier 'env_counter'("E:\gaoyun\releases\e028-flash-record\firmware\e028-extension\src\synth32.v":44)
+Extracting RAM for identifier 'env_state'("E:\gaoyun\releases\e028-flash-record\firmware\e028-extension\src\synth32.v":45)
+Extracting RAM for identifier 'env_velocity'("E:\gaoyun\releases\e028-flash-record\firmware\e028-extension\src\synth32.v":46)
+Extracting RAM for identifier 'env_timbre'("E:\gaoyun\releases\e028-flash-record\firmware\e028-extension\src\synth32.v":47)
+Extracting RAM for identifier 'env_adsr'("E:\gaoyun\releases\e028-flash-record\firmware\e028-extension\src\synth32.v":48)
+Compiling module 'wave_source'("E:\gaoyun\releases\e028-flash-record\firmware\e028-extension\src\wave_source.v":3)
+WARN  (EX3791) : Expression size 19 truncated to fit in target size 17("E:\gaoyun\releases\e028-flash-record\firmware\e028-extension\src\synth32.v":569)
+WARN  (EX3791) : Expression size 25 truncated to fit in target size 17("E:\gaoyun\releases\e028-flash-record\firmware\e028-extension\src\synth32.v":612)
+WARN  (EX3791) : Expression size 26 truncated to fit in target size 24("E:\gaoyun\releases\e028-flash-record\firmware\e028-extension\src\synth32.v":617)
+Compiling module 'fx_engine'("E:\gaoyun\releases\e028-flash-record\firmware\e028-extension\src\fx_engine.v":14)
+Extracting RAM for identifier 'chorus_ram'("E:\gaoyun\releases\e028-flash-record\firmware\e028-extension\src\fx_engine.v":34)
+Extracting RAM for identifier 'delay_ram'("E:\gaoyun\releases\e028-flash-record\firmware\e028-extension\src\fx_engine.v":35)
+Extracting RAM for identifier 'rev1_ram'("E:\gaoyun\releases\e028-flash-record\firmware\e028-extension\src\fx_engine.v":36)
+Extracting RAM for identifier 'rev2_ram'("E:\gaoyun\releases\e028-flash-record\firmware\e028-extension\src\fx_engine.v":37)
+Extracting RAM for identifier 'ap1_ram'("E:\gaoyun\releases\e028-flash-record\firmware\e028-extension\src\fx_engine.v":38)
+Extracting RAM for identifier 'ap2_ram'("E:\gaoyun\releases\e028-flash-record\firmware\e028-extension\src\fx_engine.v":39)
+Compiling module 'spectrum16'("E:\gaoyun\releases\e028-flash-record\firmware\e028-extension\src\spectrum16.v":14)
+Extracting RAM for identifier 'x1'("E:\gaoyun\releases\e028-flash-record\firmware\e028-extension\src\spectrum16.v":32)
+Extracting RAM for identifier 'x2'("E:\gaoyun\releases\e028-flash-record\firmware\e028-extension\src\spectrum16.v":33)
+Extracting RAM for identifier 'y1'("E:\gaoyun\releases\e028-flash-record\firmware\e028-extension\src\spectrum16.v":34)
+Extracting RAM for identifier 'y2'("E:\gaoyun\releases\e028-flash-record\firmware\e028-extension\src\spectrum16.v":35)
+Extracting RAM for identifier 'level'("E:\gaoyun\releases\e028-flash-record\firmware\e028-extension\src\spectrum16.v":36)
+WARN  (EX3791) : Expression size 9 truncated to fit in target size 8("E:\gaoyun\releases\e028-flash-record\firmware\e028-extension\src\spectrum16.v":148)
+Compiling module 'uart8n1'("E:\gaoyun\releases\e028-flash-record\firmware\e028-extension\src\uart8n1.v":3)
+Compiling module 'esp_http_request'("E:\gaoyun\releases\e028-flash-record\firmware\e028-extension\src\esp_http_request.v":4)
+WARN  (EX3791) : Expression size 32 truncated to fit in target size 16("E:\gaoyun\releases\e028-flash-record\firmware\e028-extension\src\esp_http_request.v":23)
+WARN  (EX3791) : Expression size 32 truncated to fit in target size 4("E:\gaoyun\releases\e028-flash-record\firmware\e028-extension\src\esp_http_request.v":11)
+Compiling module 'integration_sequence'("E:\gaoyun\private\esp-web\integration_sequence_e050.v":3)
+Compiling module 'esp_command_parser(RAW_MODE=1)'("E:\gaoyun\releases\e028-flash-record\firmware\e028-extension\src\esp_command_parser.v":22)
+Compiling module 'led_guide'("E:\gaoyun\releases\e028-flash-record\firmware\e028-extension\src\led_guide.v":15)
+Compiling module 'oled_ui'("E:\gaoyun\releases\e028-flash-record\firmware\e028-extension\src\oled_ui.v":15)
+Extracting RAM for identifier 'wave'("E:\gaoyun\releases\e028-flash-record\firmware\e028-extension\src\oled_ui.v":55)
+Extracting RAM for identifier 'wave_snap'("E:\gaoyun\releases\e028-flash-record\firmware\e028-extension\src\oled_ui.v":56)
+Extracting RAM for identifier 'wave_r'("E:\gaoyun\releases\e028-flash-record\firmware\e028-extension\src\oled_ui.v":87)
+Extracting RAM for identifier 'wave_r_snap'("E:\gaoyun\releases\e028-flash-record\firmware\e028-extension\src\oled_ui.v":88)
+Compiling module 'practice_guide'("E:\gaoyun\releases\e028-flash-record\firmware\e028-extension\src\oled_ui.v":406)
+WARN  (EX3791) : Expression size 32 truncated to fit in target size 8("E:\gaoyun\releases\e028-flash-record\firmware\e028-extension\src\oled_ui.v":413)
+WARN  (EX3791) : Expression size 7 truncated to fit in target size 5("E:\gaoyun\releases\e028-flash-record\firmware\e028-extension\src\oled_ui.v":93)
+Compiling module 'oled_i2c_stream(DATA_BYTES=1,CONTROL=8'h00)'("E:\gaoyun\releases\e028-flash-record\firmware\e028-extension\src\oled_i2c_stream.v":4)
+Compiling module 'oled_i2c_stream'("E:\gaoyun\releases\e028-flash-record\firmware\e028-extension\src\oled_i2c_stream.v":4)
+WARN  (EX3791) : Expression size 7 truncated to fit in target size 6("E:\gaoyun\releases\e028-flash-record\firmware\e028-extension\src\oled_ui.v":245)
+WARN  (EX3791) : Expression size 168 truncated to fit in target size 8("E:\gaoyun\releases\e028-flash-record\firmware\e028-extension\src\oled_ui.v":177)
+Compiling module 'pcm_record'("E:\gaoyun\releases\e028-flash-record\firmware\e028-extension\src\pcm_record.v":4)
+Extracting RAM for identifier 'memory'("E:\gaoyun\releases\e028-flash-record\firmware\e028-extension\src\pcm_record.v":9)
+Extracting RAM for identifier 'snapshot'("E:\gaoyun\releases\e028-flash-record\firmware\e028-extension\src\pcm_record.v":16)
+WARN  (EX3791) : Expression size 9 truncated to fit in target size 8("E:\gaoyun\releases\e028-flash-record\firmware\e028-extension\src\pcm_record.v":59)
+Compiling module 'wifi_telemetry(EXTENDED=1)'("E:\gaoyun\releases\e028-flash-record\firmware\e028-extension\src\wifi_telemetry.v":3)
+Extracting RAM for identifier 'wave'("E:\gaoyun\releases\e028-flash-record\firmware\e028-extension\src\wifi_telemetry.v":8)
+Extracting RAM for identifier 'snapshot'("E:\gaoyun\releases\e028-flash-record\firmware\e028-extension\src\wifi_telemetry.v":8)
+WARN  (EX3791) : Expression size 32 truncated to fit in target size 5("E:\gaoyun\releases\e028-flash-record\firmware\e028-extension\src\wifi_telemetry.v":13)
+Compiling module 'i2s_tx16'("E:\gaoyun\releases\e028-flash-record\firmware\e028-extension\src\i2s_tx16.v":4)
+Compiling module 'e050_packet_uart'("E:\gaoyun\releases\e028-flash-record\firmware\e028-extension\src\diagnostic_oled_uart.v":5)
+WARN  (EX3791) : Expression size 64 truncated to fit in target size 4("E:\gaoyun\releases\e028-flash-record\firmware\e028-extension\src\diagnostic_oled_uart.v":8)
+NOTE  (EX0101) : Current top module is "integration_probe_top"
+[5%] Running netlist conversion ...
+WARN  (CV0016) : Input btn_n is unused("E:\gaoyun\private\esp-web\integration_probe_top.v":8)
+WARN  (CV0016) : Input JOY_SW_N is unused("E:\gaoyun\private\esp-web\integration_probe_top.v":9)
+WARN  (CV0016) : Input ESP_RX is unused("E:\gaoyun\private\esp-web\integration_probe_top.v":13)
+WARN  (CV0016) : Input K230_RX is unused("E:\gaoyun\private\esp-web\integration_probe_top.v":14)
+Running device independent optimization ...
+[10%] Optimizing Phase 0 completed
+[15%] Optimizing Phase 1 completed
+[25%] Optimizing Phase 2 completed
+Running inference ...
+[30%] Inferring Phase 0 completed
+[40%] Inferring Phase 1 completed
+[50%] Inferring Phase 2 completed
+[55%] Inferring Phase 3 completed
+Running technical mapping ...
+[60%] Tech-Mapping Phase 0 completed
+[65%] Tech-Mapping Phase 1 completed
+[75%] Tech-Mapping Phase 2 completed
+[80%] Tech-Mapping Phase 3 completed
+[90%] Tech-Mapping Phase 4 completed
+WARN  (NL0002) : The module "gesture_expression" instantiated to "expression_map" is swept in optimizing("E:\gaoyun\private\esp-web\instrument_core_integration_probe.v":246)
+WARN  (NL0002) : The module "esp_http_request" instantiated to "http_parser" is swept in optimizing("E:\gaoyun\private\esp-web\instrument_core_integration_probe.v":333)
+WARN  (NL0002) : The module "panel_ctrl" instantiated to "panel" is swept in optimizing("E:\gaoyun\private\esp-web\instrument_core_integration_probe.v":254)
+WARN  (NL0002) : The module "esp_command_parser" instantiated to "parser" is swept in optimizing("E:\gaoyun\private\esp-web\instrument_core_integration_probe.v":338)
+WARN  (NL0002) : The module "uart8n1" instantiated to "serial" is swept in optimizing("E:\gaoyun\private\esp-web\instrument_core_integration_probe.v":324)
+[95%] Generate netlist file "E:\gaoyun\private\esp-web\build\oled_integration_e050\impl\gwsynthesis\oled_integration_e050.vg" completed
+[100%] Generate report file "E:\gaoyun\private\esp-web\build\oled_integration_e050\impl\gwsynthesis\oled_integration_e050_syn.rpt.html" completed
+GowinSynthesis finish
+Reading netlist file: "E:\gaoyun\private\esp-web\build\oled_integration_e050\impl\gwsynthesis\oled_integration_e050.vg"
+Parsing netlist file "E:\gaoyun\private\esp-web\build\oled_integration_e050\impl\gwsynthesis\oled_integration_e050.vg" completed
+Processing netlist completed
+Reading constraint file: "E:\gaoyun\releases\e028-flash-record\firmware\e028-extension\constraints\instrument_e027_ext.cst"
+Physical Constraint parsed completed
+Running placement......
+[10%] Placement Phase 0 completed
+[20%] Placement Phase 1 completed
+[30%] Placement Phase 2 completed
+[50%] Placement Phase 3 completed
+Running routing......
+[60%] Routing Phase 0 completed
+[70%] Routing Phase 1 completed
+[80%] Routing Phase 2 completed
+[90%] Routing Phase 3 completed
+Running timing analysis......
+[95%] Timing analysis completed
+Placement and routing completed
+Bitstream generation in progress......
+Bitstream generation completed
+Running power analysis......
+[100%] Power analysis completed
+Generate file "E:\gaoyun\private\esp-web\build\oled_integration_e050\impl\pnr\oled_integration_e050.power.html" completed
+Generate file "E:\gaoyun\private\esp-web\build\oled_integration_e050\impl\pnr\oled_integration_e050.pin.html" completed
+Generate file "E:\gaoyun\private\esp-web\build\oled_integration_e050\impl\pnr\oled_integration_e050.rpt.html" completed
+Generate file "E:\gaoyun\private\esp-web\build\oled_integration_e050\impl\pnr\oled_integration_e050.rpt.txt" completed
+Generate file "E:\gaoyun\private\esp-web\build\oled_integration_e050\impl\pnr\oled_integration_e050.tr.html" completed
+Fri Oct 30 14:36:32 2026
+
