@@ -1242,3 +1242,12 @@ JTAG识别0x81B、COM13确认；首轮RAW采集幅度健全性失败，用户确
 ## 2026-10-30 E047严格赛题差距复核
 
 按用户要求重读官网选题二摘录，核对E047 manifest/Flash及用户音量反馈；重写当前对照表，移除旧表E045/E039混用造成的歧义。进一步核实APK WifiSession仅VT EPK及W/U/C/R，固件X颤音/G自定义ADSR已有而APK无操作入口；区分入口欠缺、未建互联网曲库与官方必选门槛，不自行增加要求。明确≤10ms、≤5ms/确定性、实际LRCK及最终手机/冷启动/视频未验。仅改文档，没有执行硬件操作。
+
+
+## 2026-10-30 App0.12赛题功能收尾
+
+目的：补齐基础ADSR/拓展表情控制与App联动的使用入口，保留InstrumentView原版自绘主界面。新增X/G（ADSR带A帧回读）、F效果组合、S显示页、D32声部启停，以及在线文本曲谱下载和手机缓存。G按固件A/D/R索引与S格式、XOR校验编码；E开关与F延迟位同步，避免心跳覆盖效果组合。断连清除待发送扩展、颤音和测试状态。默认不接管B/Y，沿用本地摇杆/高度控制。
+
+执行：`./mobile-companion/build.ps1`，完整七组测试、Android编译、dex、打包、签名验证通过；日志`logs/20261030-apk012-build.log`，归档`docs/app012/build.log`。初次扩展测试因新增WifiProtocol依赖缺少classpath编译失败，已修正构建脚本。单独验签初次因当前shell未设置JAVA_HOME失败，设置本机JDK后验签成功，证书与0.11一致。相关RED证据见`docs/app012/verification.json`。按code-review-and-quality核对边界、网络超时/文件上限、包络回读与效果位一致性；没有修改HDL，无需重复RTL回归。
+
+影响：产出APK0.12，未安装到真实手机，未下载SRAM、未写Flash、未改变电脑网络。E047仍为现有Flash，未代替用户冷启动。在线下载以本机HTTP服务器测试；手机公网及ESP闭环仍待验收，不能宣称实体延迟/采样率达标。使用与顺序见`docs/e047-app012-guide.md`。

@@ -1,0 +1,30 @@
+{
+  "date": "2026-10-30",
+  "fpga": "E047, existing Flash unchanged",
+  "app": "0.12-e047-expression",
+  "apk_sha256": "30a60f21d15c00f83aea6ec76a82abebd0bbaa15a2326b3dd19bdaffbe4b632a",
+  "apk_bytes": 69975,
+  "certificate_sha256": "d551d7a28c275fd932f73f8f649d0073c1ab3b24d40f42f2b5bc44449c0e2893",
+  "full_build_passed": true,
+  "tests": [
+    "core",
+    "WiFi protocol",
+    "actual TCP worker controls including X/F/S/D/G",
+    "ADSR encoding and bounds",
+    "A metadata ADSR parsing, apply/reset transactions, score/map and complete PCM",
+    "bounded HTTP score download and validation",
+    "original custom View render path"
+  ],
+  "red_evidence": [
+    "ADSR method absent: compile failed before implementation",
+    "ADSR A-frame fields absent: compile failed before parser update",
+    "F/S/D rejected with Command range before validation update",
+    "ScoreDownload absent: compile failed before implementation"
+  ],
+  "warnings": [
+    "javac source8 bootstrap path warning and deprecated APIs; build successful"
+  ],
+  "actual_phone_install_tested": false,
+  "hardware_reprogrammed_this_phase": false,
+  "physical_latency_measured_this_phase": false
+}

@@ -13,19 +13,25 @@ public final class WifiSession implements AutoCloseable {
  private volatile Socket socket;
  private Thread worker;
  private final Object stateLock=new Object();
- private int volume=160,tone=0,echo=0,page=0,keys=0;
+ private int volume=160,tone=0,echo=0,page=0,keys=0,vibrato=0,fx=0,screen=0,demo=0;
  private boolean dirty=true;
  private final java.util.concurrent.ArrayBlockingQueue<String> extensions=new java.util.concurrent.ArrayBlockingQueue<>(96);
- public void extension(String packet){if(!packet.matches("(?:[WUC][0-9A-F]{8}|R0[01])"))throw new IllegalArgumentException("扩展命令错误");if(!running||!extensions.offer(packet+"\n"))throw new IllegalStateException("直连未运行或发送队列已满");}
+ public void extension(String packet){if(!packet.matches("(?:[WUCG][0-9A-F]{8}|R0[01])"))throw new IllegalArgumentException("扩展命令错误");if(!running||!extensions.offer(packet+"\n"))throw new IllegalStateException("直连未运行或发送队列已满");}
  public WifiSession(Listener listener){this.listener=listener;}
  public void volume(int value){set('V',value);}
+ public void vibrato(int value){set('X',value);}
+ public void envelope(int attack,int decay,int sustain,int release){extension(ExtensionProtocol.envelope(attack,decay,sustain,release));}
+ public void resetEnvelope(){extension("G00000000");}
  public void tone(int value){set('T',value);}
  public void echo(boolean value){set('E',value?1:0);}
+ public void effects(int value){set('F',value);}
+ public void screen(int value){set('S',value);}
+ public void demo(boolean value){set('D',value?1:0);}
  public void page(int value){set('P',value);}
  public void keys(int value){set('K',value);}
  private void set(char kind,int value){
   WifiProtocol.command(kind,value);
-  synchronized(stateLock){switch(kind){case 'V':volume=value;break;case 'T':tone=value;break;case 'E':echo=value;break;case 'P':page=value;break;default:keys=value;}dirty=true;}
+  synchronized(stateLock){switch(kind){case 'V':volume=value;break;case 'X':vibrato=value;break;case 'T':tone=value;break;case 'E':echo=value;fx=(fx&5)|(value<<1);break;case 'F':fx=value;echo=(value>>1)&1;break;case 'S':screen=value;break;case 'D':demo=value;break;case 'P':page=value;break;default:keys=value;}dirty=true;}
  }
  public synchronized void connect(final String host,final int port,final SocketSource source) {
   if(running)throw new IllegalStateException("Already connecting");
@@ -46,7 +52,7 @@ public final class WifiSession implements AutoCloseable {
     synchronized(stateLock){
      if(dirty || first || now-sent>=500000000L){
       String message=WifiProtocol.command('V',volume)+WifiProtocol.command('T',tone)
-       +WifiProtocol.command('E',echo)+WifiProtocol.command('P',page)+WifiProtocol.command('K',keys)+WifiProtocol.command('Q',0);
+       +WifiProtocol.command('X',vibrato)+WifiProtocol.command('E',echo)+WifiProtocol.command('F',fx)+WifiProtocol.command('S',screen)+WifiProtocol.command('D',demo)+WifiProtocol.command('P',page)+WifiProtocol.command('K',keys)+WifiProtocol.command('Q',0);
       output.write(message.getBytes(StandardCharsets.US_ASCII));output.flush();sent=now;dirty=false;first=false;
      }
     }
@@ -64,7 +70,7 @@ public final class WifiSession implements AutoCloseable {
    }
    output.write(WifiProtocol.command('L',0).getBytes(StandardCharsets.US_ASCII));output.flush();
   }catch(Exception error){if(running)failure="连接停止："+error.getMessage()+"；";}
-  finally{running=false;socket=null; synchronized(stateLock){keys=0;} listener.status(failure+"已断开；FPGA最迟5秒释放远控");}
+  finally{running=false;socket=null; synchronized(stateLock){keys=0;vibrato=0;demo=0;} extensions.clear(); listener.status(failure+"已断开；FPGA最迟5秒释放远控");}
  }
  public boolean isRunning(){return running;}
  @Override public void close(){

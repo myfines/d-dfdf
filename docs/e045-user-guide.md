@@ -1,10 +1,12 @@
+> 新增功能及分步操作见[App0.12教程](e047-app012-guide.md)。手机实机验收待完成。
+
 > 最新部署：用户确认电钢琴/Bass音量够响，E047已固化Flash并校验成功，最终独立读回E047/6020。完整冷启动及其他实体功能仍待验收。[修复说明](e047-timbre-balance.md) · [烧录证据](../firmware/e028-extension/docs/e047-flash/README.md)。以下旧版本说明为历史。
 
-# E045使用教程（原版自绘UI，热点直连）
+# E047使用教程（原版自绘UI，热点直连）
 
 ## 版本与接线
 
-E045已写入Flash并校验成功，独立读回E045/0x6020；完整断电自启动尚待用户验证。现在可以按下方步骤冷启动。使用[APK0.11](../mobile-companion/apk/instrument-companion-0.11-e045-direct.apk)；签名与0.10一致，可覆盖升级；原版自绘UI保持不变。
+E047已写入Flash并校验成功，最终独立读回E047/0x6020；完整断电自启动尚待用户验证。现在可以按下方步骤冷启动。使用[APK0.12](../mobile-companion/apk/instrument-companion-0.12-e047-expression.apk)；签名与0.10一致，可覆盖升级；原版自绘UI保持不变。
 
 沿用已验证接线，不带电改线。PCM模块用现有独立USB供电，不把它的3.3V排针再次接入供电；模块共地，K230避免双路供电。音箱先调小音量；先PCM供电，再Dock/K230。电脑保持原网络，只有手机连接ESP热点。
 

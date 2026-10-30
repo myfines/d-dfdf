@@ -1,3 +1,5 @@
+> 2026-10-30：App0.12已补齐颤音、ADSR回读、效果器/OLED/32声部入口及在线文本曲谱下载，兼容E047；未手机实机验收。[操作和逐步验收](../docs/e047-app012-guide.md)。以下旧版本状态为历史。
+
 # 当前推荐：FPGA乐器 1.2-piano（用户提供）
 
 [下载推荐APK](apk/instrument-user-preferred-20261023.apk) · [身份与哈希](apk/preferred-release.json)

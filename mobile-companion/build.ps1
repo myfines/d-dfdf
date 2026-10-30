@@ -19,7 +19,7 @@ Check 'WiFi tests compile'
 Check 'WiFi protocol tests'
 & "$Jdk\bin\java.exe" -cp "$build\tests" cn.myfines.instrument.WifiSessionTest
 Check 'WiFi socket tests'
-& "$Jdk\bin\javac.exe" -encoding UTF-8 -d "$build\tests" "$PSScriptRoot\src\cn\myfines\instrument\ExtensionProtocol.java" "$PSScriptRoot\tests\ExtensionProtocolTest.java"
+& "$Jdk\bin\javac.exe" -encoding UTF-8 -cp "$build\tests" -d "$build\tests" "$PSScriptRoot\src\cn\myfines\instrument\ExtensionProtocol.java" "$PSScriptRoot\tests\ExtensionProtocolTest.java"
 Check 'Extension test compile'
 & "$Jdk\bin\java.exe" -cp "$build\tests" cn.myfines.instrument.ExtensionProtocolTest
 Check 'Extension tests'
@@ -27,6 +27,10 @@ Check 'Extension tests'
 Check 'Direct extension compile'
 & "$Jdk\bin\java.exe" -cp "$build\tests" cn.myfines.instrument.DirectExtensionTest
 Check 'Direct extension tests'
+& "$Jdk/bin/javac.exe" -encoding UTF-8 -cp "$build/tests" -d "$build/tests" "$PSScriptRoot/src/cn/myfines/instrument/ScoreDownload.java" "$PSScriptRoot/tests/ScoreDownloadTest.java"
+Check 'Score download compile'
+& "$Jdk/bin/java.exe" -cp "$build/tests" cn.myfines.instrument.ScoreDownloadTest
+Check 'Score download tests'
 $headless=@(Get-ChildItem "$PSScriptRoot/tests/headless" -Recurse -Filter *.java | ForEach-Object FullName)
 & "$Jdk/bin/javac.exe" -encoding UTF-8 -d "$build/headless" @headless "$PSScriptRoot/src/cn/myfines/instrument/reference/InstrumentView.java" "$PSScriptRoot/src/cn/myfines/instrument/reference/Protocol.java"
 Check 'Reference View test compile'

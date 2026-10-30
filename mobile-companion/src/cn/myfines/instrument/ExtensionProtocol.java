@@ -1,6 +1,10 @@
 package cn.myfines.instrument;
 public final class ExtensionProtocol {
  private static String packet(char kind,int a,int b,int c){return String.format(java.util.Locale.ROOT,"%c%02X%02X%02X%02X",kind,a,b,c,a^b^c);}
+ public static String envelope(int attack,int decay,int sustain,int release){
+  if(attack<0||attack>15||decay<0||decay>15||release<0||release>15||sustain<0||sustain>255)throw new IllegalArgumentException("ADSR: A/D/R 0..15, S 0..255");
+  return packet('G',0x10|attack,(decay<<4)|release,sustain);
+ }
  public static String keymap(int slot,int note){if(slot<0||slot>31||note<0||note>31)throw new IllegalArgumentException("位置/音符应为0..31");return packet('U',16,slot,note);}
  public static String chunk(int index){if(index<0||index>127)throw new IllegalArgumentException("分块应为0..127");return packet('C',16,2,index);}
  public static String[] score(String text){

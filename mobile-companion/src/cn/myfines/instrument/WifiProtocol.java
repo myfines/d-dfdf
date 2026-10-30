@@ -36,8 +36,9 @@ public final class WifiProtocol {
   return result;
  }
  public static String command(char kind,int value) {
-  boolean valid=(kind=='V'&&value>=0&&value<=255)||(kind=='T'&&value>=0&&value<=3)
+  boolean valid=((kind=='V'||kind=='X')&&value>=0&&value<=255)||(kind=='T'&&value>=0&&value<=3)
    ||(kind=='E'&&value>=0&&value<=1)||(kind=='K'&&value>=0&&value<=255)
+   ||(kind=='F'&&value>=0&&value<=7)||(kind=='S'&&value>=0&&value<=4)||(kind=='D'&&value>=0&&value<=1)
    ||(kind=='P'&&value>=0&&value<=3)||((kind=='Q'||kind=='L')&&value==0);
   if(!valid)throw new IllegalArgumentException("Command range");
   return String.format(Locale.ROOT,"%c%02X\n",kind,value);
