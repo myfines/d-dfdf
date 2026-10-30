@@ -1274,3 +1274,8 @@ JTAG识别0x81B、COM13确认；首轮RAW采集幅度健全性失败，用户确
 为验证新OLED指引，生成E050 SRAM-only同源派生探针，实际连接OLED，其他ADC/光键接口高阻、手势关闭、ESP_TX高阻；内部注入曲谱/映射/ADSR/录音及音区切换，USB输出A帧和OLED Z状态。最初生成命令工作目录导致FileNotFoundError，修正相对根目录后构建成功，未造成硬件操作。E050 Fmax27.065MHz、setup/hold TNS0；UART RTL回环通过。运行run_e050_probe.py，393有效A/0错误/128完整块、曲谱3事件/映射slot0→31/ADSR9CDA0、PCM非零；438个OLED快照存在实际ACK且目标/音区参考校验全过，包含58休止、32音区2、14非零目标。原始日志logs/20261030-e050-*及e050-integration证据目录，A/Z原帧/WAV私有保存。数字录音不冒充模拟DAC测量，ACK不冒充肉眼显示检查。
 
 finally已恢复固定hash的正式E049 SRAM，独立读取E049/6020；Flash为E049。未操作电脑加入ESP热点。ADB devices为空，未做手机实测。完整断电自启动与实体演奏/延迟/LRCK不在本轮通过项。
+
+
+## 2026-10-30 完整功能点测试指南
+
+按用户要求编写docs/e049-function-test-guide.md，覆盖42项本地/手机/表情与效果/显示/曲谱映射/录音/恢复功能检查，给出ADSR参数对照、慢速谱、恢复步骤与反馈编号。以当前E049＋App0.12为准；重新核对panel_ctrl、performance_controls、synth32和App实际按钮。在线示例raw.githubusercontent.com/myfines/d-dfdf/e031-web-control/docs/demo-score.txt读取HTTP200且内容合法。仅文档和只读网址核对，没有下载、烧录或改变板卡。
