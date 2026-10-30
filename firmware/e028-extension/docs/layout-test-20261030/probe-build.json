@@ -1,0 +1,8 @@
+{
+  "version": "E050 SRAM-only OLED-connected diagnostic",
+  "artifact_sha256": "ed9b1fb394669a6b70b4dc9de8dc7e7cb2f8c683307253e5c9b49fe8e72668c0",
+  "fmax_mhz": 27.065,
+  "setup_tns": 0,
+  "hold_tns": 0,
+  "source_core_sha256": "8bb9bb0240eafaeb80cbc7eb7dc93de49603a91420c37c844cbad0f10b17345e"
+}

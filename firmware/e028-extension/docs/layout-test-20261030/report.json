@@ -1,0 +1,18 @@
+{
+  "valid_A_packets": 392,
+  "invalid_A_packets": 0,
+  "chunks": 128,
+  "OLED_status_packets": 437,
+  "OLED_ack_online": true,
+  "source_core_sha256": "8bb9bb0240eafaeb80cbc7eb7dc93de49603a91420c37c844cbad0f10b17345e",
+  "limitation": "Injected SRAM diagnostic commands; OLED-online is I2C ACK evidence, not visual inspection. No phone/ESP, optical gesture, cold boot, analog audio or physical latency acceptance.",
+  "rest_snapshots": 58,
+  "bank2_snapshots": 32,
+  "target_snapshots": 14,
+  "OLED_mapping_reference_passed": true,
+  "pcm_peak": 6,
+  "wav_sha256": "e93c01681525dbab92063c17aac329a084e7eaa5061a2ad054c44d78b46ad6df",
+  "applied_metadata_verified": true,
+  "passed": true,
+  "restored_E049_6020": true
+}

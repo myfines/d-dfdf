@@ -1286,3 +1286,10 @@ finally已恢复固定hash的正式E049 SRAM，独立读取E049/6020；Flash为E
 阅读Sipeed Primer20K例程、noaidi合成器实验工具、wbscope、cocotb、SymbiYosys、sigrok I2S、Apicula/nextpnr与openFPGALoader资料，形成docs/opensource-debugging-study-20261030.md及15条来源快照索引。原文只保存在忽略的.headroom-cache。重点区分真实控制链记录与替代输入探针，提出触发缓存和可重复压力测试，尚未实现。
 
 只读执行openFPGALoader --list-boards/--help/--Version，确认v1.1.1和tangprimer20k；初次--version报Error parsing options: Option version does not exist，按帮助改为--Version后成功。检查Icarus和GAO文件存在；不代表GAO捕获功能已经验证。本轮无RTL修改、无编译/下载/烧录、无驱动或网络更改，板卡保持此前E049。
+
+
+## 2026-10-30 当前装配实物测试
+
+用户提供装配照片并要求测试。COM13被动115200监听12秒0字节；官方Programmer 2.5MHz --scan及operation73/74只读确认0x81B/E049/6020，日志logs/20261030-layout-*。首次查找诊断脚本误用仓库根tools路径，报不存在；定位至firmware/e028-extension/tools后解决，没有重复硬件尝试。
+
+运行现有run_e050_probe.py，将输出目录独立设为docs/layout-test-20261030；运行前核对源码、探针和恢复码流hash，保留旧私有帧/WAV副本。E050临时SRAM自测392有效A帧/0错误/128录音块/437 OLED状态且实际ACK，曲谱、映射、ADSR及参考指引通过。finally恢复E049并读回E049/6020。Flash未写，网络未改，真实手机/光键/手势及模拟音频不在本轮通过项。恢复后需重新启用外设。详见firmware/e028-extension/docs/layout-test-20261030/README.md及report.json。
