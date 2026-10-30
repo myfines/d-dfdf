@@ -1,0 +1,12 @@
+{
+  "date": "2026-10-30",
+  "path": "E:\\gaoyun\\releases\\instrument-E047-app012-delivery-20261030.zip",
+  "sha256": "61db46efa10c318bd3ac75d988a5ea0930bb230b425b2ee87f46251e032751b9",
+  "bytes": 2930277,
+  "source_commit": "63d351b977564748e698ece8e0950fbee48e107b",
+  "verified_content_files": 721,
+  "zip_crc_passed": true,
+  "fpga": "E047",
+  "app": "0.12-e047-expression",
+  "phone_and_physical_acceptance_pending": true
+}
