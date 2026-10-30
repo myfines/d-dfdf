@@ -4,11 +4,29 @@ from pathlib import Path
 import numpy as np
 from scipy.signal import find_peaks
 
+def transition_windows(samples, rate, offset, slots=30):
+ rows=[]
+ for slot in range(slots):
+  start=int((offset+slot*2)*rate);end=start+2*rate
+  y=samples[max(start,0):min(end,len(samples))]
+  steady=y[int(.35*rate):int(1.75*rate)]
+  rows.append(dict(slot=slot,complete=start>=0 and end<=len(samples),
+   peak=float(max(abs(y))) if len(y) else None,
+   near_fullscale_samples=int(np.sum(abs(y)>=.99)),
+   steady_near_fullscale_samples=int(np.sum(abs(steady)>=.99))))
+ return rows
+
 def main():
  p=argparse.ArgumentParser();p.add_argument('tag');a=p.parse_args()
  root=Path(__file__).resolve().parents[1];out=root/'docs'/a.tag;raw=Path('E:/gaoyun/private/esp-web')/a.tag
  report=json.loads((out/'report.json').read_text());rate=report['pc_sample_rate'];offset=report['sequence_offset_seconds']
  with wave.open(str(raw/'capture.wav')) as stream:x=np.frombuffer(stream.readframes(stream.getnframes()),dtype='<i2').astype(float)/32768
+ windows=transition_windows(x,rate,offset)
+ (out/'transition-windows.json').write_text(json.dumps(dict(windows=windows,
+  complete=all(row['complete'] for row in windows),
+  near_fullscale_samples=sum(row['near_fullscale_samples'] for row in windows),
+  no_recording_overload=all(row['near_fullscale_samples']==0 for row in windows),
+  limitation='Captures test-stimulus and PC-input overload; cannot alone assign distortion to production RTL.'),indent=2)+'\n',encoding='utf-8')
  def segment(slot,start=.35,duration=1.4):
   i=int((offset+slot*2+start)*rate);return x[i:i+int(duration*rate)]
  def spectrum(slot):

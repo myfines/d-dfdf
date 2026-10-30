@@ -1,0 +1,160 @@
+{
+  "count": 24,
+  "passed": true,
+  "checks": [
+    {
+      "test": "piano-dry signal above noise",
+      "passed": true,
+      "observed": 22.70283396051678
+    },
+    {
+      "test": "piano-dry C4 frequency",
+      "passed": true,
+      "observed": 261.62916428388576
+    },
+    {
+      "test": "piano-dry no implicit wide vibrato",
+      "passed": true,
+      "observed": [
+        261.47432128771857,
+        261.7802782674801
+      ]
+    },
+    {
+      "test": "organ-dry signal above noise",
+      "passed": true,
+      "observed": 25.563309151526248
+    },
+    {
+      "test": "organ-dry C4 frequency",
+      "passed": true,
+      "observed": 261.6279853749002
+    },
+    {
+      "test": "organ-dry no implicit wide vibrato",
+      "passed": true,
+      "observed": [
+        261.49232163620707,
+        261.7646922339314
+      ]
+    },
+    {
+      "test": "strings-dry signal above noise",
+      "passed": true,
+      "observed": 22.7987460761756
+    },
+    {
+      "test": "strings-dry C4 frequency",
+      "passed": true,
+      "observed": 261.63034806171044
+    },
+    {
+      "test": "strings-dry no implicit wide vibrato",
+      "passed": true,
+      "observed": [
+        261.5433276630155,
+        261.7185773610554
+      ]
+    },
+    {
+      "test": "bass-dry signal above noise",
+      "passed": true,
+      "observed": 25.172771646454486
+    },
+    {
+      "test": "bass-dry C4 frequency",
+      "passed": true,
+      "observed": 261.6287630530074
+    },
+    {
+      "test": "bass-dry no implicit wide vibrato",
+      "passed": true,
+      "observed": [
+        261.5220979123328,
+        261.71905497195087
+      ]
+    },
+    {
+      "test": "half volume",
+      "passed": true,
+      "observed": -5.970770808789641
+    },
+    {
+      "test": "quarter volume",
+      "passed": true,
+      "observed": -11.85420459178874
+    },
+    {
+      "test": "restoration",
+      "passed": true,
+      "observed": -0.00887538279510558
+    },
+    {
+      "test": "mute near noise",
+      "passed": true,
+      "observed": 0.5411469577761423
+    },
+    {
+      "test": "four voices",
+      "passed": true,
+      "observed": 4
+    },
+    {
+      "test": "32 and selective16 states",
+      "passed": true,
+      "observed": [
+        32,
+        16,
+        16
+      ]
+    },
+    {
+      "test": "32 spectral peaks",
+      "passed": true,
+      "observed": 32
+    },
+    {
+      "test": "explicit vibrato",
+      "passed": true,
+      "observed": [
+        259.1804830544961,
+        264.0792256347166
+      ]
+    },
+    {
+      "test": "all transition windows captured",
+      "passed": true,
+      "observed": true
+    },
+    {
+      "test": "whole timeline no recording overload",
+      "passed": true,
+      "observed": 0
+    },
+    {
+      "test": "valid markers",
+      "passed": true,
+      "observed": 0
+    },
+    {
+      "test": "released gates zero",
+      "passed": true,
+      "observed": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    }
+  ],
+  "limitations": [
+    "Isolated stimulus, capture attenuation4 and lower multivoice levels, not maximum production gain.",
+    "PC input noise and RAW discontinuity apply; not no-glitch or physical latency proof."
+  ]
+}

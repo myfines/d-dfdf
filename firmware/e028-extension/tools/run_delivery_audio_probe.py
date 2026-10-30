@@ -1,4 +1,4 @@
-"""Bounded real DAC/Realtek capture; temporary SRAM E043, restore E045 in finally.
+"""Bounded real DAC/Realtek capture; temporary SRAM probe, exact restore in finally.
 USB UART supplies sequence markers only; host timing is not latency evidence.
 """
 import argparse,hashlib,json,subprocess,time,wave,threading
@@ -26,14 +26,17 @@ def deploy(project,expected,label,code):
 
 def main():
     global OUT,RAW
-    parser=argparse.ArgumentParser();parser.add_argument('--project',default='audio_delivery_probe');parser.add_argument('--code',default='E043');parser.add_argument('--attenuation',type=int,default=16);parser.add_argument('--device',type=int,default=1);parser.add_argument('--tag',default='e043-audio-acceptance');parser.add_argument('--raw-wasapi',action='store_true');parser.add_argument('--restore-code',choices=['E045','E047'],default='E045');args=parser.parse_args()
+    parser=argparse.ArgumentParser();parser.add_argument('--project',default='audio_delivery_probe');parser.add_argument('--code',default='E043');parser.add_argument('--attenuation',type=int,default=16);parser.add_argument('--device',type=int,default=1);parser.add_argument('--tag',default='e043-audio-acceptance');parser.add_argument('--raw-wasapi',action='store_true');parser.add_argument('--restore-code',choices=['E045','E047','E049'],default='E049');args=parser.parse_args()
     if args.project not in ['audio_delivery_probe','audio_delivery_probe_gain4','audio_delivery_probe_e048'] or args.code not in ['E043','E044','E048'] or args.attenuation not in [4,16] or '/' in args.tag or '\\' in args.tag:raise ValueError('probe arguments')
     OUT=ROOT/'docs'/args.tag;RAW=PRIVATE/args.tag
     OUT.mkdir(exist_ok=True);RAW.mkdir(exist_ok=True)
     fs=PRIVATE/'build'/args.project/'impl/pnr'/(args.project+'.fs')
     probe_sha=hashlib.sha256(fs.read_bytes()).hexdigest()
     restore_project='instrument_'+args.restore_code.lower()+'_ap'
-    restore=json.loads((ROOT/'docs'/(args.restore_code.lower()+'-regression')/'manifest.json').read_text())['artifact_sha256']
+    restore=('e9148e835c0dc08b764a16039bb6696e025b285967bbf6f4129d96d5175a6790'
+             if args.restore_code=='E049' else json.loads((ROOT/'docs'/(args.restore_code.lower()+'-regression')/'manifest.json').read_text())['artifact_sha256'])
+    restore_file=PRIVATE/'build'/restore_project/'impl/pnr'/(restore_project+'.fs')
+    if hashlib.sha256(restore_file.read_bytes()).hexdigest().lower()!=restore.lower():raise RuntimeError('restore artifact hash mismatch before probe deployment')
     sd.check_input_settings(device=args.device,channels=1,samplerate=48000)
     chunks=[];markers=[];audio_status=[];stop=threading.Event();bad=[0]
     def callback(data,frames,stamp,status):

@@ -1,0 +1,196 @@
+{"test":"real TCP connection and snapshot","passed":true,"observed":"true","elapsed_ms":1188}
+{"test":"FPGA armed","passed":true,"observed":"228","elapsed_ms":1189}
+{"test":"32-point actual snapshot","passed":true,"observed":"32","elapsed_ms":1189}
+{"test":"phone key0 down","passed":true,"observed":"1","elapsed_ms":2655}
+{"test":"phone key0 up","passed":true,"observed":"0","elapsed_ms":3081}
+{"test":"phone key1 down","passed":true,"observed":"2","elapsed_ms":3570}
+{"test":"phone key1 up","passed":true,"observed":"0","elapsed_ms":3986}
+{"test":"phone key2 down","passed":true,"observed":"4","elapsed_ms":4451}
+{"test":"phone key2 up","passed":true,"observed":"0","elapsed_ms":4868}
+{"test":"phone key3 down","passed":true,"observed":"8","elapsed_ms":5337}
+{"test":"phone key3 up","passed":true,"observed":"0","elapsed_ms":5770}
+{"test":"phone key4 down","passed":true,"observed":"16","elapsed_ms":6237}
+{"test":"phone key4 up","passed":true,"observed":"0","elapsed_ms":6688}
+{"test":"phone key5 down","passed":true,"observed":"32","elapsed_ms":7143}
+{"test":"phone key5 up","passed":true,"observed":"0","elapsed_ms":7560}
+{"test":"phone key6 down","passed":true,"observed":"64","elapsed_ms":8017}
+{"test":"phone key6 up","passed":true,"observed":"0","elapsed_ms":8433}
+{"test":"phone key7 down","passed":true,"observed":"128","elapsed_ms":8899}
+{"test":"phone key7 up","passed":true,"observed":"0","elapsed_ms":9333}
+{"test":"four phone key callbacks held","passed":true,"observed":"15","elapsed_ms":9947}
+{"test":"selective phone release0","passed":true,"observed":"14","elapsed_ms":10414}
+{"test":"selective phone release1","passed":true,"observed":"12","elapsed_ms":10882}
+{"test":"selective phone release2","passed":true,"observed":"8","elapsed_ms":11348}
+{"test":"selective phone release3","passed":true,"observed":"0","elapsed_ms":11826}
+{"test":"timbre readback0","passed":true,"observed":"0","elapsed_ms":12229}
+{"test":"bank readback0","passed":true,"observed":"0","elapsed_ms":12629}
+{"test":"timbre readback1","passed":true,"observed":"1","elapsed_ms":13030}
+{"test":"bank readback1","passed":true,"observed":"1","elapsed_ms":13430}
+{"test":"timbre readback2","passed":true,"observed":"2","elapsed_ms":13835}
+{"test":"bank readback2","passed":true,"observed":"2","elapsed_ms":14236}
+{"test":"timbre readback3","passed":true,"observed":"3","elapsed_ms":14637}
+{"test":"bank readback3","passed":true,"observed":"3","elapsed_ms":15037}
+{"test":"volume readback160","passed":true,"observed":"160","elapsed_ms":15439}
+{"test":"volume readback80","passed":true,"observed":"80","elapsed_ms":15840}
+{"test":"volume readback40","passed":true,"observed":"40","elapsed_ms":16242}
+{"test":"volume readback0","passed":true,"observed":"0","elapsed_ms":16643}
+{"test":"volume readback160","passed":true,"observed":"160","elapsed_ms":17044}
+{"test":"effect enabled flag mask0","passed":true,"observed":"false","elapsed_ms":17394}
+{"test":"effect enabled flag mask1","passed":true,"observed":"true","elapsed_ms":17745}
+{"test":"effect enabled flag mask2","passed":true,"observed":"true","elapsed_ms":18096}
+{"test":"effect enabled flag mask3","passed":true,"observed":"true","elapsed_ms":18451}
+{"test":"effect enabled flag mask4","passed":true,"observed":"true","elapsed_ms":18802}
+{"test":"effect enabled flag mask5","passed":true,"observed":"true","elapsed_ms":19160}
+{"test":"effect enabled flag mask6","passed":true,"observed":"true","elapsed_ms":19511}
+{"test":"effect enabled flag mask7","passed":true,"observed":"true","elapsed_ms":19862}
+{"test":"screen command transport alive0","passed":true,"observed":"physical display pending","elapsed_ms":20113}
+{"test":"screen command transport alive1","passed":true,"observed":"physical display pending","elapsed_ms":20363}
+{"test":"screen command transport alive2","passed":true,"observed":"physical display pending","elapsed_ms":20614}
+{"test":"screen command transport alive3","passed":true,"observed":"physical display pending","elapsed_ms":20864}
+{"test":"screen command transport alive4","passed":true,"observed":"physical display pending","elapsed_ms":21114}
+{"test":"keymap0 to12 acknowledged","passed":true,"observed":"real FPGA A frame","elapsed_ms":21283}
+{"test":"keymap restored acknowledged","passed":true,"observed":"real FPGA A frame","elapsed_ms":21444}
+{"test":"custom ADSR acknowledged","passed":true,"observed":"real FPGA A frame","elapsed_ms":21652}
+{"test":"factory ADSR restored acknowledged","passed":true,"observed":"real FPGA A frame","elapsed_ms":21857}
+{"test":"invalid map rejected","passed":true,"observed":"true","elapsed_ms":21858}
+{"test":"invalid ADSR rejected","passed":true,"observed":"true","elapsed_ms":21858}
+{"test":"score4 including rest acknowledged","passed":true,"observed":"real FPGA A frame","elapsed_ms":22235}
+录音回传 1 / 128
+录音回传 2 / 128
+录音回传 3 / 128
+录音回传 4 / 128
+录音回传 5 / 128
+录音回传 6 / 128
+录音回传 7 / 128
+录音回传 8 / 128
+录音回传 9 / 128
+录音回传 10 / 128
+录音回传 11 / 128
+录音回传 12 / 128
+录音回传 13 / 128
+录音回传 14 / 128
+录音回传 15 / 128
+录音回传 16 / 128
+录音回传 17 / 128
+录音回传 18 / 128
+录音回传 19 / 128
+录音回传 20 / 128
+录音回传 21 / 128
+录音回传 22 / 128
+录音回传 23 / 128
+录音回传 24 / 128
+录音回传 25 / 128
+录音回传 26 / 128
+录音回传 27 / 128
+录音回传 28 / 128
+录音回传 29 / 128
+录音回传 30 / 128
+录音回传 31 / 128
+录音回传 32 / 128
+录音回传 33 / 128
+录音回传 34 / 128
+录音回传 35 / 128
+录音回传 36 / 128
+录音回传 37 / 128
+录音回传 38 / 128
+录音回传 39 / 128
+录音回传 40 / 128
+录音回传 41 / 128
+录音回传 42 / 128
+录音回传 43 / 128
+录音回传 44 / 128
+录音回传 45 / 128
+录音回传 46 / 128
+录音回传 47 / 128
+录音回传 48 / 128
+录音回传 49 / 128
+录音回传 50 / 128
+录音回传 51 / 128
+录音回传 52 / 128
+录音回传 53 / 128
+录音回传 54 / 128
+录音回传 55 / 128
+录音回传 56 / 128
+录音回传 57 / 128
+录音回传 58 / 128
+录音回传 59 / 128
+录音回传 60 / 128
+录音回传 61 / 128
+录音回传 62 / 128
+录音回传 63 / 128
+录音回传 64 / 128
+录音回传 65 / 128
+录音回传 66 / 128
+录音回传 67 / 128
+录音回传 68 / 128
+录音回传 69 / 128
+录音回传 70 / 128
+录音回传 71 / 128
+录音回传 72 / 128
+录音回传 73 / 128
+录音回传 74 / 128
+录音回传 75 / 128
+录音回传 76 / 128
+录音回传 77 / 128
+录音回传 78 / 128
+录音回传 79 / 128
+录音回传 80 / 128
+录音回传 81 / 128
+录音回传 82 / 128
+录音回传 83 / 128
+录音回传 84 / 128
+录音回传 85 / 128
+录音回传 86 / 128
+录音回传 87 / 128
+录音回传 88 / 128
+录音回传 89 / 128
+录音回传 90 / 128
+录音回传 91 / 128
+录音回传 92 / 128
+录音回传 93 / 128
+录音回传 94 / 128
+录音回传 95 / 128
+录音回传 96 / 128
+录音回传 97 / 128
+录音回传 98 / 128
+录音回传 99 / 128
+录音回传 100 / 128
+录音回传 101 / 128
+录音回传 102 / 128
+录音回传 103 / 128
+录音回传 104 / 128
+录音回传 105 / 128
+录音回传 106 / 128
+录音回传 107 / 128
+录音回传 108 / 128
+录音回传 109 / 128
+录音回传 110 / 128
+录音回传 111 / 128
+录音回传 112 / 128
+录音回传 113 / 128
+录音回传 114 / 128
+录音回传 115 / 128
+录音回传 116 / 128
+录音回传 117 / 128
+录音回传 118 / 128
+录音回传 119 / 128
+录音回传 120 / 128
+录音回传 121 / 128
+录音回传 122 / 128
+录音回传 123 / 128
+录音回传 124 / 128
+录音回传 125 / 128
+录音回传 126 / 128
+录音回传 127 / 128
+录音回传 128 / 128
+{"test":"record128 chunks and WAV","passed":true,"observed":"4140","elapsed_ms":50706}
+{"test":"WAV actual phone file write","passed":true,"observed":"\/storage\/emulated\/0\/Android\/data\/cn.myfines.instrument\/files\/device-suite-record.wav","elapsed_ms":50713}
+{"test":"disconnect clears local phone held state","passed":true,"observed":"0","elapsed_ms":56735}
+{"test":"real TCP connection and snapshot","passed":true,"observed":"true","elapsed_ms":56948}
+{"test":"FPGA armed","passed":true,"observed":"228","elapsed_ms":56948}
+{"test":"32-point actual snapshot","passed":true,"observed":"32","elapsed_ms":56948}
+{"test":"fresh telemetry after reconnect","passed":true,"observed":"2884","elapsed_ms":57749}
+INSTRUMENTATION_RESULT: passed=true
+INSTRUMENTATION_RESULT: record_path=/storage/emulated/0/Android/data/cn.myfines.instrument/files/device-suite-record.wav
+INSTRUMENTATION_RESULT: results_json=[{"test":"real TCP connection and snapshot","passed":true,"observed":"true","elapsed_ms":1188},{"test":"FPGA armed","passed":true,"observed":"228","elapsed_ms":1189},{"test":"32-point actual snapshot","passed":true,"observed":"32","elapsed_ms":1189},{"test":"phone key0 down","passed":true,"observed":"1","elapsed_ms":2655},{"test":"phone key0 up","passed":true,"observed":"0","elapsed_ms":3081},{"test":"phone key1 down","passed":true,"observed":"2","elapsed_ms":3570},{"test":"phone key1 up","passed":true,"observed":"0","elapsed_ms":3986},{"test":"phone key2 down","passed":true,"observed":"4","elapsed_ms":4451},{"test":"phone key2 up","passed":true,"observed":"0","elapsed_ms":4868},{"test":"phone key3 down","passed":true,"observed":"8","elapsed_ms":5337},{"test":"phone key3 up","passed":true,"observed":"0","elapsed_ms":5770},{"test":"phone key4 down","passed":true,"observed":"16","elapsed_ms":6237},{"test":"phone key4 up","passed":true,"observed":"0","elapsed_ms":6688},{"test":"phone key5 down","passed":true,"observed":"32","elapsed_ms":7143},{"test":"phone key5 up","passed":true,"observed":"0","elapsed_ms":7560},{"test":"phone key6 down","passed":true,"observed":"64","elapsed_ms":8017},{"test":"phone key6 up","passed":true,"observed":"0","elapsed_ms":8433},{"test":"phone key7 down","passed":true,"observed":"128","elapsed_ms":8899},{"test":"phone key7 up","passed":true,"observed":"0","elapsed_ms":9333},{"test":"four phone key callbacks held","passed":true,"observed":"15","elapsed_ms":9947},{"test":"selective phone release0","passed":true,"observed":"14","elapsed_ms":10414},{"test":"selective phone release1","passed":true,"observed":"12","elapsed_ms":10882},{"test":"selective phone release2","passed":true,"observed":"8","elapsed_ms":11348},{"test":"selective phone release3","passed":true,"observed":"0","elapsed_ms":11826},{"test":"timbre readback0","passed":true,"observed":"0","elapsed_ms":12229},{"test":"bank readback0","passed":true,"observed":"0","elapsed_ms":12629},{"test":"timbre readback1","passed":true,"observed":"1","elapsed_ms":13030},{"test":"bank readback1","passed":true,"observed":"1","elapsed_ms":13430},{"test":"timbre readback2","passed":true,"observed":"2","elapsed_ms":13835},{"test":"bank readback2","passed":true,"observed":"2","elapsed_ms":14236},{"test":"timbre readback3","passed":true,"observed":"3","elapsed_ms":14637},{"test":"bank readback3","passed":true,"observed":"3","elapsed_ms":15037},{"test":"volume readback160","passed":true,"observed":"160","elapsed_ms":15439},{"test":"volume readback80","passed":true,"observed":"80","elapsed_ms":15840},{"test":"volume readback40","passed":true,"observed":"40","elapsed_ms":16242},{"test":"volume readback0","passed":true,"observed":"0","elapsed_ms":16643},{"test":"volume readback160","passed":true,"observed":"160","elapsed_ms":17044},{"test":"effect enabled flag mask0","passed":true,"observed":"false","elapsed_ms":17394},{"test":"effect enabled flag mask1","passed":true,"observed":"true","elapsed_ms":17745},{"test":"effect enabled flag mask2","passed":true,"observed":"true","elapsed_ms":18096},{"test":"effect enabled flag mask3","passed":true,"observed":"true","elapsed_ms":18451},{"test":"effect enabled flag mask4","passed":true,"observed":"true","elapsed_ms":18802},{"test":"effect enabled flag mask5","passed":true,"observed":"true","elapsed_ms":19160},{"test":"effect enabled flag mask6","passed":true,"observed":"true","elapsed_ms":19511},{"test":"effect enabled flag mask7","passed":true,"observed":"true","elapsed_ms":19862},{"test":"screen command transport alive0","passed":true,"observed":"physical display pending","elapsed_ms":20113},{"test":"screen command transport alive1","passed":true,"observed":"physical display pending","elapsed_ms":20363},{"test":"screen command transport alive2","passed":true,"observed":"physical display pending","elapsed_ms":20614},{"test":"screen command transport alive3","passed":true,"observed":"physical display pending","elapsed_ms":20864},{"test":"screen command transport alive4","passed":true,"observed":"physical display pending","elapsed_ms":21114},{"test":"keymap0 to12 acknowledged","passed":true,"observed":"real FPGA A frame","elapsed_ms":21283},{"test":"keymap restored acknowledged","passed":true,"observed":"real FPGA A frame","elapsed_ms":21444},{"test":"custom ADSR acknowledged","passed":true,"observed":"real FPGA A frame","elapsed_ms":21652},{"test":"factory ADSR restored acknowledged","passed":true,"observed":"real FPGA A frame","elapsed_ms":21857},{"test":"invalid map rejected","passed":true,"observed":"true","elapsed_ms":21858},{"test":"invalid ADSR rejected","passed":true,"observed":"true","elapsed_ms":21858},{"test":"score4 including rest acknowledged","passed":true,"observed":"real FPGA A frame","elapsed_ms":22235},{"test":"record128 chunks and WAV","passed":true,"observed":"4140","elapsed_ms":50706},{"test":"WAV actual phone file write","passed":true,"observed":"\/storage\/emulated\/0\/Android\/data\/cn.myfines.instrument\/files\/device-suite-record.wav","elapsed_ms":50713},{"test":"disconnect clears local phone held state","passed":true,"observed":"0","elapsed_ms":56735},{"test":"real TCP connection and snapshot","passed":true,"observed":"true","elapsed_ms":56948},{"test":"FPGA armed","passed":true,"observed":"228","elapsed_ms":56948},{"test":"32-point actual snapshot","passed":true,"observed":"32","elapsed_ms":56948},{"test":"fresh telemetry after reconnect","passed":true,"observed":"2884","elapsed_ms":57749}]
+INSTRUMENTATION_CODE: 0

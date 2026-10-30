@@ -1,0 +1,20 @@
+E
+======================================================================
+ERROR: test_delivery_transitions (unittest.loader._FailedTest.test_delivery_transitions)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_delivery_transitions
+Traceback (most recent call last):
+  File "C:\Users\zrk\AppData\Local\Programs\Python\Python312\Lib\unittest\loader.py", line 396, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\zrk\AppData\Local\Programs\Python\Python312\Lib\unittest\loader.py", line 339, in _get_module_from_name
+    __import__(name)
+  File "E:\gaoyun\releases\e028-flash-record\firmware\e028-extension\tools\test_delivery_transitions.py", line 3, in <module>
+    from analyze_delivery_audio import transition_windows
+ImportError: cannot import name 'transition_windows' from 'analyze_delivery_audio' (E:\gaoyun\releases\e028-flash-record\firmware\e028-extension\tools\analyze_delivery_audio.py)
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)

@@ -1,0 +1,8 @@
+{
+  "low_pinch_samples": 11,
+  "high_pinch_samples": 56,
+  "low_pinch_median_PCM_span": 1,
+  "high_pinch_median_PCM_span": 14.0,
+  "conditions": "real phone held note, volume160, active hand, height300..500; actual returned output PCM span",
+  "limitation": "32-point PCM span is a relative amplitude indicator, not calibrated analog loudness or independent brightness measurement."
+}

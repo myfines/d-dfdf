@@ -1,0 +1,31 @@
+{
+  "observed": "Five layouts visible; changing waveform/spectrum and chorus XY trace observed in dynamic test; guidance keyboard and voice-status graphics present. Small text not legibly verified, no refresh-rate measurement.",
+  "resolution": [
+    1920,
+    1080
+  ],
+  "test_mode": "32-voice demo for pages0..2, volume80; chorus on XY",
+  "source_frames": [
+    {
+      "frame": "E:\\gaoyun\\private\\esp-web\\oled-dynamic-20261030\\03.jpg",
+      "sha256": "921b747d38e966a05604f48486b5aa09fad8230bdd8e7b25fb5c126efc4c231e"
+    },
+    {
+      "frame": "E:\\gaoyun\\private\\esp-web\\oled-dynamic-20261030\\07.jpg",
+      "sha256": "ca40b71767193893a009c2180fe8234fd8f4ff00f789a5810a17da4bcde65652"
+    },
+    {
+      "frame": "E:\\gaoyun\\private\\esp-web\\oled-dynamic-20261030\\11.jpg",
+      "sha256": "40acb29e29fb576c335ee4e764edc96bd6099d4b6940048447283f75959f3fbc"
+    },
+    {
+      "frame": "E:\\gaoyun\\private\\esp-web\\oled-dynamic-20261030\\15.jpg",
+      "sha256": "a226d56f4d87c95bbe640b3cd3fa7f875de367d1fbf88bd8a29b84ba93d2ce84"
+    },
+    {
+      "frame": "E:\\gaoyun\\private\\esp-web\\oled-dynamic-20261030\\19.jpg",
+      "sha256": "3de8ac629ba071f8b9f44b0dd95c91015e5ec5689e1f951b2e3092c69966c711"
+    }
+  ],
+  "log": "20261030-device-display-dynamic.log"
+}

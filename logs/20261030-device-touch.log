@@ -1,0 +1,11 @@
+{"test":"real TCP connection and snapshot","passed":true,"observed":"true","elapsed_ms":1744}
+{"test":"FPGA armed","passed":true,"observed":"228","elapsed_ms":1746}
+{"test":"32-point actual snapshot","passed":true,"observed":"32","elapsed_ms":1746}
+{"test":"actual View four-pointer chord reaches FPGA","passed":true,"observed":"15","elapsed_ms":3053}
+{"test":"actual View selective pointer release3","passed":true,"observed":"7","elapsed_ms":3371}
+{"test":"actual View selective pointer release2","passed":true,"observed":"3","elapsed_ms":3703}
+{"test":"actual View selective pointer release1","passed":true,"observed":"1","elapsed_ms":4037}
+{"test":"actual View last pointer released","passed":true,"observed":"0","elapsed_ms":4387}
+INSTRUMENTATION_RESULT: passed=true
+INSTRUMENTATION_RESULT: results_json=[{"test":"real TCP connection and snapshot","passed":true,"observed":"true","elapsed_ms":1744},{"test":"FPGA armed","passed":true,"observed":"228","elapsed_ms":1746},{"test":"32-point actual snapshot","passed":true,"observed":"32","elapsed_ms":1746},{"test":"actual View four-pointer chord reaches FPGA","passed":true,"observed":"15","elapsed_ms":3053},{"test":"actual View selective pointer release3","passed":true,"observed":"7","elapsed_ms":3371},{"test":"actual View selective pointer release2","passed":true,"observed":"3","elapsed_ms":3703},{"test":"actual View selective pointer release1","passed":true,"observed":"1","elapsed_ms":4037},{"test":"actual View last pointer released","passed":true,"observed":"0","elapsed_ms":4387}]
+INSTRUMENTATION_CODE: 0

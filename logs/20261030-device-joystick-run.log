@@ -1,0 +1,26 @@
+{"test":"real TCP connection and snapshot","passed":true,"observed":"true","elapsed_ms":969}
+{"test":"FPGA armed","passed":true,"observed":"228","elapsed_ms":970}
+{"test":"32-point actual snapshot","passed":true,"observed":"32","elapsed_ms":970}
+GESTURE_WINDOW_READY_90_SECONDS
+{"ms":5038,"sequence":3847,"pinch":0,"height":0,"confidence":0,"gesture_active":false,"x":842,"y":1646,"volume":160,"keys":16,"wave_span":20}
+{"ms":10109,"sequence":3897,"pinch":0,"height":0,"confidence":0,"gesture_active":false,"x":842,"y":1646,"volume":160,"keys":16,"wave_span":20}
+{"ms":15177,"sequence":3946,"pinch":0,"height":0,"confidence":0,"gesture_active":false,"x":842,"y":0,"volume":160,"keys":16,"wave_span":26}
+{"ms":20294,"sequence":3996,"pinch":0,"height":0,"confidence":0,"gesture_active":false,"x":1,"y":824,"volume":160,"keys":16,"wave_span":19}
+{"ms":25347,"sequence":4045,"pinch":0,"height":0,"confidence":0,"gesture_active":false,"x":1646,"y":823,"volume":160,"keys":16,"wave_span":21}
+{"ms":30451,"sequence":4096,"pinch":0,"height":0,"confidence":0,"gesture_active":false,"x":842,"y":824,"volume":160,"keys":16,"wave_span":20}
+{"ms":35569,"sequence":4145,"pinch":0,"height":0,"confidence":0,"gesture_active":false,"x":1,"y":824,"volume":160,"keys":16,"wave_span":27}
+{"ms":40688,"sequence":4195,"pinch":0,"height":0,"confidence":0,"gesture_active":false,"x":1646,"y":824,"volume":160,"keys":16,"wave_span":26}
+{"ms":45807,"sequence":4245,"pinch":0,"height":0,"confidence":0,"gesture_active":false,"x":842,"y":1646,"volume":160,"keys":16,"wave_span":27}
+{"ms":50926,"sequence":4295,"pinch":0,"height":0,"confidence":0,"gesture_active":false,"x":842,"y":1,"volume":160,"keys":16,"wave_span":19}
+{"ms":56045,"sequence":4345,"pinch":0,"height":0,"confidence":0,"gesture_active":false,"x":1646,"y":824,"volume":160,"keys":16,"wave_span":26}
+{"ms":61163,"sequence":4395,"pinch":0,"height":0,"confidence":0,"gesture_active":false,"x":842,"y":824,"volume":160,"keys":16,"wave_span":27}
+{"ms":66281,"sequence":4446,"pinch":0,"height":0,"confidence":0,"gesture_active":false,"x":842,"y":1646,"volume":160,"keys":16,"wave_span":26}
+{"ms":71369,"sequence":4495,"pinch":0,"height":0,"confidence":0,"gesture_active":false,"x":842,"y":0,"volume":160,"keys":16,"wave_span":26}
+{"ms":76455,"sequence":4546,"pinch":0,"height":0,"confidence":0,"gesture_active":false,"x":1,"y":824,"volume":160,"keys":16,"wave_span":27}
+{"ms":81553,"sequence":4595,"pinch":0,"height":0,"confidence":0,"gesture_active":false,"x":1646,"y":824,"volume":160,"keys":16,"wave_span":26}
+{"ms":86656,"sequence":4645,"pinch":0,"height":0,"confidence":0,"gesture_active":false,"x":842,"y":824,"volume":160,"keys":16,"wave_span":27}
+{"test":"real phone gesture telemetry capture","passed":true,"observed":"442","elapsed_ms":92054}
+INSTRUMENTATION_RESULT: gesture_path=/storage/emulated/0/Android/data/cn.myfines.instrument/files/device-suite-gesture.json
+INSTRUMENTATION_RESULT: passed=true
+INSTRUMENTATION_RESULT: results_json=[{"test":"real TCP connection and snapshot","passed":true,"observed":"true","elapsed_ms":969},{"test":"FPGA armed","passed":true,"observed":"228","elapsed_ms":970},{"test":"32-point actual snapshot","passed":true,"observed":"32","elapsed_ms":970},{"test":"real phone gesture telemetry capture","passed":true,"observed":"442","elapsed_ms":92054}]
+INSTRUMENTATION_CODE: 0

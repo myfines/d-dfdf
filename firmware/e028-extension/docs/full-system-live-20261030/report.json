@@ -1,0 +1,12 @@
+{
+  "seconds": 180,
+  "limitation": "Real inputs retained; periodic snapshots are not a lossless event trace, physical latency measurement or visual display inspection.",
+  "snapshots": 6058,
+  "armed_seen": true,
+  "oled_ack_seen": true,
+  "optical_valid_seen": true,
+  "adc_valid_seen": true,
+  "gesture_seen": true,
+  "remote_seen": false,
+  "restored_E049_6020": true
+}

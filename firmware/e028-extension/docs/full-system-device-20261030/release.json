@@ -1,0 +1,8 @@
+{
+  "app": "0.13-e049-recovery",
+  "versionCode": 13,
+  "apk_sha256": "91b6d3bc6affdde31d8e640550be86e97de35feb75ea291dc22a18df5ddd6eb4",
+  "fpga": "E049/6020",
+  "flash_changed": false,
+  "original_custom_view_changed": false
+}

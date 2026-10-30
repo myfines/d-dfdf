@@ -44,6 +44,9 @@ public final class WifiSession implements AutoCloseable {
    socket=s;if(!running)return;
    s.connect(new InetSocketAddress(host,port),3000);s.setSoTimeout(100);s.setTcpNoDelay(true);
    InputStream input=s.getInputStream();OutputStream output=s.getOutputStream();
+   // A broken previous socket may leave FPGA telemetry selecting an A/PCM
+   // chunk. Restore normal snapshots before replaying queued controls.
+   output.write("C00000000\n".getBytes(StandardCharsets.US_ASCII));output.flush();
    listener.status("TCP已连接，等待FPGA真实状态");
    StringBuilder line=new StringBuilder(96);long sent=0,received=System.nanoTime();boolean first=true;
    while(running){

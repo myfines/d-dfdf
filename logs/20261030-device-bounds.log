@@ -1,0 +1,12 @@
+{"test":"real TCP connection and snapshot","passed":true,"observed":"true","elapsed_ms":1151}
+{"test":"FPGA armed","passed":true,"observed":"228","elapsed_ms":1151}
+{"test":"32-point actual snapshot","passed":true,"observed":"32","elapsed_ms":1151}
+{"test":"maximum64 score events acknowledged","passed":true,"observed":"64 events","elapsed_ms":1610}
+{"test":"65 score events rejected","passed":true,"observed":"true","elapsed_ms":1611}
+{"test":"all32 remapped slots acknowledged","passed":true,"observed":"each slot real A frame","elapsed_ms":8191}
+{"test":"all32 identity slots restored acknowledged","passed":true,"observed":"each slot real A frame","elapsed_ms":14745}
+{"test":"ADSR boundary configs acknowledged","passed":true,"observed":"zero\/max\/mixed values","elapsed_ms":15549}
+{"test":"corrupt ADSR checksum ignored by real FPGA","passed":true,"observed":"9cda0","elapsed_ms":16444}
+INSTRUMENTATION_RESULT: passed=true
+INSTRUMENTATION_RESULT: results_json=[{"test":"real TCP connection and snapshot","passed":true,"observed":"true","elapsed_ms":1151},{"test":"FPGA armed","passed":true,"observed":"228","elapsed_ms":1151},{"test":"32-point actual snapshot","passed":true,"observed":"32","elapsed_ms":1151},{"test":"maximum64 score events acknowledged","passed":true,"observed":"64 events","elapsed_ms":1610},{"test":"65 score events rejected","passed":true,"observed":"true","elapsed_ms":1611},{"test":"all32 remapped slots acknowledged","passed":true,"observed":"each slot real A frame","elapsed_ms":8191},{"test":"all32 identity slots restored acknowledged","passed":true,"observed":"each slot real A frame","elapsed_ms":14745},{"test":"ADSR boundary configs acknowledged","passed":true,"observed":"zero\/max\/mixed values","elapsed_ms":15549},{"test":"corrupt ADSR checksum ignored by real FPGA","passed":true,"observed":"9cda0","elapsed_ms":16444}]
+INSTRUMENTATION_CODE: 0

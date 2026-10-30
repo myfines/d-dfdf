@@ -1,3 +1,5 @@
+> 2026-10-30本轮最新结果：板卡仍E049/6020，Flash未改；手机已安装[App0.13](../mobile-companion/apk/instrument-companion-0.13-e049-recovery.apk)，修复录音中断后重连卡在回传模式。真实手机常规64项、异常恢复、边界、多指、在线曲谱下载/缓存下发、WAV导出及播放器实测通过；显示画面另见摄像头证据，延迟/LRCK/抖动仍未测。[本轮测试总览](../firmware/e028-extension/docs/full-system-test-20261030/FINAL.md) · [操作指南](e049-function-test-guide.md)。下文旧部署与未验状态为历史。
+
 > 2026-10-30最新部署：E049已写入Flash并校验成功，独立读取E049/6020；E050临时SRAM板上测试通过后已恢复正式E049，再次读取E049/6020。OLED实际I2C应答与目标/音区快照、曲谱/映射/ADSR及128块PCM通过。完整冷启动及手机/实体演奏仍未验。[烧录证据](../firmware/e028-extension/docs/e049-flash/README.md) · [板上自测](../firmware/e028-extension/docs/e050-integration/README.md)。以下未烧录状态为历史。
 
 > E049补充：OLED已新增音区/映射精确曲目指引及32声部调度预算测试，保留原LED输出。纸壳可视性由外置OLED改善，但不把OLED当作已获官方认可的LED替代。候选未烧录，当前扫描未发现设备。[说明](e049-oled-guide.md)。

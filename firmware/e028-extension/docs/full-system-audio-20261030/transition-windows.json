@@ -1,0 +1,218 @@
+{
+  "windows": [
+    {
+      "slot": 0,
+      "complete": true,
+      "peak": 0.365325927734375,
+      "near_fullscale_samples": 0,
+      "steady_near_fullscale_samples": 0
+    },
+    {
+      "slot": 1,
+      "complete": true,
+      "peak": 0.2908935546875,
+      "near_fullscale_samples": 0,
+      "steady_near_fullscale_samples": 0
+    },
+    {
+      "slot": 2,
+      "complete": true,
+      "peak": 0.36724853515625,
+      "near_fullscale_samples": 0,
+      "steady_near_fullscale_samples": 0
+    },
+    {
+      "slot": 3,
+      "complete": true,
+      "peak": 0.38177490234375,
+      "near_fullscale_samples": 0,
+      "steady_near_fullscale_samples": 0
+    },
+    {
+      "slot": 4,
+      "complete": true,
+      "peak": 0.272186279296875,
+      "near_fullscale_samples": 0,
+      "steady_near_fullscale_samples": 0
+    },
+    {
+      "slot": 5,
+      "complete": true,
+      "peak": 0.3040771484375,
+      "near_fullscale_samples": 0,
+      "steady_near_fullscale_samples": 0
+    },
+    {
+      "slot": 6,
+      "complete": true,
+      "peak": 0.385406494140625,
+      "near_fullscale_samples": 0,
+      "steady_near_fullscale_samples": 0
+    },
+    {
+      "slot": 7,
+      "complete": true,
+      "peak": 0.352630615234375,
+      "near_fullscale_samples": 0,
+      "steady_near_fullscale_samples": 0
+    },
+    {
+      "slot": 8,
+      "complete": true,
+      "peak": 0.37091064453125,
+      "near_fullscale_samples": 0,
+      "steady_near_fullscale_samples": 0
+    },
+    {
+      "slot": 9,
+      "complete": true,
+      "peak": 0.401458740234375,
+      "near_fullscale_samples": 0,
+      "steady_near_fullscale_samples": 0
+    },
+    {
+      "slot": 10,
+      "complete": true,
+      "peak": 0.243927001953125,
+      "near_fullscale_samples": 0,
+      "steady_near_fullscale_samples": 0
+    },
+    {
+      "slot": 11,
+      "complete": true,
+      "peak": 0.142242431640625,
+      "near_fullscale_samples": 0,
+      "steady_near_fullscale_samples": 0
+    },
+    {
+      "slot": 12,
+      "complete": true,
+      "peak": 0.366729736328125,
+      "near_fullscale_samples": 0,
+      "steady_near_fullscale_samples": 0
+    },
+    {
+      "slot": 13,
+      "complete": true,
+      "peak": 0.376983642578125,
+      "near_fullscale_samples": 0,
+      "steady_near_fullscale_samples": 0
+    },
+    {
+      "slot": 14,
+      "complete": true,
+      "peak": 0.365875244140625,
+      "near_fullscale_samples": 0,
+      "steady_near_fullscale_samples": 0
+    },
+    {
+      "slot": 15,
+      "complete": true,
+      "peak": 0.373565673828125,
+      "near_fullscale_samples": 0,
+      "steady_near_fullscale_samples": 0
+    },
+    {
+      "slot": 16,
+      "complete": true,
+      "peak": 0.41064453125,
+      "near_fullscale_samples": 0,
+      "steady_near_fullscale_samples": 0
+    },
+    {
+      "slot": 17,
+      "complete": true,
+      "peak": 0.3543701171875,
+      "near_fullscale_samples": 0,
+      "steady_near_fullscale_samples": 0
+    },
+    {
+      "slot": 18,
+      "complete": true,
+      "peak": 0.392120361328125,
+      "near_fullscale_samples": 0,
+      "steady_near_fullscale_samples": 0
+    },
+    {
+      "slot": 19,
+      "complete": true,
+      "peak": 0.375579833984375,
+      "near_fullscale_samples": 0,
+      "steady_near_fullscale_samples": 0
+    },
+    {
+      "slot": 20,
+      "complete": true,
+      "peak": 0.37841796875,
+      "near_fullscale_samples": 0,
+      "steady_near_fullscale_samples": 0
+    },
+    {
+      "slot": 21,
+      "complete": true,
+      "peak": 0.287384033203125,
+      "near_fullscale_samples": 0,
+      "steady_near_fullscale_samples": 0
+    },
+    {
+      "slot": 22,
+      "complete": true,
+      "peak": 0.89349365234375,
+      "near_fullscale_samples": 0,
+      "steady_near_fullscale_samples": 0
+    },
+    {
+      "slot": 23,
+      "complete": true,
+      "peak": 0.79107666015625,
+      "near_fullscale_samples": 0,
+      "steady_near_fullscale_samples": 0
+    },
+    {
+      "slot": 24,
+      "complete": true,
+      "peak": 0.39373779296875,
+      "near_fullscale_samples": 0,
+      "steady_near_fullscale_samples": 0
+    },
+    {
+      "slot": 25,
+      "complete": true,
+      "peak": 0.397125244140625,
+      "near_fullscale_samples": 0,
+      "steady_near_fullscale_samples": 0
+    },
+    {
+      "slot": 26,
+      "complete": true,
+      "peak": 0.999969482421875,
+      "near_fullscale_samples": 160,
+      "steady_near_fullscale_samples": 0
+    },
+    {
+      "slot": 27,
+      "complete": true,
+      "peak": 0.999969482421875,
+      "near_fullscale_samples": 104,
+      "steady_near_fullscale_samples": 0
+    },
+    {
+      "slot": 28,
+      "complete": true,
+      "peak": 0.375457763671875,
+      "near_fullscale_samples": 0,
+      "steady_near_fullscale_samples": 0
+    },
+    {
+      "slot": 29,
+      "complete": true,
+      "peak": 0.280609130859375,
+      "near_fullscale_samples": 0,
+      "steady_near_fullscale_samples": 0
+    }
+  ],
+  "complete": true,
+  "near_fullscale_samples": 264,
+  "no_recording_overload": false,
+  "limitation": "Captures test-stimulus and PC-input overload; cannot alone assign distortion to production RTL."
+}

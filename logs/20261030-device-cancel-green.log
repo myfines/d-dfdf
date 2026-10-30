@@ -1,0 +1,11 @@
+{"test":"real TCP connection and snapshot","passed":true,"observed":"true","elapsed_ms":1182}
+{"test":"FPGA armed","passed":true,"observed":"228","elapsed_ms":1183}
+{"test":"32-point actual snapshot","passed":true,"observed":"32","elapsed_ms":1183}
+{"test":"record cancellation is bounded","passed":true,"observed":"java.lang.IllegalStateException: 直连未运行或发送队列已满","elapsed_ms":2395}
+{"test":"real TCP connection and snapshot","passed":true,"observed":"true","elapsed_ms":3450}
+{"test":"FPGA armed","passed":true,"observed":"228","elapsed_ms":3450}
+{"test":"32-point actual snapshot","passed":true,"observed":"32","elapsed_ms":3450}
+{"test":"normal snapshots restored after aborted recording","passed":true,"observed":"true","elapsed_ms":3451}
+INSTRUMENTATION_RESULT: passed=true
+INSTRUMENTATION_RESULT: results_json=[{"test":"real TCP connection and snapshot","passed":true,"observed":"true","elapsed_ms":1182},{"test":"FPGA armed","passed":true,"observed":"228","elapsed_ms":1183},{"test":"32-point actual snapshot","passed":true,"observed":"32","elapsed_ms":1183},{"test":"record cancellation is bounded","passed":true,"observed":"java.lang.IllegalStateException: 直连未运行或发送队列已满","elapsed_ms":2395},{"test":"real TCP connection and snapshot","passed":true,"observed":"true","elapsed_ms":3450},{"test":"FPGA armed","passed":true,"observed":"228","elapsed_ms":3450},{"test":"32-point actual snapshot","passed":true,"observed":"32","elapsed_ms":3450},{"test":"normal snapshots restored after aborted recording","passed":true,"observed":"true","elapsed_ms":3451}]
+INSTRUMENTATION_CODE: 0

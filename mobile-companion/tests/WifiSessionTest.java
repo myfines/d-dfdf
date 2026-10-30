@@ -9,7 +9,7 @@ public final class WifiSessionTest {
   CountDownLatch received=new CountDownLatch(3);
   Thread peer=new Thread(()->{try(Socket socket=server.accept()){
    BufferedReader in=new BufferedReader(new InputStreamReader(socket.getInputStream(),StandardCharsets.US_ASCII));
-   for(int i=0;i<12;i++)commands.append(in.readLine()).append('\n');
+   for(int i=0;i<13;i++)commands.append(in.readLine()).append('\n');
    StringBuilder line=new StringBuilder("S00010F8101234580210");
    line=new StringBuilder("S0001"+"0F"+"81"+"012"+"345"+"80"+"2"+"1"+"0");
    for(int i=0;i<32;i++)line.append("80");
@@ -25,6 +25,7 @@ public final class WifiSessionTest {
   session.extension("C10020012");session.envelope(9,12,160,13);
   if(!received.await(3,TimeUnit.SECONDS))throw new AssertionError("snapshot not delivered");
   session.close();peer.join(2000);server.close();
+  if(!commands.toString().startsWith("C00000000\n"))throw new AssertionError("new connection must exit stale FPGA recording mode before queued controls");
   if(!commands.toString().contains("V80\nT02\n")||!commands.toString().contains("K03\nQ00\n")||!commands.toString().contains("C10020012\n")||!commands.toString().contains("X60\n")||!commands.toString().contains("E01\nF07\nS04\nD01\n")||!commands.toString().contains("G19CDA074\n"))throw new AssertionError("control/extension wire protocol");
   System.out.println("PASS WiFi TCP worker: control bytes, fragmented FPGA status, disconnect");
  }

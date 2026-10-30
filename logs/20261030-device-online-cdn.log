@@ -1,0 +1,5 @@
+{"test":"actual phone Internet score download and cache","passed":true,"observed":"12:20,16:20,19:20,24:40,19:20,16:20,12:40,-:20","elapsed_ms":4083}
+{"test":"invalid download scheme rejected on phone","passed":true,"observed":"true","elapsed_ms":4084}
+INSTRUMENTATION_RESULT: passed=true
+INSTRUMENTATION_RESULT: results_json=[{"test":"actual phone Internet score download and cache","passed":true,"observed":"12:20,16:20,19:20,24:40,19:20,16:20,12:40,-:20","elapsed_ms":4083},{"test":"invalid download scheme rejected on phone","passed":true,"observed":"true","elapsed_ms":4084}]
+INSTRUMENTATION_CODE: 0

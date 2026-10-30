@@ -1,0 +1,16 @@
+{"test":"real TCP connection and snapshot","passed":true,"observed":"true","elapsed_ms":1212}
+{"test":"FPGA armed","passed":true,"observed":"228","elapsed_ms":1214}
+{"test":"32-point actual snapshot","passed":true,"observed":"32","elapsed_ms":1214}
+DISPLAY_PAGE_0_OBSERVE_8_SECONDS
+{"test":"display page transport0","passed":true,"observed":"physical observer confirmation required","elapsed_ms":9222}
+DISPLAY_PAGE_1_OBSERVE_8_SECONDS
+{"test":"display page transport1","passed":true,"observed":"physical observer confirmation required","elapsed_ms":17225}
+DISPLAY_PAGE_2_OBSERVE_8_SECONDS
+{"test":"display page transport2","passed":true,"observed":"physical observer confirmation required","elapsed_ms":25227}
+DISPLAY_PAGE_3_OBSERVE_8_SECONDS
+{"test":"display page transport3","passed":true,"observed":"physical observer confirmation required","elapsed_ms":33572}
+DISPLAY_PAGE_4_OBSERVE_8_SECONDS
+{"test":"display page transport4","passed":true,"observed":"physical observer confirmation required","elapsed_ms":41575}
+INSTRUMENTATION_RESULT: passed=true
+INSTRUMENTATION_RESULT: results_json=[{"test":"real TCP connection and snapshot","passed":true,"observed":"true","elapsed_ms":1212},{"test":"FPGA armed","passed":true,"observed":"228","elapsed_ms":1214},{"test":"32-point actual snapshot","passed":true,"observed":"32","elapsed_ms":1214},{"test":"display page transport0","passed":true,"observed":"physical observer confirmation required","elapsed_ms":9222},{"test":"display page transport1","passed":true,"observed":"physical observer confirmation required","elapsed_ms":17225},{"test":"display page transport2","passed":true,"observed":"physical observer confirmation required","elapsed_ms":25227},{"test":"display page transport3","passed":true,"observed":"physical observer confirmation required","elapsed_ms":33572},{"test":"display page transport4","passed":true,"observed":"physical observer confirmation required","elapsed_ms":41575}]
+INSTRUMENTATION_CODE: 0

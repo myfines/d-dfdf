@@ -1,0 +1,8 @@
+{
+  "channels": 1,
+  "sample_width": 1,
+  "sample_rate": 5859,
+  "frames": 4096,
+  "peak_offset_128": 9,
+  "sha256": "8814ea3ea66eb6ddc19c2607fa370c104d3d28a2bca7fb78d036c550f213e308"
+}

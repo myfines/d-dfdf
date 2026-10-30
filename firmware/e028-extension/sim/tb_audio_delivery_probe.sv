@@ -8,7 +8,9 @@ initial begin
  wait(dut.slot==11);#1;if(dut.expression!=40)$fatal(1,"quarter pinch");
  wait(dut.slot==12);#1;if(dut.expression!=0)$fatal(1,"mute pinch");
  wait(dut.slot==13);#1;if(dut.expression!=160)$fatal(1,"hand loss unity");
+ wait(dut.slot==23);#1;if(dut.ceiling!=32||dut.mask!=0)$fatal(1,"four-note release changes stimulus gain");
  wait(dut.slot==24);#1;if(dut.mask!=32'hffffffff)$fatal(1,"32 notes");
+ wait(dut.slot==27);#1;if(dut.ceiling!=16||dut.mask!=0)$fatal(1,"16-note release changes stimulus gain");
  wait(dut.slot==28);#1;if(dut.vibrato!=80)$fatal(1,"explicit vibrato comparison");
  wait(dut.slot==30);repeat(10000)@(negedge clk);
  if(dut.slot!=30||dut.mask!=0||dut.ESP_TX!==1'bz)$fatal(1,"probe not bounded/isolated");

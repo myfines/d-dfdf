@@ -1,0 +1,8 @@
+{"test":"real TCP connection and snapshot","passed":true,"observed":"true","elapsed_ms":1206}
+{"test":"FPGA armed","passed":true,"observed":"228","elapsed_ms":1207}
+{"test":"32-point actual snapshot","passed":true,"observed":"32","elapsed_ms":1207}
+{"test":"cached online score persists across network change","passed":true,"observed":"12:20,16:20,19:20,24:40,19:20,16:20,12:40,-:20","elapsed_ms":1208}
+{"test":"cached online score acknowledged by real FPGA","passed":true,"observed":"real A frame","elapsed_ms":1538}
+INSTRUMENTATION_RESULT: passed=true
+INSTRUMENTATION_RESULT: results_json=[{"test":"real TCP connection and snapshot","passed":true,"observed":"true","elapsed_ms":1206},{"test":"FPGA armed","passed":true,"observed":"228","elapsed_ms":1207},{"test":"32-point actual snapshot","passed":true,"observed":"32","elapsed_ms":1207},{"test":"cached online score persists across network change","passed":true,"observed":"12:20,16:20,19:20,24:40,19:20,16:20,12:40,-:20","elapsed_ms":1208},{"test":"cached online score acknowledged by real FPGA","passed":true,"observed":"real A frame","elapsed_ms":1538}]
+INSTRUMENTATION_CODE: 0

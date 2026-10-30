@@ -28,9 +28,11 @@ module audio_delivery_probe #(parameter integer SLOT_FRAMES=93750,CAPTURE_SHIFT=
    20:begin mask=32'h1000;fx=4;end
    21:fx=4;
    22:begin mask=32'h00891000;ceiling=32;end
+   23:ceiling=32; // Keep release-tail gain equal to the preceding held chord.
    24:begin mask=32'hffffffff;ceiling=16;end
    25:begin mask=32'hffff0000;ceiling=16;end
    26:begin mask=32'h0000ffff;ceiling=16;end
+   27:ceiling=16; // Do not amplify releasing voices10x at the test boundary.
    28:begin mask=32'h1000;vibrato=80;end
    default:begin end
   endcase

@@ -1,0 +1,14 @@
+{"test":"real TCP connection and snapshot","passed":true,"observed":"true","elapsed_ms":1166}
+{"test":"FPGA armed","passed":true,"observed":"228","elapsed_ms":1167}
+{"test":"32-point actual snapshot","passed":true,"observed":"32","elapsed_ms":1167}
+{"test":"record cancellation is bounded","passed":true,"observed":"java.lang.IllegalStateException: 直连未运行或发送队列已满","elapsed_ms":2378}
+{"test":"real TCP connection and snapshot","passed":false,"observed":"false","elapsed_ms":32498}
+INSTRUMENTATION_RESULT: error=java.lang.AssertionError: real TCP connection and snapshot: false
+    at cn.myfines.instrument.devicetest.DeviceSuite.check(DeviceSuite.java:40)
+    at cn.myfines.instrument.devicetest.DeviceSuite.connected(DeviceSuite.java:46)
+    at cn.myfines.instrument.devicetest.DeviceSuite.onStart(DeviceSuite.java:88)
+    at android.app.Instrumentation$InstrumentationThread.run(Instrumentation.java:2720)
+
+INSTRUMENTATION_RESULT: passed=false
+INSTRUMENTATION_RESULT: results_json=[{"test":"real TCP connection and snapshot","passed":true,"observed":"true","elapsed_ms":1166},{"test":"FPGA armed","passed":true,"observed":"228","elapsed_ms":1167},{"test":"32-point actual snapshot","passed":true,"observed":"32","elapsed_ms":1167},{"test":"record cancellation is bounded","passed":true,"observed":"java.lang.IllegalStateException: 直连未运行或发送队列已满","elapsed_ms":2378},{"test":"real TCP connection and snapshot","passed":false,"observed":"false","elapsed_ms":32498}]
+INSTRUMENTATION_CODE: 0

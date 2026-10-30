@@ -1,0 +1,16 @@
+{
+  "test": "isolated physical UART, AT CRLF query only; no ESP configuration changes",
+  "limitations": "TX count proves query engine issued bytes, not electrical continuity to ESP RX. No incoming bytes cannot alone distinguish supply, wiring or baud. ready_seen here means OK was received, not hotspot configured.",
+  "snapshots": 1207,
+  "ready_seen": true,
+  "maximum_rx_bytes": 108,
+  "maximum_tx_bytes": 72,
+  "timeout_seen": false,
+  "command_indices": [
+    0
+  ],
+  "rx_levels": [
+    true
+  ],
+  "restored_E049_6020": true
+}

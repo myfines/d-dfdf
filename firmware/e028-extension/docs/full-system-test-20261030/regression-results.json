@@ -1,0 +1,104 @@
+{
+  "rtl": {
+    "log": "20261030-full-system-icarus.log",
+    "passed_lines": [
+      "PASS tb_practice_guide",
+      "PASS tb_oled_practice",
+      "PASS tb_voice_schedule",
+      "PASS tb_timbre_balance",
+      "PASS tb_direct_record_wiring",
+      "PASS tb_control_ownership",
+      "PASS tb_control_wiring",
+      "PASS tb_performance_controls",
+      "PASS tb_unarmed_led",
+      "PASS tb_score_download",
+      "PASS tb_pcm_record",
+      "PASS tb_score_transport",
+      "PASS tb_record_transport",
+      "PASS tb_keymap",
+      "PASS tb_keymap_transport",
+      "PASS tb_adsr_long_release",
+      "PASS tb_adsr_core",
+      "PASS tb_custom_adsr",
+      "PASS tb_envelope_control",
+      "PASS tb_adsr_transport",
+      "PASS tb_voice_gain",
+      "PASS tb_audio_fix",
+      "PASS tb_fx_stability",
+      "PASS tb_fx_gain",
+      "PASS tb_mix_headroom",
+      "PASS tb_pitch_frame",
+      "PASS tb_audio_regression_top",
+      "PASS tb_quality",
+      "PASS tb_panel_quality",
+      "PASS tb_synth32",
+      "PASS tb_features",
+      "PASS tb_fx",
+      "PASS tb_spectrum",
+      "PASS tb_oled_ui",
+      "PASS tb_song_led",
+      "PASS tb_command",
+      "PASS tb_core"
+    ],
+    "test_summary": [],
+    "errors": []
+  },
+  "additional_rtl": {
+    "log": "20261030-full-system-extra.log",
+    "passed_lines": [
+      "PASS tb_delivery_latency",
+      "PASS tb_lissajous",
+      "PASS tb_esp_at",
+      "PASS tb_http",
+      "PASS tb_http_at",
+      "PASS tb_cloud",
+      "PASS tb_e050_uart",
+      "PASS tb_envelope_telemetry",
+      "PASS tb_bass_preset"
+    ],
+    "test_summary": [],
+    "errors": []
+  },
+  "app": {
+    "log": "20261030-full-system-app.log",
+    "passed_lines": [
+      "PASS idle, four voices, headroom, panic, release, pitch",
+      "PASS WiFi protocol: actual snapshot fields, waveform, invalid/range checks",
+      "PASS WiFi TCP worker: control bytes, fragmented FPGA status, disconnect",
+      "PASS Android extension packet encoding and bounds",
+      "PASS direct A metadata/checksum and signed PCM WAV export",
+      "PASS online score download, format validation, size and URL bounds",
+      "PASS actual reference View constructor/layout/offline draw/32-point connected draw/four timbres"
+    ],
+    "test_summary": [],
+    "errors": []
+  },
+  "python": {
+    "log": "20261030-full-system-python-complete.log",
+    "passed_lines": [],
+    "test_summary": [
+      "Ran 21 tests in 0.942s",
+      "OK"
+    ],
+    "errors": []
+  },
+  "k230": {
+    "log": "20261030-full-system-k230.log",
+    "passed_lines": [],
+    "test_summary": [
+      "Ran 32 tests in 0.059s",
+      "OK"
+    ],
+    "errors": []
+  },
+  "audio_rtl": {
+    "log": "20261030-full-system-audio-rtl.log",
+    "passed_lines": [
+      "PASS tb_audio_delivery_probe",
+      "PASS tb_timbre_levels",
+      "PASS tb_fx_sine",
+      "PASS tb_audio_render"
+    ],
+    "note": "probe release gain regression was then added; RED/GREEN logs preserved separately"
+  }
+}

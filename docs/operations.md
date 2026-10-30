@@ -1293,3 +1293,22 @@ finally已恢复固定hash的正式E049 SRAM，独立读取E049/6020；Flash为E
 用户提供装配照片并要求测试。COM13被动115200监听12秒0字节；官方Programmer 2.5MHz --scan及operation73/74只读确认0x81B/E049/6020，日志logs/20261030-layout-*。首次查找诊断脚本误用仓库根tools路径，报不存在；定位至firmware/e028-extension/tools后解决，没有重复硬件尝试。
 
 运行现有run_e050_probe.py，将输出目录独立设为docs/layout-test-20261030；运行前核对源码、探针和恢复码流hash，保留旧私有帧/WAV副本。E050临时SRAM自测392有效A帧/0错误/128录音块/437 OLED状态且实际ACK，曲谱、映射、ADSR及参考指引通过。finally恢复E049并读回E049/6020。Flash未写，网络未改，真实手机/光键/手势及模拟音频不在本轮通过项。恢复后需重新启用外设。详见firmware/e028-extension/docs/layout-test-20261030/README.md及report.json。
+
+
+## 2026-10-30 全系统回归、真实输入/手机/音频与恢复修复
+
+用户授权全面测试及修复。默认ModelSim缺D:/Modelsim/vlib，改用现有Icarus入口，50个RTL台、Python21、K23032、App7组通过。各次测试及RED/GREEN日志见logs/20261030-full-system-*、device-*、probe-release-*、transitions-*、app-record-recovery-*。主机时间仅作追溯。
+
+临时SRAM依次使用E048音频、E051真实输入旁路观测、E052最小AT和E053原AT初始化器隔离探针。各运行器部署前scan、核对0x81B/源文件/码流/恢复哈希，finally恢复E049并用operation73/74读E049/6020；没有写Flash、OTP或更改ESP/下载器固件。恢复文件SHA256 e9148e835c0dc08b764a16039bb6696e025b285967bbf6f4129d96d5175a6790。相关build/report/restore日志在full-system证据目录。E051初版72位到64位字段修正并重编译后才下载；Icarus缺DLL PATH及调度问题修正。原全HTTP ROM隔离综合耗时异常，确认自有gw_sh命令后停止PID13688，未部署该产物；常数HTTP桩仅测原AT初始化，不能冒充HTTP实测。最小探针声明顺序修正并重编译后下载。
+
+初次音频稳态窗口漏掉过渡264近满幅样本；修复诊断probe slot23/27音量上限，新增失败用例和全窗口分析，重新编译E048录音。30完整窗口0近满幅/24检查通过；RAW输入初始discontinuity和衰减4倍限制保留。生产增益进麦克风过载，不能归为DAC失真。原始WAV只在E:/gaoyun/private/esp-web。
+
+真实输入6058周期快照后专项摇杆442帧证明两轴有效，撤回早期失效推断；手机手势424帧中213有效，输出PCM幅度随捏合改变。热点曾在正式启用后缺失/60秒0字节；E052收108字节，E053六命令初始化完成；电脑扫描发现热点但未加入，手机随后真实连接。原缺失原因尚未永久定位。
+
+手机HDB识别但ADB为空后，用户启用USB调试并允许RSA。测试包首次被系统INSTALL_FAILED_ABORTED拒绝；用户解锁授权后成功安装。同签名独立DeviceSuite调用正式App回调、原View多指事件、真实ESP/FPGA；没有屏幕坐标点击。0.12复现录音中断后重连30秒无状态；新增单测先失败，WifiSession新连接先发C00000000修复，构建签名App0.13并安装，直接断开/HOME后台实测恢复。常规64项、64/65曲谱边界、32映射、ADSR边界/坏校验、多指逐放、导出实际处理器和MediaPlayer通过。公网GitHub raw下载曾Connection reset/UnknownHost，换公共jsDelivr成功；手机切校园网下载后已切回FPGA-Instrument，缓存下发真实A帧通过。电脑网络未加入热点。临时USB常亮原值0，结束恢复0。
+
+OLED五页通信通过；电脑相机首帧暗且未朝向板卡，不计显示验收；用户调整后拍摄，再以1080p采集。图像及原始轨迹私有保存。延迟、LRCK、抖动和用户冷启动仍未验，不用软件回归代替。公开汇总见firmware/e028-extension/docs/full-system-test-20261030/FINAL.md。
+
+摄像头1080p三轮（初轮640×480、高清低幅、高清32声部动态）实拍五页，已观察波形/频谱变化、合唱XY轨迹、曲谱键位和声部状态；小字及刷新率未量化。正式App原UI未修改，仅测试套件display模式采用32声部80音量检查动态，finally恢复音量160/音色1/音区0、关闭测试/效果/曲谱。公开屏幕裁剪图与私有原帧SHA收据已保存。
+
+收尾：卸载独立测试包cn.myfines.instrument.devicetest，保留已安装正式App0.13并启动；恢复stay_on_while_plugged_in原值0。9组实体流程共115检查点通过（含重复连接前置检查，不是115独立功能）。补跑observer3项与transition2项通过。git暂存前扫描排除Wi-Fi网络列表、私有WAV/完整轨迹、密钥；原烧录日志私有备份，公开副本规范空白且保留全部错误行，git diff --cached --check通过。首次暂存因根tools/忽略规则返回失败，确认后仅对8个项目源码脚本显式git add -f；未加入工具二进制。

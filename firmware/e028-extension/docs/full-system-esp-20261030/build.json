@@ -1,0 +1,5 @@
+{
+  "artifact_sha256": "c3783179417adbd386557e5fbad27ba30fa4f3c6b51fc0aca19267702854f1c7",
+  "timing_summary": "Max Frequency Summary: NO. Clock Name Constraint Actual Fmax Logic Level Entity 1 clk27 27.000(MHz) 149.510(MHz) 7 TOP Total Negative Slack Summary: Clock Name Analysis Type Endpoints TNS Number of Endpoints clk27 Setup 0.000 0 clk27 Hold 0.000 0 ",
+  "probe": "AT-only UART queries, no ESP configuration changes"
+}

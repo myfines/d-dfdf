@@ -1,0 +1,28 @@
+INSTRUMENTATION_RESULT: error=java.net.SocketException: Connection reset
+    at java.net.SocketInputStream.read(SocketInputStream.java:191)
+    at java.net.SocketInputStream.read(SocketInputStream.java:143)
+    at com.android.org.conscrypt.ConscryptEngineSocket$SSLInputStream.readFromSocket(ConscryptEngineSocket.java:994)
+    at com.android.org.conscrypt.ConscryptEngineSocket$SSLInputStream.processDataFromSocket(ConscryptEngineSocket.java:958)
+    at com.android.org.conscrypt.ConscryptEngineSocket$SSLInputStream.-$$Nest$mprocessDataFromSocket(Unknown Source:0)
+    at com.android.org.conscrypt.ConscryptEngineSocket.doHandshake(ConscryptEngineSocket.java:242)
+    at com.android.org.conscrypt.ConscryptEngineSocket.startHandshake(ConscryptEngineSocket.java:224)
+    at com.android.okhttp.internal.io.RealConnection.connectTls(RealConnection.java:196)
+    at com.android.okhttp.internal.io.RealConnection.connectSocket(RealConnection.java:153)
+    at com.android.okhttp.internal.io.RealConnection.connect(RealConnection.java:116)
+    at com.android.okhttp.internal.http.StreamAllocation.findConnection(StreamAllocation.java:186)
+    at com.android.okhttp.internal.http.StreamAllocation.findHealthyConnection(StreamAllocation.java:128)
+    at com.android.okhttp.internal.http.StreamAllocation.newStream(StreamAllocation.java:97)
+    at com.android.okhttp.internal.http.HttpEngine.connect(HttpEngine.java:289)
+    at com.android.okhttp.internal.http.HttpEngine.sendRequest(HttpEngine.java:232)
+    at com.android.okhttp.internal.huc.HttpURLConnectionImpl.execute(HttpURLConnectionImpl.java:465)
+    at com.android.okhttp.internal.huc.HttpURLConnectionImpl.getResponse(HttpURLConnectionImpl.java:411)
+    at com.android.okhttp.internal.huc.HttpURLConnectionImpl.getResponseCode(HttpURLConnectionImpl.java:542)
+    at com.android.okhttp.internal.huc.DelegatingHttpsURLConnection.getResponseCode(DelegatingHttpsURLConnection.java:106)
+    at com.android.okhttp.internal.huc.HttpsURLConnectionImpl.getResponseCode(HttpsURLConnectionImpl.java:30)
+    at cn.myfines.instrument.ScoreDownload.fetch(ScoreDownload.java:19)
+    at cn.myfines.instrument.devicetest.DeviceSuite.onStart(DeviceSuite.java:81)
+    at android.app.Instrumentation$InstrumentationThread.run(Instrumentation.java:2720)
+
+INSTRUMENTATION_RESULT: passed=false
+INSTRUMENTATION_RESULT: results_json=[]
+INSTRUMENTATION_CODE: 0

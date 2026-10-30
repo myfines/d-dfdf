@@ -1,0 +1,17 @@
+{
+  "test": "unchanged production AT initializer; HTTP page ROM stubbed, no HTTP response claim",
+  "limitations": "ready means initializer completed its command sequence; confirm SSID externally. Sensor and App paths not exercised.",
+  "snapshots": 1208,
+  "ready_seen": true,
+  "maximum_rx_bytes": 47,
+  "maximum_tx_bytes": 114,
+  "timeout_seen": false,
+  "command_indices": [
+    0,
+    5
+  ],
+  "rx_levels": [
+    true
+  ],
+  "restored_E049_6020": true
+}

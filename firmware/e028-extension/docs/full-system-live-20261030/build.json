@@ -1,0 +1,7 @@
+{
+  "artifact_sha256": "eaf2bf8e3cbb09f471df7e97860b09b96b47bd9312e75af47d1ac89339de080e",
+  "source_core_sha256": "8bb9bb0240eafaeb80cbc7eb7dc93de49603a91420c37c844cbad0f10b17345e",
+  "timing_summary": "Max Frequency Summary: NO. Clock Name Constraint Actual Fmax Logic Level Entity 1 clk27 27.000(MHz) 27.016(MHz) 34 TOP Total Negative Slack Summary: Clock Name Analysis Type Endpoints TNS Number of Endpoints clk27 Setup 0.000 0 clk27 Hold 0.000 0 ",
+  "worst_setup_slack_ns": 0.022,
+  "purpose": "temporary SRAM live observer; all original inputs retained; no Flash write"
+}

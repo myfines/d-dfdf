@@ -1,0 +1,46 @@
+{
+  "samples": 424,
+  "active_hand_samples": 213,
+  "ranges": {
+    "pinch": [
+      0,
+      1000
+    ],
+    "height": [
+      0,
+      781
+    ],
+    "confidence": [
+      0,
+      69
+    ],
+    "x": [
+      839,
+      876
+    ],
+    "y": [
+      0,
+      1646
+    ],
+    "volume": [
+      160,
+      160
+    ],
+    "keys": [
+      0,
+      16
+    ],
+    "wave_span": [
+      0,
+      17
+    ]
+  },
+  "trace_sha256": "94b86e1dfdda1eb9ccdba32eef760b20b4c6932920ffb37a945e85ef61b181c5",
+  "user_confirmed_full_joystick_motion": true,
+  "joystick_passed": "superseded by dedicated joystick run",
+  "limitations": [
+    "App telemetry ranges do not establish physical ADC wiring cause.",
+    "Gesture raw values and wave span are evidence of response, analogue amplitude/colour analysis is separate."
+  ],
+  "correction": "Full follow-up joystick run observed both axes0..1646/1647 and analogue pitch233..294Hz. Initial gesture run did not cover both axes; not a proven hardware fault."
+}

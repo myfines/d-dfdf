@@ -1,0 +1,5 @@
+{"test":"actual App export handler and content URI bytes","passed":true,"observed":"4140","elapsed_ms":981}
+{"test":"Android player decodes and completes exported WAV","passed":true,"observed":"699","elapsed_ms":1905}
+INSTRUMENTATION_RESULT: passed=true
+INSTRUMENTATION_RESULT: results_json=[{"test":"actual App export handler and content URI bytes","passed":true,"observed":"4140","elapsed_ms":981},{"test":"Android player decodes and completes exported WAV","passed":true,"observed":"699","elapsed_ms":1905}]
+INSTRUMENTATION_CODE: 0
