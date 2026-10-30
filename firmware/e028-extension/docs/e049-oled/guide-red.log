@@ -1,0 +1,6 @@
+E:\gaoyun\releases\e028-flash-record\firmware\e028-extension\src\instrument_core.v:465: warning: Anachronistic use of named begin/end to surround generate schemes.
+E:\gaoyun\releases\e028-flash-record\firmware\e028-extension/sim/tb_practice_guide.sv:5: error: Unknown module type: practice_guide
+2 error(s) during elaboration.
+*** These modules were missing:
+        practice_guide referenced 1 times.
+***

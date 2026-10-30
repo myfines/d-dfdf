@@ -1,0 +1,2 @@
+PASS 32-voice schedule: 80 frames, max 290 / 576 clocks, four timbres
+E:\gaoyun\releases\e028-flash-record\firmware\e028-extension/sim/tb_voice_schedule.sv:32: $finish called at 460850000 (1ps)

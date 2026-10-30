@@ -2,7 +2,7 @@
 set root [file normalize [file join [file dirname [info script]] ..]]
 set output [file join $root build-public]
 if {[info exists ::env(FPGA_BUILD_ROOT)]} { set output $::env(FPGA_BUILD_ROOT) }
-create_project -name instrument_e047_public -dir "$output" -pn GW2A-LV18PG256C8/I7 -device_version C -force
+create_project -name instrument_e049_public -dir "$output" -pn GW2A-LV18PG256C8/I7 -device_version C -force
 add_file "$root/src/wave_source.v"
 add_file "$root/src/synth32.v"
 add_file "$root/src/envelope_control.v"
@@ -42,5 +42,5 @@ set_option -use_sspi_as_gpio 1
 set_option -use_jtag_as_gpio 0
 set_option -use_mspi_as_gpio 0
 set_option -use_reconfign_as_gpio 0
-set_option -user_code 0xE047
+set_option -user_code 0xE049
 run all

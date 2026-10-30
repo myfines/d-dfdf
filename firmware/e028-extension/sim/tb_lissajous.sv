@@ -3,7 +3,7 @@ module tb_lissajous;
 reg clk=0; // Frozen raster input test: no controller clock during injected snapshots.
 tri1 scl,sda;wire online;
 reg[9:0] address;integer i,x,y,p,mode,fd,expected;real angle;
-oled_ui dut(.clk(clk),.reset_n(1'b0),.frame_tick(1'b0),.sample_l(16'sd0),.sample_r(16'sd0),.bands(128'd0),.timbre(2'd0),.fx_enable(3'd0),.voices(6'd0),.latency_frames(16'd0),.screen(3'd2),.guide_note(5'd0),.guide_step(6'd0),.song_playing(1'b0),.keys_n(8'hff),.status(8'd0),.scl(scl),.sda(sda),.online(online));
+oled_ui dut(.clk(clk),.reset_n(1'b0),.frame_tick(1'b0),.sample_l(16'sd0),.sample_r(16'sd0),.bands(128'd0),.timbre(2'd0),.fx_enable(3'd0),.voices(6'd0),.latency_frames(16'd0),.screen(3'd2),.guide_note(5'd0),.guide_step(6'd0),.song_playing(1'b0),.keys_n(8'hff),.status(8'd0),.scl(scl),.sda(sda),.online(online),.key_page(2'd0),.key_mapping(160'd0),.guide_valid(1'b0));
 initial begin
  force dut.screen_hold=3'd2;force dut.pixel=address;
  for(mode=0;mode<4;mode=mode+1)begin

@@ -459,7 +459,8 @@ module instrument_core #(
             clk, io_reset_n, frame_tick, final_l, final_r, spectrum_bands,
             timbre, fx_on, voice_count, latency_frames, screen,
             guide_note, guide_step, song_playing, optical_valid ? optical_keys_n : 8'hff,
-            oled_status, OLED_SCL, OLED_SDA, oled_online);
+            oled_status, OLED_SCL, OLED_SDA, oled_online,
+            page,key_mapping,song_gate[guide_note]);
 
         wire [7:0] visible_keys = remote_keys_byte | {4'd0, ~keys_sync};
         begin: recording

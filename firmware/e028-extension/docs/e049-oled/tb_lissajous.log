@@ -1,0 +1,2 @@
+PASS Lissajous actual stereo frozen pairs: equal/opposite/quadrature/silence and isolated XY mapping
+E:\gaoyun\releases\e028-flash-record\firmware\e028-extension/sim/tb_lissajous.sv:34: $finish called at 4230000 (1ps)

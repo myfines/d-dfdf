@@ -6,7 +6,7 @@
 //   0 waveform      : real post-effects audio, zero-crossing triggered
 //   1 spectrum      : 16 real-time biquad bands, 8 columns per band
 //   2 Lissajous     : X/Y plot of the stereo post-effects signal, frame snapshot
-//   3 guide         : eight key boxes with the next song note highlighted
+//   3 guide         : mapped/banked target above, actual keys below, numbered1..8
 //   4 status        : instrument, effects, voice count, latency, song, screen
 //
 // The I2C master is the same bounded open-drain engine used by E027.  At HALF_TICKS=36 the nominal bus rate is 375 kHz before synchronizer
@@ -36,7 +36,10 @@ module oled_ui #(
     input  wire [7:0]         status,
     inout  wire               scl,
     inout  wire               sda,
-    output reg                online
+    output reg                online,
+    input wire [1:0]          key_page,
+    input wire [159:0]        key_mapping,
+    input wire                guide_valid
 );
 
     reg start;
@@ -63,6 +66,14 @@ module oled_ui #(
     reg [4:0] guide_hold;
     reg [5:0] step_hold;
     reg song_hold;
+    wire [7:0] guide_target;
+    wire [1:0] guide_bank;
+    wire guide_found;
+    reg [7:0] target_hold;
+    reg [1:0] bank_hold, suggested_hold;
+    reg guide_valid_hold, found_hold;
+    practice_guide guide_decoder(song_playing,guide_valid,guide_note,key_page,key_mapping,
+        guide_target,guide_bank,guide_found);
 
     reg stream_start;
     wire stream_busy, stream_done, stream_ok;
@@ -143,10 +154,14 @@ module oled_ui #(
                     0: row="SCOPE       LIVE     ";
                     1: row="SPECTRUM    16 BANDS ";
                     2: row="STEREO      XY       ";
-                    3: row="PRACTICE    TARGET   ";
+                    3: begin row="NOTE 00 BANK 1       ";row[127:120]="0"+guide_hold/10;row[119:112]="0"+guide_hold%10;row[63:56]="1"+bank_hold;end
                     default: row="ENGINE      STATUS   ";
                 endcase
-                1: case(timbre_hold)
+                1: if(screen_hold==3) begin
+                    row=!song_hold?"PLAY KEYS 1 TO 8     ":!guide_valid_hold?"REST      STEP 00    ":!found_hold?"UNMAPPED  STEP 00    ":target_hold==0?"BANK 1    STEP 00    ":"PLAY KEYS STEP 00    ";
+                    if(song_hold && guide_valid_hold && found_hold && target_hold==0) row[127:120]="1"+suggested_hold;
+                    if(song_hold)begin row[47:40]="0"+step_hold/10;row[39:32]="0"+step_hold%10;end
+                end else case(timbre_hold)
                     0: row="E PIANO              ";
                     1: row="ORGAN                ";
                     2: row="STRINGS              ";
@@ -156,8 +171,8 @@ module oled_ui #(
                 3: begin row="LINK 00    KEYS 00   ";row[127:120]=hex_char(status_hold[7:4]);row[119:112]=hex_char(status_hold[3:0]);row[39:32]=hex_char(~keys_hold[7:4]);row[31:24]=hex_char(~keys_hold[3:0]);end
                 4: begin row="DSP FRAMES 0000      ";row[79:72]=hex_char(latency_hold[15:12]);row[71:64]=hex_char(latency_hold[11:8]);row[63:56]=hex_char(latency_hold[7:4]);row[55:48]=hex_char(latency_hold[3:0]);end
                 5: row=song_hold?"SONG PLAYING         ":"SONG STOPPED         ";
-                6: row="S1 RANGE  S2 DISPLAY ";
-                7: row="S3 SONG   STICK TONE ";
+                6: row=screen_hold==4?"32 VOICE HDL TDM     ":"S1 RANGE  S2 DISPLAY ";
+                7: row=screen_hold==3?"TOP TARGET BOTTOM KEY":"S3 SONG   STICK TONE ";
             endcase
             text_char=idx<21 ? (row >> ((20-idx)*8)) : 8'h20;
         end
@@ -250,7 +265,10 @@ module oled_ui #(
     // frozen between complete SSD1306 transfers, preventing tearing.
     always @* begin
         pixels=0; character=" "; y=0;lo=0;hi=0;point_x=0;point_y=0;hit=0;
-        if(screen_hold>=4 || page<2 || page==7) begin
+        if(screen_hold==3 && page==6) begin
+            character="1"+(column>>4);
+            pixels=(column[3:0]>=5 && column[3:0]<=9)?((glyph_bits>>((9-column[3:0])*7))&7'h7f):0;
+        end else if(screen_hold>=4 || page<2 || page==7) begin
             character=text_char(page,char_index);
             pixels=glyph_column<5 ? ((glyph_bits >> ((4-glyph_column)*7)) & 7'h7f):0;
         end else begin
@@ -278,10 +296,11 @@ module oled_ui #(
                         pixels[b]=hit || (y==36 && column[3:0]==0);
                     end
                     3: begin
-                        hit=(!keys_hold[column>>4]) || (song_hold && (column>>4)==guide_hold[2:0]);
+                        // Upper fill = expected key(s); lower fill = actual presses.
+                        // Do not alias a different bank/rest into an incorrect key.
                         pixels[b]=(column[3:0]>=1 && column[3:0]<=14) &&
-                           ((y>=19 && y<=46 && (hit || column[3:0]==1 || column[3:0]==14 || y==19 || y==46)) ||
-                            (y>=51 && y<=53 && song_hold && column<({step_hold,1'b0})));
+                           (y>=23 && y<=46 && (column[3:0]==1 || column[3:0]==14 || y==23 || y==46 ||
+                            (y<=34 && target_hold[column>>4]) || (y>=39 && !keys_hold[column>>4])));
                     end
                 endcase
             end
@@ -311,6 +330,7 @@ module oled_ui #(
             guide_hold <= 16;
             step_hold <= 0;
             song_hold <= 0;
+            target_hold<=0;bank_hold<=0;suggested_hold<=0;guide_valid_hold<=0;found_hold<=0;
             bands_hold <= 0;
             for(k = 0; k < 128; k = k + 1) begin wave_snap[k] <= 32; wave_r_snap[k] <= 32; end
         end else begin
@@ -367,6 +387,8 @@ module oled_ui #(
                        guide_hold <= guide_note;
                        step_hold <= guide_step;
                        song_hold <= song_playing;
+                       target_hold<=guide_target;bank_hold<=key_page;suggested_hold<=guide_bank;
+                       guide_valid_hold<=guide_valid;found_hold<=guide_found;
                        setup <= 0;
                        timer <= 0;
                        state <= 1;
@@ -377,4 +399,23 @@ module oled_ui #(
             endcase
         end
     end
+endmodule
+
+// Inverse key mapping for offline practice. The selected bank is preferred;
+// otherwise suggest the first bank containing the target note. No bus writes.
+module practice_guide(input wire playing,valid,input wire[4:0] note,
+ input wire[1:0] bank,input wire[159:0] mapping,
+ output reg[7:0] target,output reg[1:0] suggested,output reg found);
+ reg[31:0] matching_keys;integer i;
+ always @*begin
+  matching_keys=0;target=0;suggested=bank;found=0;
+  for(i=0;i<32;i=i+1)matching_keys[i]=playing && valid && mapping[i*5+:5]==note;
+  target=matching_keys>>{bank,3'b000};found=|matching_keys;
+  if(target==0)begin
+   if(|matching_keys[7:0])suggested=0;
+   else if(|matching_keys[15:8])suggested=1;
+   else if(|matching_keys[23:16])suggested=2;
+   else if(|matching_keys[31:24])suggested=3;
+  end
+ end
 endmodule

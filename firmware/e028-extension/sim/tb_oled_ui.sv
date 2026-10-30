@@ -15,6 +15,9 @@ module tb_oled_ui;
     reg song_playing = 0;
     reg [7:0] keys_n = 8'hff;
     reg [7:0] status = 8'h55;
+    reg [159:0] mapping;
+    integer map_index;
+    initial for(map_index=0;map_index<32;map_index=map_index+1)mapping[map_index*5+:5]=map_index;
     wire online;
     tri1 scl, sda;
     reg ack_low = 0;
@@ -33,7 +36,8 @@ module tb_oled_ui;
         .timbre(timbre), .fx_enable(fx_enable), .voices(voices),
         .latency_frames(latency), .screen(screen), .guide_note(guide_note),
         .guide_step(guide_step), .song_playing(song_playing), .keys_n(keys_n),
-        .status(status), .scl(scl), .sda(sda), .online(online));
+        .status(status), .scl(scl), .sda(sda), .online(online),
+        .key_page(2'd0),.key_mapping(mapping),.guide_valid(1'b1));
 
     always #5 clk = ~clk;
 

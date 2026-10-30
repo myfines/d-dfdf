@@ -1,0 +1,38 @@
+{
+  "date": "2026-10-30",
+  "candidate_version": "E049",
+  "actual_flash_version": "E047 last verified; no device available this phase",
+  "app_version": "0.12-e047-expression",
+  "fmax_mhz": 27.19,
+  "constraint_mhz": 27,
+  "setup_tns": 0,
+  "hold_tns": 0,
+  "worst_setup_slack_ns": 0.259,
+  "default_rtl_tests_passed": 37,
+  "additional_lissajous_passed": true,
+  "schedule_frames": 80,
+  "synth_max_clocks": 290,
+  "frame_budget_clocks": 576,
+  "board_scan": "Error: No Gowin devices found!",
+  "board_programmed": false,
+  "coldboot_or_physical_acceptance_claimed": false,
+  "pdf_led_protocol": "0x01 calibration write, 0x30 status read; no independent LED control documented",
+  "source_hashes": {
+    "src/oled_ui.v": "ddd0c8bc3380ec76eb2420e6c21d030af3db0fdf8de14629878b176bdd0387a9",
+    "src/instrument_core.v": "8bb9bb0240eafaeb80cbc7eb7dc93de49603a91420c37c844cbad0f10b17345e",
+    "src/synth32.v": "b5a4056eede554520856da8c92a336ee96de383ca2d3ed3d7060f9ee613d0e61",
+    "src/led_guide.v": "1c5da8703a0aaafc1a11d009225ee12bd754b1ed6deb12c37d5bf34bc9ef1bbf"
+  },
+  "artifacts": [
+    {
+      "path": "E:\\gaoyun\\private\\esp-web\\build\\instrument_e049_ap\\impl\\pnr\\instrument_e049_ap.fs",
+      "sha256": "e9148e835c0dc08b764a16039bb6696e025b285967bbf6f4129d96d5175a6790",
+      "bytes": 7264152
+    },
+    {
+      "path": "E:\\gaoyun\\private\\esp-web\\build\\instrument_e049_ap\\impl\\pnr\\instrument_e049_ap.bin",
+      "sha256": "93d155b47ba4d6028cac2b99f02aa63d3ba487b451aebba1b9b9ff1a88529517",
+      "bytes": 907418
+    }
+  ]
+}

@@ -1256,3 +1256,12 @@ JTAG识别0x81B、COM13确认；首轮RAW采集幅度健全性失败，用户确
 ## 2026-10-30 LED与并行架构核对
 
 对照官网拓展1/3/4、FAQ77及正式CST，确认四个GPIO灯约束与OLED指引路径；八路巡线当前仅读0x12/0x30，未发现独立灯控协议，未猜测写寄存器或改模块固件。纠正instrument_core/instrument_ap_top六灯旧注释为四灯。明确当前32独立状态voice共享算术TDM，不宣称32套物理并行算术单元；OLED不自动替代赛题明确LED指引。见docs/led-and-parallel-scope-20261030.md。本轮只有注释和说明变更，git diff --check通过，无构建/下载/烧录/硬件变更，既有E047及App0.12继续使用。
+
+
+## 2026-10-30 E049 OLED可视指引与32声部调度
+
+目的：纸壳内板载灯不直观，新增外置OLED主提示；保留四路板载LED，不能自行宣称OLED替代赛题LED要求。修改OLED为音符/音区/映射反查，上半格为目标、下半格为实际光键，标号1..8，支持休止/无映射。未改引脚/供电/巡线协议/合成音量。厂家三页PDF重新文本核对，仅0x01校准写与0x30状态读，无独立八灯命令；官网旧文档URL目前返回SPA入口，未当作新协议证据。
+
+命令：`sim/run_icarus.ps1`默认37项全部通过，另跑`-Tests tb_lissajous`通过；初始新测试缺practice_guide模块编译失败（RED），实现中遇SystemVerilog保留字matches，已改matching_keys；新渲染测试首次把第5键列坐标写成第6键，纠正夹具坐标后通过。`gw_sh.exe tools/build_e049_ap.tcl`成功，Fmax27.190MHz满足27MHz约束，setup/hold TNS0。调度测试四音色/32音/弯音/颤音80帧最高290/576周期。原始日志在logs/20261030-e049-*，关键证据归档firmware/e028-extension/docs/e049-oled/。
+
+设备识别：官方Programmer 2.5MHz、cable-index1、GW2A-18C执行`--scan`，返回`Error: No Gowin devices found!`（CLI退出码仍0，未误判成功）。未尝试下载或写Flash，不重复探测；未改电脑网络、传感器固件、OTP或下载器。实际板卡仍为上次确认E047，E049候选供后续部署。未做用户负责的实体验收。
