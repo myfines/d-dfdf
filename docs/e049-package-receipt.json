@@ -1,0 +1,11 @@
+{
+  "path": "E:\\gaoyun\\releases\\instrument-E049-app012-delivery-20261030.zip",
+  "sha256": "326eb0ccf30dfc1404161ae8f60ce2f05301b0b4c79bee8de45df25309aeb800",
+  "bytes": 3767811,
+  "source_commit": "bc12b54e82b9e6d035281a80303ff73eed900b22",
+  "verified_content_files": 741,
+  "zip_crc_passed": true,
+  "candidate": "E049",
+  "app": "0.12-e047-expression",
+  "programmed": false
+}
