@@ -1317,3 +1317,7 @@ OLED五页通信通过；电脑相机首帧暗且未朝向板卡，不计显示�
 ## 2026-10-30 独立比赛交付源码仓库
 
 用户要求准备比赛查验代码库。新建E:/gaoyun/releases/fpga-instrument-competition，main初始提交3b22bcc，包含E049综合引用源码、RTL测试、App0.13源码/测试/APK、K230代码与SOURCE-MANIFEST.json。不复制签名私钥、开发操作日志或旧Git历史。README按实际功能描述，不以设计值代替延迟/采样率/抖动实测。构建路径改为相对输出、JAVA_HOME/PATH依赖，未执行异机完整构建，不宣称已验证复现。综合引用文件静态检查通过。首次提交因新仓库作者未配置退出128，沿用原仓库本地配置后成功。gh不在PATH且连接器未提供创建仓库接口，当前仅本地新仓库，未创建GitHub远端。检查命令首次PowerShell正则引号解析失败，改为独立Python文件执行，没有板卡影响。本轮无硬件更改、无烧录。
+
+## 2026-10-30 热点事件回查与公开资料研究
+
+回查音频/真实输入/AT探针及正式esp_at_control、io_arm_control、引脚约束；结合用户补充中途断FPGA电源/故障时不热，形成docs/wifi-incident-analysis-20261030.md，明确供电/接触/启动状态优先假设及ready后缺少主动健康探测的恢复边界，未把推测写成已定位。Tinyfish检索ESP-01S GPIO2蓝灯与Espressif供电资料；web搜索接口空错误、fetch接口参数校验失败，改公开URL直接读取，官方指南成功、社区正文读取超时；社区蓝灯结论来自搜索摘要，未核实实物版本。原始官方HTML私有缓存于E:/gaoyun/private/esp-web/wifi-research。仅只读研究，无硬件动作、无固件/接线修改。
