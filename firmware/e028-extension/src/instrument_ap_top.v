@@ -1,6 +1,6 @@
 `timescale 1ns/1ps
 // E027 extension top level.  Pin-compatible with the E027 Dock build except
-// that N16/N14 and four more user LEDs form the six-LED performance guide.
+// that four GPIO user LEDs form the coarse performance guide; OLED shows keys.
 module instrument_ap_top #(
     parameter LINK_MODE = 0 // 0 = ESP-01S Wi-Fi AT/TCP, 1 = BLE-UART transparent
 )(

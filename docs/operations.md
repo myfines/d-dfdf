@@ -1251,3 +1251,8 @@ JTAG识别0x81B、COM13确认；首轮RAW采集幅度健全性失败，用户确
 执行：`./mobile-companion/build.ps1`，完整七组测试、Android编译、dex、打包、签名验证通过；日志`logs/20261030-apk012-build.log`，归档`docs/app012/build.log`。初次扩展测试因新增WifiProtocol依赖缺少classpath编译失败，已修正构建脚本。单独验签初次因当前shell未设置JAVA_HOME失败，设置本机JDK后验签成功，证书与0.11一致。相关RED证据见`docs/app012/verification.json`。按code-review-and-quality核对边界、网络超时/文件上限、包络回读与效果位一致性；没有修改HDL，无需重复RTL回归。
 
 影响：产出APK0.12，未安装到真实手机，未下载SRAM、未写Flash、未改变电脑网络。E047仍为现有Flash，未代替用户冷启动。在线下载以本机HTTP服务器测试；手机公网及ESP闭环仍待验收，不能宣称实体延迟/采样率达标。使用与顺序见`docs/e047-app012-guide.md`。
+
+
+## 2026-10-30 LED与并行架构核对
+
+对照官网拓展1/3/4、FAQ77及正式CST，确认四个GPIO灯约束与OLED指引路径；八路巡线当前仅读0x12/0x30，未发现独立灯控协议，未猜测写寄存器或改模块固件。纠正instrument_core/instrument_ap_top六灯旧注释为四灯。明确当前32独立状态voice共享算术TDM，不宣称32套物理并行算术单元；OLED不自动替代赛题明确LED指引。见docs/led-and-parallel-scope-20261030.md。本轮只有注释和说明变更，git diff --check通过，无构建/下载/烧录/硬件变更，既有E047及App0.12继续使用。

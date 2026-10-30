@@ -4,8 +4,8 @@
 // real-time visualisation, offline song/LED guide and the serial app link.
 //
 // The pinout is the E027 Dock pinout.  The only intentional board-level change
-// is that the two former status LEDs plus four more user LEDs become the
-// six-LED performance guide (L16 L14 N14 N16 A13 C13).
+// is that four GPIO user LEDs become the performance guide (L16 L14 N14 N16).
+// A13/C13 are dedicated package pins, not additional user LED outputs.
 // -----------------------------------------------------------------------------
 module instrument_core #(
     parameter integer I2C_HALF_TICKS = 135,
