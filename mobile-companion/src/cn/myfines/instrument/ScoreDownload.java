@@ -4,14 +4,17 @@ import java.net.*;
 import java.nio.charset.StandardCharsets;
 /** Bounded text-score download; no audio is downloaded or used to synthesize. */
 public final class ScoreDownload {
+ public static final String EXAMPLE_URL="https://cdn.jsdelivr.net/gh/myfines/d-dfdf@e031-web-control/docs/demo-score.txt";
+ public static final String EXAMPLE_SCORE="12:20,16:20,19:20,24:40,19:20,16:20,12:40,-:20";
  private static final int LIMIT=8192;
+ public static String addressOrExample(String address){return address==null||address.trim().isEmpty()?EXAMPLE_URL:address.trim();}
  public static String validate(String text){
   if(text.length()>LIMIT)throw new IllegalArgumentException("曲谱文本不能超过8192字符");
   String score=text.trim();if(score.startsWith("\uFEFF"))score=score.substring(1).trim();
   ExtensionProtocol.score(score);return score;
  }
  public static String fetch(String address)throws IOException {
-  URL url=new URL(address.trim());
+  URL url=new URL(addressOrExample(address));
   if(!(url.getProtocol().equals("https")||url.getProtocol().equals("http"))||url.getUserInfo()!=null)throw new IllegalArgumentException("请使用不含账号密码的HTTP/HTTPS曲谱文本网址");
   HttpURLConnection connection=(HttpURLConnection)url.openConnection();
   connection.setConnectTimeout(5000);connection.setReadTimeout(5000);connection.setInstanceFollowRedirects(false);

@@ -151,6 +151,23 @@ public final class DeviceSuite extends Instrumentation {
         try {
             Intent launch=new Intent(getTargetContext(),ReferenceActivity.class);launch.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             activity=(ReferenceActivity)startActivitySync(launch);
+            if(mode.equals("score-setup")){
+                android.content.SharedPreferences prefs=activity.getSharedPreferences("reference_wifi",0);
+                String previousUrl=prefs.getString("score_url",null),previousScore=prefs.getString("score",null);
+                try{
+                    prefs.edit().putString("score_url","").remove("score").commit();openEffects();
+                    android.app.AlertDialog dialog=(android.app.AlertDialog)activityField("extensionDialog");
+                    check("ready-to-use example URL visible",textView(dialog.getWindow().getDecorView(),ScoreDownload.EXAMPLE_URL)!=null,"default URL");
+                    check("bundled example visible offline",textView(dialog.getWindow().getDecorView(),ScoreDownload.EXAMPLE_SCORE)!=null,"valid score without network");
+                    View record=textView(dialog.getWindow().getDecorView(),"录制设备PCM并导出WAV（点击后演奏）");
+                    action(()->{try{Field busy=activity.getClass().getDeclaredField("extensionBusy");busy.setAccessible(true);busy.setBoolean(activity,true);}catch(Exception e){throw new RuntimeException(e);}record.performClick();});
+                    check("rejected busy recording keeps dialog open",dialog.isShowing(),"no unrelated dismissal");
+                    output.putBoolean("passed",true);return;
+                }finally{
+                    prefs.edit().putString("score_url",previousUrl).putString("score",previousScore).commit();
+                    action(()->{try{Field busy=activity.getClass().getDeclaredField("extensionBusy");busy.setAccessible(true);busy.setBoolean(activity,false);}catch(Exception e){throw new RuntimeException(e);}});closeEffects();
+                }
+            }
             if(mode.equals("export")){export(output);return;}
             if(mode.equals("download")){
                 String text=ScoreDownload.fetch(downloadUrl);

@@ -1339,3 +1339,9 @@ OLED五页通信通过；电脑相机首帧暗且未朝向板卡，不计显示�
 用户报告效果无法选定及听不到、明确不改UI，后要求直接检查APK不等手机。ADB为空，未安装设备。静态源码与交付0.13 APK反编译确认只保存echo、合唱/混响重开默认未选、新连接不恢复完整组合。REA inspect_android_package缺外部jadx-headless-mcp 0.7.1返回capability_unavailable，未安装依赖或改配置；改用现有JADX CLI。首次java -jar调用进入GUI并滞留，核对自有PID23360完整命令后停止，改显式jadx.cli.JadxCLI成功。旧/新反编译原文及证书仅私有保存。EffectsStateTest初始RED为新增类不存在的编译失败，不充当旧APK运行失败。
 
 新增EffectsState及全8组合/迁移/延迟隔离测试，ReferenceActivity保存/恢复完整effects掩码、新连接重放，保留控件顺序/文字/尺寸和InstrumentView不变；build.ps1加入状态与真实本机TCP全8组合测试。Android versionCode14/0.14-e049-effects，同签名APK生成；9组检查和APK签名/旧新保存路径/InstrumentView哈希对比通过。新增DeviceSuite effects实际复选框performClick/应用/重开/偏好/重连脚本编译通过但未执行；不当物理触摸或音频验收。FPGA、接线、手机均未改。候选说明、哈希收据、README/当前发布/功能指南已标明候选未部署，历史0.13实体通过范围未外推。
+
+## 2026-10-31 App0.15打包与曲谱简化
+
+用户要求提供安装包、检查其他操作并简化下载。保留原自绘UI及效果布局，只简化曲谱默认数据/网址/下载说明：内置合法示例，可离线直接下发；默认CDN地址预填，空地址自动补示例，自定义网址保留，失败不清旧谱。PC读取示例HTTP200/47字节，与内置谱一致，不冒充手机网络通过。检查还发现忙时点录音因复用extensionBusy会误关页面，改operate返回本次是否接受、仅启动成功才关；加入ready/session保护。新增ScoreDownload契约初始RED为缺符号编译失败，未当实体失败；补全8种效果状态/TCP回放、曲谱404/302/HTML/超大无长度等测试，9组构建内检查通过。DeviceSuite新增score-setup及既有effects脚本编译通过未运行。
+
+生成同签名0.15 APK，版本、签名、反编译与InstrumentView未变核查通过；发布SHA见docs/app015-receipt.json。文档及README明确未安装/未试听状态。无手机、固件、烧录或接线操作。原始编译日志私有备份，公开副本只规范空白并保留错误。

@@ -1,0 +1,36 @@
+mobile-companion\tests\ScoreDownloadTest.java:7: ����: �Ҳ�������
+  if(!ScoreDownload.addressOrExample("  ").equals(ScoreDownload.EXAMPLE_URL))throw new AssertionError("blank URL should use ready-to-download example");
+                                                               ^
+  ����:   ���� EXAMPLE_URL
+  λ��: �� ScoreDownload
+mobile-companion\tests\ScoreDownloadTest.java:7: ����: �Ҳ�������
+  if(!ScoreDownload.addressOrExample("  ").equals(ScoreDownload.EXAMPLE_URL))throw new AssertionError("blank URL should use ready-to-download example");
+                   ^
+  ����:   ���� addressOrExample(String)
+  λ��: �� ScoreDownload
+mobile-companion\tests\ScoreDownloadTest.java:8: ����: �Ҳ�������
+  if(!ScoreDownload.addressOrExample(null).equals(ScoreDownload.EXAMPLE_URL))throw new AssertionError("missing saved URL should use example");
+                                                               ^
+  ����:   ���� EXAMPLE_URL
+  λ��: �� ScoreDownload
+mobile-companion\tests\ScoreDownloadTest.java:8: ����: �Ҳ�������
+  if(!ScoreDownload.addressOrExample(null).equals(ScoreDownload.EXAMPLE_URL))throw new AssertionError("missing saved URL should use example");
+                   ^
+  ����:   ���� addressOrExample(<��ֵ>)
+  λ��: �� ScoreDownload
+mobile-companion\tests\ScoreDownloadTest.java:9: ����: �Ҳ�������
+  if(!ScoreDownload.addressOrExample(" http://127.0.0.1/song ").equals("http://127.0.0.1/song"))throw new AssertionError("custom URL preserved");
+                   ^
+  ����:   ���� addressOrExample(String)
+  λ��: �� ScoreDownload
+mobile-companion\tests\ScoreDownloadTest.java:10: ����: �Ҳ�������
+  if(!ScoreDownload.validate(ScoreDownload.EXAMPLE_SCORE).equals(ScoreDownload.EXAMPLE_SCORE))throw new AssertionError("bundled offline example must be valid");
+                                                                              ^
+  ����:   ���� EXAMPLE_SCORE
+  λ��: �� ScoreDownload
+mobile-companion\tests\ScoreDownloadTest.java:10: ����: �Ҳ�������
+  if(!ScoreDownload.validate(ScoreDownload.EXAMPLE_SCORE).equals(ScoreDownload.EXAMPLE_SCORE))throw new AssertionError("bundled offline example must be valid");
+                                          ^
+  ����:   ���� EXAMPLE_SCORE
+  λ��: �� ScoreDownload
+7 ������

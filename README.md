@@ -4,7 +4,7 @@
 
 ## 当前版本（2026-10-31）
 
-> 新增[App0.14效果修复候选](docs/app014-effects-fix.md)：修复合唱/混响选择回显、保存及重连丢失，UI布局不改。[下载0.14 APK](mobile-companion/apk/instrument-companion-0.14-e049-effects.apk)。软件检查已通过，尚未安装手机或实机复验；下表0.13仍是最近确认安装版本。
+> 最新待安装版为**[App0.15 APK](mobile-companion/apk/instrument-companion-0.15-e049-easy-score.apk)**，包含0.14效果状态修复，并简化示例曲谱下载/直接下发、修复忙时录音误关页面。[安装与曲谱操作](docs/app015-install-and-score.md)。9组软件检查通过，尚未安装手机或实机复验；下表0.13仍是最近确认安装版本。
 
 | 项目 | 最近确认状态 |
 |---|---|
@@ -48,7 +48,7 @@
 
 ### 复制给其他AI的拍摄交接提示
 
-> 请在本仓库指导队员实时拍摄比赛视频。先读README.md、docs/video-requirement-evidence-20261031.md、docs/video-shoot-plan-20261031.md、docs/e049-function-test-guide.md和firmware/e028-extension/docs/full-system-test-20261030/FINAL.md。当前正式E049＋App0.13，音频在FPGA合成；不要按旧E026首页或旧APK规划。
+> 请在本仓库指导队员实时拍摄比赛视频。先读README.md、docs/video-requirement-evidence-20261031.md、docs/video-shoot-plan-20261031.md、docs/e049-function-test-guide.md和firmware/e028-extension/docs/full-system-test-20261030/FINAL.md。FPGA正式E049，App最新待安装版0.15、最近确认安装版0.13，开拍前确认实际安装版本。音频在FPGA合成；不要按旧E026首页或旧APK规划。
 >
 > 严格覆盖赛题基础三项、拓展四项及核心评分标准。每次指导一个镜头：机位、设备初始状态、手的动作、参数、应看到/听到的结果、字幕和恢复步骤。用户确认拍完后再安排下一镜；依据实际反馈或素材记录“已录／待补／未测”，不能把功能存在或自动测试通过当作已经拍到。
 >

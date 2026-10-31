@@ -46,14 +46,15 @@ public final class ReferenceActivity extends Activity implements InstrumentView.
   settingsDialog=dialog;
  }
  private interface Work {String run(DirectExtension e)throws Exception;}
- private void operate(TextView status,Work work){
-  if(extensionBusy||extension==null||!session.isRunning()){status.setText("请先连接设备，并等待上一操作结束");return;}
+ private boolean operate(TextView status,Work work){
+  if(extensionBusy||!ready||extension==null||session==null||!session.isRunning()){status.setText("请先连接设备，并等待上一操作结束");return false;}
   final DirectExtension e=extension;final int id=generation;extensionBusy=true;status.setText("正在等待 FPGA 回读…");
   extensionWorker.execute(()->{String result;try{result=work.run(e);}catch(Exception error){result="未完成："+error.getMessage();}final String text=result;ui.post(()->{extensionBusy=false;if(id==generation){status.setText(text);Toast.makeText(this,text,Toast.LENGTH_LONG).show();}});});
+  return true;
  }
  private void extensions(){
   LinearLayout body=new LinearLayout(this);body.setOrientation(1);body.setPadding(24,12,24,12);ScrollView scroll=new ScrollView(this);scroll.addView(body);
-  TextView status=new TextView(this);status.setText("使用当前热点TCP连接；配置断电不保留。录音是约0.7秒单声道数字PCM。");body.addView(status);
+  TextView status=new TextView(this);status.setText("已备好示例曲谱，可直接下发；在线下载需手机能上网。设备配置断电不保留，录音约0.7秒单声道。");body.addView(status);
   TextView expression=new TextView(this);expression.setText("颤音深度 0..255（0关闭）；断连后自动释放。ADSR作用于新触发音符，A/D/R是步进索引，越大越慢；S为保持电平0..255。应用后重新按键试听。");body.addView(expression);
   EditText vibrato=new EditText(this);vibrato.setHint("颤音深度0..255");vibrato.setInputType(2);vibrato.setText("0");body.addView(vibrato);
   Button applyVibrato=new Button(this);applyVibrato.setText("应用颤音 / 0关闭");body.addView(applyVibrato);
@@ -72,10 +73,10 @@ public final class ReferenceActivity extends Activity implements InstrumentView.
   Button demoOn=new Button(this);demoOn.setText("启动32声部测试（先降低音箱音量）");body.addView(demoOn);Button demoOff=new Button(this);demoOff.setText("停止32声部测试");body.addView(demoOff);
   demoOn.setOnClickListener(v->{if(!ready||session==null||!session.isRunning()){status.setText("请先连接设备");return;}session.demo(true);status.setText("已请求32声部测试；频谱及实际输出采样率仍需仪器验证");});
   demoOff.setOnClickListener(v->{if(session!=null)session.demo(false);status.setText("已请求停止32声部测试；效果器可能有尾音");});
-  EditText score=new EditText(this);score.setHint("音符0..31:时长10ms，-为休止");score.setText(prefs.getString("score","12:20,16:20,19:20,-:10"));body.addView(score);
-  EditText scoreUrl=new EditText(this);scoreUrl.setSingleLine(true);scoreUrl.setHint("在线曲谱文本HTTP/HTTPS最终网址（非网页）");scoreUrl.setText(prefs.getString("score_url",""));body.addView(scoreUrl);
-  Button download=new Button(this);download.setText("从互联网获取曲谱并保存到手机");body.addView(download);
-  download.setOnClickListener(v->{if(extensionBusy){status.setText("请等待上一操作完成");return;}final String address=scoreUrl.getText().toString();extensionBusy=true;status.setText("下载中；请确保手机有互联网。热点无互联网时先断开热点下载，再重连设备下发。");extensionWorker.execute(()->{try{final String text=cn.myfines.instrument.ScoreDownload.fetch(address);prefs.edit().putString("score",text).putString("score_url",address).apply();ui.post(()->{extensionBusy=false;score.setText(text);status.setText("在线曲谱已校验并保存在手机；连接设备后点击下发并回读确认");});}catch(Exception error){ui.post(()->{extensionBusy=false;status.setText("下载未完成："+error.getMessage());});}});});
+  EditText score=new EditText(this);score.setHint("音符0..31:时长10ms，-为休止");score.setText(prefs.getString("score",cn.myfines.instrument.ScoreDownload.EXAMPLE_SCORE));body.addView(score);
+  EditText scoreUrl=new EditText(this);scoreUrl.setSingleLine(true);scoreUrl.setHint("已填好示例地址；也可替换为其他曲谱文本网址");scoreUrl.setText(cn.myfines.instrument.ScoreDownload.addressOrExample(prefs.getString("score_url","")));body.addView(scoreUrl);
+  Button download=new Button(this);download.setText("下载曲谱（默认示例）");body.addView(download);
+  download.setOnClickListener(v->{if(extensionBusy){status.setText("请等待上一操作完成");return;}final String address=cn.myfines.instrument.ScoreDownload.addressOrExample(scoreUrl.getText().toString());scoreUrl.setText(address);extensionBusy=true;status.setText("下载中；请确保手机有互联网。热点无互联网时先断开热点下载，再重连设备下发。");extensionWorker.execute(()->{try{final String text=cn.myfines.instrument.ScoreDownload.fetch(address);prefs.edit().putString("score",text).putString("score_url",address).apply();ui.post(()->{extensionBusy=false;score.setText(text);status.setText("在线曲谱已校验并保存在手机；连接设备后点击下发并回读确认");});}catch(Exception error){ui.post(()->{extensionBusy=false;status.setText("下载未完成，当前曲谱仍保留，可直接下发："+error.getMessage());});}});});
   Button upload=new Button(this);upload.setText("下发曲谱到FPGA并回读确认");body.addView(upload);upload.setOnClickListener(v->{final String text=score.getText().toString();operate(status,e->{e.score(text);prefs.edit().putString("score",text).apply();return "FPGA已回读曲谱事件数；可断网后用板载S3启停，断电需重新下载";});});
   Button play=new Button(this);play.setText("播放 / 停止曲谱");body.addView(play);final boolean[] playing={false};play.setOnClickListener(v->{if(extensionBusy||session==null||!session.isRunning())return;playing[0]=!playing[0];session.extension(playing[0]?"R01":"R00");status.setText("已发送播放/停止请求；请核对实际演奏");});
   EditText slot=new EditText(this);slot.setHint("映射位置0..31");slot.setText("0");slot.setInputType(2);body.addView(slot);EditText note=new EditText(this);note.setHint("目标音符0..31，C4=12");note.setText("12");note.setInputType(2);body.addView(note);
@@ -83,7 +84,7 @@ public final class ReferenceActivity extends Activity implements InstrumentView.
   Button record=new Button(this);record.setText("录制设备PCM并导出WAV（点击后演奏）");body.addView(record);
   extensionDialog=new AlertDialog.Builder(this).setTitle("直连扩展").setView(scroll).setNegativeButton("关闭",null).show();
   // Return to the original pads immediately, so the phone can play during capture.
-  record.setOnClickListener(v->{operate(status,e->{byte[] wav=e.record(t->ui.post(()->status.setText(t)));ui.post(()->{pendingWav=wav;Intent save=new Intent(Intent.ACTION_CREATE_DOCUMENT);save.addCategory(Intent.CATEGORY_OPENABLE);save.setType("audio/wav");save.putExtra(Intent.EXTRA_TITLE,"FPGA-"+System.currentTimeMillis()+".wav");startActivityForResult(save,701);});return "128块已校验接收，请选择WAV保存位置";});if(extensionBusy){extensionDialog.dismiss();if(settingsDialog!=null)settingsDialog.dismiss();}});
+  record.setOnClickListener(v->{boolean started=operate(status,e->{byte[] wav=e.record(t->ui.post(()->status.setText(t)));ui.post(()->{pendingWav=wav;Intent save=new Intent(Intent.ACTION_CREATE_DOCUMENT);save.addCategory(Intent.CATEGORY_OPENABLE);save.setType("audio/wav");save.putExtra(Intent.EXTRA_TITLE,"FPGA-"+System.currentTimeMillis()+".wav");startActivityForResult(save,701);});return "128块已校验接收，请选择WAV保存位置";});if(started){extensionDialog.dismiss();if(settingsDialog!=null)settingsDialog.dismiss();}});
  }
  @Override protected void onActivityResult(int request,int result,Intent data){super.onActivityResult(request,result,data);if(request==701&&result==RESULT_OK&&data!=null&&pendingWav!=null){final byte[] wav=pendingWav;final android.net.Uri uri=data.getData();pendingWav=null;extensionWorker.execute(()->{try(java.io.OutputStream out=getContentResolver().openOutputStream(uri)){if(out==null)throw new java.io.IOException("无法打开文件");out.write(wav);ui.post(()->Toast.makeText(this,"WAV已保存",Toast.LENGTH_LONG).show());}catch(Exception error){ui.post(()->Toast.makeText(this,"保存失败："+error.getMessage(),Toast.LENGTH_LONG).show());}});}}
  @Override protected void onDestroy(){disconnect();extensionWorker.shutdownNow();super.onDestroy();}

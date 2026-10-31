@@ -1,0 +1,21 @@
+{
+  "version": "0.15-e049-easy-score",
+  "versionCode": 15,
+  "sha256": "1b6cc0ae8ee9934626d9e40ff5472863d670c04ab6a236d8e3c119669d3f9ff2",
+  "bytes": 69975,
+  "same_certificate_as_013": true,
+  "InstrumentView_unchanged": true,
+  "phone_installed_this_phase": false,
+  "FPGA_changed": false,
+  "software_check_groups": 9,
+  "device_score_setup": "compiled_not_run",
+  "device_effects": "compiled_not_run",
+  "public_example": {
+    "url": "https://cdn.jsdelivr.net/gh/myfines/d-dfdf@e031-web-control/docs/demo-score.txt",
+    "http": 200,
+    "bytes": 47,
+    "text": "12:20,16:20,19:20,24:40,19:20,16:20,12:40,-:20",
+    "sha256": "588c51784f904a50362595e5d096a8bdcbcbcea7055e287fba8283125b451c37",
+    "network": "PC public Internet, not phone"
+  }
+}
