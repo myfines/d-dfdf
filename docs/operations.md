@@ -1353,3 +1353,7 @@ OLED五页通信通过；电脑相机首帧暗且未朝向板卡，不计显示�
 
 ## 2026-10-31 离线效果回调回归补证
 明确用户测试未连接FPGA，目标是本地勾选持久化及主界面同步，不是板上听感。新增test_offline_effect_callbacks.py，提取生产Activity的效果回调绑定，在Java控件/会话替身执行。相同用例在0.15提交1f1ab91失败：offline checkbox selection not saved: 2；0.16全8组合的离线勾选、应用、保存、主显示、恢复及连接重发通过。不是Android触屏/SharedPreferences系统实现测试。JADX反编译已发布0.16 APK确认三个CheckedChangeListener与effects保存存在；APK SHA256 cde5a5f45021aa9f214486a7a7b7d38c1fcdc84ffddc50fd2ecf76075db9dfa5。无新增App或板卡代码，无硬件操作。
+
+
+## 2026-10-31 内外延迟同步复核
+用户明确内部勾选保存后外部硬件延时仍关闭；不能以保存用例通过否定用户现象。复查InstrumentView.drawTimbreCard直接使用echo，setEcho更新并invalidate。将离线回归Screen替身替换为真实InstrumentView与已有Android headless桩，生产回调8组合更新真实View echo测试通过。此测试仍非Android设备界面实测。ADB设备为空，尚未获知用户复现所用安装版本；不发布无依据的新版本，不宣称现象已解决。
