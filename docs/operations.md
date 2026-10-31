@@ -1349,3 +1349,7 @@ OLED五页通信通过；电脑相机首帧暗且未朝向板卡，不计显示�
 
 ## 2026-10-31 App0.16 效果勾选即时保存
 用户确认未连接热点时，扩展页勾选后重进丢失，主界面延迟不变。定位0.15只在应用按钮且ready时写入状态；复选框没有变更监听。0.16为三个复选框绑定即时更新：保存effects/echo、更新原主界面、session运行时发送，离线下次连接重放。应用按钮保留为再次发送；布局不变。build.ps1九组软件检查及APK构建通过。新增effects-offline设备脚本覆盖无应用按钮的勾选保存、主延迟同步、重开保留；首次脚本编译捕获checked exception错误，移出Runnable后重编译通过，未在手机执行。不声称真实点击或听感验收；无硬件操作。日志见20261031-app016-build.log与app016-device-build.log。
+
+
+## 2026-10-31 离线效果回调回归补证
+明确用户测试未连接FPGA，目标是本地勾选持久化及主界面同步，不是板上听感。新增test_offline_effect_callbacks.py，提取生产Activity的效果回调绑定，在Java控件/会话替身执行。相同用例在0.15提交1f1ab91失败：offline checkbox selection not saved: 2；0.16全8组合的离线勾选、应用、保存、主显示、恢复及连接重发通过。不是Android触屏/SharedPreferences系统实现测试。JADX反编译已发布0.16 APK确认三个CheckedChangeListener与effects保存存在；APK SHA256 cde5a5f45021aa9f214486a7a7b7d38c1fcdc84ffddc50fd2ecf76075db9dfa5。无新增App或板卡代码，无硬件操作。

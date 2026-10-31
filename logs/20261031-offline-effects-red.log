@@ -1,0 +1,9 @@
+Exception in thread "main" java.lang.AssertionError: offline checkbox selection not saved: 2
+	at OfflineCallbacks.check(OfflineCallbacks.java:16)
+	at OfflineCallbacks.main(OfflineCallbacks.java:21)
+Traceback (most recent call last):
+  File "E:\gaoyun\releases\e028-flash-record\mobile-companion\tests\test_offline_effect_callbacks.py", line 45, in <module>
+    subprocess.run([str(jdk/'java.exe'),'-cp',str(out),'OfflineCallbacks'],check=True)
+  File "C:\Users\zrk\AppData\Local\Programs\Python\Python312\Lib\subprocess.py", line 571, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['E:\\gaoyun\\tools\\mobile-jdk\\jdk-17.0.20.1+1\\bin\\java.exe', '-cp', 'E:\\gaoyun\\releases\\e028-flash-record\\mobile-companion\\build\\offline-callbacks', 'OfflineCallbacks']' returned non-zero exit status 1.
