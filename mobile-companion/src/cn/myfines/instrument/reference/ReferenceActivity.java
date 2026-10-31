@@ -67,7 +67,11 @@ public final class ReferenceActivity extends Activity implements InstrumentView.
   resetEnvelope.setOnClickListener(v->operate(status,e->{e.resetEnvelope();return "FPGA已回读原厂包络模式；重新按键试听";}));
   CheckBox chorus=new CheckBox(this);chorus.setText("合唱");chorus.setChecked((effectState.mask()&1)!=0);body.addView(chorus);CheckBox delay=new CheckBox(this);delay.setText("延迟");delay.setChecked(effectState.delay());body.addView(delay);CheckBox reverb=new CheckBox(this);reverb.setText("混响");reverb.setChecked((effectState.mask()&4)!=0);body.addView(reverb);
   Button effects=new Button(this);effects.setText("应用FPGA效果器组合");body.addView(effects);
-  effects.setOnClickListener(v->{if(!ready||session==null||!session.isRunning()){status.setText("请先连接设备");return;}effectState.select(chorus.isChecked(),delay.isChecked(),reverb.isChecked());session.effects(effectState.mask());echo=effectState.delay();view.setEcho(echo);save();status.setText("已发送效果器组合；主界面延时开关仅控制延迟，合唱/混响请在此关闭；请试听确认");});
+  Runnable updateEffects=()->{effectState.select(chorus.isChecked(),delay.isChecked(),reverb.isChecked());echo=effectState.delay();view.setEcho(echo);save();if(session!=null&&session.isRunning()){session.effects(effectState.mask());status.setText("效果组合已保存并发送；请试听确认");}else{status.setText("效果组合已保存在手机；连接FPGA热点并点击连接后自动发送");}};
+  chorus.setOnCheckedChangeListener((button,checked)->updateEffects.run());
+  delay.setOnCheckedChangeListener((button,checked)->updateEffects.run());
+  reverb.setOnCheckedChangeListener((button,checked)->updateEffects.run());
+  effects.setOnClickListener(v->updateEffects.run());
   Spinner screen=new Spinner(this);screen.setAdapter(new ArrayAdapter<String>(this,android.R.layout.simple_spinner_dropdown_item,new String[]{"波形","16带频谱","立体声李萨如","曲目指引","系统状态"}));body.addView(screen);
   Button display=new Button(this);display.setText("切换OLED页面");body.addView(display);display.setOnClickListener(v->{if(!ready||session==null||!session.isRunning()){status.setText("请先连接设备");return;}session.screen(screen.getSelectedItemPosition());status.setText("已发送OLED页面请求，请查看板上显示；手机波形不代表OLED验收");});
   Button demoOn=new Button(this);demoOn.setText("启动32声部测试（先降低音箱音量）");body.addView(demoOn);Button demoOff=new Button(this);demoOff.setText("停止32声部测试");body.addView(demoOff);

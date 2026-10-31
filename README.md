@@ -1,3 +1,5 @@
+> 最新安装候选：[App 0.16：效果器勾选立即保存与同步](mobile-companion/apk/instrument-companion-0.16-e049-instant-effects.apk)。覆盖安装；无需重烧FPGA。勾选即保存，未连接时下次连接发送；实际手机点击与声音待复测。
+
 # Tang Primer 20K · FPGA实时多音色电子乐器
 
 2026高云FPGA创新设计赛道选题二。Tang Primer 20K＋Dock配合PCM5102A、ADS1015、摇杆、八路光键、K230手势、OLED和ESP-01S，实现FPGA实时合成与多维演奏控制。

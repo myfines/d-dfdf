@@ -151,6 +151,23 @@ public final class DeviceSuite extends Instrumentation {
         try {
             Intent launch=new Intent(getTargetContext(),ReferenceActivity.class);launch.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             activity=(ReferenceActivity)startActivitySync(launch);
+            if(mode.equals("effects-offline")){
+                android.content.SharedPreferences prefs=activity.getSharedPreferences("reference_wifi",0);
+                int previous=prefs.getInt("effects",-1);boolean previousEcho=prefs.getBoolean("echo",false);
+                try{
+                    openEffects();
+                    android.widget.CheckBox c=effectBox("合唱"),d=effectBox("延迟"),r=effectBox("混响");
+                    action(()->{c.setChecked(false);d.setChecked(false);r.setChecked(false);d.performClick();});
+                    check("offline click immediately saves delay",prefs.getInt("effects",-1)==2,prefs.getInt("effects",-1));
+                    check("offline click syncs main view delay",Boolean.TRUE.equals(field(activityField("view"),"echo")),"main switch");
+                    closeEffects();openEffects();
+                    check("offline reopen retains delay without apply",effectBox("延迟").isChecked(),"saved immediately");
+                    android.widget.CheckBox reopenedChorus=effectBox("合唱"),reopenedReverb=effectBox("混响");
+                    action(()->{reopenedChorus.performClick();reopenedReverb.performClick();});
+                    check("offline saves all effects without apply",prefs.getInt("effects",-1)==7,prefs.getInt("effects",-1));
+                    closeEffects();output.putBoolean("passed",true);return;
+                }finally{android.content.SharedPreferences.Editor edit=prefs.edit().putBoolean("echo",previousEcho);if(previous<0)edit.remove("effects");else edit.putInt("effects",previous);edit.commit();}
+            }
             if(mode.equals("score-setup")){
                 android.content.SharedPreferences prefs=activity.getSharedPreferences("reference_wifi",0);
                 String previousUrl=prefs.getString("score_url",null),previousScore=prefs.getString("score",null);
