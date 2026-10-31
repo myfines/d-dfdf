@@ -1,0 +1,15 @@
+PASS effects state: all8 masks, saved restore, legacy migration and delay isolation
+PASS idle, four voices, headroom, panic, release, pitch
+PASS WiFi protocol: actual snapshot fields, waveform, invalid/range checks
+PASS WiFi TCP worker: control bytes, fragmented FPGA status, disconnect
+PASS actual TCP effect replay: exact E/F bytes for all8 restored combinations
+PASS Android extension packet encoding and bounds
+PASS direct A metadata/checksum and signed PCM WAV export
+PASS online score download, format validation, size and URL bounds
+PASS actual reference View constructor/layout/offline draw/32-point connected draw/four timbres
+����: [options] δ�� -source 8 һ������������·��
+ע: ĳЩ�����ļ�ʹ�û򸲸����ѹ�ʱ�� API��
+ע: �й���ϸ��Ϣ, ��ʹ�� -Xlint:deprecation ���±��롣
+1 ������
+ 'classes.dex'...
+APK: E:\gaoyun\releases\e028-flash-record\mobile-companion\build\instrument-companion.apk

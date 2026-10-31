@@ -1333,3 +1333,9 @@ OLED五页通信通过；电脑相机首帧暗且未朝向板卡，不计显示�
 ## 2026-10-31 更新README与拍摄AI交接
 
 按用户要求将仓库首页从过期E026状态更新为E049＋App0.13，纠正主工程入口、APK和测试结论；旧首页另存docs/history/readme-before-E049.md。增加逐段拍摄顺序、赛题证据/分镜/操作指南入口，以及可复制给其他AI的逐镜头交接提示，明确版本、实际结果、未测指标、历史探针频谱来源和拍摄约束。README相对链接静态检查通过。首次apply_patch同目标delete/add被拒，未改变文件；改私有模板复制写入。仅文档，无板卡、手机、固件、接线动作。
+
+## 2026-10-31 App合唱/混响状态修复候选0.14
+
+用户报告效果无法选定及听不到、明确不改UI，后要求直接检查APK不等手机。ADB为空，未安装设备。静态源码与交付0.13 APK反编译确认只保存echo、合唱/混响重开默认未选、新连接不恢复完整组合。REA inspect_android_package缺外部jadx-headless-mcp 0.7.1返回capability_unavailable，未安装依赖或改配置；改用现有JADX CLI。首次java -jar调用进入GUI并滞留，核对自有PID23360完整命令后停止，改显式jadx.cli.JadxCLI成功。旧/新反编译原文及证书仅私有保存。EffectsStateTest初始RED为新增类不存在的编译失败，不充当旧APK运行失败。
+
+新增EffectsState及全8组合/迁移/延迟隔离测试，ReferenceActivity保存/恢复完整effects掩码、新连接重放，保留控件顺序/文字/尺寸和InstrumentView不变；build.ps1加入状态与真实本机TCP全8组合测试。Android versionCode14/0.14-e049-effects，同签名APK生成；9组检查和APK签名/旧新保存路径/InstrumentView哈希对比通过。新增DeviceSuite effects实际复选框performClick/应用/重开/偏好/重连脚本编译通过但未执行；不当物理触摸或音频验收。FPGA、接线、手机均未改。候选说明、哈希收据、README/当前发布/功能指南已标明候选未部署，历史0.13实体通过范围未外推。

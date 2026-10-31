@@ -1,0 +1,7 @@
+INFO  - Checking for updates...
+INFO  - Update channel: STABLE, current version: 1.5.6
+INFO  - output directory: instrument-companion-0.13-e049-recovery
+INFO  - loading ...
+INFO  - Loaded classes: 137, methods: 582, instructions: 22053
+INFO  - Resetting disk code cache, base dir: C:\Users\zrk\AppData\Local\skylot\jadx\cache\projects\instrument-companion-0.13-e049-recovery-1f82e2e7474e7c24d0ee79ca1a09008e\code
+INFO  - No updates found

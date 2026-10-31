@@ -1,0 +1,19 @@
+{
+  "app": "0.14-e049-effects",
+  "versionCode": 14,
+  "sha256": "65ce9a13a5f10c2ee37d02e7a2dfbbf08e8bb6bb168c63a4b2cbf00e4ea993b5",
+  "same_certificate_as_013": true,
+  "InstrumentView_unchanged": true,
+  "phone_installed_this_phase": false,
+  "device_effects_test": "compiled_not_run",
+  "FPGA_changed": false,
+  "build_checks": 9,
+  "apk013_static_findings": [
+    "no complete effects preference",
+    "chorus/reverb checkbox defaults unchecked",
+    "connection only restores echo"
+  ],
+  "limitations": [
+    "physical touch and audible effect feedback not reverified"
+  ]
+}

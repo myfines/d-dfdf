@@ -8,15 +8,18 @@ import android.widget.*;
 import cn.myfines.instrument.WifiProtocol;
 import cn.myfines.instrument.WifiSession;
 import cn.myfines.instrument.DirectExtension;
+import cn.myfines.instrument.EffectsState;
 public final class ReferenceActivity extends Activity implements InstrumentView.Actions {
  private InstrumentView view;private WifiSession session;private final Handler ui=new Handler(Looper.getMainLooper());
  private volatile DirectExtension extension;private boolean extensionBusy;private byte[] pendingWav;
  private AlertDialog settingsDialog,extensionDialog;
+ private EffectsState effectState;
  private final java.util.concurrent.ExecutorService extensionWorker=java.util.concurrent.Executors.newSingleThreadExecutor();
  private SharedPreferences prefs;private String host;private int port,volume,tone,page,mask;private volatile int generation;private boolean echo;private boolean ready;private final boolean[] held=new boolean[8];
  private void held(int key,boolean value){held[key]=value;view.setHeld(held);}
- private void save(){prefs.edit().putString("host",host).putInt("port",port).putInt("volume",volume).putInt("tone",tone).putInt("page",page).putBoolean("echo",echo).apply();}
+ private void save(){prefs.edit().putString("host",host).putInt("port",port).putInt("volume",volume).putInt("tone",tone).putInt("page",page).putBoolean("echo",echo).putInt("effects",effectState.mask()).apply();}
  @Override public void onCreate(Bundle state){super.onCreate(state);prefs=getSharedPreferences("reference_wifi",0);host=prefs.getString("host","192.168.4.1");port=prefs.getInt("port",9000);volume=prefs.getInt("volume",160);tone=prefs.getInt("tone",0);page=prefs.getInt("page",0);echo=prefs.getBoolean("echo",false);
+  effectState=new EffectsState(prefs.getInt("effects",-1),echo);echo=effectState.delay();
   getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);getWindow().setStatusBarColor(0xff080f18);getWindow().setNavigationBarColor(0xff080f18);
   view=new InstrumentView(this);view.setActions(this);view.setHost(host,port);view.setVolume(volume);view.setTimbre(tone);view.setEcho(echo);view.setStatus("未连接","手机连接 FPGA-Instrument 热点后点连接",0,false);view.setReady(false);setContentView(view);
  }
@@ -28,13 +31,13 @@ public final class ReferenceActivity extends Activity implements InstrumentView.
    public void extension(DirectExtension.Frame f){DirectExtension e=extension;if(id==generation&&e!=null)e.accept(f);}
    public void snapshot(WifiProtocol.Snapshot s){ui.post(()->{if(id!=generation)return;ready=true;view.setMode(true);view.setSnapshot(new Protocol.Snapshot(s.sequence,s.keys,s.flags,s.x,s.y,s.volume,s.timbre,s.echo,s.page,s.wave,s.gestureAvailable,s.gestureActive,s.gestureSequence,s.pinch,s.gestureY,s.confidence));view.setStatus("已连接","参数与波形来自 FPGA；设置自动保存",2,false);});}});
   final WifiSession link=session;extension=new DirectExtension(new DirectExtension.Wire(){public void send(String packet){link.extension(packet);}public boolean connected(){return link.isRunning();}});
-  session.volume(volume);session.tone(tone);session.echo(echo);session.page(page);view.setStatus("连接中","正在连接 ESP "+host+":"+port,1,true);session.connect(host,port,()->wifi.getSocketFactory().createSocket());
+  session.volume(volume);session.tone(tone);session.effects(effectState.mask());session.page(page);view.setStatus("连接中","正在连接 ESP "+host+":"+port,1,true);session.connect(host,port,()->wifi.getSocketFactory().createSocket());
  }
  public void onPadDown(int i){if(!ready)return;mask|=1<<i;held(i,true);session.keys(mask);}
  public void onPadUp(int i){mask&=~(1<<i);held(i,false);if(session!=null)session.keys(mask);}
  public void onVolumeChanged(int value,boolean done){volume=value;if(session!=null)session.volume(value);if(done)save();}
  public void onTimbre(int value){tone=value;if(session!=null)session.tone(value);save();}
- public void onEcho(boolean value){echo=value;if(session!=null)session.echo(value);save();}
+ public void onEcho(boolean value){effectState.delay(value);echo=effectState.delay();if(session!=null)session.effects(effectState.mask());save();}
  public void onMute(){volume=0;view.setVolume(0);if(session!=null)session.volume(0);save();}
  public void onHelp(){new AlertDialog.Builder(this).setTitle("Wi-Fi 直连演奏").setMessage("手机连接 FPGA-Instrument 热点（密码 fpga-demo-2026），返回本页点击连接。需要 FPGA 热点版固件。\n八键支持多指，按住发声松开停止；音量、音色、延时、音区与连接地址自动保存。\n手势控制音量与亮度，手势本身不触发音符。波形来自设备回传，不是音频录音。\nRCFG只重配FPGA，外设异常请按原流程完整冷启动。").setPositiveButton("知道了",null).show();}
  public void onSettings(){LinearLayout form=new LinearLayout(this);form.setOrientation(1);form.setPadding(24,12,24,12);EditText address=new EditText(this);address.setSingleLine(true);address.setHint("ESP IP 地址");address.setText(host);form.addView(address);EditText number=new EditText(this);number.setInputType(2);number.setHint("TCP端口");number.setText(""+port);form.addView(number);Spinner bank=new Spinner(this);bank.setAdapter(new ArrayAdapter<String>(this,android.R.layout.simple_spinner_dropdown_item,new String[]{"音区1 · C3–G3","音区2 · G#3–D#4","音区3 · E4–B4","音区4 · C5–G5"}));bank.setSelection(page);form.addView(bank);
@@ -61,9 +64,9 @@ public final class ReferenceActivity extends Activity implements InstrumentView.
   applyEnvelope.setOnClickListener(v->{try{final int a=Integer.parseInt(adsr[0].getText().toString()),d=Integer.parseInt(adsr[1].getText().toString()),sustain=Integer.parseInt(adsr[2].getText().toString()),r=Integer.parseInt(adsr[3].getText().toString());operate(status,e->{e.envelope(a,d,sustain,r);return "FPGA已回读自定义ADSR；重新按键试听";});}catch(Exception error){status.setText("未应用："+error.getMessage());}});
   Button resetEnvelope=new Button(this);resetEnvelope.setText("恢复四音色原厂包络");body.addView(resetEnvelope);
   resetEnvelope.setOnClickListener(v->operate(status,e->{e.resetEnvelope();return "FPGA已回读原厂包络模式；重新按键试听";}));
-  CheckBox chorus=new CheckBox(this);chorus.setText("合唱");body.addView(chorus);CheckBox delay=new CheckBox(this);delay.setText("延迟");delay.setChecked(echo);body.addView(delay);CheckBox reverb=new CheckBox(this);reverb.setText("混响");body.addView(reverb);
+  CheckBox chorus=new CheckBox(this);chorus.setText("合唱");chorus.setChecked((effectState.mask()&1)!=0);body.addView(chorus);CheckBox delay=new CheckBox(this);delay.setText("延迟");delay.setChecked(effectState.delay());body.addView(delay);CheckBox reverb=new CheckBox(this);reverb.setText("混响");reverb.setChecked((effectState.mask()&4)!=0);body.addView(reverb);
   Button effects=new Button(this);effects.setText("应用FPGA效果器组合");body.addView(effects);
-  effects.setOnClickListener(v->{if(!ready||session==null||!session.isRunning()){status.setText("请先连接设备");return;}session.effects((chorus.isChecked()?1:0)|(delay.isChecked()?2:0)|(reverb.isChecked()?4:0));echo=delay.isChecked();view.setEcho(echo);save();status.setText("已发送效果器组合；主界面延时开关仅控制延迟，合唱/混响请在此关闭；请试听确认");});
+  effects.setOnClickListener(v->{if(!ready||session==null||!session.isRunning()){status.setText("请先连接设备");return;}effectState.select(chorus.isChecked(),delay.isChecked(),reverb.isChecked());session.effects(effectState.mask());echo=effectState.delay();view.setEcho(echo);save();status.setText("已发送效果器组合；主界面延时开关仅控制延迟，合唱/混响请在此关闭；请试听确认");});
   Spinner screen=new Spinner(this);screen.setAdapter(new ArrayAdapter<String>(this,android.R.layout.simple_spinner_dropdown_item,new String[]{"波形","16带频谱","立体声李萨如","曲目指引","系统状态"}));body.addView(screen);
   Button display=new Button(this);display.setText("切换OLED页面");body.addView(display);display.setOnClickListener(v->{if(!ready||session==null||!session.isRunning()){status.setText("请先连接设备");return;}session.screen(screen.getSelectedItemPosition());status.setText("已发送OLED页面请求，请查看板上显示；手机波形不代表OLED验收");});
   Button demoOn=new Button(this);demoOn.setText("启动32声部测试（先降低音箱音量）");body.addView(demoOn);Button demoOff=new Button(this);demoOff.setText("停止32声部测试");body.addView(demoOff);

@@ -1,3 +1,5 @@
+> 2026-10-31：新增[App0.14效果状态修复候选](app014-effects-fix.md)，修复合唱/混响选择回显、持久化与重连重放，原UI布局不改。9组软件检查通过，未安装手机/未实机试听；0.13仍为最近已安装版本，FPGA仍E049。
+
 > 2026-10-30本轮最新结果：板卡仍E049/6020，Flash未改；手机已安装[App0.13](../mobile-companion/apk/instrument-companion-0.13-e049-recovery.apk)，修复录音中断后重连卡在回传模式。真实手机常规64项、异常恢复、边界、多指、在线曲谱下载/缓存下发、WAV导出及播放器实测通过；显示画面另见摄像头证据，延迟/LRCK/抖动仍未测。[本轮测试总览](../firmware/e028-extension/docs/full-system-test-20261030/FINAL.md) · [操作指南](e049-function-test-guide.md)。下文旧部署与未验状态为历史。
 
 > 完整功能点检查：[E049＋App0.13测试指南](e049-function-test-guide.md)，42项按“有／异常／未测”记录，仅查功能存在，不替代性能验收。

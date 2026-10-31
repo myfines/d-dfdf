@@ -9,6 +9,10 @@ $api=Join-Path $Sdk 'platforms\android-37.0\android.jar'
 $build=Join-Path $PSScriptRoot 'build'
 New-Item -ItemType Directory -Force "$build\classes","$build\tests","$build\dex" | Out-Null
 function Check([string]$step){if($LASTEXITCODE -ne 0){throw "$step failed ($LASTEXITCODE)"}}
+& "$Jdk/bin/javac.exe" -encoding UTF-8 -d "$build/tests" "$PSScriptRoot/src/cn/myfines/instrument/EffectsState.java" "$PSScriptRoot/tests/EffectsStateTest.java"
+Check 'Effects state compile'
+& "$Jdk/bin/java.exe" -cp "$build/tests" cn.myfines.instrument.EffectsStateTest
+Check 'Effects state tests'
 & "$Jdk\bin\javac.exe" -encoding UTF-8 -d "$build\tests" "$PSScriptRoot\src\cn\myfines\instrument\SynthCore.java" "$PSScriptRoot\tests\CoreTest.java"
 Check 'Core test compile'
 & "$Jdk\bin\java.exe" -cp "$build\tests" cn.myfines.instrument.CoreTest
@@ -19,6 +23,10 @@ Check 'WiFi tests compile'
 Check 'WiFi protocol tests'
 & "$Jdk\bin\java.exe" -cp "$build\tests" cn.myfines.instrument.WifiSessionTest
 Check 'WiFi socket tests'
+& "$Jdk/bin/javac.exe" -encoding UTF-8 -cp "$build/tests" -d "$build/tests" "$PSScriptRoot/tests/EffectsWireTest.java"
+Check 'Effects wire compile'
+& "$Jdk/bin/java.exe" -cp "$build/tests" cn.myfines.instrument.EffectsWireTest
+Check 'Effects wire tests'
 & "$Jdk\bin\javac.exe" -encoding UTF-8 -cp "$build\tests" -d "$build\tests" "$PSScriptRoot\src\cn\myfines\instrument\ExtensionProtocol.java" "$PSScriptRoot\tests\ExtensionProtocolTest.java"
 Check 'Extension test compile'
 & "$Jdk\bin\java.exe" -cp "$build\tests" cn.myfines.instrument.ExtensionProtocolTest

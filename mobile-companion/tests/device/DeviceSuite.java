@@ -46,6 +46,32 @@ public final class DeviceSuite extends Instrumentation {
         results.put(row);Bundle progress=new Bundle();progress.putString("stream",row.toString()+"\n");sendStatus(0,progress);
         if(!passed)throw new AssertionError(name+": "+observed);
     }
+    private View textView(View root,String text){
+        if(root instanceof android.widget.TextView&&text.contentEquals(((android.widget.TextView)root).getText()))return root;
+        if(root instanceof android.view.ViewGroup){android.view.ViewGroup group=(android.view.ViewGroup)root;for(int i=0;i<group.getChildCount();i++){View found=textView(group.getChildAt(i),text);if(found!=null)return found;}}
+        return null;
+    }
+    private void openEffects()throws Exception {
+        action(()->activity.onSettings());
+        android.app.AlertDialog settings=(android.app.AlertDialog)activityField("settingsDialog");
+        View button=textView(settings.getWindow().getDecorView(),"直连扩展 · 颤音 / ADSR / 曲谱 / 键位 / 录音");
+        if(button==null)throw new AssertionError("extension entry missing");
+        action(()->button.performClick());
+    }
+    private android.widget.CheckBox effectBox(String text)throws Exception {
+        android.app.AlertDialog dialog=(android.app.AlertDialog)activityField("extensionDialog");
+        return (android.widget.CheckBox)textView(dialog.getWindow().getDecorView(),text);
+    }
+    private void applyEffects()throws Exception {
+        android.app.AlertDialog dialog=(android.app.AlertDialog)activityField("extensionDialog");
+        View button=textView(dialog.getWindow().getDecorView(),"应用FPGA效果器组合");
+        action(()->button.performClick());SystemClock.sleep(600);
+    }
+    private void closeEffects()throws Exception {
+        android.app.AlertDialog extra=(android.app.AlertDialog)activityField("extensionDialog");
+        android.app.AlertDialog settings=(android.app.AlertDialog)activityField("settingsDialog");
+        action(()->{extra.dismiss();settings.dismiss();});
+    }
     private void connected()throws Exception {
         action(()->activity.onConnectClick());
         long end=SystemClock.elapsedRealtime()+30000;
@@ -137,6 +163,27 @@ public final class DeviceSuite extends Instrumentation {
             connected();
             WifiSession link=(WifiSession)activityField("session");
             DirectExtension extension=(DirectExtension)activityField("extension");
+            if(mode.equals("effects")){
+                openEffects();
+                android.widget.CheckBox chorus=effectBox("合唱"),delay=effectBox("延迟"),reverb=effectBox("混响");
+                action(()->{chorus.setChecked(false);delay.setChecked(false);reverb.setChecked(false);});applyEffects();
+                action(()->{chorus.performClick();reverb.performClick();});
+                check("real checkbox click toggles chorus/reverb",chorus.isChecked()&&reverb.isChecked()&&!delay.isChecked(),"mask5 selected");
+                applyEffects();check("combined command retains exact mask5",((Integer)field(link,"fx"))==5,field(link,"fx"));
+                check("saved effect mask5",activity.getSharedPreferences("reference_wifi",0).getInt("effects",-1)==5,"saved effects");
+                closeEffects();openEffects();
+                check("dialog reopen retains chorus/reverb",effectBox("合唱").isChecked()&&effectBox("混响").isChecked()&&!effectBox("延迟").isChecked(),"mask5 restored");
+                closeEffects();action(()->activity.onEcho(true));
+                check("main delay on preserves chorus/reverb",((Integer)field(link,"fx"))==7,field(link,"fx"));
+                action(()->activity.onEcho(false));
+                check("main delay off preserves chorus/reverb",((Integer)field(link,"fx"))==5,field(link,"fx"));
+                action(()->activity.onConnectClick());connected();link=(WifiSession)activityField("session");
+                check("reconnect replays chorus/reverb mask5",((Integer)field(link,"fx"))==5,field(link,"fx"));
+                check("FPGA aggregate effect flag active",snapshot().echo,"aggregate only, not exact mask readback");
+                openEffects();android.widget.CheckBox c=effectBox("合唱"),d=effectBox("延迟"),r=effectBox("混响");
+                action(()->{c.setChecked(false);d.setChecked(false);r.setChecked(false);});applyEffects();closeEffects();
+                output.putBoolean("passed",true);return;
+            }
             if(mode.equals("touch")){
                 long down=SystemClock.uptimeMillis();
                 touch(1,MotionEvent.ACTION_DOWN,down);SystemClock.sleep(300);
